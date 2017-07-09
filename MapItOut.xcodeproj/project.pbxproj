@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D3C6C22B3595DABB6C7C8D6 /* Pods_MapItOut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */; };
+		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
 		83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */; };
 		83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */; };
 		83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB1D1F12EA5D00EDDD91 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
 		83E4CB101F12EA5D00EDDD91 /* MapItOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapItOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83E4CB1B1F12EA5D00EDDD91 /* MapItOut.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MapItOut.xcdatamodel; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				83E4CB281F12EB5800EDDD91 /* LaunchScreen.storyboard */,
 				83E4CB291F12EB5800EDDD91 /* Main.storyboard */,
+				83D529731F12F03A00ED4EEE /* Login.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			files = (
 				83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */,
 				83E4CB311F12EB9400EDDD91 /* Info.plist in Resources */,
+				83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */,
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83E4CB341F12EBDD00EDDD91 /* GoogleService-Info.plist in Resources */,
 				83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */,
