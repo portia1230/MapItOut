@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kOq-FY-Xjb">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="f4b-IS-eXQ">
+            <objects>
+                <viewController id="kOq-FY-Xjb" customClass="LoginViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lNV-wj-hVU"/>
+                        <viewControllerLayoutGuide type="bottom" id="MLb-SA-Or7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sgI-er-7nn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0x-75-Vrw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="VkT-86-CJC">
+                                        <rect key="frame" x="-9" y="195" width="392" height="392"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="392" id="227-ye-6ct"/>
+                                            <constraint firstAttribute="width" constant="392" id="q39-0J-Y0a"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map It Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1b-EP-7lq">
+                                        <rect key="frame" x="70" y="121" width="235" height="66"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="235" id="dug-AS-339"/>
+                                            <constraint firstAttribute="height" constant="66" id="vdL-Dn-X51"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="48"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an app that allows you to record the people surrounding you and locations you have been to" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7I-Me-EIf">
+                                        <rect key="frame" x="40" y="190" width="295" height="66"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="66" id="5a6-KZ-rYh"/>
+                                            <constraint firstAttribute="width" constant="295" id="Cuz-sF-lHs"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tql-ED-KRw">
+                                        <rect key="frame" x="62" y="564" width="250" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.25203916430000001" green="0.7691936493" blue="0.5019900799" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
+                                        <state key="normal" title="Get Started!">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.26173061130000003" green="0.31526783110000001" blue="0.68635404109999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="L7I-Me-EIf" firstAttribute="centerX" secondItem="Q0x-75-Vrw" secondAttribute="centerX" id="1ZI-mX-6Ng"/>
+                                    <constraint firstItem="VkT-86-CJC" firstAttribute="top" secondItem="L1b-EP-7lq" secondAttribute="bottom" constant="8" id="MgU-2G-VJq"/>
+                                    <constraint firstItem="VkT-86-CJC" firstAttribute="centerX" secondItem="Q0x-75-Vrw" secondAttribute="centerX" id="TgR-sH-6yx"/>
+                                    <constraint firstItem="L1b-EP-7lq" firstAttribute="top" secondItem="Q0x-75-Vrw" secondAttribute="top" constant="121" id="sfY-Iw-SWP"/>
+                                    <constraint firstItem="L1b-EP-7lq" firstAttribute="centerX" secondItem="Q0x-75-Vrw" secondAttribute="centerX" id="uHU-1c-C6H"/>
+                                    <constraint firstItem="L7I-Me-EIf" firstAttribute="top" secondItem="L1b-EP-7lq" secondAttribute="bottom" constant="3" id="z2y-fq-gkj"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Q0x-75-Vrw" firstAttribute="top" secondItem="sgI-er-7nn" secondAttribute="top" id="4ub-ZG-ClK"/>
+                            <constraint firstAttribute="bottom" secondItem="Q0x-75-Vrw" secondAttribute="bottom" id="CXp-az-mkE"/>
+                            <constraint firstAttribute="trailing" secondItem="Q0x-75-Vrw" secondAttribute="trailing" id="ceN-Yw-hlO"/>
+                            <constraint firstItem="Q0x-75-Vrw" firstAttribute="leading" secondItem="sgI-er-7nn" secondAttribute="leading" id="j6q-gg-VdI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="getStartedButton" destination="tql-ED-KRw" id="QZX-gn-BAO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kN3-CE-xe3" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="129.98500749625188"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Icon.png" width="392" height="390"/>
+    </resources>
+</document>

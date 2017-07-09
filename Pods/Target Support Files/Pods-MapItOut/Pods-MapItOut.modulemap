@@ -1,0 +1,6 @@
+framework module Pods_MapItOut {
+  umbrella header "Pods-MapItOut-umbrella.h"
+
+  export *
+  module * { export * }
+}
