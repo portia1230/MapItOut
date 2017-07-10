@@ -59,19 +59,30 @@ extension LoginViewController: FUIAuthDelegate {
             else { return }
         
         //assigning name to model user
-        let userRef = Database.database().reference().child("users").child(user.uid)
-        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            //retrieve user data from snapshot
-            let name = ["name" : user.displayName]
-            userRef.setValue(name) { (error, userRef) in
-                if let error = error {
-                    assertionFailure(error.localizedDescription)
-                    return
-                }
-            }
-            print("Welcome back, \(user.displayName).")
-            
-        })
+        
+//        let userRef = Database.database().reference().child("users").child(user.uid)
+//        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+//            
+//            let name = ["name" : user.displayName]
+//            let email = ["email" : user.email]
+//            userRef.setValue(name) { (error, userRef) in
+//                if let error = error {
+//                    assertionFailure(error.localizedDescription)
+//                    return
+//                }
+//            }
+//            userRef.setValue(email) { (error, userRef) in
+//                if let error = error {
+//                    assertionFailure(error.localizedDescription)
+//                    return
+//                }
+//            }
+//            print("Welcome back, \(user.displayName!) \(user.email!).")
+//            
+//        })
+        UserService.create(user, name: user.displayName!, email: user.email!) { (user) in
+            guard let user = user else { return }
+        }
     }
 }
 
