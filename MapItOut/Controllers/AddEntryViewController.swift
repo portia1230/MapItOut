@@ -12,17 +12,22 @@ import MapKit
 
 class AddEntryViewController: UIViewController, MKMapViewDelegate{
     
-//MARK: - Properties
+    //MARK: - Properties
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var locationMapView: MKMapView!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var addContactButton: UIButton!
-    let blueColor = UIColor(red: 74/255, green: 88/255, blue: 178/255, alpha: 1)
+    //let blueColor = UIColor(red: 74/255, green: 88/255, blue: 178/255, alpha: 1)
+    let greenColor = UIColor(red: 173/255, green: 189/255, blue: 240/255, alpha: 0.2)
+    let blueColor = UIColor(red: 76, green: 109, blue: 255, alpha: 1)
     var photoHelper = MGPhotoHelper()
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
-//MARK: - Lifecycles
+    //MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +50,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate{
         locationMapView.setRegion(region, animated: true)
     }
     
-//MARK: - Functions
+    //MARK: - Functions
     
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
         photoHelper.presentActionSheet(from: self)
@@ -56,6 +61,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate{
     
     
     
-
+    
     
 }
