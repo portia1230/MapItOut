@@ -10,7 +10,7 @@ import Foundation
 import FirebaseDatabase.FIRDataSnapshot
 import Firebase
 
-class User {
+class User: NSObject {
     
     //MARK: - Properties
     
@@ -23,12 +23,27 @@ class User {
     
     init(uid: String){
         self.uid = uid
+        super.init()
     }
     
     init?(snapshot: DataSnapshot){
         guard let dic = snapshot.value as? [String: Any]
         else { return nil }
         self.uid = snapshot.key
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        guard let uid = aDecoder.decodeObject(forKey: "uid") as? String,
+            let userName = aDecoder.decodeObject(forKey: "userName") as? String,
+            let userEmail = aDecoder.decodeBool(forKey: "userEmail") as? String
+            else { return nil }
+        
+        self.uid = uid
+        self.userEmail = userEmail
+        self.userName = userName
+        
+        super.init()
     }
     
     //MARK: - Functions
@@ -39,8 +54,23 @@ class User {
         return currentUser
     }
     
-    static func setCurrent(_ user : User){
+    class func setCurrent (_ user: User, writeToUserDefaults : Bool = false){
+        if writeToUserDefaults{
+            let data = NSKeyedArchiver.archivedData(withRootObject: user)
+            UserDefaults.standard.set(data,forKey: "currentUser")
+        }
         current = user
     }
     
 }
+
+extension User: NSCoding {
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(uid, forKey: "uid")
+        aCoder.encode(userName, forKey: "userName")
+        aCoder.encode(userEmail, forKey: "userEmail")
+    }
+}
+
+
+

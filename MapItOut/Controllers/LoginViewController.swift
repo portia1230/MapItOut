@@ -25,10 +25,7 @@ class LoginViewController: UIViewController {
     //MARK: - Funtions
     
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
-        
-        if let current =  {
-            
-        } else {
+
         guard let authUI = FUIAuth.defaultAuthUI()
         else { return }
         
@@ -36,7 +33,7 @@ class LoginViewController: UIViewController {
         
         let authViewController = authUI.authViewController()
         present(authViewController, animated: true)
-        }
+        
     }
     
     //MARK: - Lifecycles
@@ -64,17 +61,14 @@ extension LoginViewController: FUIAuthDelegate {
         guard let user = user
             else { return }
         //redirect
-        let userRef = Database.database().reference().child("users").child(user.uid)
-        userRef.observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
-            if let user = User(snapshot: snapshot) {
-                User.setCurrent(user)
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: .main)
-                if let initialViewController = storyboard.instantiateInitialViewController() {
-                    self.view.window?.rootViewController = initialViewController
-                    self.view.window?.makeKeyAndVisible()
-                }
+        UserService.show(forUID: user.uid) { (user) in
+            if let user = user {
+                // handle existing user
+                User.setCurrent(user, writeToUserDefaults:  true)
+                let initialViewController = UIStoryboard.initialViewController(for: .main)
+                self.view.window?.rootViewController = initialViewController
+                self.view.window?.makeKeyAndVisible()
             }
-        })
+        }
     }
 }
