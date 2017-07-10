@@ -187,7 +187,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" showsSearchResultsButton="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K97-5h-1iw">
+                            <searchBar contentMode="redraw" placeholder="Search Location" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K97-5h-1iw">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.23302437365055084" green="0.28166684508323669" blue="0.6118505597114563" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -355,7 +355,7 @@
                         <outlet property="locationMapView" destination="6iq-9e-1lm" id="dYe-az-MmK"/>
                         <outlet property="photoImageView" destination="GDZ-ZW-Gtg" id="Qdq-2i-PGw"/>
                         <outlet property="searchBar" destination="K97-5h-1iw" id="NtA-di-hwx"/>
-                        <outlet property="searchDisplayController" destination="blc-bd-nTT" id="J91-D0-2yo"/>
+                        <outlet property="searchDisplayController" destination="MMj-g2-pw8" id="4ba-Yy-SlH"/>
                         <outlet property="uploadPhotoButton" destination="FWy-wM-bvG" id="vvv-mm-8rO"/>
                     </connections>
                 </viewController>
@@ -367,6 +367,14 @@
                         <outlet property="searchContentsController" destination="VHa-0p-uIy" id="VIF-MJ-mjn"/>
                         <outlet property="searchResultsDataSource" destination="VHa-0p-uIy" id="Qpv-jC-iJ8"/>
                         <outlet property="searchResultsDelegate" destination="VHa-0p-uIy" id="kCs-S0-lTJ"/>
+                    </connections>
+                </searchDisplayController>
+                <searchDisplayController id="MMj-g2-pw8">
+                    <connections>
+                        <outlet property="delegate" destination="VHa-0p-uIy" id="3QL-pZ-6Xe"/>
+                        <outlet property="searchContentsController" destination="VHa-0p-uIy" id="KIJ-DH-KxI"/>
+                        <outlet property="searchResultsDataSource" destination="VHa-0p-uIy" id="ToB-jJ-wvR"/>
+                        <outlet property="searchResultsDelegate" destination="VHa-0p-uIy" id="uJz-4O-QyX"/>
                     </connections>
                 </searchDisplayController>
             </objects>

@@ -26,6 +26,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate{
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    let locationManager = CLLocationManager()
     
     //MARK: - Lifecycles
     
@@ -40,6 +41,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate{
         searchBar.layer.borderColor = blueColor.cgColor
         locationMapView.showsUserLocation = true
         locationMapView.delegate = self
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestLocation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,8 +64,29 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate{
         }
     }
     
-    
-    
-    
-    
 }
+
+extension AddEntryViewController : CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let region = MKCoordinateRegion(center: location.coordinate, span: span)
+            locationMapView.setRegion(region, animated: true)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("error:: (error)")
+    }
+}
+
+
+
+
+
