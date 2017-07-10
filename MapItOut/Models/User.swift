@@ -36,7 +36,7 @@ class User: NSObject {
     required init?(coder aDecoder: NSCoder) {
         guard let uid = aDecoder.decodeObject(forKey: "uid") as? String,
             let userName = aDecoder.decodeObject(forKey: "userName") as? String,
-            let userEmail = aDecoder.decodeBool(forKey: "userEmail") as? String
+            let userEmail = aDecoder.decodeObject(forKey: "userEmail") as? String
             else { return nil }
         
         self.uid = uid
