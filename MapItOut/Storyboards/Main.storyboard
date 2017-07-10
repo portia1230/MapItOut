@@ -123,6 +123,10 @@
                                                 <constraint firstItem="sD7-LF-Tl9" firstAttribute="leading" secondItem="JX7-Nj-aTb" secondAttribute="trailing" constant="26" id="xrI-qi-GEf"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contactButton" destination="mbg-PB-iEq" id="O0k-fE-uGv"/>
+                                            <outlet property="photoImageView" destination="JX7-Nj-aTb" id="Elb-RU-7zm"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

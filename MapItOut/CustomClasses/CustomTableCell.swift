@@ -10,5 +10,14 @@ import Foundation
 import UIKit
 
 class CustomTableCell : UITableViewCell {
+
     
+    @IBOutlet weak var contactButton: UIButton!
+    @IBOutlet weak var photoImageView: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        photoImageView.layer.cornerRadius = 35
+        contactButton.layer.cornerRadius = 15
+    }
 }

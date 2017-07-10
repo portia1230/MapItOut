@@ -17,6 +17,7 @@ class User: NSObject {
     let uid: String
     var userName: String = ""
     var userEmail: String = ""
+    var entries: [Entry] = []
     private static var current: User?
     
     //MARK: - Init
