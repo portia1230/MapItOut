@@ -19,8 +19,6 @@
 		83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7E1F1359A4002EEE74 /* EntryService.swift */; };
 		837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938931F136CE1003B4B34 /* AddEntryViewController.swift */; };
 		837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938951F137213003B4B34 /* MGPhotoHelper.swift */; };
-		837A7B8F1F13F8D6005621CF /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837A7B8E1F13F8D6005621CF /* LocationSearchViewController.swift */; };
-		83BD84141F1403D600DBC472 /* NavBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD84131F1403D600DBC472 /* NavBackground.png */; };
 		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
@@ -44,10 +42,8 @@
 		83533A7A1F134CC5002EEE74 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = Models/Entry.swift; sourceTree = "<group>"; };
 		83533A7C1F135272002EEE74 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = Services/StorageService.swift; sourceTree = "<group>"; };
 		83533A7E1F1359A4002EEE74 /* EntryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntryService.swift; path = Services/EntryService.swift; sourceTree = "<group>"; };
-		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; };
 		837938951F137213003B4B34 /* MGPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGPhotoHelper.swift; path = Helpers/MGPhotoHelper.swift; sourceTree = "<group>"; };
-		837A7B8E1F13F8D6005621CF /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationSearchViewController.swift; path = Controllers/LocationSearchViewController.swift; sourceTree = "<group>"; };
-		83BD84131F1403D600DBC472 /* NavBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NavBackground.png; path = Arts/NavBackground.png; sourceTree = "<group>"; };
 		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
 		83D529761F12F38800ED4EEE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		83D529791F12FCAD00ED4EEE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
@@ -154,7 +150,6 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
-				83BD84131F1403D600DBC472 /* NavBackground.png */,
 				83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */,
 				83533A6F1F133F64002EEE74 /* plusImage.png */,
 				83533A6D1F133EA1002EEE74 /* whiteGearImage.png */,
@@ -188,7 +183,6 @@
 				83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */,
 				83533A711F1340C7002EEE74 /* MainViewController.swift */,
 				837938931F136CE1003B4B34 /* AddEntryViewController.swift */,
-				837A7B8E1F13F8D6005621CF /* LocationSearchViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -282,7 +276,6 @@
 				83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */,
 				83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */,
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
-				83BD84141F1403D600DBC472 /* NavBackground.png in Resources */,
 				83533A6E1F133EA1002EEE74 /* whiteGearImage.png in Resources */,
 				83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */,
 				83E4CB2A1F12EB5800EDDD91 /* LaunchScreen.storyboard in Resources */,
@@ -352,7 +345,6 @@
 				83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */,
 				83533A761F134706002EEE74 /* CustomTableCell.swift in Sources */,
 				83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */,
-				837A7B8F1F13F8D6005621CF /* LocationSearchViewController.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
 				83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
