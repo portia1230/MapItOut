@@ -17,9 +17,25 @@ class AddEntryViewController: UIViewController{
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var addContactButton: UIButton!
     
+    
+//MARK: - Lifecycles
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         photoImageView.layer.cornerRadius = 77.5
         uploadPhotoButton.layer.cornerRadius = 77.5
     }
+    
+    
+    @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
+        photoHelper.presentActionSheet(from: self)
+        photoHelper.completionHandler = { image in
+            self.photoImageView.image = image
+        }
+    }
+    
+    
+    
+
+    
 }
