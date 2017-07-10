@@ -141,7 +141,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true) { 
+        
+        self.dismiss(animated: true) { 
         }
     }
     

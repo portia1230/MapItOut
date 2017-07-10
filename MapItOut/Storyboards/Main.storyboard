@@ -126,7 +126,7 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="plusImage.png"/>
                                         <connections>
-                                            <segue destination="VHa-0p-uIy" kind="show" id="ea7-6p-nx3"/>
+                                            <segue destination="VHa-0p-uIy" kind="presentation" id="AKo-CL-P34"/>
                                         </connections>
                                     </button>
                                 </subviews>
