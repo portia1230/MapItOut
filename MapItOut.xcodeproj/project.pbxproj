@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D3C6C22B3595DABB6C7C8D6 /* Pods_MapItOut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */; };
 		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
+		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */; };
 		83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */; };
 		83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB1D1F12EA5D00EDDD91 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
+		83D529761F12F38800ED4EEE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		83E4CB101F12EA5D00EDDD91 /* MapItOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapItOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83E4CB1B1F12EA5D00EDDD91 /* MapItOut.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MapItOut.xcdatamodel; sourceTree = "<group>"; };
@@ -57,10 +59,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		83D529751F12F36700ED4EEE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				83D529761F12F38800ED4EEE /* User.swift */,
+			);
+			name = Models;
+			path = MapItOut;
+			sourceTree = "<group>";
+		};
 		83E4CB071F12EA5D00EDDD91 = {
 			isa = PBXGroup;
 			children = (
 				83E4CB121F12EA5D00EDDD91 /* MapItOut */,
+				83D529751F12F36700ED4EEE /* Models */,
 				83E4CB111F12EA5D00EDDD91 /* Products */,
 				A3D4E72469DA465EAB0999B0 /* Pods */,
 				45EFBCED8911ABCC28A0ED22 /* Frameworks */,
@@ -253,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83D529771F12F38800ED4EEE /* User.swift in Sources */,
 				83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
 				83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */,
