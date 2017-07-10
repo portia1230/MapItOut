@@ -16,6 +16,7 @@
 		83533A761F134706002EEE74 /* CustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A751F134706002EEE74 /* CustomTableCell.swift */; };
 		83533A791F134B6A002EEE74 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A781F134B6A002EEE74 /* CustomTableView.swift */; };
 		83533A7B1F134CC5002EEE74 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7A1F134CC5002EEE74 /* Entry.swift */; };
+		83533A7D1F135272002EEE74 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7C1F135272002EEE74 /* StorageService.swift */; };
 		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
@@ -38,6 +39,7 @@
 		83533A751F134706002EEE74 /* CustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTableCell.swift; path = CustomClasses/CustomTableCell.swift; sourceTree = "<group>"; };
 		83533A781F134B6A002EEE74 /* CustomTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTableView.swift; path = CustomClasses/CustomTableView.swift; sourceTree = "<group>"; };
 		83533A7A1F134CC5002EEE74 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = Models/Entry.swift; sourceTree = "<group>"; };
+		83533A7C1F135272002EEE74 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = Services/StorageService.swift; sourceTree = "<group>"; };
 		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
 		83D529761F12F38800ED4EEE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		83D529791F12FCAD00ED4EEE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				83D529791F12FCAD00ED4EEE /* UserService.swift */,
+				83533A7C1F135272002EEE74 /* StorageService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				83533A791F134B6A002EEE74 /* CustomTableView.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
+				83533A7D1F135272002EEE74 /* StorageService.swift in Sources */,
 				83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

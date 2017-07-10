@@ -12,6 +12,8 @@ import FirebaseDatabase
 
 struct UserService {
     
+    static func addEntry(_ firUer: FIRUser, )
+    
     
     
     //Create user
