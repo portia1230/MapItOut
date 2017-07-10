@@ -12,10 +12,6 @@ import FirebaseDatabase
 
 struct UserService {
     
-    static func addEntry(_ firUer: FIRUser, )
-    
-    
-    
     //Create user
     static func create(_ firUser: FIRUser, name: String, email: String, completion: @escaping (User?) -> Void) {
         let data = [

@@ -9,25 +9,32 @@
 import Foundation
 import UIKit
 import MapKit
+import FirebaseDatabase.FIRDataSnapshot
 
-class Entry : User {
+class Entry {
+    var key: String?
     var name: String
     var location: CLLocationCoordinate2D
     var relationship: String
     var imageURL: String
     var number: String
+    var dictValue: [String : Any]{
+        return ["name": name,
+                "location": location,
+                "relationship": relationship,
+                "imageURL": imageURL,
+                "number": number]
+    }
     
-    init( uid: String, name: String, location: CLLocationCoordinate2D, relationship: String, imageURL: String, number: String) {
+    init( name: String, location: CLLocationCoordinate2D, relationship: String, imageURL: String, number: String) {
         self.name = name
         self.location = location
         self.relationship = relationship
         self.imageURL = imageURL
         self.number = number
-        super.init(uid: uid)
     }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
+    
     
 }
 
