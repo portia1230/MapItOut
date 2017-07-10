@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 import FirebaseAuthUI
 import Firebase
 
@@ -15,12 +16,14 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var locationManager: CLLocationManager?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         configureInitialRootViewController(for: window)
+        locationManager = CLLocationManager()
+        locationManager?.requestWhenInUseAuthorization()
         return true
 
     }
