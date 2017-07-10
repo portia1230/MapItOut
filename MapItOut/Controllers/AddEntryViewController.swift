@@ -27,11 +27,23 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate{
         return .lightContent
     }
     let locationManager = CLLocationManager()
+    var resultSearchController:UISearchController? = nil
     
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationMapView.delegate = self
+        locationManager.delegate = self
+        
+        let locationSearchTable = storyboard!.instantiateViewController(withIdentifier: "LocationSearchViewController") as! LocationSearchViewController
+        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
+        resultSearchController?.searchResultsUpdater = locationSearchTable
+        
+        searchBar = resultSearchController!.searchBar
+        searchBar.sizeToFit()
+        navigationItem.titleView = resultSearchController?.searchBar
+        
         locationMapView.tintColor = blueColor
         photoImageView.layer.cornerRadius = 77.5
         uploadPhotoButton.layer.cornerRadius = 77.5
@@ -40,11 +52,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate{
         searchBar.layer.backgroundColor = blueColor.cgColor
         searchBar.layer.borderColor = blueColor.cgColor
         locationMapView.showsUserLocation = true
-        locationMapView.delegate = self
-        
-        locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestLocation()
+        
+        resultSearchController?.hidesNavigationBarDuringPresentation = false
+        resultSearchController?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -85,8 +98,5 @@ extension AddEntryViewController : CLLocationManagerDelegate {
         print("error:: (error)")
     }
 }
-
-
-
 
 
