@@ -25,6 +25,10 @@ class LoginViewController: UIViewController {
     //MARK: - Funtions
     
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
+        
+        if let current =  {
+            
+        } else {
         guard let authUI = FUIAuth.defaultAuthUI()
         else { return }
         
@@ -32,6 +36,7 @@ class LoginViewController: UIViewController {
         
         let authViewController = authUI.authViewController()
         present(authViewController, animated: true)
+        }
     }
     
     //MARK: - Lifecycles
@@ -51,38 +56,25 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: FUIAuthDelegate {
     func authUI(_ authUI: FUIAuth, didSignInWith user: FIRUser?, error: Error?) {
+        //report error
         if let error = error {
             assertionFailure("Error signing in: \(error.localizedDescription)")
-            return
         }
+        // check to see whether user had been authorized
         guard let user = user
             else { return }
-        
-        //assigning name to model user
-        
-//        let userRef = Database.database().reference().child("users").child(user.uid)
-//        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//            
-//            let name = ["name" : user.displayName]
-//            let email = ["email" : user.email]
-//            userRef.setValue(name) { (error, userRef) in
-//                if let error = error {
-//                    assertionFailure(error.localizedDescription)
-//                    return
-//                }
-//            }
-//            userRef.setValue(email) { (error, userRef) in
-//                if let error = error {
-//                    assertionFailure(error.localizedDescription)
-//                    return
-//                }
-//            }
-//            print("Welcome back, \(user.displayName!) \(user.email!).")
-//            
-//        })
-        UserService.create(user, name: user.displayName!, email: user.email!) { (user) in
-            guard let user = user else { return }
-        }
+        //redirect
+        let userRef = Database.database().reference().child("users").child(user.uid)
+        userRef.observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
+            if let user = User(snapshot: snapshot) {
+                User.setCurrent(user)
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                if let initialViewController = storyboard.instantiateInitialViewController() {
+                    self.view.window?.rootViewController = initialViewController
+                    self.view.window?.makeKeyAndVisible()
+                }
+            }
+        })
     }
 }
-

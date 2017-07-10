@@ -102,3 +102,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate{
+    func configureInitialRootViewController(for window: UIWindow?) {
+        if User.currentUser
+        
+        window?.rootViewController = initialViewController
+        window?.makeKeyAndVisible()
+    }
+}

@@ -15,8 +15,9 @@ class User {
     //MARK: - Properties
     
     let uid: String
-    var name: String = ""
-    var email: String = ""
+    var userName: String = ""
+    var userEmail: String = ""
+    private static var current: User?
     
     //MARK: - Init
     
@@ -28,6 +29,18 @@ class User {
         guard let dic = snapshot.value as? [String: Any]
         else { return nil }
         self.uid = snapshot.key
+    }
+    
+    //MARK: - Functions
+    static var currentUser: User{
+        guard let currentUser = current else {
+            fatalError("Error: Current user does not exist")
+        }
+        return currentUser
+    }
+    
+    static func setCurrent(_ user : User){
+        current = user
     }
     
 }
