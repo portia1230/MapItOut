@@ -12,6 +12,9 @@ import UIKit
 class CustomTableCell : UITableViewCell {
 
     
+    @IBOutlet weak var relationship: UILabel!
+    @IBOutlet weak var address: UILabel!
+    @IBOutlet weak var name: UILabel!
     @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
     

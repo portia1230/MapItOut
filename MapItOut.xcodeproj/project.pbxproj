@@ -39,6 +39,7 @@
 		83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB291F12EB5800EDDD91 /* Main.storyboard */; };
 		83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */; };
 		83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB351F12EC2600EDDD91 /* Icon.png */; };
+		83E8331C1F154ADB001B144B /* CustomTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8331B1F154ADB001B144B /* CustomTableTableViewController.swift */; };
 		83EC9DCD1F148BAD00AAC07B /* 200*274pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,7 @@
 		83E4CB291F12EB5800EDDD91 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Storyboards/Main.storyboard; sourceTree = "<group>"; };
 		83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
 		83E4CB351F12EC2600EDDD91 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Arts/Icon.png; sourceTree = "<group>"; };
+		83E8331B1F154ADB001B144B /* CustomTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTableTableViewController.swift; path = CustomClasses/CustomTableTableViewController.swift; sourceTree = "<group>"; };
 		83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "200*274pin.png"; path = "Arts/200*274pin.png"; sourceTree = "<group>"; };
 		A3FBD0AC450289A1FC033061 /* Pods-MapItOut.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapItOut.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapItOut/Pods-MapItOut.debug.xcconfig"; sourceTree = "<group>"; };
 		DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapItOut.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				83533A751F134706002EEE74 /* CustomTableCell.swift */,
+				83E8331B1F154ADB001B144B /* CustomTableTableViewController.swift */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
 				83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */,
+				83E8331C1F154ADB001B144B /* CustomTableTableViewController.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
 				832C70781F15350A00E213F4 /* StorageReference.swift in Sources */,
 				837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */,

@@ -54,6 +54,9 @@
                                             <constraint firstAttribute="width" constant="25" id="PUT-kV-Gj3"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="List icon.png"/>
+                                        <connections>
+                                            <segue destination="k6n-Q1-GIX" kind="presentation" id="Rud-zq-0A9"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -174,10 +177,10 @@
             </objects>
             <point key="canvasLocation" x="671.20000000000005" y="-384.55772113943033"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Custom Table Table View Controller-->
         <scene sceneID="JuR-OH-2bD">
             <objects>
-                <tableViewController id="k6n-Q1-GIX" sceneMemberID="viewController">
+                <tableViewController id="k6n-Q1-GIX" customClass="CustomTableTableViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wz5-6C-v37">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,8 +255,11 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="address" destination="KYB-na-Tq2" id="vuf-dv-4fW"/>
                                     <outlet property="contactButton" destination="wki-ju-jyu" id="D3Y-u9-ujI"/>
+                                    <outlet property="name" destination="bqA-h5-23K" id="HsX-MD-aE2"/>
                                     <outlet property="photoImageView" destination="zod-0p-AMq" id="DQM-IE-oOv"/>
+                                    <outlet property="relationship" destination="9LM-6P-ZUa" id="lXg-Uw-1WI"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -265,7 +271,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Umg-GD-QfB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="651" y="319"/>
+            <point key="canvasLocation" x="671" y="398"/>
         </scene>
         <!--Add Entry View Controller-->
         <scene sceneID="1jl-VQ-fQe">
@@ -607,7 +613,7 @@
                     </view>
                     <connections>
                         <outlet property="addContactButton" destination="zsB-ZT-4z8" id="qJa-nA-wee"/>
-                        <outlet property="emailTextField" destination="bVH-mN-e7d" id="zGH-2r-icn"/>
+                        <outlet property="emailTextField" destination="bVH-mN-e7d" id="1QL-vW-Kc4"/>
                         <outlet property="firstNameTextField" destination="LvL-CK-cVq" id="qmr-mx-dQy"/>
                         <outlet property="lastNameTextField" destination="yNx-9e-Gac" id="IBQ-ef-8T4"/>
                         <outlet property="locationLabel" destination="888-kb-apx" id="f4S-fV-bXC"/>
