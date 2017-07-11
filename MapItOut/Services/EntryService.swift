@@ -14,20 +14,24 @@ import FirebaseStorage
 struct EntryService{
     
     static func addEntry(entry: Entry){
-        User.currentUser.entries.append(entry)
-
         let currentUser = User.currentUser
-        let entry = Entry(firstName: entry.firstName, lastName: entry.lastName, location: entry.location, relationship: entry.relationship, imageURL: entry.imageURL, number: entry.number, email: entry.email)
-        let dict = entry.dictValue
         let entryRef = Database.database().reference().child("Entries").child(currentUser.uid).childByAutoId()
-        entryRef.updateChildValues(dict)
+        let newKey = entryRef.key
+        let newEntry = Entry(firstName: entry.firstName, lastName: entry.lastName, longitude: entry.longitude, latitude: entry.latitude, relationship: entry.relationship, imageURL: entry.imageURL, number: entry.number, email: entry.email, key: newKey)
+        
+        User.currentUser.entries.append(newEntry)
+        
+        let dict = newEntry.dictValue
+        
+        entryRef.setValue(dict)
+        
     }
     
     static func deleteEntry(entry: Entry, index: Int){
         User.currentUser.entries.remove(at: index)
         let currentUser = User.currentUser
         //let dict = entry.dictValue
-        let entryRef = Database.database().reference().child("Entries").child(currentUser.uid).childByAutoId().child(entry.key!)
+        let entryRef = Database.database().reference().child("Entries").child(currentUser.uid).childByAutoId().child(entry.key)
         entryRef.removeValue()
     }
     

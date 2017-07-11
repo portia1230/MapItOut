@@ -62,9 +62,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         //dismiss keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         var swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        var swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        swipeUp.direction = UISwipeGestureRecognizerDirection.up
         view.addGestureRecognizer(tap)
         view.addGestureRecognizer(swipeDown)
+        view.addGestureRecognizer(swipeUp)
         
         //testing only to preset location to current
         self.location = getLocation(manager: locationManager)
@@ -187,7 +190,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 
                 let urlString = downloadURL.absoluteString
                 
-                var entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, location: self.locationMapView.annotations[0].coordinate, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!)
+                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.locationMapView.annotations[0].coordinate.longitude, latitude: self.locationMapView.annotations[0].coordinate.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "")
                 EntryService.addEntry(entry: entry)
                 self.dismiss(animated: true) {
                 }

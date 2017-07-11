@@ -12,10 +12,11 @@ import MapKit
 import FirebaseDatabase.FIRDataSnapshot
 
 class Entry {
-    var key: String?
+    var key: String
     var firstName: String
     var lastName: String
-    var location: CLLocationCoordinate2D
+    var longitude: CLLocationDegrees
+    var latitude: CLLocationDegrees
     var relationship: String
     var imageURL: String
     var number: String
@@ -23,21 +24,25 @@ class Entry {
     var dictValue: [String : Any]{
         return ["firstName": firstName,
                 "lastName": lastName,
-                "location": location,
+                "longitude": longitude,
+                "latitude": latitude,
                 "relationship": relationship,
                 "imageURL": imageURL,
                 "number": number,
-                "email": email  ]
+                "email": email,
+                "key": key]
     }
     
-    init( firstName: String, lastName: String, location: CLLocationCoordinate2D, relationship: String, imageURL: String, number: String, email: String) {
+    init( firstName: String, lastName: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, relationship: String, imageURL: String, number: String, email: String, key: String) {
         self.firstName = firstName
         self.lastName = lastName
-        self.location = location
+        self.longitude = longitude
+        self.latitude = latitude
         self.relationship = relationship
         self.imageURL = imageURL
         self.number = number
         self.email = email
+        self.key = key
     }
     
     
