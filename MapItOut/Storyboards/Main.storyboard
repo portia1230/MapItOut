@@ -426,11 +426,11 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGh-8d-Hdd">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykw-Z0-eR7">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykw-Z0-eR7">
                                                         <rect key="frame" x="21" y="32" width="73" height="29"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="29" id="gI6-9V-ukg"/>
-                                                            <constraint firstAttribute="width" constant="73" id="s3b-Mz-9Pg"/>
+                                                            <constraint firstAttribute="width" constant="73" id="MvR-Km-wrf"/>
+                                                            <constraint firstAttribute="height" constant="29" id="mqE-c2-Pxp"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="19"/>
                                                         <state key="normal" title="Cancel">
@@ -440,11 +440,11 @@
                                                             <action selector="cancelButtonTapped:" destination="VHa-0p-uIy" eventType="touchUpInside" id="hx4-W8-zz8"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Add Contact" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0X-JC-txh">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Contact" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0X-JC-txh">
                                                         <rect key="frame" x="124" y="35" width="128" height="24"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="24" id="HPU-21-oJH"/>
-                                                            <constraint firstAttribute="width" constant="128" id="OPT-3E-jKr"/>
+                                                            <constraint firstAttribute="height" constant="24" id="Jm7-3R-vsi"/>
+                                                            <constraint firstAttribute="width" constant="128" id="L5j-9h-Wih"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="19"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -454,6 +454,10 @@
                                                 <color key="backgroundColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
+                                                    <constraint firstItem="n0X-JC-txh" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="35" id="9Et-Bs-XPR"/>
+                                                    <constraint firstItem="n0X-JC-txh" firstAttribute="centerX" secondItem="YGh-8d-Hdd" secondAttribute="centerX" id="jDT-WX-c8e"/>
+                                                    <constraint firstItem="Ykw-Z0-eR7" firstAttribute="leading" secondItem="YGh-8d-Hdd" secondAttribute="leading" constant="21" id="oze-7f-G7v"/>
+                                                    <constraint firstItem="Ykw-Z0-eR7" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="32" id="sq1-dO-OhX"/>
                                                     <constraint firstAttribute="height" constant="65" id="xWg-E5-1Ww"/>
                                                 </constraints>
                                             </view>
@@ -489,7 +493,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsB-ZT-4z8">
-                                                <rect key="frame" x="62.5" y="910" width="250" height="40"/>
+                                                <rect key="frame" x="63" y="910" width="250" height="40"/>
                                                 <color key="backgroundColor" red="0.25203916430000001" green="0.7691936493" blue="0.5019900799" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="SnD-OC-441"/>
