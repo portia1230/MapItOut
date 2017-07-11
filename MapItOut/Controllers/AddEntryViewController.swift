@@ -13,7 +13,7 @@ import AddressBookUI
 import FirebaseStorage
 import FirebaseDatabase
 
-class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate{
+class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITextFieldDelegate{
     
     //MARK: - Properties
     
@@ -59,6 +59,18 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         addContactButton.layer.cornerRadius = 15
         locationMapView.showsUserLocation = true
         
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        relationshipTextField.delegate = self
+        phoneTextField.delegate = self
+        emailTextField.delegate = self
+        
+        firstNameTextField.tag = 0
+        lastNameTextField.tag = 1
+        relationshipTextField.tag = 2
+        phoneTextField.tag = 3
+        emailTextField.tag = 4
+        
         //dismiss keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         var swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -91,6 +103,19 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     
     
     //MARK: - Functions
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextTextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextTextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
+    }
     
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         var trimmed = ""

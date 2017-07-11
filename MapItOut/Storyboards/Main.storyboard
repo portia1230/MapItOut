@@ -54,6 +54,9 @@
                                             <constraint firstAttribute="width" constant="25" id="PUT-kV-Gj3"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="List icon.png"/>
+                                        <connections>
+                                            <segue destination="k6n-Q1-GIX" kind="presentation" id="gsA-Z3-u9Y"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -268,7 +271,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Umg-GD-QfB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="651" y="319"/>
+            <point key="canvasLocation" x="671" y="358"/>
         </scene>
         <!--Add Entry View Controller-->
         <scene sceneID="1jl-VQ-fQe">
@@ -409,7 +412,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contact's First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LvL-CK-cVq">
                                         <rect key="frame" x="151" y="284" width="219" height="33"/>
@@ -418,7 +421,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contact's Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yNx-9e-Gac">
                                         <rect key="frame" x="151" y="325" width="219" height="33"/>
@@ -427,7 +430,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Relationship with you" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aKB-qw-nmK">
                                         <rect key="frame" x="151" y="366" width="219" height="30"/>
@@ -436,7 +439,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2JX-Kh-yRr">
                                         <rect key="frame" x="0.0" y="521" width="375" height="1"/>
@@ -617,7 +620,7 @@
                         <outlet property="locationMapView" destination="JiW-Di-Jum" id="V8C-av-dVH"/>
                         <outlet property="phoneTextField" destination="hsB-RU-xgA" id="tNK-X8-Yg9"/>
                         <outlet property="photoImageView" destination="Qdj-ZV-Nk3" id="YYy-3Y-fvi"/>
-                        <outlet property="relationshipTextField" destination="hsB-RU-xgA" id="lMw-5s-xdd"/>
+                        <outlet property="relationshipTextField" destination="aKB-qw-nmK" id="B31-dt-0M2"/>
                         <outlet property="searchBar" destination="98K-1u-2Yf" id="Hmh-Zx-fE8"/>
                         <outlet property="uploadPhotoButton" destination="hIq-Lk-LqR" id="YNe-tQ-j5X"/>
                     </connections>

@@ -16,7 +16,7 @@ struct EntryService{
     static func addEntry(entry: Entry){
         let currentUser = User.currentUser
         let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
-        let userRef = Database.database().reference().child("Users").child("Contacts")
+        let userRef = Database.database().reference().child("Users").child(currentUser.uid).child("Contacts")
         let newKey = entryRef.key
         let newEntry = Entry(firstName: entry.firstName, lastName: entry.lastName, longitude: entry.longitude, latitude: entry.latitude, relationship: entry.relationship, imageURL: entry.imageURL, number: entry.number, email: entry.email, key: newKey)
         

@@ -18,7 +18,7 @@ class CustomTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let ref = Database.database().reference().child("Users").child((Auth.auth().currentUser?.uid)!)
+        let ref = Database.database().reference().child("Users").child(User.currentUser.uid)
         self.keys = ref.value(forKey: "Contacts") as! [String]
 
         // Uncomment the following line to preserve selection between presentations
@@ -57,6 +57,8 @@ class CustomTableViewController: UITableViewController {
         cell.addressLabel.text = contactInfo["address"] as! String
         cell.nameLabel.text = contactInfo["name"] as? String
         cell.relationshipLabel.text = contactInfo["relationship"] as? String
+        
+        
         return cell
     }
 
