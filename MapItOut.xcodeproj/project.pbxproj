@@ -19,6 +19,8 @@
 		83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7E1F1359A4002EEE74 /* EntryService.swift */; };
 		837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938931F136CE1003B4B34 /* AddEntryViewController.swift */; };
 		837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938951F137213003B4B34 /* MGPhotoHelper.swift */; };
+		839DF3B51F147E1C0029D556 /* ImagePin.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DF3B31F147E1C0029D556 /* ImagePin.png */; };
+		839DF3B81F147E250029D556 /* redPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DF3B71F147E250029D556 /* redPin.png */; };
 		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
@@ -30,6 +32,7 @@
 		83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB291F12EB5800EDDD91 /* Main.storyboard */; };
 		83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */; };
 		83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB351F12EC2600EDDD91 /* Icon.png */; };
+		83EC9DCD1F148BAD00AAC07B /* 200*274pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,8 @@
 		83533A7E1F1359A4002EEE74 /* EntryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntryService.swift; path = Services/EntryService.swift; sourceTree = "<group>"; };
 		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; };
 		837938951F137213003B4B34 /* MGPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGPhotoHelper.swift; path = Helpers/MGPhotoHelper.swift; sourceTree = "<group>"; };
+		839DF3B31F147E1C0029D556 /* ImagePin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ImagePin.png; path = Arts/ImagePin.png; sourceTree = "<group>"; };
+		839DF3B71F147E250029D556 /* redPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redPin.png; path = Arts/redPin.png; sourceTree = "<group>"; };
 		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
 		83D529761F12F38800ED4EEE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		83D529791F12FCAD00ED4EEE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
@@ -57,6 +62,7 @@
 		83E4CB291F12EB5800EDDD91 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Storyboards/Main.storyboard; sourceTree = "<group>"; };
 		83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
 		83E4CB351F12EC2600EDDD91 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Arts/Icon.png; sourceTree = "<group>"; };
+		83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "200*274pin.png"; path = "Arts/200*274pin.png"; sourceTree = "<group>"; };
 		A3FBD0AC450289A1FC033061 /* Pods-MapItOut.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapItOut.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapItOut/Pods-MapItOut.debug.xcconfig"; sourceTree = "<group>"; };
 		DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapItOut.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29DB4B985B7F3B640591B87 /* Pods-MapItOut.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapItOut.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapItOut/Pods-MapItOut.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +156,9 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
+				83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */,
+				839DF3B71F147E250029D556 /* redPin.png */,
+				839DF3B31F147E1C0029D556 /* ImagePin.png */,
 				83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */,
 				83533A6F1F133F64002EEE74 /* plusImage.png */,
 				83533A6D1F133EA1002EEE74 /* whiteGearImage.png */,
@@ -274,11 +283,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */,
+				83EC9DCD1F148BAD00AAC07B /* 200*274pin.png in Resources */,
 				83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */,
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83533A6E1F133EA1002EEE74 /* whiteGearImage.png in Resources */,
 				83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */,
+				839DF3B81F147E250029D556 /* redPin.png in Resources */,
 				83E4CB2A1F12EB5800EDDD91 /* LaunchScreen.storyboard in Resources */,
+				839DF3B51F147E1C0029D556 /* ImagePin.png in Resources */,
 				83D5297D1F12FCFD00ED4EEE /* GoogleService-Info.plist in Resources */,
 				83533A701F133F64002EEE74 /* plusImage.png in Resources */,
 			);

@@ -54,8 +54,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         
         let coordinate = getLocation(manager: locationManager)
         reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
-  
-    
+        
+        
     }
     
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
@@ -75,7 +75,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         }
     }
     
-
+    
     
     override func viewDidAppear(_ animated: Bool) {
         //set region/zoom in for map
@@ -98,15 +98,15 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 let anno = MKPointAnnotation()
                 anno.coordinate = (placemark?.location?.coordinate)!
                 anno.title = self.searchBar.text!
+                
                 let annotations = self.locationMapView.annotations
-    
+                
                 //centering and clearing other annotations
                 let span = MKCoordinateSpanMake(0.075, 0.075)
                 let region = MKCoordinateRegion(center: anno.coordinate, span: span)
                 self.locationMapView.setRegion(region, animated: true)
                 self.locationMapView.removeAnnotations(annotations)
                 self.locationMapView.addAnnotation(anno)
-                
                 
             } else {
                 print(error?.localizedDescription ?? "error" )
@@ -128,8 +128,26 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         
-        self.dismiss(animated: true) { 
+        self.dismiss(animated: true) {
         }
     }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
+        if !(annotation is MKPointAnnotation){
+            return nil
+            print("Not registered as mkpointannotation")
+        }
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+        let pinImage = UIImage(named: "200*274pin")
+        
+        annotationView!.image = UIImage(cgImage: (pinImage?.cgImage)!, scale: 200/30, orientation: .up)
+        return annotationView
+        
+    }
 }
