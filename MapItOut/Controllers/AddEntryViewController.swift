@@ -69,7 +69,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 trimmed = address
             }
             trimmed = trimmed.replacingOccurrences(of: "\n", with: ", ")
-            self.locationLabel.text = "Lives near " + trimmed
+            self.locationLabel.text = trimmed
         }
     }
     
@@ -105,6 +105,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 self.locationMapView.setRegion(region, animated: true)
                 self.locationMapView.removeAnnotations(annotations)
                 self.locationMapView.addAnnotation(anno)
+                
+                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
                 
             } else {
                 print(error?.localizedDescription ?? "error" )
