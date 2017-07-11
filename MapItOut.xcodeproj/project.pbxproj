@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D3C6C22B3595DABB6C7C8D6 /* Pods_MapItOut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */; };
 		8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312E0021F13318A00AD0054 /* Storyboard+Utility.swift */; };
+		832C70781F15350A00E213F4 /* StorageReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C70771F15350A00E213F4 /* StorageReference.swift */; };
 		83533A6E1F133EA1002EEE74 /* whiteGearImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83533A6D1F133EA1002EEE74 /* whiteGearImage.png */; };
 		83533A701F133F64002EEE74 /* plusImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83533A6F1F133F64002EEE74 /* plusImage.png */; };
 		83533A721F1340C7002EEE74 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A711F1340C7002EEE74 /* MainViewController.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		8312E0021F13318A00AD0054 /* Storyboard+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Storyboard+Utility.swift"; path = "Extensions/Storyboard+Utility.swift"; sourceTree = "<group>"; };
+		832C70771F15350A00E213F4 /* StorageReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageReference.swift; path = Extensions/StorageReference.swift; sourceTree = "<group>"; };
 		83533A6D1F133EA1002EEE74 /* whiteGearImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteGearImage.png; path = Arts/whiteGearImage.png; sourceTree = "<group>"; };
 		83533A6F1F133F64002EEE74 /* plusImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plusImage.png; path = Arts/plusImage.png; sourceTree = "<group>"; };
 		83533A711F1340C7002EEE74 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Controllers/MainViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		8312E0011F13316600AD0054 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				832C70771F15350A00E213F4 /* StorageReference.swift */,
 				8312E0021F13318A00AD0054 /* Storyboard+Utility.swift */,
 			);
 			name = Extensions;
@@ -384,6 +387,7 @@
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
 				83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
+				832C70781F15350A00E213F4 /* StorageReference.swift in Sources */,
 				837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */,
 				83533A7D1F135272002EEE74 /* StorageService.swift in Sources */,
 				837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */,

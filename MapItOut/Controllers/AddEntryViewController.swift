@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import MapKit
 import AddressBookUI
+import FirebaseStorage
+import FirebaseDatabase
 
 class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate{
     
@@ -163,7 +165,20 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     }
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
-        var entry = Entry(firstName: firstNameTextField.text, lastName: lastNameTextField.text, location: locationMapView.annotations[0].coordinate, relationship: relationshipTextField.text, imageURL: , number: phoneTextField.text)
+        
+        
+        let imageRef = StorageReference.newPostImageReference()
+        StorageService.uploadImage(photoImageView.image!, at: imageRef) { (downloadURL) in
+            guard let downloadURL = downloadURL else {
+                return
+            }
+            
+            let urlString = downloadURL.absoluteString
+            
+            var entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, location: self.locationMapView.annotations[0].coordinate, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!)
+        }
+        
+//        var entry = Entry(firstName: firstNameTextField.text, lastName: lastNameTextField.text, location: locationMapView.annotations[0].coordinate, relationship: relationshipTextField.text, imageURL: urlString , number: phoneTextField.text)
     }
     
 }

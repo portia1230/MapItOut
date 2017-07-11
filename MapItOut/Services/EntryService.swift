@@ -17,7 +17,7 @@ struct EntryService{
         User.currentUser.entries.append(entry)
 
         let currentUser = User.currentUser
-        let entry = Entry(name: entry.name, location: entry.location, relationship: entry.relationship, imageURL: entry.imageURL, number: entry.number)
+        let entry = Entry(firstName: entry.firstName, lastName: entry.lastName, location: entry.location, relationship: entry.relationship, imageURL: entry.imageURL, number: entry.number, email: entry.email)
         let dict = entry.dictValue
         let entryRef = Database.database().reference().child("Entries").child(currentUser.uid).childByAutoId()
         entryRef.updateChildValues(dict)
