@@ -20,7 +20,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var addContactButton: UIButton!
-    @IBOutlet weak var contactInfoButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
     var location : CLLocationCoordinate2D!
     
@@ -40,7 +39,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         searchBar.delegate = self
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = false
-        contactInfoButton.layer.cornerRadius = 15
         locationMapView.tintColor = blueColor
         photoImageView.layer.cornerRadius = 77.5
         uploadPhotoButton.layer.cornerRadius = 77.5
