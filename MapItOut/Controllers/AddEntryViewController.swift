@@ -59,6 +59,13 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         addContactButton.layer.cornerRadius = 15
         locationMapView.showsUserLocation = true
         
+        //dismiss keyboard
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        var swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        view.addGestureRecognizer(tap)
+        view.addGestureRecognizer(swipeDown)
+        
         //testing only to preset location to current
         self.location = getLocation(manager: locationManager)
         //testing only to preset location to current
@@ -68,6 +75,19 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //set region/zoom in for map
+        let location = self.location
+        let coordinate = CLLocationCoordinate2DMake((location!.latitude), (location!.longitude))
+        let span = MKCoordinateSpanMake(0.1, 0.1)
+        let region = MKCoordinateRegionMake(coordinate, span)
+        locationMapView.setRegion(region, animated: false)
+    }
+    
+    
+    
+    //MARK: - Functions
     
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         var trimmed = ""
@@ -86,19 +106,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         }
     }
     
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //set region/zoom in for map
-        let location = self.location
-        let coordinate = CLLocationCoordinate2DMake((location!.latitude), (location!.longitude))
-        let span = MKCoordinateSpanMake(0.1, 0.1)
-        let region = MKCoordinateRegionMake(coordinate, span)
-        locationMapView.setRegion(region, animated: false)
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
-    
-    //MARK: - Functions
-    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -148,7 +158,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
         if !(annotation is MKPointAnnotation){
             return nil
-            print("Not registered as mkpointannotation")
         }
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
         if annotationView == nil {
@@ -165,9 +174,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     }
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
-        if let nameF = self.firstNameTextField.text,
-            let nameL = self.lastNameTextField.text {
-            
+        if self.firstNameTextField.text != "",
+            self.lastNameTextField.text != "" {
+            if photoImageView.image == nil {
+                photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
+            }
             let imageRef = StorageReference.newPostImageReference()
             StorageService.uploadImage(photoImageView.image!, at: imageRef) { (downloadURL) in
                 guard let downloadURL = downloadURL else {
@@ -184,8 +195,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         } else {
             
             let alertController = UIAlertController(title: "", message:
-                "Did you put a first name and last name?", preferredStyle: UIAlertControllerStyle.alert)
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+                "Did you put in a first name and last name?", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
             
