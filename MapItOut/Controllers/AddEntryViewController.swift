@@ -37,6 +37,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = false
         contactInfoButton.layer.cornerRadius = 15
@@ -45,11 +46,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         uploadPhotoButton.layer.cornerRadius = 77.5
         photoImageView.clipsToBounds = true
         addContactButton.layer.cornerRadius = 15
-        searchBar.layer.backgroundColor = blueColor.cgColor
-        searchBar.layer.borderColor = blueColor.cgColor
         locationMapView.showsUserLocation = true
         
-
         //testing only to preset location to current
         self.location = getLocation(manager: locationManager)
         //testing only to preset location to current
@@ -73,49 +71,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 trimmed = address
             }
             trimmed = trimmed.replacingOccurrences(of: "\n", with: ", ")
-            self.locationLabel.text = trimmed
+            self.locationLabel.text = "Lives near " + trimmed
         }
     }
     
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        //Ignore user
-        UIApplication.shared.beginIgnoringInteractionEvents()
-        //Activity Indicate
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.stopAnimating()
-        
-        self.view.addSubview(activityIndicator)
-        
-        //hide search bar
-        searchBar.resignFirstResponder()
-        dismiss(animated: true, completion:  nil)
-        
-        //create the search request
-        let searchRequest = MKLocalSearchRequest()
-        searchRequest.naturalLanguageQuery = searchBar.text
-        let activeSearch = MKLocalSearch(request: searchRequest)
-        activeSearch.start{ (response, error) in
-            if response == nil{
-                print(error as Any)
-            } else {
-                //remove existing location annotation
-                let annotations = self.locationMapView.annotations
-                self.locationMapView.removeAnnotations(annotations)
-                //getting data
-                let latitude = response?.boundingRegion.center.latitude
-                let longitude = response?.boundingRegion.center.longitude
-                //creating annotation
-                let annotaion = MKPointAnnotation()
-                annotaion.coordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
-                self.locationMapView.addAnnotation(annotaion)
-            }
-        }
-        
-    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         //set region/zoom in for map
@@ -123,10 +83,36 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         let coordinate = CLLocationCoordinate2DMake((location!.latitude), (location!.longitude))
         let span = MKCoordinateSpanMake(0.1, 0.1)
         let region = MKCoordinateRegionMake(coordinate, span)
-        locationMapView.setRegion(region, animated: true)
+        locationMapView.setRegion(region, animated: false)
     }
     
     //MARK: - Functions
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(searchBar.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+            if error == nil{
+                let placemark = placemarks?.first
+                let anno = MKPointAnnotation()
+                anno.coordinate = (placemark?.location?.coordinate)!
+                anno.title = self.searchBar.text!
+                let annotations = self.locationMapView.annotations
+    
+                //centering and clearing other annotations
+                let span = MKCoordinateSpanMake(0.075, 0.075)
+                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                self.locationMapView.setRegion(region, animated: true)
+                self.locationMapView.removeAnnotations(annotations)
+                self.locationMapView.addAnnotation(anno)
+                
+                
+            } else {
+                print(error?.localizedDescription ?? "error" )
+            }
+        }
+    }
     
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
         photoHelper.presentActionSheet(from: self)
@@ -145,6 +131,5 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         self.dismiss(animated: true) { 
         }
     }
-    
     
 }
