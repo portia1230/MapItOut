@@ -24,6 +24,9 @@ class MainViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //fititng the photo
+        contactImage.layer.cornerRadius = 35
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
     }
