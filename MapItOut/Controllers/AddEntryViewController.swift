@@ -13,7 +13,7 @@ import AddressBookUI
 import FirebaseStorage
 import FirebaseDatabase
 
-class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITextFieldDelegate{
+class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate{
     
     //MARK: - Properties
     
@@ -44,17 +44,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     @IBOutlet weak var emailTextField: UITextField!
     
     
+    
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
-        relationshipTextField.delegate = self
-        phoneTextField.delegate = self
-        emailTextField.delegate = self
-        
         searchBar.delegate = self
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = false
@@ -82,11 +76,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         let coordinate = getLocation(manager: locationManager)
         reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
-        self.firstNameTextField.tag = 0
-        self.lastNameTextField.tag = 1
-        self.relationshipTextField.tag = 2
-        self.phoneTextField.tag = 3
-        self.emailTextField.tag = 4
         
     }
     
@@ -99,19 +88,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         locationMapView.setRegion(region, animated: false)
     }
     
-    //MARK: - Functions
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
-        //find next responder
-        if let textField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
-            textField.becomeFirstResponder()
-        } else {
-            //dimiss current keyboard
-            textField.resignFirstResponder()
-        }
-        return false
-    }
+    
+    //MARK: - Functions
     
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         var trimmed = ""

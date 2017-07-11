@@ -18,9 +18,10 @@ struct UserService {
             "username": name,
             "userEmail": email
         ]
+        
         print("\(name) \(email)")
         
-        let ref = Database.database().reference().child("Users").child(firUser.uid)
+        let ref = Database.database().reference().child("users").child(firUser.uid)
         
         ref.setValue(data) { (error, ref) in
             if let error = error {
