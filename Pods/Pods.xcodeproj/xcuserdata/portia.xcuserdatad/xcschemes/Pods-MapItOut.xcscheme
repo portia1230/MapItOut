@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0830"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C815793F55B5245E494247B83D023E96"
+               BlueprintIdentifier = "3F8D82E93FE3FAD700700D7BF616219A"
                BuildableName = "Pods_MapItOut.framework"
                BlueprintName = "Pods-MapItOut"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C815793F55B5245E494247B83D023E96"
+            BlueprintIdentifier = "3F8D82E93FE3FAD700700D7BF616219A"
             BuildableName = "Pods_MapItOut.framework"
             BlueprintName = "Pods-MapItOut"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C815793F55B5245E494247B83D023E96"
-            BuildableName = "Pods_MapItOut.framework"
-            BlueprintName = "Pods-MapItOut"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

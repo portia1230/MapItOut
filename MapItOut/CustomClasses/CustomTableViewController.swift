@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuthUI
+import Kingfisher
 
 class CustomTableViewController: UITableViewController {
 
+    var keys : [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let ref = Database.database().reference().child("Users").child((Auth.auth().currentUser?.uid)!)
+        self.keys = ref.value(forKey: "Contacts") as! [String]
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -38,15 +45,20 @@ class CustomTableViewController: UITableViewController {
         return 0
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as! CustomTableCell
+        
+        
+        let ref = Database.database().reference().child("Contacts")
+        let contactInfo = ref.value(forKey: keys[indexPath.row]) as!  [String : Any]
+        
+        let imageURL = URL(string: contactInfo["imageURL"] as! String)
+        cell.photoImageView.kf.setImage(with: imageURL)
+        cell.addressLabel.text = contactInfo["address"] as! String
+        cell.nameLabel.text = contactInfo["name"] as? String
+        cell.relationshipLabel.text = contactInfo["relationship"] as? String
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

@@ -5,7 +5,6 @@
 //  Created by Portia Wang on 7/9/17.
 //  Copyright © 2017 Portia Wang. All rights reserved.
 //
-
 import UIKit
 import FirebaseAuth
 import FirebaseAuthUI
@@ -16,7 +15,6 @@ typealias FIRUser = FirebaseAuth.User
 class LoginViewController: UIViewController {
     
     //MARK: - Properties
-
     @IBOutlet weak var getStartedButton: UIButton!
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -25,9 +23,9 @@ class LoginViewController: UIViewController {
     //MARK: - Funtions
     
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
-
+        
         guard let authUI = FUIAuth.defaultAuthUI()
-        else { return }
+            else { return }
         
         authUI.delegate = self
         
@@ -47,13 +45,16 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
 extension LoginViewController: FUIAuthDelegate {
     func authUI(_ authUI: FUIAuth, didSignInWith user: FIRUser?, error: Error?) {
         //report error
+        UserService.create(user!, name: (user?.displayName!)!, email: (user?.email!
+            )!) { (user) in
+        }
         if let error = error {
             assertionFailure("Error signing in: \(error.localizedDescription)")
         }
