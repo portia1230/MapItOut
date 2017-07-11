@@ -13,25 +13,31 @@ import FirebaseDatabase.FIRDataSnapshot
 
 class Entry {
     var key: String?
-    var name: String
+    var firstName: String
+    var lastName: String
     var location: CLLocationCoordinate2D
     var relationship: String
     var imageURL: String
     var number: String
+    var email: String
     var dictValue: [String : Any]{
-        return ["name": name,
+        return ["firstName": firstName,
+                "lastName": lastName,
                 "location": location,
                 "relationship": relationship,
                 "imageURL": imageURL,
-                "number": number]
+                "number": number,
+                "email": email  ]
     }
     
-    init( name: String, location: CLLocationCoordinate2D, relationship: String, imageURL: String, number: String) {
-        self.name = name
+    init( firstName: String, lastName: String, location: CLLocationCoordinate2D, relationship: String, imageURL: String, number: String, email: String) {
+        self.firstName = firstName
+        self.lastName = lastName
         self.location = location
         self.relationship = relationship
         self.imageURL = imageURL
         self.number = number
+        self.email = email
     }
     
     

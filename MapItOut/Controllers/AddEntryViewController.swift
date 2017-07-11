@@ -32,6 +32,17 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         return .lightContent
     }
     
+    
+    
+    //MARK: - IBoutlets for text fields
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var relationshipTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    
+    
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -150,4 +161,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         return annotationView
         
     }
+    
+    @IBAction func addContactButtonTapped(_ sender: Any) {
+        var entry = Entry(firstName: firstNameTextField.text, lastName: lastNameTextField.text, location: locationMapView.annotations[0].coordinate, relationship: relationshipTextField.text, imageURL: , number: phoneTextField.text)
+    }
+    
 }

@@ -414,7 +414,7 @@
                                             <constraint firstAttribute="height" constant="33" id="xej-fC-iWW"/>
                                         </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contact's Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yNx-9e-Gac">
@@ -423,7 +423,7 @@
                                             <constraint firstAttribute="height" constant="33" id="hWt-md-cut"/>
                                         </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Relationship with you" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aKB-qw-nmK">
@@ -524,6 +524,9 @@
                                         <state key="normal" title="Add Contact">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="addContactButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="2vV-ER-41r"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -604,9 +607,14 @@
                     </view>
                     <connections>
                         <outlet property="addContactButton" destination="zsB-ZT-4z8" id="qJa-nA-wee"/>
+                        <outlet property="emailTextField" destination="bVH-mN-e7d" id="zGH-2r-icn"/>
+                        <outlet property="firstNameTextField" destination="LvL-CK-cVq" id="qmr-mx-dQy"/>
+                        <outlet property="lastNameTextField" destination="yNx-9e-Gac" id="IBQ-ef-8T4"/>
                         <outlet property="locationLabel" destination="888-kb-apx" id="f4S-fV-bXC"/>
                         <outlet property="locationMapView" destination="JiW-Di-Jum" id="V8C-av-dVH"/>
+                        <outlet property="phoneTextField" destination="hsB-RU-xgA" id="tNK-X8-Yg9"/>
                         <outlet property="photoImageView" destination="Qdj-ZV-Nk3" id="YYy-3Y-fvi"/>
+                        <outlet property="relationshipTextField" destination="hsB-RU-xgA" id="lMw-5s-xdd"/>
                         <outlet property="searchBar" destination="98K-1u-2Yf" id="Hmh-Zx-fE8"/>
                         <outlet property="uploadPhotoButton" destination="hIq-Lk-LqR" id="YNe-tQ-j5X"/>
                     </connections>
