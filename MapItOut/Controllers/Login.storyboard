@@ -12,7 +12,6 @@
         <!--Login View Controller-->
         <scene sceneID="vaY-l0-9pn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Yrh-kx-qlj" sceneMemberID="firstResponder"/>
                 <viewController id="CVX-rH-MK6" customClass="LoginViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nbt-WT-VtH"/>
@@ -52,10 +51,13 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dov-70-nTJ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dov-70-nTJ">
                                         <rect key="frame" x="62" y="564" width="250" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.25203916430000001" green="0.7691936493" blue="0.5019900799" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="5hw-II-Zds"/>
+                                            <constraint firstAttribute="width" constant="250" id="bM2-eh-3Pa"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                         <state key="normal" title="Get Started!">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -69,6 +71,8 @@
                                 <constraints>
                                     <constraint firstItem="s24-IC-apP" firstAttribute="centerX" secondItem="b1o-SJ-wdc" secondAttribute="centerX" id="1K2-zu-7yX"/>
                                     <constraint firstItem="c65-j3-ROR" firstAttribute="centerX" secondItem="b1o-SJ-wdc" secondAttribute="centerX" id="5CD-Lj-aQO"/>
+                                    <constraint firstAttribute="bottom" secondItem="dov-70-nTJ" secondAttribute="bottom" constant="63" id="5w7-am-jup"/>
+                                    <constraint firstItem="dov-70-nTJ" firstAttribute="centerX" secondItem="b1o-SJ-wdc" secondAttribute="centerX" id="6s6-yB-Mhx"/>
                                     <constraint firstItem="s24-IC-apP" firstAttribute="top" secondItem="c65-j3-ROR" secondAttribute="bottom" constant="3" id="KZo-ov-rks"/>
                                     <constraint firstItem="zxF-Dd-nmI" firstAttribute="centerX" secondItem="b1o-SJ-wdc" secondAttribute="centerX" id="b69-9P-gGS"/>
                                     <constraint firstItem="c65-j3-ROR" firstAttribute="top" secondItem="b1o-SJ-wdc" secondAttribute="top" constant="121" id="kqY-MS-Uwq"/>
@@ -88,6 +92,7 @@
                         <outlet property="getStartedButton" destination="dov-70-nTJ" id="Lmq-vi-OBM"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yrh-kx-qlj" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="129.98500749625188"/>
         </scene>
