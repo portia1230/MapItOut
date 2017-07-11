@@ -165,20 +165,32 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     }
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
-        
-        
-        let imageRef = StorageReference.newPostImageReference()
-        StorageService.uploadImage(photoImageView.image!, at: imageRef) { (downloadURL) in
-            guard let downloadURL = downloadURL else {
-                return
+        if let nameF = self.firstNameTextField.text,
+            let nameL = self.lastNameTextField.text {
+            
+            let imageRef = StorageReference.newPostImageReference()
+            StorageService.uploadImage(photoImageView.image!, at: imageRef) { (downloadURL) in
+                guard let downloadURL = downloadURL else {
+                    return
+                }
+                
+                let urlString = downloadURL.absoluteString
+                
+                var entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, location: self.locationMapView.annotations[0].coordinate, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!)
+                EntryService.addEntry(entry: entry)
+                self.dismiss(animated: true) {
+                }
             }
+        } else {
             
-            let urlString = downloadURL.absoluteString
+            let alertController = UIAlertController(title: "", message:
+                "Did you put a first name and last name?", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+            self.present(alertController, animated: true, completion: nil)
             
-            var entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, location: self.locationMapView.annotations[0].coordinate, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!)
+            
         }
         
-//        var entry = Entry(firstName: firstNameTextField.text, lastName: lastNameTextField.text, location: locationMapView.annotations[0].coordinate, relationship: relationshipTextField.text, imageURL: urlString , number: phoneTextField.text)
     }
     
 }
