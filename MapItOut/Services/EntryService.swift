@@ -15,15 +15,16 @@ struct EntryService{
     
     static func addEntry(entry: Entry){
         let currentUser = User.currentUser
-        let entryRef = Database.database().reference().child("users").child(currentUser.uid).child("contacts")
+        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
+        let userRef = Database.database().reference().child("Users").child("Contacts")
         let newKey = entryRef.key
         let newEntry = Entry(firstName: entry.firstName, lastName: entry.lastName, longitude: entry.longitude, latitude: entry.latitude, relationship: entry.relationship, imageURL: entry.imageURL, number: entry.number, email: entry.email, key: newKey)
         
         User.currentUser.entries.append(newEntry)
         
         let dict = newEntry.dictValue
-        
         entryRef.setValue(dict)
+        userRef.setValue(newKey)
         
     }
     
@@ -31,7 +32,7 @@ struct EntryService{
         User.currentUser.entries.remove(at: index)
         let currentUser = User.currentUser
         //let dict = entry.dictValue
-        let entryRef = Database.database().reference().child("users").child(currentUser.uid).child("contacts")
+        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId().child(entry.key)
         entryRef.removeValue()
     }
     

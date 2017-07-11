@@ -21,7 +21,7 @@ struct UserService {
         
         print("\(name) \(email)")
         
-        let ref = Database.database().reference().child("users").child(firUser.uid)
+        let ref = Database.database().reference().child("Users").child(firUser.uid)
         
         ref.setValue(data) { (error, ref) in
             if let error = error {
@@ -39,7 +39,7 @@ struct UserService {
     
     //show user
     static func show(forUID uid: String, completion: @escaping (User?) -> Void) {
-        let ref = Database.database().reference().child("users").child(uid)
+        let ref = Database.database().reference().child("Users").child(uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let user = User(snapshot: snapshot) else {
                 return completion(nil)

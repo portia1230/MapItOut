@@ -174,10 +174,10 @@
             </objects>
             <point key="canvasLocation" x="671.20000000000005" y="-384.55772113943033"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Custom Table View Controller-->
         <scene sceneID="JuR-OH-2bD">
             <objects>
-                <tableViewController id="k6n-Q1-GIX" sceneMemberID="viewController">
+                <tableViewController id="k6n-Q1-GIX" customClass="CustomTableViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wz5-6C-v37">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,8 +252,11 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="addressLabel" destination="KYB-na-Tq2" id="iCi-Nu-VA7"/>
                                     <outlet property="contactButton" destination="wki-ju-jyu" id="D3Y-u9-ujI"/>
+                                    <outlet property="nameLabel" destination="bqA-h5-23K" id="pMr-NS-Spd"/>
                                     <outlet property="photoImageView" destination="zod-0p-AMq" id="DQM-IE-oOv"/>
+                                    <outlet property="relationshipLabel" destination="9LM-6P-ZUa" id="n2V-PU-Mw8"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
