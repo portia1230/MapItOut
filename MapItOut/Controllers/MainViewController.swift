@@ -13,11 +13,18 @@ class MainViewController : UIViewController{
     
     //MARK: - Properties
     
+    @IBOutlet weak var contactImage: UIImageView!
+    @IBOutlet weak var contactButton: UIButton!
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
+    //MARK: - Lifecycles
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        contactButton.layer.cornerRadius = 15
+        contactImage.clipsToBounds = true
     }
 }
