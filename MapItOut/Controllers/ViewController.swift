@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var plusButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-plusButton.layer.cornerRadius = 12.5
         // Do any additional setup after loading the view.
     }
 

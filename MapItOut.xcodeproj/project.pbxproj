@@ -18,6 +18,8 @@
 		83533A7D1F135272002EEE74 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7C1F135272002EEE74 /* StorageService.swift */; };
 		83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7E1F1359A4002EEE74 /* EntryService.swift */; };
 		83680B5F1F149C48003A14CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83680B5E1F149C48003A14CC /* ViewController.swift */; };
+		83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B601F149F2B003A14CC /* plusButton200*200.png */; };
+		83680B631F14A83D003A14CC /* arrowGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B621F14A83D003A14CC /* arrowGreen.png */; };
 		837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938931F136CE1003B4B34 /* AddEntryViewController.swift */; };
 		837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938951F137213003B4B34 /* MGPhotoHelper.swift */; };
 		839DF3B51F147E1C0029D556 /* ImagePin.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DF3B31F147E1C0029D556 /* ImagePin.png */; };
@@ -47,6 +49,8 @@
 		83533A7C1F135272002EEE74 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = Services/StorageService.swift; sourceTree = "<group>"; };
 		83533A7E1F1359A4002EEE74 /* EntryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntryService.swift; path = Services/EntryService.swift; sourceTree = "<group>"; };
 		83680B5E1F149C48003A14CC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Controllers/ViewController.swift; sourceTree = "<group>"; };
+		83680B601F149F2B003A14CC /* plusButton200*200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plusButton200*200.png"; path = "Arts/plusButton200*200.png"; sourceTree = "<group>"; };
+		83680B621F14A83D003A14CC /* arrowGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrowGreen.png; path = Arts/arrowGreen.png; sourceTree = "<group>"; };
 		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; };
 		837938951F137213003B4B34 /* MGPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGPhotoHelper.swift; path = Helpers/MGPhotoHelper.swift; sourceTree = "<group>"; };
 		839DF3B31F147E1C0029D556 /* ImagePin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ImagePin.png; path = Arts/ImagePin.png; sourceTree = "<group>"; };
@@ -158,6 +162,8 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
+				83680B621F14A83D003A14CC /* arrowGreen.png */,
+				83680B601F149F2B003A14CC /* plusButton200*200.png */,
 				83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */,
 				839DF3B71F147E250029D556 /* redPin.png */,
 				839DF3B31F147E1C0029D556 /* ImagePin.png */,
@@ -290,7 +296,9 @@
 				83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */,
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83533A6E1F133EA1002EEE74 /* whiteGearImage.png in Resources */,
+				83680B631F14A83D003A14CC /* arrowGreen.png in Resources */,
 				83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */,
+				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
 				83E4CB2A1F12EB5800EDDD91 /* LaunchScreen.storyboard in Resources */,
 				839DF3B51F147E1C0029D556 /* ImagePin.png in Resources */,
