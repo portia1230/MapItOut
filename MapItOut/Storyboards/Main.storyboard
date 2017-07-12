@@ -169,8 +169,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="contactAddress" destination="Ab6-xr-fWC" id="21b-3y-1Sq"/>
                         <outlet property="contactButton" destination="3xa-qc-06L" id="Dqh-gq-Qe6"/>
                         <outlet property="contactImage" destination="sHw-2M-bg3" id="9ta-Ka-x1c"/>
+                        <outlet property="contactName" destination="BaJ-CN-Oi1" id="QHf-Me-7xD"/>
+                        <outlet property="relationshipLabel" destination="EWo-dO-CNT" id="9Qa-dK-wKU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xoh-YE-JaH" userLabel="First Responder" sceneMemberID="firstResponder"/>

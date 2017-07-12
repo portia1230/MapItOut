@@ -20,10 +20,12 @@ struct EntryService{
         let newEntry = Entry(firstName: entry.firstName, lastName: entry.lastName, longitude: entry.longitude, latitude: entry.latitude, relationship: entry.relationship, imageURL: entry.imageURL, number: entry.number, email: entry.email, key: newKey, locationDescription: entry.locationDescription)
         
         User.currentUser.entries.append(newEntry)
-        let userRef = Database.database().reference().child("Users").child(currentUser.uid).child("Contacts").child(newKey)
+        UserService.contacts(for: User.currentUser) { (contacts) in
+            let sortedContacts = LocationService.rankDistance(entries: contacts)
+            User.currentUser.entries = sortedContacts
+        }
         let dict = newEntry.dictValue
         entryRef.setValue(dict)
-        userRef.setValue(newKey)
         
     }
     
