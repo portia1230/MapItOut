@@ -21,6 +21,7 @@ class Entry {
     var imageURL: String
     var number: String
     var email: String
+    var locationDescription: String
     var dictValue: [String : Any]{
         return ["firstName": firstName,
                 "lastName": lastName,
@@ -30,10 +31,11 @@ class Entry {
                 "imageURL": imageURL,
                 "number": number,
                 "email": email,
-                "key": key]
+                "key": key,
+                "locationDescription": locationDescription]
     }
     
-    init( firstName: String, lastName: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, relationship: String, imageURL: String, number: String, email: String, key: String) {
+    init( firstName: String, lastName: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, relationship: String, imageURL: String, number: String, email: String, key: String, locationDescription: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.longitude = longitude
@@ -43,6 +45,7 @@ class Entry {
         self.number = number
         self.email = email
         self.key = key
+        self.locationDescription = locationDescription
     }
     
     init?(snapshot: DataSnapshot) {
@@ -55,7 +58,8 @@ class Entry {
             let relationship = dict["relationship"] as? String,
             let number = dict["number"] as? String,
             let email = dict["email"] as? String,
-            let key = dict["key"] as? String
+            let key = dict["key"] as? String,
+            let locationDescription = dict["locationDescription"] as? String
             else { return nil }
         
         self.key = key
@@ -67,6 +71,7 @@ class Entry {
         self.relationship = relationship
         self.number = number
         self.email = email
+        self.locationDescription = locationDescription
     }
     
 }

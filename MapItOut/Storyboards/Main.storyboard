@@ -207,7 +207,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="108" id="y10-d6-GMb" customClass="CustomTableCell" customModule="MapItOut" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="108" id="y10-d6-GMb" customClass="CustomTableCell" customModule="MapItOut" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="93" width="375" height="108"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y10-d6-GMb" id="rh8-v9-ECn">
@@ -241,7 +241,7 @@
                                                 <constraint firstAttribute="height" constant="60.5" id="Php-Hg-Ksw"/>
                                             </constraints>
                                         </stackView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmq-W9-Kpa">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmq-W9-Kpa">
                                             <rect key="frame" x="18" y="18" width="70" height="70"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="70" id="51N-ig-E0v"/>

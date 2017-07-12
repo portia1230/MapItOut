@@ -50,7 +50,7 @@ struct UserService {
     
     
     
-    static func posts(for user: User, completion: @escaping ([Entry]) -> Void) {
+    static func contacts(for user: User, completion: @escaping ([Entry]) -> Void) {
         let ref = Database.database().reference().child("Contacts").child(user.uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let snapshot = snapshot.children.allObjects as? [DataSnapshot] else {
@@ -65,8 +65,6 @@ struct UserService {
                     .flatMap {
                         guard let contact = Entry(snapshot: $0)
                             else { return nil }
-                        dispatchGroup.enter()
-                        
                         return contact
             }
             dispatchGroup.notify(queue: .main, execute: {

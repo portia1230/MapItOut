@@ -63,7 +63,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         relationshipTextField.delegate = self
         phoneTextField.delegate = self
         emailTextField.delegate = self
-        
         firstNameTextField.tag = 0
         lastNameTextField.tag = 1
         relationshipTextField.tag = 2
@@ -214,7 +213,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 
                 let urlString = downloadURL.absoluteString
                 
-                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.locationMapView.annotations[0].coordinate.longitude, latitude: self.locationMapView.annotations[0].coordinate.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "")
+                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.locationMapView.annotations[0].coordinate.longitude, latitude: self.locationMapView.annotations[0].coordinate.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationLabel.text!)
                 EntryService.addEntry(entry: entry)
                 self.dismiss(animated: true) {
                 }
