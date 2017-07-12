@@ -19,7 +19,7 @@ struct LocationService{
         sortedEntries = entries.sorted { (entry1, entry2) -> Bool in
             return (entry1.distance(to: location).magnitude) > (entry2.distance(to: location).magnitude)
         }
-        return sortedEntries
+        return sortedEntries.reversed()
         
     }
     
