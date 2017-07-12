@@ -93,7 +93,7 @@
                                         </state>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="PZ9-x1-vxi">
-                                        <rect key="frame" x="113" y="20" width="110" height="65"/>
+                                        <rect key="frame" x="113" y="20" width="157" height="65"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rory Mcilroy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaJ-CN-Oi1">
                                                 <rect key="frame" x="0.0" y="0.0" width="77.5" height="24"/>
@@ -121,8 +121,7 @@
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="110" id="3WG-Ca-PsZ"/>
-                                            <constraint firstAttribute="height" constant="65" id="l0c-iS-Es9"/>
+                                            <constraint firstAttribute="height" constant="65" id="c0f-JN-P8o"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -130,10 +129,11 @@
                                 <constraints>
                                     <constraint firstItem="sHw-2M-bg3" firstAttribute="top" secondItem="eYu-6d-W7D" secondAttribute="top" constant="17" id="0Po-Ex-4yZ"/>
                                     <constraint firstItem="sHw-2M-bg3" firstAttribute="leading" secondItem="eYu-6d-W7D" secondAttribute="leading" constant="17" id="9vP-6q-YxJ"/>
-                                    <constraint firstItem="PZ9-x1-vxi" firstAttribute="leading" secondItem="sHw-2M-bg3" secondAttribute="trailing" constant="26" id="KWp-Ef-ive"/>
+                                    <constraint firstItem="3xa-qc-06L" firstAttribute="leading" secondItem="PZ9-x1-vxi" secondAttribute="trailing" constant="5" id="GIP-bA-VJ8"/>
+                                    <constraint firstItem="PZ9-x1-vxi" firstAttribute="leading" secondItem="sHw-2M-bg3" secondAttribute="trailing" constant="26" id="O83-3q-NDz"/>
                                     <constraint firstAttribute="height" constant="108" id="Tcq-tE-hBg"/>
                                     <constraint firstAttribute="trailing" secondItem="3xa-qc-06L" secondAttribute="trailing" constant="20" id="ayq-s6-V8l"/>
-                                    <constraint firstItem="PZ9-x1-vxi" firstAttribute="top" secondItem="eYu-6d-W7D" secondAttribute="top" constant="20" id="c5l-6z-KNY"/>
+                                    <constraint firstItem="PZ9-x1-vxi" firstAttribute="top" secondItem="eYu-6d-W7D" secondAttribute="top" constant="20" id="sup-pO-5QW"/>
                                     <constraint firstItem="3xa-qc-06L" firstAttribute="top" secondItem="eYu-6d-W7D" secondAttribute="top" constant="39" id="wRQ-eT-kot"/>
                                 </constraints>
                             </view>

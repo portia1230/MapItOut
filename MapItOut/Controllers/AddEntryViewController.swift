@@ -22,6 +22,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var addContactButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
+    
+    var latitude = 0.0
+    var longitude = 0.0
     var location : CLLocationCoordinate2D!
     
     let locationManager = CLLocationManager()
@@ -71,22 +74,26 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         
         //dismiss keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        var swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
-        var swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         view.addGestureRecognizer(tap)
         view.addGestureRecognizer(swipeDown)
         view.addGestureRecognizer(swipeUp)
         
-        //testing only to preset location to current
-        self.location = getLocation(manager: locationManager)
-        //testing only to preset location to current
-        
         let coordinate = getLocation(manager: locationManager)
+        self.location = coordinate
         reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let anno = MKPointAnnotation()
+        anno.coordinate = coordinate
+        self.longitude = anno.coordinate.longitude
+        self.latitude = anno.coordinate.latitude
         
-        
+        let annotations = self.locationMapView.annotations
+        self.locationMapView.removeAnnotations(annotations)
+        self.locationMapView.addAnnotation(anno)
+        self.locationMapView.showsUserLocation = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -144,18 +151,20 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 let placemark = placemarks?.first
                 let anno = MKPointAnnotation()
                 anno.coordinate = (placemark?.location?.coordinate)!
-                anno.title = self.searchBar.text!
                 
                 let annotations = self.locationMapView.annotations
                 
                 //centering and clearing other annotations
                 let span = MKCoordinateSpanMake(0.075, 0.075)
+                self.location = anno.coordinate
                 let region = MKCoordinateRegion(center: anno.coordinate, span: span)
                 self.locationMapView.setRegion(region, animated: true)
                 self.locationMapView.removeAnnotations(annotations)
                 self.locationMapView.addAnnotation(anno)
                 
                 self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+                self.longitude = anno.coordinate.longitude
+                self.latitude = anno.coordinate.latitude
                 
             } else {
                 print(error?.localizedDescription ?? "error" )
@@ -213,7 +222,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 
                 let urlString = downloadURL.absoluteString
                 
-                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.locationMapView.annotations[0].coordinate.longitude, latitude: self.locationMapView.annotations[0].coordinate.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationLabel.text!)
+                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.longitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationLabel.text!)
                 EntryService.addEntry(entry: entry)
                 self.dismiss(animated: true) {
                 }

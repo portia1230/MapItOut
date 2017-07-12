@@ -17,7 +17,7 @@ struct LocationService{
         let location = CLLocation(latitude: myLocation.latitude, longitude: myLocation.longitude)
         var sortedEntries : [Entry] = []
         sortedEntries = entries.sorted { (entry1, entry2) -> Bool in
-            return (entry1.distance(to: location)) < (entry2.distance(to: location))
+            return (entry1.distance(to: location).magnitude) > (entry2.distance(to: location).magnitude)
         }
         return sortedEntries
         

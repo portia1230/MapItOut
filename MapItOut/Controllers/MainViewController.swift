@@ -31,25 +31,34 @@ class MainViewController : UIViewController{
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
-        
         UserService.contacts(for: User.currentUser) { (contacts) in
-            var sortedContacts = LocationService.rankDistance(entries: contacts)
-            self.contacts = sortedContacts
-            let imageURL = URL(string: contacts[0].imageURL)
-            self.contactAddressLabel.text = contacts[0].locationDescription
-            let coordinate = LocationService.getLocation(manager: self.locationManager)
-            let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            let distance = self.contacts[0].distance(to: location)
-            let km = Int(distance/1000)
-            if distance > 1000
-            {
-                self.contactAddressLabel.text = " \(km) KM away"
+            if contacts.isEmpty{
+                self.contactNameLabel.text = "No contact entered"
+                self.contactAddressLabel.text = ""
+                self.contactButton.isHidden = true
             } else {
-                self.contactAddressLabel.text = " \(((distance * 1000).rounded())/1000) M away"
+                self.contactButton.isHidden = false
+                var sortedContacts = LocationService.rankDistance(entries: contacts)
+                let imageURL = URL(string: sortedContacts[0].imageURL)
+                self.contactAddressLabel.text = sortedContacts[0].locationDescription
+                let coordinate = LocationService.getLocation(manager: self.locationManager)
+                let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
+                
+                let distance = myLocation.distance(from: contactLocation)
+                
+                
+                if distance.magnitude > 1000.0
+                {
+                    self.contactAddressLabel.text = " \((distance.magnitude)/1000) KM away"
+                } else {
+                    self.contactAddressLabel.text = " \(((distance * 1000).rounded())/1000) M away"
+                }
+                self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
+                self.contactRelationshipLabel.text = sortedContacts[0].relationship
+                self.contactImage.kf.setImage(with: imageURL)
             }
-            self.contactNameLabel.text = contacts[0].firstName + " " + contacts[0].lastName
-            self.contactRelationshipLabel.text = contacts[0].relationship
-            self.contactImage.kf.setImage(with: imageURL)
+            
         }
     }
     

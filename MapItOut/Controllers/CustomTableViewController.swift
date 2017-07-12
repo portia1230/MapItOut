@@ -31,7 +31,6 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
         UserService.contacts(for: User.currentUser) { (contacts) in
             var sortedContacts = LocationService.rankDistance(entries: contacts)
             self.contacts = sortedContacts
-            
             self.tableView.reloadData()
         }
         
