@@ -17,12 +17,10 @@ class CustomTableCell : UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var relationshipLabel: UILabel!
-    @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         photoImageView.layer.cornerRadius = 35
-        contactButton.layer.cornerRadius = 15
     }
 }

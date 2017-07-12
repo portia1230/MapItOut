@@ -24,12 +24,14 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         UserService.contacts(for: User.currentUser) { (contacts) in
             self.contacts = contacts
             self.tableView.reloadData()
         }
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,4 +76,10 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
         
     }
     
+    @IBAction func mapButtonTapped(_ sender: Any) {
+        dismiss(animated: false) {
+        }
+    }
+    
+
 }
