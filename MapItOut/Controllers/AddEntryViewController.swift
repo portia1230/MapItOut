@@ -86,7 +86,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         //testing only to preset location to current
         
         let coordinate = getLocation(manager: locationManager)
-        reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        self.locationLabel.text = LocationService.reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         
     }
@@ -117,23 +117,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         return false
     }
     
-    func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        var trimmed = ""
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) -> Void in
-            if error != nil{
-                print(error as Any)
-                return
-            } else if (placemarks?.count)! > 0 {
-                let pm = placemarks![0]
-                let address = ABCreateStringWithAddressDictionary(pm.addressDictionary!, false)
-                trimmed = address
-            }
-            trimmed = trimmed.replacingOccurrences(of: "\n", with: ", ")
-            self.locationLabel.text = trimmed
-        }
-    }
-    
     func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -156,8 +139,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 self.locationMapView.setRegion(region, animated: true)
                 self.locationMapView.removeAnnotations(annotations)
                 self.locationMapView.addAnnotation(anno)
-                
-                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+                self.locationLabel.text = LocationService.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
                 
             } else {
                 print(error?.localizedDescription ?? "error" )

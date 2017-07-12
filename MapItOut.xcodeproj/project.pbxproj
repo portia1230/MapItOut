@@ -32,6 +32,7 @@
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
 		83D5297D1F12FCFD00ED4EEE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */; };
+		83DDC2381F15F1E30072BCFB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DDC2371F15F1E30072BCFB /* LocationService.swift */; };
 		83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */; };
 		83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */; };
 		83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB1D1F12EA5D00EDDD91 /* Assets.xcassets */; };
@@ -68,6 +69,7 @@
 		83D529791F12FCAD00ED4EEE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
 		83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Supports/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		83D5297C1F12FCFD00ED4EEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Supports/Info.plist; sourceTree = "<group>"; };
+		83DDC2371F15F1E30072BCFB /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/LocationService.swift; sourceTree = "<group>"; };
 		83E4CB101F12EA5D00EDDD91 /* MapItOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapItOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83E4CB1B1F12EA5D00EDDD91 /* MapItOut.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MapItOut.xcdatamodel; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		83D529781F12FC9600ED4EEE /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				83DDC2371F15F1E30072BCFB /* LocationService.swift */,
 				83D529791F12FCAD00ED4EEE /* UserService.swift */,
 				83533A7C1F135272002EEE74 /* StorageService.swift */,
 				83533A7E1F1359A4002EEE74 /* EntryService.swift */,
@@ -387,6 +390,7 @@
 				83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
 				832C70781F15350A00E213F4 /* StorageReference.swift in Sources */,
+				83DDC2381F15F1E30072BCFB /* LocationService.swift in Sources */,
 				837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */,
 				83313F281F15795600E1C607 /* CustomTableViewController.swift in Sources */,
 				83533A7D1F135272002EEE74 /* StorageService.swift in Sources */,
