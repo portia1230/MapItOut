@@ -47,4 +47,43 @@ struct UserService {
             completion(user)
         })
     }
+    
+    
+    
+    static func posts(for user: User, completion: @escaping ([Entry]) -> Void) {
+        let ref = Database.database().reference().child("Contacts").child(user.uid)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let snapshot = snapshot.children.allObjects as? [DataSnapshot] else {
+                return completion([])
+            }
+            
+            let dispatchGroup = DispatchGroup()
+            
+            let contacts: [Entry] =
+                snapshot
+                    .reversed()
+                    .flatMap {
+                        guard let contact = Entry(snapshot: $0)
+                            else { return nil }
+                        dispatchGroup.enter()
+                        
+                        return contact
+            }
+            dispatchGroup.notify(queue: .main, execute: {
+                completion(contacts)
+            })
+        })
+    }
+    
+    
+    
 }
+
+
+
+
+
+
+
+
+

@@ -45,7 +45,29 @@ class Entry {
         self.key = key
     }
     
-    
+    init?(snapshot: DataSnapshot) {
+        guard let dict = snapshot.value as? [String : Any],
+            let imageURL = dict["imageURL"] as? String,
+            let firstName = dict["firstName"] as? String,
+            let lastName = dict["lastName"] as? String,
+            let longitude = dict["longitude"] as? Double,
+            let latitude = dict["latitude"] as? Double,
+            let relationship = dict["relationship"] as? String,
+            let number = dict["number"] as? String,
+            let email = dict["email"] as? String,
+            let key = dict["key"] as? String
+            else { return nil }
+        
+        self.key = key
+        self.imageURL = imageURL
+        self.firstName = firstName
+        self.lastName = lastName
+        self.longitude = longitude
+        self.latitude = latitude
+        self.relationship = relationship
+        self.number = number
+        self.email = email
+    }
     
 }
 
