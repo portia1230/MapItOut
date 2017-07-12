@@ -222,7 +222,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 
                 let urlString = downloadURL.absoluteString
                 
-                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.longitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationLabel.text!)
+                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationLabel.text!)
                 EntryService.addEntry(entry: entry)
                 self.dismiss(animated: true) {
                 }
