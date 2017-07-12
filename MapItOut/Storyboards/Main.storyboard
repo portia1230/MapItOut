@@ -169,11 +169,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="contactAddress" destination="Ab6-xr-fWC" id="21b-3y-1Sq"/>
+                        <outlet property="contactAddressLabel" destination="Ab6-xr-fWC" id="q88-VL-OsH"/>
                         <outlet property="contactButton" destination="3xa-qc-06L" id="Dqh-gq-Qe6"/>
                         <outlet property="contactImage" destination="sHw-2M-bg3" id="9ta-Ka-x1c"/>
-                        <outlet property="contactName" destination="BaJ-CN-Oi1" id="QHf-Me-7xD"/>
-                        <outlet property="relationshipLabel" destination="EWo-dO-CNT" id="9Qa-dK-wKU"/>
+                        <outlet property="contactNameLabel" destination="BaJ-CN-Oi1" id="1qb-7E-tGO"/>
+                        <outlet property="contactRelationshipLabel" destination="EWo-dO-CNT" id="SKS-iV-GmA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xoh-YE-JaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -566,6 +566,6 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yex-B4-fmz"/>
+        <segue reference="BWr-ba-LSD"/>
     </inferredMetricsTieBreakers>
 </document>

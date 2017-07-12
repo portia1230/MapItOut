@@ -48,6 +48,8 @@ struct UserService {
         })
     }
     
+    
+    
     static func contacts(for user: User, completion: @escaping ([Entry]) -> Void) {
         let ref = Database.database().reference().child("Contacts").child(user.uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
