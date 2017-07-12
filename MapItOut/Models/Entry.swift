@@ -74,6 +74,11 @@ class Entry {
         self.locationDescription = locationDescription
     }
     
+    func distance(to location: CLLocation) -> CLLocationDistance {
+        let contactLocation = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        return contactLocation.distance(from: location)
+    }
+    
 }
 
 

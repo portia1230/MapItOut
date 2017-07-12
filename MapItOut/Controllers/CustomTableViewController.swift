@@ -29,7 +29,10 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UserService.contacts(for: User.currentUser) { (contacts) in
-            self.contacts = contacts
+            var sortedContacts = LocationService.rankDistance(entries: contacts)
+            self.contacts = sortedContacts
+            
+            
             self.tableView.reloadData()
         }
         

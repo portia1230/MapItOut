@@ -41,5 +41,6 @@ struct EntryService{
         deleteEntry(entry: entry, index: index)
         addEntry(entry: entry)
     }
+    
 }
 
