@@ -14,6 +14,7 @@ import MapKit
 import AddressBookUI
 
 class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITextFieldDelegate {
+    @IBOutlet weak var headerView: UIView!
     
     var keys : [String] = []
     var contacts : [Entry] = []
@@ -32,6 +33,11 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
             self.tableView.reloadData()
         }
         
+    }
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView()
+        header.addSubview(self.headerView)
+        return header
     }
     
     override func didReceiveMemoryWarning() {
