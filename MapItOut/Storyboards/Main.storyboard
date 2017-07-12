@@ -186,7 +186,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentifier" rowHeight="108" id="O5R-4v-yvv" customClass="CustomTableCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="108" id="O5R-4v-yvv" customClass="CustomTableCell" customModule="MapItOut" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="108"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O5R-4v-yvv" id="ONq-5g-90s" customClass="CustomTableCell" customModule="MapItOut" customModuleProvider="target">
@@ -264,8 +264,8 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="k6n-Q1-GIX" id="XwH-hZ-jdI"/>
-                            <outlet property="delegate" destination="k6n-Q1-GIX" id="aay-Qh-Ahc"/>
+                            <outlet property="dataSource" destination="k6n-Q1-GIX" id="xhO-j8-ynb"/>
+                            <outlet property="delegate" destination="k6n-Q1-GIX" id="Lcn-18-gVK"/>
                         </connections>
                     </tableView>
                 </tableViewController>
@@ -634,7 +634,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="SCj-Jc-Yda" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tmm-Kg-MFE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tmm-Kg-MFE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.2617306113243103" green="0.31526783108711243" blue="0.68635404109954834" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
