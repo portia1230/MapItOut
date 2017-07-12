@@ -47,12 +47,11 @@ class MainViewController : UIViewController{
                 
                 let distance = myLocation.distance(from: contactLocation)
                 
-                
-                if distance.magnitude > 1000.0
+                if distance > 1000.0
                 {
-                    self.contactAddressLabel.text = " \((distance.magnitude)/1000) KM away"
+                    self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
                 } else {
-                    self.contactAddressLabel.text = " \(((distance * 1000).rounded())/1000) M away"
+                    self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
                 }
                 self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
                 self.contactRelationshipLabel.text = sortedContacts[0].relationship
