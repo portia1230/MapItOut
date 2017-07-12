@@ -15,11 +15,10 @@ struct LocationService{
         var locationManager = CLLocationManager()
         let myLocation = getLocation(manager: locationManager)
         let location = CLLocation(latitude: myLocation.latitude, longitude: myLocation.longitude)
-        var sortedEntries : [Entry] = []
         entries.sorted { (entry1, entry2) -> Bool in
             return (entry1.distance(to: location)) < (entry2.distance(to: location))
         }
-        return entries
+        return entries.reversed()
         
     }
     
