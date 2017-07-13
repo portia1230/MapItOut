@@ -67,8 +67,16 @@ class MainViewController : UIViewController{
         contactImage.layer.cornerRadius = 35
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
-        
-        
-        
     }
+    
+    @IBAction func addButtonTapped(_ sender: Any) {
+        let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in self.performSegue(withIdentifier: "contactsSegue", sender: self) }))
+        alert.addAction(UIAlertAction(title: "Create new contact", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
+        alert.addAction(UIAlertAction(title: "Back", style: .cancel , handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
 }

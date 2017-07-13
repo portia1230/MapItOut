@@ -10,36 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="l3S-0v-6u0">
-            <objects>
-                <viewController id="Xnj-20-hxr" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="s2i-FN-fzw"/>
-                        <viewControllerLayoutGuide type="bottom" id="GrF-nI-rj4"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Eba-gU-3mi">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="me3-2I-hbs">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="me3-2I-hbs" secondAttribute="trailing" id="Gah-oW-tSq"/>
-                            <constraint firstItem="GrF-nI-rj4" firstAttribute="top" secondItem="me3-2I-hbs" secondAttribute="bottom" id="Ioo-QA-hjd"/>
-                            <constraint firstItem="me3-2I-hbs" firstAttribute="top" secondItem="Eba-gU-3mi" secondAttribute="top" id="c0b-0q-Pa0"/>
-                            <constraint firstItem="me3-2I-hbs" firstAttribute="leading" secondItem="Eba-gU-3mi" secondAttribute="leading" id="mxH-uE-85y"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uWI-XQ-uMj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="671.20000000000005" y="-1071.8140929535234"/>
-        </scene>
         <!--Main View Controller-->
         <scene sceneID="9vu-rv-FD9">
             <objects>
@@ -74,7 +44,7 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="plusImage.png"/>
                                         <connections>
-                                            <segue destination="Y6f-BZ-apC" kind="presentation" identifier="fromMapView" id="BWr-ba-LSD"/>
+                                            <action selector="addButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="6re-49-qzD"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Il2-bD-Edi">
@@ -213,11 +183,85 @@
                         <outlet property="contactImage" destination="sHw-2M-bg3" id="9ta-Ka-x1c"/>
                         <outlet property="contactNameLabel" destination="BaJ-CN-Oi1" id="1qb-7E-tGO"/>
                         <outlet property="contactRelationshipLabel" destination="EWo-dO-CNT" id="SKS-iV-GmA"/>
+                        <segue destination="lio-1D-2yw" kind="presentation" identifier="contactsSegue" id="vvP-rq-4a0"/>
+                        <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" id="sz0-VJ-i1G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xoh-YE-JaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="671.20000000000005" y="-384.55772113943033"/>
+        </scene>
+        <!--Contacts Table View Controller-->
+        <scene sceneID="Nls-AX-lBG">
+            <objects>
+                <tableViewController id="lio-1D-2yw" customClass="ContactsTableViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="65" sectionFooterHeight="28" id="WSc-QK-Hr4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="USa-7a-8Ht" customClass="ContactsTableViewCell" customModule="MapItOut" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="65" width="375" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="USa-7a-8Ht" id="Tcs-2Y-2LO">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ux2-Cg-v5v">
+                                            <rect key="frame" x="38" y="8" width="324" height="27"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="27" id="9hR-Qy-sbl"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                            <color key="textColor" red="0.52555841207504272" green="0.52554816007614136" blue="0.52555513381958008" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Ux2-Cg-v5v" firstAttribute="leading" secondItem="Tcs-2Y-2LO" secondAttribute="leadingMargin" constant="30" id="FN0-60-GAI"/>
+                                        <constraint firstItem="Ux2-Cg-v5v" firstAttribute="top" secondItem="Tcs-2Y-2LO" secondAttribute="topMargin" id="Tw0-4f-vib"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Ux2-Cg-v5v" secondAttribute="trailing" constant="5" id="svm-It-e67"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="Ux2-Cg-v5v" id="I1J-VY-jz6"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lio-1D-2yw" id="O6o-d9-u9i"/>
+                            <outlet property="delegate" destination="lio-1D-2yw" id="PGR-Lz-2qZ"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="headerView" destination="MTZ-Pg-WXE" id="PvP-fa-JeE"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3sh-Qm-CoV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="MTZ-Pg-WXE">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wn1-O7-oUG">
+                            <rect key="frame" x="24" y="32" width="45" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="EEr-hb-bVv"/>
+                                <constraint firstAttribute="width" constant="45" id="YpU-Jz-HQw"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                            <state key="normal" title="Back">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstItem="wn1-O7-oUG" firstAttribute="leading" secondItem="MTZ-Pg-WXE" secondAttribute="leading" constant="24" id="bdx-fg-1fS"/>
+                        <constraint firstItem="wn1-O7-oUG" firstAttribute="top" secondItem="MTZ-Pg-WXE" secondAttribute="top" constant="32" id="o8Y-JO-8zM"/>
+                    </constraints>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="1520.8" y="-794.75262368815595"/>
         </scene>
         <!--Custom Table View Controller-->
         <scene sceneID="shj-sZ-zW3">
@@ -300,6 +344,8 @@
                     </tableView>
                     <connections>
                         <outlet property="headerView" destination="X2M-NH-3wB" id="B9F-bX-4ec"/>
+                        <segue destination="lio-1D-2yw" kind="presentation" identifier="contactsSegue" id="Qdn-cu-3xe"/>
+                        <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addNewContact" id="lWe-VJ-ryq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4u-sH-4Tz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -330,7 +376,7 @@
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <segue destination="Y6f-BZ-apC" kind="presentation" identifier="fromListView" id="yex-B4-fmz"/>
+                                <action selector="addButtonTapped:" destination="dRJ-HI-GbT" eventType="touchUpInside" id="Web-sa-QER"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GwM-sm-lrp">
@@ -581,7 +627,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPb-xv-DCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1517.5999999999999" y="-385.45727136431788"/>
+            <point key="canvasLocation" x="1521" y="-94"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nYK-Xd-eHY">
@@ -614,6 +660,7 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BWr-ba-LSD"/>
+        <segue reference="vvP-rq-4a0"/>
+        <segue reference="sz0-VJ-i1G"/>
     </inferredMetricsTieBreakers>
 </document>
