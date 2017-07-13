@@ -28,7 +28,7 @@ class User: NSObject {
     }
     
     init?(snapshot: DataSnapshot){
-        guard let dic = snapshot.value as? [String: Any]
+        guard (snapshot.value as? [String: Any]) != nil
         else { return nil }
         self.uid = snapshot.key
         super.init()

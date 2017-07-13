@@ -38,7 +38,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         self.tableView.delegate = self
         self.tableView.dataSource = self
         UserService.contacts(for: User.currentUser) { (contacts) in
-            var sortedContacts = LocationService.rankDistance(entries: contacts)
+            let sortedContacts = LocationService.rankDistance(entries: contacts)
             self.contacts = sortedContacts
             self.tableView.reloadData()
             

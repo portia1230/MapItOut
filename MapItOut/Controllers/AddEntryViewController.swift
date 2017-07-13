@@ -100,7 +100,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         if let phone = self.phone {
             self.phoneTextField.text = phone
         }
-        if let image = self.image{
+        if (self.image) != nil{
             self.photoImageView.image = self.image
         }
         

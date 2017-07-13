@@ -12,7 +12,7 @@ import MapKit
 
 struct LocationService{
     static func rankDistance( entries: [Entry]) -> [Entry] {
-        var locationManager = CLLocationManager()
+        let locationManager = CLLocationManager()
         let myLocation = getLocation(manager: locationManager)
         let location = CLLocation(latitude: myLocation.latitude, longitude: myLocation.longitude)
         var sortedEntries : [Entry] = []
