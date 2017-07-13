@@ -10,16 +10,16 @@ import UIKit
 import ContactsUI
 import Foundation
 
-class ContactsTableViewController: UITableViewController {
+class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //MARK: - Properties
-    
-    @IBOutlet var headerView: UIView!
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     var contacts = [CNContact]()
     var contactStore = CNContactStore()
+    @IBOutlet weak var tableView: UITableView!
+    
     
     //MARK: - Functions
 
@@ -32,9 +32,11 @@ class ContactsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
+    
     override func viewWillAppear(_ animated: Bool) {
+        tableView.delegate = self
+        tableView.dataSource = self
         let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName) ]
         let request = CNContactFetchRequest(keysToFetch: keys)
         
@@ -48,28 +50,21 @@ class ContactsTableViewController: UITableViewController {
             print("unable to fetch contacts")
         }
     }
-
-
     
     // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView()
-        header.addSubview(self.headerView)
-        return header
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.contacts.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return contacts.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactsTableViewCell
         cell.nameLabel.text = contacts[indexPath.row].givenName + " " + contacts[indexPath.row].familyName
+        
         return cell
     }
 

@@ -35,7 +35,7 @@
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
 		83D5297D1F12FCFD00ED4EEE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */; };
-		83DDC23A1F1693F90072BCFB /* CustomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DDC2391F1693F90072BCFB /* CustomTableViewController.swift */; };
+		83DDC23A1F1693F90072BCFB /* ContactListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DDC2391F1693F90072BCFB /* ContactListController.swift */; };
 		83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */; };
 		83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */; };
 		83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB1D1F12EA5D00EDDD91 /* Assets.xcassets */; };
@@ -75,7 +75,7 @@
 		83D529791F12FCAD00ED4EEE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
 		83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Supports/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		83D5297C1F12FCFD00ED4EEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Supports/Info.plist; sourceTree = "<group>"; };
-		83DDC2391F1693F90072BCFB /* CustomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTableViewController.swift; path = Controllers/CustomTableViewController.swift; sourceTree = "<group>"; };
+		83DDC2391F1693F90072BCFB /* ContactListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactListController.swift; path = Controllers/ContactListController.swift; sourceTree = "<group>"; };
 		83E4CB101F12EA5D00EDDD91 /* MapItOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapItOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83E4CB1B1F12EA5D00EDDD91 /* MapItOut.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MapItOut.xcdatamodel; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */,
-				83DDC2391F1693F90072BCFB /* CustomTableViewController.swift */,
+				83DDC2391F1693F90072BCFB /* ContactListController.swift */,
 				83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */,
 				83533A711F1340C7002EEE74 /* MainViewController.swift */,
 				837938931F136CE1003B4B34 /* AddEntryViewController.swift */,
@@ -394,7 +394,7 @@
 				83533A721F1340C7002EEE74 /* MainViewController.swift in Sources */,
 				83D529771F12F38800ED4EEE /* User.swift in Sources */,
 				83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */,
-				83DDC23A1F1693F90072BCFB /* CustomTableViewController.swift in Sources */,
+				83DDC23A1F1693F90072BCFB /* ContactListController.swift in Sources */,
 				83533A761F134706002EEE74 /* CustomTableCell.swift in Sources */,
 				83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,

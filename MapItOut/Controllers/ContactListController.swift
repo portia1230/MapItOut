@@ -14,8 +14,7 @@ import MapKit
 import AddressBookUI
 import ContactsUI
 
-class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITextFieldDelegate {
-    @IBOutlet weak var headerView: UIView!
+class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     //MARK: - Properties
     
@@ -42,25 +41,15 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
         }
         
     }
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView()
-        header.addSubview(self.headerView)
-        return header
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
         return self.contacts.count
@@ -68,7 +57,7 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
         let contact = self.contacts[indexPath.row]
@@ -84,7 +73,7 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 108
         
