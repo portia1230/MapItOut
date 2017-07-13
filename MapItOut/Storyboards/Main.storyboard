@@ -195,20 +195,20 @@
         <scene sceneID="Nls-AX-lBG">
             <objects>
                 <tableViewController id="lio-1D-2yw" customClass="ContactsTableViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="65" sectionFooterHeight="28" id="WSc-QK-Hr4">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="65" sectionFooterHeight="28" id="WSc-QK-Hr4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="USa-7a-8Ht" customClass="ContactsTableViewCell" customModule="MapItOut" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="65" width="375" height="50"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="USa-7a-8Ht" customClass="ContactsTableViewCell" customModule="MapItOut" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="65" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="USa-7a-8Ht" id="Tcs-2Y-2LO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ux2-Cg-v5v">
-                                            <rect key="frame" x="38" y="8" width="324" height="27"/>
+                                            <rect key="frame" x="38" y="16" width="324" height="27"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="27" id="9hR-Qy-sbl"/>
                                             </constraints>
@@ -219,7 +219,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Ux2-Cg-v5v" firstAttribute="leading" secondItem="Tcs-2Y-2LO" secondAttribute="leadingMargin" constant="30" id="FN0-60-GAI"/>
-                                        <constraint firstItem="Ux2-Cg-v5v" firstAttribute="top" secondItem="Tcs-2Y-2LO" secondAttribute="topMargin" id="Tw0-4f-vib"/>
+                                        <constraint firstItem="Ux2-Cg-v5v" firstAttribute="top" secondItem="Tcs-2Y-2LO" secondAttribute="topMargin" constant="8" id="Tw0-4f-vib"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Ux2-Cg-v5v" secondAttribute="trailing" constant="5" id="svm-It-e67"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -252,6 +252,9 @@
                             <state key="normal" title="Back">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <connections>
+                                <action selector="backButtonTapped:" destination="lio-1D-2yw" eventType="touchUpInside" id="vFQ-p6-7a1"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

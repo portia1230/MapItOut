@@ -7,23 +7,39 @@
 //
 
 import UIKit
+import ContactsUI
+import Foundation
+
 
 class ContactsTableViewController: UITableViewController {
 
     //MARK: - Properties
     
     @IBOutlet var headerView: UIView!
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     
     //MARK: - Functions
+
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.dismiss(animated: false) {
+        }
+    }
     
-    
-    
-    
+    func dismissController(action: UIAlertAction) {
+        self.dismiss(animated: true) {
+        }
+    }
     //MARK: - Lifecycles
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -41,7 +57,7 @@ class ContactsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

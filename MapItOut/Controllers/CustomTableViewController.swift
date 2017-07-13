@@ -12,9 +12,12 @@ import FirebaseAuthUI
 import Kingfisher
 import MapKit
 import AddressBookUI
+import ContactsUI
 
 class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var headerView: UIView!
+    
+    //MARK: - Properties
     
     var keys : [String] = []
     var contacts : [Entry] = []
@@ -22,6 +25,10 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    var contactStore = CNContactStore()
+    
+    
+    //MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,15 +90,40 @@ class CustomTableViewController: UITableViewController, MKMapViewDelegate, UITex
         
     }
     
+    
+    //MARK: - Functions
+    
     @IBAction func mapButtonTapped(_ sender: Any) {
         dismiss(animated: false) {
         }
     }
-    
     @IBAction func addButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in self.performSegue(withIdentifier: "contactsSegue", sender: self) }))
+        //Import from Contacts segue
+        alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in
+            let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
+            switch authorizationStatus {
+            case .authorized:
+                print("Authorized")
+                self.performSegue(withIdentifier: "contactsSegue", sender: self)
+            case .notDetermined: // needs to ask for authorization
+                self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
+                    if error != nil{
+                        let alertController = UIAlertController(title: nil, message:
+                            "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                        alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                })
+            default:
+                let alertController = UIAlertController(title: nil, message:
+                    "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Okay!", style: .cancel,handler: nil ))
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }))
+        
         alert.addAction(UIAlertAction(title: "Create new contact", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
         alert.addAction(UIAlertAction(title: "Back", style: .cancel , handler: nil))
         self.present(alert, animated: true, completion: nil)
