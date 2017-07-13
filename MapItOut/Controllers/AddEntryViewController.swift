@@ -23,6 +23,13 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     @IBOutlet weak var addContactButton: UIButton!
     @IBOutlet weak var locationLabel: UILabel!
     
+    var firstName : String!
+    var lastName : String!
+    var image : UIImage!
+    var email : String!
+    var phone : String!
+    var contactLocationDescription : String!
+    
     var latitude = 0.0
     var longitude = 0.0
     var location : CLLocationCoordinate2D!
@@ -35,7 +42,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
     
     
     //MARK: - IBoutlets for text fields
@@ -82,18 +88,53 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         view.addGestureRecognizer(swipeDown)
         view.addGestureRecognizer(swipeUp)
         
-        let coordinate = getLocation(manager: locationManager)
-        self.location = coordinate
-        reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let anno = MKPointAnnotation()
-        anno.coordinate = coordinate
-        self.longitude = anno.coordinate.longitude
-        self.latitude = anno.coordinate.latitude
+        if let firstName = self.firstName {
+            self.firstNameTextField.text = firstName
+        }
+        if let lastName = self.lastName {
+            self.lastNameTextField.text = lastName
+        }
+        if let email = self.email {
+            self.emailTextField.text = email
+        }
+        if let phone = self.phone {
+            self.phoneTextField.text = phone
+        }
+        if let image = self.image{
+            self.photoImageView.image = self.image
+        }
         
-        let annotations = self.locationMapView.annotations
-        self.locationMapView.removeAnnotations(annotations)
-        self.locationMapView.addAnnotation(anno)
-        self.locationMapView.showsUserLocation = false
+        if let _ = self.contactLocationDescription {
+            self.locationLabel.text = self.contactLocationDescription
+            getCoordinate(addressString: self.contactLocationDescription!, completionHandler: { (location, error) in
+                let dispatchGroup = DispatchGroup()
+                let anno = MKPointAnnotation()
+                anno.coordinate = location
+                self.longitude = anno.coordinate.longitude
+                self.latitude = anno.coordinate.latitude
+                let annotations = self.locationMapView.annotations
+                self.locationMapView.removeAnnotations(annotations)
+                self.locationMapView.addAnnotation(anno)
+                self.locationMapView.showsUserLocation = false
+                self.location = location
+                dispatchGroup.notify(queue: .main, execute: {
+                })
+            })
+        }  else {
+            let coordinate = getLocation(manager: locationManager)
+            self.location = coordinate
+            reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            let anno = MKPointAnnotation()
+            anno.coordinate = coordinate
+            self.longitude = anno.coordinate.longitude
+            self.latitude = anno.coordinate.latitude
+            
+            let annotations = self.locationMapView.annotations
+            self.locationMapView.removeAnnotations(annotations)
+            self.locationMapView.addAnnotation(anno)
+            self.locationMapView.showsUserLocation = false
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -186,7 +227,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         
-        self.dismiss(animated: true) {
+        self.dismiss(animated: false) {
         }
     }
     
@@ -239,4 +280,19 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         
     }
     
+    func getCoordinate( addressString : String,
+                        completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+            if error == nil {
+                if let placemark = placemarks?[0] {
+                    let location = placemark.location!
+                    
+                    completionHandler(location.coordinate, nil)
+                    return
+                }
+            }
+            
+        }
+    }
 }

@@ -41,6 +41,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             var sortedContacts = LocationService.rankDistance(entries: contacts)
             self.contacts = sortedContacts
             self.tableView.reloadData()
+            
         }
         
     }

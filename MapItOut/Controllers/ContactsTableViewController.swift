@@ -9,6 +9,7 @@
 import UIKit
 import ContactsUI
 import Foundation
+import CoreLocation
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -19,7 +20,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     var contacts = [CNContact]()
     var contactStore = CNContactStore()
     @IBOutlet weak var tableView: UITableView!
-    
+    var geocoder = CLGeocoder()
     
     //MARK: - Functions
 
@@ -37,13 +38,17 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(_ animated: Bool) {
         tableView.delegate = self
         tableView.dataSource = self
-        let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName) ]
-        let request = CNContactFetchRequest(keysToFetch: keys)
+        self.contacts.removeAll()
+        let keys = [CNContactIdentifierKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName)] as [Any]
+        let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
         
         do {
             try self.contactStore.enumerateContacts(with: request) {
                 (contact, stop) in
                 self.contacts.append(contact)
+                self.contacts = self.contacts.sorted(by: { (contact1, contact2) -> Bool in
+                    return contact1.givenName.compare(contact2.givenName) == ComparisonResult.orderedAscending
+                })
             }
         }
         catch {
@@ -53,19 +58,60 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Table view data source
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+        performSegue(withIdentifier: "contactSelected", sender: self)
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contacts.count
+            return contacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactsTableViewCell
         cell.nameLabel.text = contacts[indexPath.row].givenName + " " + contacts[indexPath.row].familyName
-        
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "contactSelected" {
+            let indexPath = tableView.indexPathForSelectedRow!
+            let contact = contacts[indexPath.row]
+            let displayTaskViewController = segue.destination as! AddEntryViewController
+            if contact.givenName.isEmpty == false {
+                displayTaskViewController.firstName = contact.givenName
+            }
+            if contact.familyName.isEmpty == false{
+                displayTaskViewController.lastName = contact.familyName
+            }
+            if contact.emailAddresses.isEmpty == false {
+                displayTaskViewController.email = contact.emailAddresses[0].value as String
+            }
+            if contact.phoneNumbers.count != 0 {
+                displayTaskViewController.phone = contact.phoneNumbers[0].value.stringValue
+            }
+            if contact.imageData?.isEmpty == false {
+                displayTaskViewController.image = UIImage(data: contact.imageData!)!
+                
+            }
+            if contact.postalAddresses.count != 0 {
+                let address = contact.postalAddresses[0].value
+                let string = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.postalCode
+                displayTaskViewController.contactLocationDescription = string
+        }
     }
 
 }
+}
+
+
+
+
+
+
+
+

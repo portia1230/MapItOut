@@ -55,7 +55,7 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="List icon.png"/>
                                         <connections>
-                                            <segue destination="M4Q-aG-t6d" kind="presentation" id="BYu-2L-pCR"/>
+                                            <segue destination="M4Q-aG-t6d" kind="presentation" animates="NO" id="BYu-2L-pCR"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -183,8 +183,8 @@
                         <outlet property="contactImage" destination="sHw-2M-bg3" id="9ta-Ka-x1c"/>
                         <outlet property="contactNameLabel" destination="BaJ-CN-Oi1" id="1qb-7E-tGO"/>
                         <outlet property="contactRelationshipLabel" destination="EWo-dO-CNT" id="SKS-iV-GmA"/>
-                        <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" id="sz0-VJ-i1G"/>
-                        <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" id="h3e-dj-j96"/>
+                        <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" animates="NO" id="sz0-VJ-i1G"/>
+                        <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" animates="NO" id="h3e-dj-j96"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xoh-YE-JaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -203,21 +203,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IbE-9A-UlL">
-                                <rect key="frame" x="0.0" y="65" width="375" height="602"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IbE-9A-UlL">
+                                <rect key="frame" x="0.0" y="62" width="375" height="605"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="60" id="9c3-40-vcp" customClass="ContactsTableViewCell" customModule="MapItOut" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="50" id="9c3-40-vcp" customClass="ContactsTableViewCell" customModule="MapItOut" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9c3-40-vcp" id="U5R-Ut-xLc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOZ-iM-YuU">
-                                                    <rect key="frame" x="28" y="16" width="334" height="27"/>
+                                                    <rect key="frame" x="23" y="11" width="339" height="27"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="27" id="fA5-gi-rmb"/>
+                                                        <constraint firstAttribute="height" constant="27" id="O53-Ve-2UL"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
                                                     <color key="textColor" red="0.52555841209999998" green="0.52554816010000005" blue="0.52555513379999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -225,13 +225,14 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="qOZ-iM-YuU" firstAttribute="leading" secondItem="U5R-Ut-xLc" secondAttribute="leadingMargin" constant="20" id="3jp-nh-ZDt"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="qOZ-iM-YuU" secondAttribute="trailing" constant="5" id="UkS-xm-pnp"/>
-                                                <constraint firstItem="qOZ-iM-YuU" firstAttribute="top" secondItem="U5R-Ut-xLc" secondAttribute="topMargin" constant="8" id="s9e-7A-Cwc"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qOZ-iM-YuU" secondAttribute="trailing" constant="5" id="CbH-jE-4g1"/>
+                                                <constraint firstItem="qOZ-iM-YuU" firstAttribute="top" secondItem="U5R-Ut-xLc" secondAttribute="topMargin" constant="3" id="D8G-v1-iGi"/>
+                                                <constraint firstItem="qOZ-iM-YuU" firstAttribute="leading" secondItem="U5R-Ut-xLc" secondAttribute="leadingMargin" constant="15" id="SVJ-ML-rhK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="nameLabel" destination="qOZ-iM-YuU" id="xk3-ZW-AJH"/>
+                                            <segue destination="Y6f-BZ-apC" kind="presentation" identifier="contactSelected" trigger="accessoryAction" animates="NO" id="Xjx-vg-KDV"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -265,14 +266,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="OMD-xb-Drs" firstAttribute="top" secondItem="IbE-9A-UlL" secondAttribute="bottom" id="8DB-fc-7Wh"/>
+                            <constraint firstItem="IbE-9A-UlL" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="LCR-Sk-0gS"/>
                             <constraint firstItem="SUU-7X-VLL" firstAttribute="top" secondItem="eVe-So-qd9" secondAttribute="top" id="LZW-5b-X3G"/>
-                            <constraint firstItem="IbE-9A-UlL" firstAttribute="top" secondItem="SUU-7X-VLL" secondAttribute="bottom" id="SKK-uH-fZq"/>
                             <constraint firstItem="APm-fK-a3O" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" constant="15" id="SLV-5f-Jw7"/>
                             <constraint firstItem="APm-fK-a3O" firstAttribute="top" secondItem="eVe-So-qd9" secondAttribute="top" constant="30" id="Y88-TZ-xRp"/>
-                            <constraint firstItem="IbE-9A-UlL" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="bkh-UB-9Zg"/>
                             <constraint firstAttribute="trailing" secondItem="SUU-7X-VLL" secondAttribute="trailing" id="cdp-xW-lf7"/>
-                            <constraint firstAttribute="trailing" secondItem="IbE-9A-UlL" secondAttribute="trailing" id="sfc-2m-poy"/>
-                            <constraint firstItem="OMD-xb-Drs" firstAttribute="top" secondItem="IbE-9A-UlL" secondAttribute="bottom" id="tH9-In-4ov"/>
+                            <constraint firstAttribute="trailing" secondItem="IbE-9A-UlL" secondAttribute="trailing" id="fxi-py-haV"/>
+                            <constraint firstItem="IbE-9A-UlL" firstAttribute="top" secondItem="APm-fK-a3O" secondAttribute="bottom" constant="8" id="o7i-Pz-P8o"/>
                             <constraint firstItem="SUU-7X-VLL" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="x8B-Xj-CCk"/>
                         </constraints>
                     </view>
@@ -282,7 +283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oLX-wb-era" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1521" y="-783"/>
+            <point key="canvasLocation" x="1520.8" y="-783.05847076461771"/>
         </scene>
         <!--Contact List Controller-->
         <scene sceneID="qOC-wK-11n">
@@ -434,8 +435,8 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="c0R-kg-YAL" id="sXB-Wd-BDx"/>
-                        <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addNewContact" id="e1G-mV-pNx"/>
-                        <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" id="9ej-53-kgX"/>
+                        <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addNewContact" animates="NO" id="e1G-mV-pNx"/>
+                        <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" animates="NO" id="9ej-53-kgX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Adx-nZ-1rZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -663,7 +664,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPb-xv-DCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1521" y="-94"/>
+            <point key="canvasLocation" x="1521" y="-52"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nYK-Xd-eHY">
@@ -696,7 +697,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e1G-mV-pNx"/>
         <segue reference="9ej-53-kgX"/>
+        <segue reference="Xjx-vg-KDV"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
