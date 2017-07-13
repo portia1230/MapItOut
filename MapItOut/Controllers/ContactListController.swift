@@ -18,6 +18,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     //MARK: - Properties
     
+    @IBOutlet weak var tableView: UITableView!
     var keys : [String] = []
     var contacts : [Entry] = []
     var locationDescription = ""
@@ -34,6 +35,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         UserService.contacts(for: User.currentUser) { (contacts) in
             var sortedContacts = LocationService.rankDistance(entries: contacts)
             self.contacts = sortedContacts

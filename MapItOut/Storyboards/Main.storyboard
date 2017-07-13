@@ -54,6 +54,9 @@
                                             <constraint firstAttribute="height" constant="25" id="gz2-xd-rIN"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="List icon.png"/>
+                                        <connections>
+                                            <segue destination="M4Q-aG-t6d" kind="presentation" id="BYu-2L-pCR"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -281,10 +284,10 @@
             </objects>
             <point key="canvasLocation" x="1521" y="-783"/>
         </scene>
-        <!--View Controller-->
+        <!--Contact List Controller-->
         <scene sceneID="qOC-wK-11n">
             <objects>
-                <viewController id="M4Q-aG-t6d" sceneMemberID="viewController">
+                <viewController id="M4Q-aG-t6d" customClass="ContactListController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="D8j-uK-q38"/>
                         <viewControllerLayoutGuide type="bottom" id="ZLz-XZ-O7G"/>
@@ -297,14 +300,14 @@
                                 <rect key="frame" x="0.0" y="65" width="375" height="602"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="108" id="SDZ-pq-bZg">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="108" id="SDZ-pq-bZg" customClass="CustomTableCell" customModule="MapItOut" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1" width="375" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SDZ-pq-bZg" id="4PH-JJ-jFI">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="107.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Fx-eh-Nak">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Fx-eh-Nak">
                                                     <rect key="frame" x="18" y="18" width="70" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="70" id="7nz-UG-urK"/>
@@ -353,8 +356,18 @@
                                                 <constraint firstItem="9Fx-eh-Nak" firstAttribute="leading" secondItem="4PH-JJ-jFI" secondAttribute="leadingMargin" constant="10" id="q0J-wm-6Ni"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="NPT-rz-VAa" id="hpM-Gz-JaU"/>
+                                            <outlet property="nameLabel" destination="vTU-7U-Q2O" id="aeO-Nh-45q"/>
+                                            <outlet property="photoImageView" destination="9Fx-eh-Nak" id="gVO-AC-cwA"/>
+                                            <outlet property="relationshipLabel" destination="K5r-ab-Lw2" id="U0z-qg-xu6"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="M4Q-aG-t6d" id="weo-VH-RHl"/>
+                                    <outlet property="delegate" destination="M4Q-aG-t6d" id="Y7g-yB-ISd"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGs-l4-Jqo">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
@@ -368,6 +381,9 @@
                                         <state key="normal" backgroundImage="Map Icon.png">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="mapButtonTapped:" destination="M4Q-aG-t6d" eventType="touchUpInside" id="E81-pA-DsW"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ti0-Dn-HJv">
                                         <rect key="frame" x="335" y="32" width="23" height="23"/>
@@ -378,6 +394,9 @@
                                         <state key="normal" backgroundImage="plusImage.png">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="addButtonTapped:" destination="M4Q-aG-t6d" eventType="touchUpInside" id="oF6-2I-K7K"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8a-mg-7TL">
                                         <rect key="frame" x="17" y="32" width="25" height="25"/>
@@ -414,6 +433,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="tableView" destination="c0R-kg-YAL" id="sXB-Wd-BDx"/>
                         <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addNewContact" id="e1G-mV-pNx"/>
                         <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" id="9ej-53-kgX"/>
                     </connections>
@@ -676,7 +696,7 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9ej-53-kgX"/>
         <segue reference="e1G-mV-pNx"/>
+        <segue reference="9ej-53-kgX"/>
     </inferredMetricsTieBreakers>
 </document>
