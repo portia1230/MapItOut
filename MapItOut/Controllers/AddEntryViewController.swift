@@ -269,8 +269,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBAction func addContactButtonTapped(_ sender: Any) {
         if self.firstNameTextField.text != "",
             self.lastNameTextField.text != "",
-            self.photoImageView.image != nil,
-            self.relationshipTextField.text == "Relationship Status"{
+            self.relationshipTextField.text != "Relationship Status"{
             if photoImageView.image == nil {
                 photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
             }
