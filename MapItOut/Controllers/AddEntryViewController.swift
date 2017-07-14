@@ -12,16 +12,15 @@ import AddressBookUI
 import FirebaseStorage
 import FirebaseDatabase
 
-class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDelegate, UITextFieldDelegate{
+class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate{
     
     //MARK: - Properties
     
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var locationMapView: MKMapView!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var addContactButton: UIButton!
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var locationTextField: UITextField!
     
     var firstName : String!
     var lastName : String!
@@ -57,14 +56,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = false
         locationMapView.tintColor = blueColor
-        photoImageView.layer.cornerRadius = 60
-        uploadPhotoButton.layer.cornerRadius = 60
+        photoImageView.layer.cornerRadius = 75
+        uploadPhotoButton.layer.cornerRadius = 75
         photoImageView.clipsToBounds = true
-        addContactButton.layer.cornerRadius = 15
         locationMapView.showsUserLocation = true
         
         firstNameTextField.delegate = self
@@ -77,6 +74,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         relationshipTextField.tag = 2
         phoneTextField.tag = 3
         emailTextField.tag = 4
+        locationTextField.tag = 5
         
         //dismiss keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -105,7 +103,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         }
         
         if let _ = self.contactLocationDescription {
-            self.locationLabel.text = self.contactLocationDescription
+            self.locationTextField.text = self.contactLocationDescription
             getCoordinate(addressString: self.contactLocationDescription!, completionHandler: { (location, error) in
                 let dispatchGroup = DispatchGroup()
                 let anno = MKPointAnnotation()
@@ -176,7 +174,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 trimmed = address
             }
             trimmed = trimmed.replacingOccurrences(of: "\n", with: ", ")
-            self.locationLabel.text = trimmed
+            self.locationTextField.text = trimmed
         }
     }
     
@@ -184,34 +182,34 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
         view.endEditing(true)
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(searchBar.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
-            if error == nil{
-                let placemark = placemarks?.first
-                let anno = MKPointAnnotation()
-                anno.coordinate = (placemark?.location?.coordinate)!
-                
-                let annotations = self.locationMapView.annotations
-                
-                //centering and clearing other annotations
-                let span = MKCoordinateSpanMake(0.075, 0.075)
-                self.location = anno.coordinate
-                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
-                self.locationMapView.setRegion(region, animated: true)
-                self.locationMapView.removeAnnotations(annotations)
-                self.locationMapView.addAnnotation(anno)
-                
-                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
-                self.longitude = anno.coordinate.longitude
-                self.latitude = anno.coordinate.latitude
-                
-            } else {
-                print(error?.localizedDescription ?? "error" )
-            }
-        }
-    }
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.resignFirstResponder()
+//        let geocoder = CLGeocoder()
+//        geocoder.geocodeAddressString(searchBar.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+//            if error == nil{
+//                let placemark = placemarks?.first
+//                let anno = MKPointAnnotation()
+//                anno.coordinate = (placemark?.location?.coordinate)!
+//                
+//                let annotations = self.locationMapView.annotations
+//                
+//                //centering and clearing other annotations
+//                let span = MKCoordinateSpanMake(0.075, 0.075)
+//                self.location = anno.coordinate
+//                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+//                self.locationMapView.setRegion(region, animated: true)
+//                self.locationMapView.removeAnnotations(annotations)
+//                self.locationMapView.addAnnotation(anno)
+//                
+//                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+//                self.longitude = anno.coordinate.longitude
+//                self.latitude = anno.coordinate.latitude
+//                
+//            } else {
+//                print(error?.localizedDescription ?? "error" )
+//            }
+//        }
+//    }
     
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
         photoHelper.presentActionSheet(from: self)
@@ -227,7 +225,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         
-        self.dismiss(animated: false) {
+        self.dismiss(animated: true) {
         }
     }
     
@@ -263,7 +261,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UISearchBarDe
                 
                 let urlString = downloadURL.absoluteString
                 
-                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationLabel.text!)
+                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationTextField.text!)
                 EntryService.addEntry(entry: entry)
                 self.dismiss(animated: true) {
                 }

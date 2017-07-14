@@ -37,6 +37,7 @@ class MainViewController : UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         UserService.contacts(for: User.currentUser) { (contacts) in
             if contacts.isEmpty{
+                self.contactNameLabel.backgroundColor = UIColor.clear
                 self.contactNameLabel.text = "No contact entered"
                 self.contactAddressLabel.text = ""
                 self.contactButton.isHidden = true
@@ -44,12 +45,15 @@ class MainViewController : UIViewController{
                 self.contactButton.isHidden = false
                 var sortedContacts = LocationService.rankDistance(entries: contacts)
                 let imageURL = URL(string: sortedContacts[0].imageURL)
-                self.contactAddressLabel.text = sortedContacts[0].locationDescription
                 let coordinate = LocationService.getLocation(manager: self.locationManager)
                 let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
                 
                 let distance = myLocation.distance(from: contactLocation)
+                
+                self.contactAddressLabel.backgroundColor = UIColor.clear
+                self.contactNameLabel.backgroundColor = UIColor.clear
+                self.contactRelationshipLabel.backgroundColor = UIColor.clear
                 
                 if distance > 1000.0
                 {
