@@ -12,7 +12,7 @@ import AddressBookUI
 import FirebaseStorage
 import FirebaseDatabase
 
-class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate{
+class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate{
     
     //MARK: - Properties
     
@@ -22,6 +22,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var addContactButton: UIButton!
     @IBOutlet weak var locationTextField: UITextField!
     
+    var originalLocation : String!
     var firstName : String!
     var lastName : String!
     var image : UIImage!
@@ -42,6 +43,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         return .lightContent
     }
     
+    var pickOption = ["Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
     
     //MARK: - IBoutlets for text fields
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -51,11 +53,15 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var emailTextField: UITextField!
     
     
-    
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.tintColor = UIColor.clear
+        relationshipTextField.inputView = pickerView
+        
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = false
         locationMapView.tintColor = blueColor
@@ -182,6 +188,17 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         view.endEditing(true)
     }
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        if textField == locationTextField{
+            self.originalLocation = locationTextField.text
+            return true
+        }
+        return false
+    }
+    
+    
+    
+    
 //    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 //        searchBar.resignFirstResponder()
 //        let geocoder = CLGeocoder()
@@ -292,5 +309,23 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             
         }
+    }
+    
+    
+    //MARK: - Picker View functions
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickOption.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickOption[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        relationshipTextField.text = pickOption[row]
     }
 }
