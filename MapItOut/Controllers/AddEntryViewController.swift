@@ -29,6 +29,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     var email : String!
     var phone : String!
     var contactLocationDescription : String!
+    var relationship: String!
     
     var latitude = 0.0
     var longitude = 0.0
@@ -57,11 +58,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var pickerView = UIPickerView()
+        let pickerView = UIPickerView()
         pickerView.delegate = self
         relationshipTextField.tintColor = UIColor.clear
         relationshipTextField.inputView = pickerView
-        
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = false
         locationMapView.tintColor = blueColor
@@ -92,6 +92,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         view.addGestureRecognizer(swipeDown)
         view.addGestureRecognizer(swipeUp)
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //set region/zoom in for map
         if let firstName = self.firstName {
             self.firstNameTextField.text = firstName
         }
@@ -121,6 +125,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.locationMapView.addAnnotation(anno)
                 self.locationMapView.showsUserLocation = false
                 self.location = location
+                let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
+                let span = MKCoordinateSpanMake(0.1, 0.1)
+                let region = MKCoordinateRegionMake(coordinate, span)
+                self.locationMapView.setRegion(region, animated: false)
                 dispatchGroup.notify(queue: .main, execute: {
                 })
             })
@@ -137,17 +145,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.locationMapView.removeAnnotations(annotations)
             self.locationMapView.addAnnotation(anno)
             self.locationMapView.showsUserLocation = false
+            let span = MKCoordinateSpanMake(0.1, 0.1)
+            let region = MKCoordinateRegionMake(coordinate, span)
+            locationMapView.setRegion(region, animated: false)
         }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //set region/zoom in for map
-        let location = self.location
-        let coordinate = CLLocationCoordinate2DMake((location!.latitude), (location!.longitude))
-        let span = MKCoordinateSpanMake(0.1, 0.1)
-        let region = MKCoordinateRegionMake(coordinate, span)
-        locationMapView.setRegion(region, animated: false)
     }
     
     
@@ -228,12 +229,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             
         }
     }
-    
-    
-    
-    //    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    //        searchBar.resignFirstResponder()
-    //       //    }
     
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
         photoHelper.presentActionSheet(from: self)

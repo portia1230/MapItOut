@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseAuthUI
+import FirebaseDatabase
 import Kingfisher
 import MapKit
 import AddressBookUI
@@ -85,6 +84,15 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     
     //MARK: - Functions
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
+            if editingStyle == .delete{
+                let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(contacts[indexPath.row].key)
+                ref.removeValue()
+                viewDidAppear(true)
+        }
+    }
+    
     
     @IBAction func mapButtonTapped(_ sender: Any) {
         dismiss(animated: false) {
