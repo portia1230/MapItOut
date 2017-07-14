@@ -12,7 +12,8 @@ import Kingfisher
 import MapKit
 import ContactsUI
 
-class MainViewController : UIViewController, MKMapViewDelegate{
+
+class MainViewController : UIViewController, MKMapViewDelegate {
     
     //MARK: - Properties
     
@@ -22,12 +23,11 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
-    
     var contactStore = CNContactStore()
     
     var locationManager = CLLocationManager()
     var contacts : [Entry] = []
-    
+    let greenBorderColor = UIColor(red: 71/255, green: 198/255, blue: 133/255, alpha: 1)
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -48,13 +48,10 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                 let latitude = contact.latitude
                 let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
                 var anno = MKPointAnnotation()
-                anno.coordinate = self.getLocation(manager: self.locationManager)
+                anno.coordinate = coordinate
                 //let newImage = self.maskImage(image: contactImage!, withMask: pinImage!)
                 //annoView.image = UIImage(cgImage: newImage as! CGImage, scale: 720/30, orientation: .up)
                 self.mapView.addAnnotation(anno)
-                let span = MKCoordinateSpanMake(100, 100)
-                let region = MKCoordinateRegionMake(anno.coordinate, span)
-                self.mapView.setRegion(region, animated: false)
                 
             }
             
@@ -87,8 +84,18 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                 self.contactRelationshipLabel.text = sortedContacts[0].relationship
                 self.contactImage.kf.setImage(with: imageURL)
             }
-            
         }
+        let myLocation = getLocation(manager: locationManager)
+        let anno = MKPointAnnotation()
+        anno.coordinate = myLocation
+        mapView.addAnnotation(anno)
+        let circle = MKCircle(center: myLocation, radius: 200000)
+        
+        self.mapView.setRegion(MKCoordinateRegion(center: myLocation, span: MKCoordinateSpan(latitudeDelta: 7, longitudeDelta: 7)), animated: true)
+        self.mapView.add(circle)
+        let span = MKCoordinateSpanMake(100, 100)
+        let region = MKCoordinateRegionMake(anno.coordinate, span)
+        self.mapView.setRegion(region, animated: false)
     }
     
     
@@ -180,4 +187,16 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         return locValue
     }
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let circleRenderer = MKCircleRenderer(overlay: overlay)
+        circleRenderer.fillColor = self.greenBorderColor.withAlphaComponent(0.1)
+        circleRenderer.strokeColor = self.greenBorderColor
+        circleRenderer.lineWidth = 2
+        return circleRenderer
+    }
+    
 }
+
+
+
