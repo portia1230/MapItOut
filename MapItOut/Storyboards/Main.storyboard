@@ -583,6 +583,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6f-BZ-apC" id="3bY-m5-gTr"/>
+                                </connections>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="G4R-yF-e6H">
                                 <rect key="frame" x="181.5" y="90" width="172.5" height="73"/>
@@ -601,6 +604,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Y6f-BZ-apC" id="0dq-YB-tIv"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -634,6 +640,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6f-BZ-apC" id="6T4-vP-CrL"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2JX-Kh-yRr">
                                 <rect key="frame" x="0.0" y="405" width="375" height="1"/>
@@ -674,6 +683,9 @@
                                 <color key="textColor" red="0.92096400260925293" green="0.27257329225540161" blue="0.22357378900051117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6f-BZ-apC" id="EvX-jh-eWS"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Relationship Status" placeholder="Relationship with you" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aKB-qw-nmK">
                                 <rect key="frame" x="169.5" y="198" width="184.5" height="30"/>
@@ -683,9 +695,12 @@
                                 <color key="textColor" red="0.40570312738418579" green="0.75298976898193359" blue="0.52552276849746704" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6f-BZ-apC" id="PrD-b6-IDW"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iej-ZM-swb">
-                                <rect key="frame" x="211" y="183" width="115" height="1"/>
+                                <rect key="frame" x="191" y="183" width="135" height="1"/>
                                 <color key="backgroundColor" red="0.81963789460000003" green="0.81962239739999998" blue="0.81963288779999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="gdC-zN-xh5"/>
@@ -745,7 +760,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="aKB-qw-nmK" secondAttribute="trailing" constant="5" id="YhG-Uz-L5b"/>
                             <constraint firstItem="aKB-qw-nmK" firstAttribute="top" secondItem="Iej-ZM-swb" secondAttribute="bottom" constant="14" id="ZfV-cT-Ift"/>
                             <constraint firstItem="G4R-yF-e6H" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="bottom" constant="25" id="bEF-HL-IxO"/>
-                            <constraint firstItem="Iej-ZM-swb" firstAttribute="leading" secondItem="vzQ-uB-BtM" secondAttribute="leadingMargin" constant="195" id="d5e-VI-0sh"/>
+                            <constraint firstItem="Iej-ZM-swb" firstAttribute="leading" secondItem="vzQ-uB-BtM" secondAttribute="leadingMargin" constant="175" id="d5e-VI-0sh"/>
                             <constraint firstAttribute="trailing" secondItem="2JX-Kh-yRr" secondAttribute="trailing" id="eXK-gO-uhB"/>
                             <constraint firstItem="2JX-Kh-yRr" firstAttribute="leading" secondItem="vzQ-uB-BtM" secondAttribute="leading" id="fv0-fI-Qgg"/>
                             <constraint firstItem="hsB-RU-xgA" firstAttribute="leading" secondItem="fdx-PG-M5D" secondAttribute="trailing" constant="10" id="ge6-TT-mZO"/>

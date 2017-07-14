@@ -59,7 +59,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         super.viewDidLoad()
         var pickerView = UIPickerView()
         pickerView.delegate = self
-        pickerView.tintColor = UIColor.clear
+        relationshipTextField.tintColor = UIColor.clear
         relationshipTextField.inputView = pickerView
         
         locationMapView.delegate = self
@@ -188,45 +188,52 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         view.endEditing(true)
     }
     
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == locationTextField{
             self.originalLocation = locationTextField.text
+            self.locationTextField.text = ""
             return true
         }
-        return false
+        return true
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if self.locationTextField.text == ""{
+            self.locationTextField.text = self.originalLocation
+        } else {
+            let geocoder = CLGeocoder()
+            geocoder.geocodeAddressString(locationTextField.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+                if error == nil{
+                    let placemark = placemarks?.first
+                    let anno = MKPointAnnotation()
+                    anno.coordinate = (placemark?.location?.coordinate)!
+                    
+                    let annotations = self.locationMapView.annotations
+                    
+                    //centering and clearing other annotations
+                    let span = MKCoordinateSpanMake(0.075, 0.075)
+                    self.location = anno.coordinate
+                    let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                    self.locationMapView.setRegion(region, animated: true)
+                    self.locationMapView.removeAnnotations(annotations)
+                    self.locationMapView.addAnnotation(anno)
+                    
+                    self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+                    self.longitude = anno.coordinate.longitude
+                    self.latitude = anno.coordinate.latitude
+                    
+                } else {
+                    print(error?.localizedDescription ?? "error" )
+                }
+            }
+            
+        }
     }
     
     
     
-    
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.resignFirstResponder()
-//        let geocoder = CLGeocoder()
-//        geocoder.geocodeAddressString(searchBar.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
-//            if error == nil{
-//                let placemark = placemarks?.first
-//                let anno = MKPointAnnotation()
-//                anno.coordinate = (placemark?.location?.coordinate)!
-//                
-//                let annotations = self.locationMapView.annotations
-//                
-//                //centering and clearing other annotations
-//                let span = MKCoordinateSpanMake(0.075, 0.075)
-//                self.location = anno.coordinate
-//                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
-//                self.locationMapView.setRegion(region, animated: true)
-//                self.locationMapView.removeAnnotations(annotations)
-//                self.locationMapView.addAnnotation(anno)
-//                
-//                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
-//                self.longitude = anno.coordinate.longitude
-//                self.latitude = anno.coordinate.latitude
-//                
-//            } else {
-//                print(error?.localizedDescription ?? "error" )
-//            }
-//        }
-//    }
+    //    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    //        searchBar.resignFirstResponder()
+    //       //    }
     
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
         photoHelper.presentActionSheet(from: self)
