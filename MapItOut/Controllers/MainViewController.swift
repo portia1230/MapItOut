@@ -12,7 +12,7 @@ import Kingfisher
 import MapKit
 import ContactsUI
 
-class MainViewController : UIViewController{
+class MainViewController : UIViewController, MKMapViewDelegate{
     
     //MARK: - Properties
     
@@ -21,7 +21,7 @@ class MainViewController : UIViewController{
     @IBOutlet weak var contactNameLabel: UILabel!
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var contactButton: UIButton!
-    
+    @IBOutlet weak var mapView: MKMapView!
     
     var contactStore = CNContactStore()
     
@@ -35,7 +35,29 @@ class MainViewController : UIViewController{
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
+        
         UserService.contacts(for: User.currentUser) { (contacts) in
+            self.contacts = contacts
+            
+            for contact in contacts{
+                let imageURL = URL(string
+                    : contact.imageURL)
+                let imageView = UIImageView()
+                imageView.kf.setImage(with: imageURL!)
+                let longitude = contact.longitude
+                let latitude = contact.latitude
+                let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+                var anno = MKPointAnnotation()
+                anno.coordinate = self.getLocation(manager: self.locationManager)
+                //let newImage = self.maskImage(image: contactImage!, withMask: pinImage!)
+                //annoView.image = UIImage(cgImage: newImage as! CGImage, scale: 720/30, orientation: .up)
+                self.mapView.addAnnotation(anno)
+                let span = MKCoordinateSpanMake(100, 100)
+                let region = MKCoordinateRegionMake(anno.coordinate, span)
+                self.mapView.setRegion(region, animated: false)
+                
+            }
+            
             if contacts.isEmpty{
                 self.contactNameLabel.backgroundColor = UIColor.clear
                 self.contactNameLabel.text = "No contact entered"
@@ -69,13 +91,19 @@ class MainViewController : UIViewController{
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //fittng the photo
+        mapView.delegate = self
         contactImage.layer.cornerRadius = 35
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
+        
     }
+    
+    
+    //MARK: - Functions
     
     @IBAction func addButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .actionSheet)
@@ -102,12 +130,54 @@ class MainViewController : UIViewController{
                 alertController.addAction(UIAlertAction(title: "Okay!", style: .cancel,handler: nil ))
                 self.present(alertController, animated: true, completion: nil)
             }
-            }))
+        }))
         
         alert.addAction(UIAlertAction(title: "Create new contact", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
         alert.addAction(UIAlertAction(title: "Back", style: .cancel , handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
+    func maskImage(image: UIImage, withMask maskImage: UIImage) -> UIImage {
+        
+        let maskRef = maskImage.cgImage!
+        
+        let mask = CGImage(
+            maskWidth: maskRef.width,
+            height: maskRef.height,
+            bitsPerComponent: maskRef.bitsPerComponent,
+            bitsPerPixel: maskRef.bitsPerPixel,
+            bytesPerRow: maskRef.bytesPerRow,
+            provider: maskRef.dataProvider!,
+            decode: nil,
+            shouldInterpolate: false)
+        
+        let masked = image.cgImage!.masking(mask!)
+        let image = UIImage(cgImage: masked!)
+        return image
+        
+    }
     
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
+        if !(annotation is MKPointAnnotation){
+            return nil
+        }
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
+        }
+        let pinImage = UIImage(named: "ImagePin")
+        
+        annotationView!.image = UIImage(cgImage: (pinImage?.cgImage)!, scale: 730/67, orientation: .up)
+        return annotationView
+        
+    }
+    
+    func getLocation(manager: CLLocationManager) -> CLLocationCoordinate2D {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        return locValue
+    }
 }

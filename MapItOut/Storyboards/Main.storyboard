@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gZu-wW-qCT">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gZu-wW-qCT">
                                 <rect key="frame" x="0.0" y="65" width="375" height="484"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aSz-Hc-R3b">
@@ -200,6 +200,7 @@
                         <outlet property="contactImage" destination="sHw-2M-bg3" id="9ta-Ka-x1c"/>
                         <outlet property="contactNameLabel" destination="BaJ-CN-Oi1" id="1qb-7E-tGO"/>
                         <outlet property="contactRelationshipLabel" destination="EWo-dO-CNT" id="SKS-iV-GmA"/>
+                        <outlet property="mapView" destination="gZu-wW-qCT" id="5KU-Qc-gNO"/>
                         <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" id="sz0-VJ-i1G"/>
                         <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" id="h3e-dj-j96"/>
                     </connections>
@@ -387,7 +388,7 @@
                                             <outlet property="relationshipLabel" destination="K5r-ab-Lw2" id="U0z-qg-xu6"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="200" id="ob9-JB-mL0">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bigCell" rowHeight="200" id="ob9-JB-mL0" customClass="SelectedTableViewCell" customModule="MapItOut" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="109" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ob9-JB-mL0" id="I8J-KQ-xLn">
@@ -407,9 +408,9 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jupiter, Florida, USA" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUv-yb-C9f">
-                                                            <rect key="frame" x="0.0" y="24" width="156" height="40"/>
+                                                            <rect key="frame" x="0.0" y="24" width="179" height="40"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="nie-uk-7Qg"/>
+                                                                <constraint firstAttribute="height" constant="40" id="Hek-dC-cMr"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                                             <color key="textColor" red="0.99499177930000005" green="0.18655474480000001" blue="0.1686470062" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -433,7 +434,9 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="115.5" id="5RY-OU-VRG"/>
-                                                        <constraint firstItem="hUv-yb-C9f" firstAttribute="top" secondItem="tWE-wi-Nnj" secondAttribute="bottom" constant="4" id="Gog-SM-nXo"/>
+                                                        <constraint firstAttribute="trailing" secondItem="hUv-yb-C9f" secondAttribute="trailing" constant="5" id="OIA-su-nwO"/>
+                                                        <constraint firstItem="hUv-yb-C9f" firstAttribute="leading" secondItem="4ZV-eS-K8q" secondAttribute="leading" id="Vfw-WS-ack"/>
+                                                        <constraint firstItem="hUv-yb-C9f" firstAttribute="top" secondItem="tWE-wi-Nnj" secondAttribute="bottom" constant="4" id="lIR-yS-hE8"/>
                                                     </constraints>
                                                 </stackView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mFC-6z-B7b">
@@ -465,6 +468,14 @@
                                                 <constraint firstItem="4ZV-eS-K8q" firstAttribute="top" secondItem="I8J-KQ-xLn" secondAttribute="topMargin" constant="15" id="ty6-YO-k7t"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="hUv-yb-C9f" id="QWH-iU-1Wz"/>
+                                            <outlet property="contactButton" destination="qbq-jD-sYO" id="VIw-RN-XJT"/>
+                                            <outlet property="distanceLabel" destination="4oX-iW-m6g" id="Sho-lB-fu6"/>
+                                            <outlet property="nameLabel" destination="tWE-wi-Nnj" id="FvP-tb-DTp"/>
+                                            <outlet property="photoImageView" destination="mFC-6z-B7b" id="BrE-7z-Fxx"/>
+                                            <outlet property="relationshipLabel" destination="rht-aw-TTi" id="HGS-FS-Aaj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -909,8 +920,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e1G-mV-pNx"/>
-        <segue reference="9ej-53-kgX"/>
+        <segue reference="h3e-dj-j96"/>
+        <segue reference="sz0-VJ-i1G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

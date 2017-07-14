@@ -112,6 +112,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.photoImageView.image = self.image
         }
         
+        self.locationMapView.showsUserLocation = false
+        
         if let _ = self.contactLocationDescription {
             self.locationTextField.text = self.contactLocationDescription
             getCoordinate(addressString: self.contactLocationDescription!, completionHandler: { (location, error) in
@@ -123,7 +125,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 let annotations = self.locationMapView.annotations
                 self.locationMapView.removeAnnotations(annotations)
                 self.locationMapView.addAnnotation(anno)
-                self.locationMapView.showsUserLocation = false
                 self.location = location
                 let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
                 let span = MKCoordinateSpanMake(0.1, 0.1)
@@ -144,7 +145,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             let annotations = self.locationMapView.annotations
             self.locationMapView.removeAnnotations(annotations)
             self.locationMapView.addAnnotation(anno)
-            self.locationMapView.showsUserLocation = false
             let span = MKCoordinateSpanMake(0.1, 0.1)
             let region = MKCoordinateRegionMake(coordinate, span)
             locationMapView.setRegion(region, animated: false)
@@ -211,7 +211,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let annotations = self.locationMapView.annotations
                     
                     //centering and clearing other annotations
-                    let span = MKCoordinateSpanMake(0.075, 0.075)
+                    let span = MKCoordinateSpanMake(0.1, 0.1)
                     self.location = anno.coordinate
                     let region = MKCoordinateRegion(center: anno.coordinate, span: span)
                     self.locationMapView.setRegion(region, animated: true)
@@ -286,13 +286,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 }
             }
         } else {
-            
             let alertController = UIAlertController(title: "", message:
                 "Did you put in a first name and last name?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
-            
-            
         }
         
     }

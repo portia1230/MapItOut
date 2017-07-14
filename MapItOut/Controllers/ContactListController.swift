@@ -56,40 +56,66 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         // #warning Incomplete implementation, return the number of rows
         
         return self.contacts.count
-    
+        
     }
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
+            let contact = self.contacts[indexPath.row]
+            let imageURL = URL(string: contact.imageURL)
+            
+            cell.addressLabel.text = contact.locationDescription
+            cell.nameLabel.text = contact.firstName + " " + contact.lastName
+            cell.relationshipLabel.text = contact.relationship
+            cell.photoImageView.kf.setImage(with: imageURL)
+            cell.photoImageView.layer.cornerRadius = 35
+            cell.photoImageView.clipsToBounds = true
+            return cell
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
-        let contact = self.contacts[indexPath.row]
-        let imageURL = URL(string: contact.imageURL)
+        }
     
-        cell.addressLabel.text = contact.locationDescription
-        cell.nameLabel.text = contact.firstName + " " + contact.lastName
-        cell.relationshipLabel.text = contact.relationship
-        cell.photoImageView.kf.setImage(with: imageURL)
-        cell.photoImageView.layer.cornerRadius = 35
-        cell.photoImageView.clipsToBounds = true
-        
-        return cell
-    }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "bigCell", for: indexPath) as! SelectedTableViewCell
+//        let contact = self.contacts[indexPath.row]
+//        let imageURL = URL(string: contact.imageURL)
+//        let locationManager = CLLocationManager()
+//        let myCoordinate = LocationService.getLocation(manager: locationManager)
+//        let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
+//        let contactLocation = CLLocation(latitude: contacts[indexPath.row].latitude, longitude: contacts[indexPath.row].longitude)
+//        let distance = myLocation.distance(from: contactLocation)
+//        
+//        if distance > 1000.0
+//        {
+//            cell.distanceLabel.text = " \(Int(distance/1000)) KM away"
+//        } else {
+//            cell.distanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+//        }
+//        
+//        cell.photoImageView.layer.cornerRadius = 62.5
+//        cell.addressLabel.text = contact.locationDescription
+//        cell.nameLabel.text = contact.firstName + " " + contact.lastName
+//        cell.relationshipLabel.text = contact.relationship
+//        cell.photoImageView.kf.setImage(with: imageURL)
+//        cell.photoImageView.clipsToBounds = true
+//
+//    }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+//        if (tableView.cellForRow(at: indexPath)?.isSelected)!{
+//            return 200
+//        }
         return 108
-        
     }
     
-    
-    //MARK: - Functions
-    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
-            if editingStyle == .delete{
-                let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(contacts[indexPath.row].key)
-                ref.removeValue()
-                viewDidAppear(true)
+        if editingStyle == .delete{
+            let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(contacts[indexPath.row].key)
+            ref.removeValue()
+            viewDidAppear(true)
+            
         }
     }
     
@@ -131,5 +157,5 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     
-
+    
 }

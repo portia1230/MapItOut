@@ -26,6 +26,7 @@
 		837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938931F136CE1003B4B34 /* AddEntryViewController.swift */; };
 		837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938951F137213003B4B34 /* MGPhotoHelper.swift */; };
 		838AC93D1F16EB8300D0EDCA /* 500*20Shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */; };
+		839A99601F18B3DB00D7419D /* SelectedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839A995F1F18B3DB00D7419D /* SelectedTableViewCell.swift */; };
 		839DF3B51F147E1C0029D556 /* ImagePin.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DF3B31F147E1C0029D556 /* ImagePin.png */; };
 		839DF3B81F147E250029D556 /* redPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DF3B71F147E250029D556 /* redPin.png */; };
 		83A00C761F14B40B0033E821 /* List icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C741F14B40B0033E821 /* List icon.png */; };
@@ -65,6 +66,7 @@
 		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; };
 		837938951F137213003B4B34 /* MGPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGPhotoHelper.swift; path = Helpers/MGPhotoHelper.swift; sourceTree = "<group>"; };
 		838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "500*20Shadow.png"; path = "Arts/500*20Shadow.png"; sourceTree = "<group>"; };
+		839A995F1F18B3DB00D7419D /* SelectedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedTableViewCell.swift; path = CustomClasses/SelectedTableViewCell.swift; sourceTree = "<group>"; };
 		839DF3B31F147E1C0029D556 /* ImagePin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ImagePin.png; path = Arts/ImagePin.png; sourceTree = "<group>"; };
 		839DF3B71F147E250029D556 /* redPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redPin.png; path = Arts/redPin.png; sourceTree = "<group>"; };
 		83A00C741F14B40B0033E821 /* List icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "List icon.png"; path = "Arts/List icon.png"; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			children = (
 				8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */,
 				83533A751F134706002EEE74 /* CustomTableCell.swift */,
+				839A995F1F18B3DB00D7419D /* SelectedTableViewCell.swift */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				839A99601F18B3DB00D7419D /* SelectedTableViewCell.swift in Sources */,
 				83533A7B1F134CC5002EEE74 /* Entry.swift in Sources */,
 				83533A721F1340C7002EEE74 /* MainViewController.swift in Sources */,
 				83D529771F12F38800ED4EEE /* User.swift in Sources */,
