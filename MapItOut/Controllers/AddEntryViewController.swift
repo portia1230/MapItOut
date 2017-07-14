@@ -268,7 +268,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
         if self.firstNameTextField.text != "",
-            self.lastNameTextField.text != "" {
+            self.lastNameTextField.text != "",
+            self.photoImageView.image != nil,
+            self.relationshipTextField.text == "Relationship Status"{
             if photoImageView.image == nil {
                 photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
             }
@@ -287,7 +289,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
         } else {
             let alertController = UIAlertController(title: "", message:
-                "Did you put in a first name and last name?", preferredStyle: UIAlertControllerStyle.alert)
+                "Did you put in a full name, image, and relationship status?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }

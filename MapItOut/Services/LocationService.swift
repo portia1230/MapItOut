@@ -24,7 +24,10 @@ struct LocationService{
     }
     
     static func getLocation(manager: CLLocationManager) -> CLLocationCoordinate2D {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        var locValue = CLLocationCoordinate2DMake(0, 0)
+        if manager.location != nil{
+            locValue = manager.location!.coordinate
+        }
         return locValue
     }
 }
