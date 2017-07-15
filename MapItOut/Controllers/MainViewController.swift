@@ -38,7 +38,9 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
-        
+        let span = MKCoordinateSpanMake(100, 100)
+        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+        self.mapView.setRegion(region, animated: false)
         UserService.contacts(for: User.currentUser) { (contacts) in
             self.contacts = contacts
             for contact in contacts{
@@ -52,9 +54,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                 var anno = MKPointAnnotation()
                 anno.coordinate = coordinate
                 self.mapView.addAnnotation(anno)
-                let span = MKCoordinateSpanMake(100, 100)
-                let region = MKCoordinateRegionMake(anno.coordinate, span)
-                self.mapView.setRegion(region, animated: false)
             }
             
             if contacts.isEmpty{
