@@ -22,6 +22,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
     
     var contactStore = CNContactStore()
     
@@ -147,26 +148,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         self.present(alert, animated: true, completion: nil)
     }
     
-    func maskImage(image: UIImage, withMask maskImage: UIImage) -> UIImage {
-        
-        let maskRef = maskImage.cgImage!
-        
-        let mask = CGImage(
-            maskWidth: maskRef.width,
-            height: maskRef.height,
-            bitsPerComponent: maskRef.bitsPerComponent,
-            bitsPerPixel: maskRef.bitsPerPixel,
-            bytesPerRow: maskRef.bytesPerRow,
-            provider: maskRef.dataProvider!,
-            decode: nil,
-            shouldInterpolate: false)
-        
-        let masked = image.cgImage!.masking(mask!)
-        let image = UIImage(cgImage: masked!)
-        return image
-        
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if(annotation is MKUserLocation){
             return nil
@@ -182,8 +163,10 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         
         annotationView!.image = custum.image
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
-        annotationView?.frame.size = CGSize(width: 50, height: 50)
+        annotationView?.frame.size = CGSize(width: 52, height: 52)
         annotationView?.layer.cornerRadius = 25
+        annotationView?.layer.borderColor = redColor.cgColor
+        annotationView?.layer.borderWidth = 2
         return annotationView
 
     }
