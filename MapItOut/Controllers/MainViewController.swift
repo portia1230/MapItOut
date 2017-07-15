@@ -46,9 +46,8 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         let span = MKCoordinateSpanMake(10, 10)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
-        
-        
         self.mapView.setRegion(region, animated: false)
+        
         UserService.contacts(for: User.currentUser) { (contacts) in
             self.contacts = contacts
             for contact in contacts{
@@ -161,16 +160,16 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         }
         let custum = annotation as! CustomPointAnnotation
         annotationView?.image = custum.image
-        //annotationView?.image = maskRoundedImage(image: custum.image, radius: 25)
+        annotationView?.image = userImageForAnnotation(image: custum.image)
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
-        annotationView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
-        annotationView?.layer.cornerRadius = 30
-        annotationView?.layer.borderColor = redColor.cgColor
-        annotationView?.layer.borderWidth = 2
-        
-        if annotationView?.image?.imageOrientation.rawValue == 3{
-            annotationView?.transform = CGAffineTransform(rotationAngle: (CGFloat.pi)/2)
-        }
+//        annotationView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+//        annotationView?.layer.cornerRadius = 30
+//        annotationView?.layer.borderColor = redColor.cgColor
+////        annotationView?.layer.borderWidth = 2
+//        
+//        if annotationView?.image?.imageOrientation.rawValue == 3{
+//            annotationView?.transform = CGAffineTransform(rotationAngle: (CGFloat.pi)/2)
+//        }
         return annotationView
         
     }
@@ -192,6 +191,35 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         var roundedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return roundedImage!
+    }
+    
+    func userImageForAnnotation(image: UIImage) -> UIImage {
+        let pinImage = UIImage(named: "redPin.png")
+        print(pinImage?.size.height)
+        print(pinImage?.size.width)
+        let userPinImg : UIImage = UIImage(cgImage: pinImage!.cgImage!, scale: 54/7, orientation: .up)
+        UIGraphicsBeginImageContextWithOptions(userPinImg.size, false, 0.0);
+        
+        userPinImg.draw(in: CGRect(origin: CGPoint.zero, size: userPinImg.size))
+        
+        let roundRect : CGRect = CGRect(x: 2, y: 2, width: userPinImg.size.width-4, height: userPinImg.size.width-4)
+        let myUserImgView = UIImageView(frame: roundRect)
+        myUserImgView.image = image
+        let layer: CALayer = myUserImgView.layer
+        layer.masksToBounds = true
+        layer.cornerRadius = myUserImgView.frame.size.width/2
+        
+        UIGraphicsBeginImageContextWithOptions(myUserImgView.bounds.size, myUserImgView.isOpaque, 0.0)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        roundedImage?.draw(in: roundRect)
+        
+        let resultImg : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return resultImg
+        
     }
     
 
