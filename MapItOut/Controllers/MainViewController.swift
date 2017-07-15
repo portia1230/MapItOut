@@ -160,8 +160,8 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         }
         let custum = annotation as! CustomPointAnnotation
         annotationView?.image = custum.image
-        annotationView?.image = userImageForAnnotation(image: custum.image)
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
+        annotationView?.image = userImageForAnnotation(image: custum.image)
 //        annotationView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
 //        annotationView?.layer.cornerRadius = 30
 //        annotationView?.layer.borderColor = redColor.cgColor
@@ -202,9 +202,10 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         
         userPinImg.draw(in: CGRect(origin: CGPoint.zero, size: userPinImg.size))
         
-        let roundRect : CGRect = CGRect(x: 2, y: 2, width: userPinImg.size.width-4, height: userPinImg.size.width-4)
+        let roundRect : CGRect = CGRect(x: 3, y: 3, width: userPinImg.size.width-6, height: userPinImg.size.width-6)
         let myUserImgView = UIImageView(frame: roundRect)
         myUserImgView.image = image
+        myUserImgView.contentMode = UIViewContentMode.scaleAspectFill
         let layer: CALayer = myUserImgView.layer
         layer.masksToBounds = true
         layer.cornerRadius = myUserImgView.frame.size.width/2
