@@ -36,24 +36,36 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "redPin.png")
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
         let span = MKCoordinateSpanMake(100, 100)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+        var coordinate: CLLocationCoordinate2D!
+        
+        
         self.mapView.setRegion(region, animated: false)
         UserService.contacts(for: User.currentUser) { (contacts) in
             self.contacts = contacts
             for contact in contacts{
                 let imageURL = URL(string
                     : contact.imageURL)
-                let imageView = UIImageView()
+                
                 imageView.kf.setImage(with: imageURL!)
+                
+                if imageView.image == nil{
+                    self.viewWillAppear(true)
+                } else {
                 let thisLongitude = contact.longitude
                 let thisLatitude = contact.latitude
-                let coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
-                var anno = MKPointAnnotation()
+                coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
+                var anno = CustomPointAnnotation()
+                anno.image = imageView.image!
                 anno.coordinate = coordinate
                 self.mapView.addAnnotation(anno)
+                    
+                }
             }
             
             if contacts.isEmpty{
@@ -155,23 +167,26 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         
     }
     
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
-        if !(annotation is MKPointAnnotation){
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if(annotation is MKUserLocation){
             return nil
         }
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
-            annotationView!.canShowCallout = true
+            annotationView?.canShowCallout = true
         } else {
-            annotationView!.annotation = annotation
+            annotationView?.annotation = annotation
         }
-        let pinImage = UIImage(named: "ImagePin")
+        let custum = annotation as! CustomPointAnnotation
         
-        annotationView!.image = UIImage(cgImage: (pinImage?.cgImage)!, scale: 730/67, orientation: .up)
+        annotationView!.image = custum.image
+        annotationView?.contentMode = UIViewContentMode.scaleAspectFill
+        annotationView?.frame.size = CGSize(width: 50, height: 50)
+        annotationView?.layer.cornerRadius = 25
         return annotationView
-        
+
     }
+    
     
 }
