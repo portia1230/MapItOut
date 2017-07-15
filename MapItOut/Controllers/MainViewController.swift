@@ -11,6 +11,8 @@ import UIKit
 import Kingfisher
 import MapKit
 import ContactsUI
+import QuartzCore
+
 
 class MainViewController : UIViewController, MKMapViewDelegate{
     
@@ -41,7 +43,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         imageView.image = #imageLiteral(resourceName: "redPin.png")
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
-        let span = MKCoordinateSpanMake(100, 100)
+        let span = MKCoordinateSpanMake(10, 10)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
         
@@ -102,7 +104,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         //fittng the photo
@@ -112,7 +113,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         contactImage.clipsToBounds = true
         
     }
-    
     
     //MARK: - Functions
     
@@ -160,13 +160,14 @@ class MainViewController : UIViewController, MKMapViewDelegate{
             annotationView?.annotation = annotation
         }
         let custum = annotation as! CustomPointAnnotation
-        annotationView!.image = custum.image
-        
+        annotationView?.image = custum.image
+        //annotationView?.image = maskRoundedImage(image: custum.image, radius: 25)
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
-        annotationView?.frame.size = CGSize(width: 52, height: 52)
-        annotationView?.layer.cornerRadius = 25
+        annotationView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+        annotationView?.layer.cornerRadius = 30
         annotationView?.layer.borderColor = redColor.cgColor
         annotationView?.layer.borderWidth = 2
+        
         if annotationView?.image?.imageOrientation.rawValue == 3{
             annotationView?.transform = CGAffineTransform(rotationAngle: (CGFloat.pi)/2)
         }
@@ -174,4 +175,26 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         
     }
     
+    func maskRoundedImage(image: UIImage, radius: Float) -> UIImage {
+        
+        var imageView: UIImageView = UIImageView(image: image)
+        var layer: CALayer = CALayer()
+        layer = imageView.layer
+        
+        layer.masksToBounds = true
+        layer.cornerRadius = CGFloat(radius)
+        let size = CGSize(width: 50, height: 50)
+        
+        UIGraphicsBeginImageContextWithOptions(size, true, 1)
+        
+        UIGraphicsBeginImageContext(size)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        var roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return roundedImage!
+    }
+    
+
+    
 }
+
