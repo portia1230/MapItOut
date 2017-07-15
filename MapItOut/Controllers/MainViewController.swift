@@ -162,6 +162,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         annotationView?.image = custum.image
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
         annotationView?.image = userImageForAnnotation(image: custum.image)
+        annotationView?.centerOffset = CGPoint(x: 0, y: -40)
 //        annotationView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
 //        annotationView?.layer.cornerRadius = 30
 //        annotationView?.layer.borderColor = redColor.cgColor
