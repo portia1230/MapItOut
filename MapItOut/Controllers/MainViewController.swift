@@ -53,11 +53,8 @@ class MainViewController : UIViewController, MKMapViewDelegate{
             for contact in contacts{
                 let imageURL = URL(string
                     : contact.imageURL)
-                
                 imageView.kf.setImage(with: imageURL!)
-                
                 if imageView.image == nil{
-                    self.viewWillAppear(true)
                 } else {
                     let thisLongitude = contact.longitude
                     let thisLatitude = contact.latitude
@@ -66,7 +63,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                     anno.image = imageView.image!
                     anno.coordinate = coordinate
                     self.mapView.addAnnotation(anno)
-                    
                 }
             }
             
@@ -162,43 +158,15 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         annotationView?.image = custum.image
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
         annotationView?.image = userImageForAnnotation(image: custum.image)
-        annotationView?.centerOffset = CGPoint(x: 0, y: -40)
-//        annotationView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
-//        annotationView?.layer.cornerRadius = 30
-//        annotationView?.layer.borderColor = redColor.cgColor
-////        annotationView?.layer.borderWidth = 2
-//        
-//        if annotationView?.image?.imageOrientation.rawValue == 3{
-//            annotationView?.transform = CGAffineTransform(rotationAngle: (CGFloat.pi)/2)
-//        }
+        annotationView?.centerOffset = CGPoint(x: 0, y: -43.4135)
         return annotationView
-        
-    }
-    
-    func maskRoundedImage(image: UIImage, radius: Float) -> UIImage {
-        
-        var imageView: UIImageView = UIImageView(image: image)
-        var layer: CALayer = CALayer()
-        layer = imageView.layer
-        
-        layer.masksToBounds = true
-        layer.cornerRadius = CGFloat(radius)
-        let size = CGSize(width: 50, height: 50)
-        
-        UIGraphicsBeginImageContextWithOptions(size, true, 1)
-        
-        UIGraphicsBeginImageContext(size)
-        layer.render(in: UIGraphicsGetCurrentContext()!)
-        var roundedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return roundedImage!
     }
     
     func userImageForAnnotation(image: UIImage) -> UIImage {
         let pinImage = UIImage(named: "redPin.png")
         print(pinImage?.size.height)
         print(pinImage?.size.width)
-        let userPinImg : UIImage = UIImage(cgImage: pinImage!.cgImage!, scale: 54/7, orientation: .up)
+        let userPinImg : UIImage = UIImage(cgImage: pinImage!.cgImage!, scale: 52/7, orientation: .up)
         UIGraphicsBeginImageContextWithOptions(userPinImg.size, false, 0.0);
         
         userPinImg.draw(in: CGRect(origin: CGPoint.zero, size: userPinImg.size))
@@ -224,7 +192,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         
     }
     
-
+    
     
 }
 
