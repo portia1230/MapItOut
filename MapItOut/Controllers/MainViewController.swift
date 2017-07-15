@@ -58,13 +58,13 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                 if imageView.image == nil{
                     self.viewWillAppear(true)
                 } else {
-                let thisLongitude = contact.longitude
-                let thisLatitude = contact.latitude
-                coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
-                var anno = CustomPointAnnotation()
-                anno.image = imageView.image!
-                anno.coordinate = coordinate
-                self.mapView.addAnnotation(anno)
+                    let thisLongitude = contact.longitude
+                    let thisLatitude = contact.latitude
+                    coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
+                    var anno = CustomPointAnnotation()
+                    anno.image = imageView.image!
+                    anno.coordinate = coordinate
+                    self.mapView.addAnnotation(anno)
                     
                 }
             }
@@ -160,16 +160,18 @@ class MainViewController : UIViewController, MKMapViewDelegate{
             annotationView?.annotation = annotation
         }
         let custum = annotation as! CustomPointAnnotation
-        
         annotationView!.image = custum.image
+        
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
         annotationView?.frame.size = CGSize(width: 52, height: 52)
         annotationView?.layer.cornerRadius = 25
         annotationView?.layer.borderColor = redColor.cgColor
         annotationView?.layer.borderWidth = 2
+        if annotationView?.image?.imageOrientation.rawValue == 3{
+            annotationView?.transform = CGAffineTransform(rotationAngle: (CGFloat.pi)/2)
+        }
         return annotationView
-
+        
     }
-    
     
 }
