@@ -25,7 +25,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
-    
+    var selectedContact : Entry!
     var contactStore = CNContactStore()
     
     var locationManager = CLLocationManager()
@@ -78,7 +78,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                 let coordinate = LocationService.getLocation(manager: self.locationManager)
                 let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
-                
+                self.selectedContact = sortedContacts[0]
                 let distance = myLocation.distance(from: contactLocation)
                 
                 self.contactAddressLabel.backgroundColor = UIColor.clear
@@ -106,6 +106,8 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         contactImage.layer.cornerRadius = 35
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
+        viewWillAppear(true)
+        viewWillAppear(true)
         
     }
     
@@ -150,7 +152,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
-            annotationView?.canShowCallout = true
+            annotationView?.canShowCallout = false
         } else {
             annotationView?.annotation = annotation
         }
@@ -162,6 +164,34 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         return annotationView
     }
     
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        var coordinate = view.annotation?.coordinate
+        var i = 0
+        while i < contacts.count{
+            let contactLocation = CLLocationCoordinate2DMake(contacts[i].latitude, contacts[i].longitude)
+            if (coordinate?.latitude == contacts[i].latitude ) && ( coordinate?.longitude == contacts[i].longitude){
+                self.selectedContact = contacts[i]
+            }
+        }
+        let url = URL(string: self.selectedContact.imageURL)
+        self.contactImage.kf.setImage(with: url!)
+        self.contactNameLabel.text = self.selectedContact.firstName + " " + self.selectedContact.lastName
+        self.contactRelationshipLabel.text = self.selectedContact.relationship
+        let location = LocationService.getLocation(manager: locationManager)
+        let myLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        let contactLocation = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
+        let distance = contactLocation.distance(from: myLocation)
+        
+//        if distance > 1000.0
+//        {
+//            self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
+//        } else {
+//            self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+//        }
+    }
+    
+
     func userImageForAnnotation(image: UIImage) -> UIImage {
         let pinImage = UIImage(named: "redPin.png")
         //print(pinImage?.size.height)
