@@ -10,9 +10,10 @@
 		1D3C6C22B3595DABB6C7C8D6 /* Pods_MapItOut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */; };
 		8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312E0021F13318A00AD0054 /* Storyboard+Utility.swift */; };
 		832C70781F15350A00E213F4 /* StorageReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C70771F15350A00E213F4 /* StorageReference.swift */; };
+		832E167A1F1BF1D1005FCE55 /* Refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 832E16791F1BF1D1005FCE55 /* Refresh.png */; };
+		832E167C1F1BF2BE005FCE55 /* whiteGearImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 832E167B1F1BF2BE005FCE55 /* whiteGearImage.png */; };
 		8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */; };
 		8341D2371F17D78100242BC8 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */; };
-		83533A6E1F133EA1002EEE74 /* whiteGearImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83533A6D1F133EA1002EEE74 /* whiteGearImage.png */; };
 		83533A701F133F64002EEE74 /* plusImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83533A6F1F133F64002EEE74 /* plusImage.png */; };
 		83533A721F1340C7002EEE74 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A711F1340C7002EEE74 /* MainViewController.swift */; };
 		83533A741F134317002EEE74 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83533A731F134317002EEE74 /* MapKit.framework */; };
@@ -51,9 +52,10 @@
 /* Begin PBXFileReference section */
 		8312E0021F13318A00AD0054 /* Storyboard+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Storyboard+Utility.swift"; path = "Extensions/Storyboard+Utility.swift"; sourceTree = "<group>"; };
 		832C70771F15350A00E213F4 /* StorageReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageReference.swift; path = Extensions/StorageReference.swift; sourceTree = "<group>"; };
+		832E16791F1BF1D1005FCE55 /* Refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Refresh.png; path = Arts/Refresh.png; sourceTree = "<group>"; };
+		832E167B1F1BF2BE005FCE55 /* whiteGearImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteGearImage.png; path = Arts/whiteGearImage.png; sourceTree = "<group>"; };
 		8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsTableViewCell.swift; path = CustomClasses/ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsTableViewController.swift; path = Controllers/ContactsTableViewController.swift; sourceTree = "<group>"; };
-		83533A6D1F133EA1002EEE74 /* whiteGearImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteGearImage.png; path = Arts/whiteGearImage.png; sourceTree = "<group>"; };
 		83533A6F1F133F64002EEE74 /* plusImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plusImage.png; path = Arts/plusImage.png; sourceTree = "<group>"; };
 		83533A711F1340C7002EEE74 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Controllers/MainViewController.swift; sourceTree = "<group>"; };
 		83533A731F134317002EEE74 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -187,6 +189,8 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
+				832E167B1F1BF2BE005FCE55 /* whiteGearImage.png */,
+				832E16791F1BF1D1005FCE55 /* Refresh.png */,
 				838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */,
 				83A00C741F14B40B0033E821 /* List icon.png */,
 				83A00C751F14B40B0033E821 /* Map Icon.png */,
@@ -198,7 +202,6 @@
 				839DF3B31F147E1C0029D556 /* ImagePin.png */,
 				83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */,
 				83533A6F1F133F64002EEE74 /* plusImage.png */,
-				83533A6D1F133EA1002EEE74 /* whiteGearImage.png */,
 				83E4CB351F12EC2600EDDD91 /* Icon.png */,
 				837938971F137216003B4B34 /* Helpers */,
 				83533A771F13470C002EEE74 /* Custom Classes */,
@@ -327,12 +330,13 @@
 				83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */,
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83A00C791F14B6A90033E821 /* Rory.jpg in Resources */,
-				83533A6E1F133EA1002EEE74 /* whiteGearImage.png in Resources */,
 				83680B631F14A83D003A14CC /* arrowGreen.png in Resources */,
 				83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */,
+				832E167A1F1BF1D1005FCE55 /* Refresh.png in Resources */,
 				83A00C771F14B40B0033E821 /* Map Icon.png in Resources */,
 				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
+				832E167C1F1BF2BE005FCE55 /* whiteGearImage.png in Resources */,
 				83A00C761F14B40B0033E821 /* List icon.png in Resources */,
 				83E4CB2A1F12EB5800EDDD91 /* LaunchScreen.storyboard in Resources */,
 				839DF3B51F147E1C0029D556 /* ImagePin.png in Resources */,

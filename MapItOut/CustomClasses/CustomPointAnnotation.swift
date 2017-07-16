@@ -11,4 +11,5 @@ import MapKit
 
 class CustomPointAnnotation: MKPointAnnotation {
     var image = UIImage()
+    var indexOfContact = 0
 }
