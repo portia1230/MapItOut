@@ -166,13 +166,14 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        var coordinate = view.annotation?.coordinate
+        let coordinate = view.annotation?.coordinate
         var i = 0
         while i < contacts.count{
             let contactLocation = CLLocationCoordinate2DMake(contacts[i].latitude, contacts[i].longitude)
             if (coordinate?.latitude == contacts[i].latitude ) && ( coordinate?.longitude == contacts[i].longitude){
                 self.selectedContact = contacts[i]
             }
+            i += 1
         }
         let url = URL(string: self.selectedContact.imageURL)
         self.contactImage.kf.setImage(with: url!)
@@ -183,12 +184,12 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         let contactLocation = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
         let distance = contactLocation.distance(from: myLocation)
         
-//        if distance > 1000.0
-//        {
-//            self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
-//        } else {
-//            self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-//        }
+        if distance > 1000.0
+        {
+            self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
+        } else {
+            self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+        }
     }
     
 
