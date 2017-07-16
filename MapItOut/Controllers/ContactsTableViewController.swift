@@ -12,20 +12,25 @@ import Foundation
 import CoreLocation
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-
+    
     //MARK: - Properties
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     var contacts = [CNContact]()
-    var results = [CNContact]()
+    let letterSet = NSCharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    var sectionedContacts = [[CNContact]]()
+    var specialContacts = [CNContact]()
+    var results = [[CNContact]]()
     var contactStore = CNContactStore()
+    var sectionName = [String]()
+    
     @IBOutlet weak var tableView: UITableView!
     var geocoder = CLGeocoder()
     @IBOutlet weak var searchBar: UISearchBar!
     
     //MARK: - Functions
-
+    
     @IBAction func backButtonTapped(_ sender: Any) {
         self.dismiss(animated: false) {
         }
@@ -34,26 +39,24 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     func dismissKeyboard(){
         view.endEditing(true)
     }
-
+    
     //MARK: - Lifecycles
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
-        swipeDown.direction = UISwipeGestureRecognizerDirection.down
-        swipeUp.direction = UISwipeGestureRecognizerDirection.up
+        
         view.addGestureRecognizer(tap)
-        view.addGestureRecognizer(swipeDown)
-        view.addGestureRecognizer(swipeUp)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.delegate = self
         tableView.dataSource = self
         self.contacts.removeAll()
+        self.results.removeAll()
+        self.sectionedContacts.removeAll()
         let keys = [CNContactIdentifierKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName)] as [Any]
         let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
         
@@ -69,20 +72,43 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         catch {
             print("unable to fetch contacts")
         }
-        self.results = contacts
+        for contact in self.contacts{
+            let letter = String(describing: contact.givenName.characters.first)
+            if sectionedContacts.count == 0{
+                self.sectionedContacts.append([contact])
+            } else {
+                if (String(describing: sectionedContacts[sectionedContacts.count - 1][0].givenName.characters.first)) == letter {
+                    self.sectionedContacts[self.sectionedContacts.count - 1].append(contact)
+                } else {
+                    if (String(contact.givenName.characters.first!)).rangeOfCharacter(from: letterSet as CharacterSet) == nil{
+                        self.specialContacts.append(contact)
+                    } else {
+                    self.sectionedContacts.append([contact])
+                    }
+                }
+            }
+        }
+        self.results = self.sectionedContacts
+        
     }
     
     //MARK: - Search bar delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.results.removeAll()
         if searchBar.text == ""{
-            self.results = self.contacts
+            self.results = self.sectionedContacts
         }
-        for contact in contacts{
-            let name = contact.givenName + contact.familyName
-            if name.contains((searchBar.text)!){
-                self.results.append(contact)
+        var n = 0
+        while n < sectionedContacts.count{
+            var i = 0
+            while i < sectionedContacts[n].count {
+                let name = sectionedContacts[n][i].givenName + sectionedContacts[n][i].familyName
+                if name.contains((searchBar.text)!){
+                    results[n].remove(at: i)
+                }
+                i += 1
             }
+            n += 1
         }
         self.tableView.reloadData()
     }
@@ -90,8 +116,25 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dismissKeyboard()
     }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        self.results = self.sectionedContacts
+        self.tableView.reloadData()
+        dismissKeyboard()
+    }
     
     // MARK: - Table view data source
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        self.sectionName.removeAll()
+        for contactGroup in results {
+            let name = String(describing: (contactGroup[0].givenName.characters.first)!)
+            sectionName.append(name.capitalized)
+        }
+        if self.specialContacts.isEmpty == false{
+            sectionName.append("#")
+        }
+        return sectionName
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
@@ -99,23 +142,30 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if self.specialContacts.isEmpty{
+            return sectionName.count
+        }
+        return sectionName.count + 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return results.count
+        if section == results[section].count{
+            return specialContacts.count
+        }
+        return results[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactsTableViewCell
-        cell.nameLabel.text = results[indexPath.row].givenName + " " + results[indexPath.row].familyName
+        cell.nameLabel.text = results[indexPath.section][indexPath.row].givenName + " " + results[indexPath.section][indexPath.row].familyName
         return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "contactSelected" {
             let indexPath = tableView.indexPathForSelectedRow!
-            let contact = results[indexPath.row]
+            let contact = results[indexPath.section][indexPath.row]
             let displayTaskViewController = segue.destination as! AddEntryViewController
             if contact.givenName.isEmpty == false {
                 displayTaskViewController.firstName = contact.givenName
@@ -137,10 +187,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 let address = contact.postalAddresses[0].value
                 let string = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.postalCode
                 displayTaskViewController.contactLocationDescription = string
+            }
         }
+        
     }
-
-}
 }
 
 
