@@ -11,16 +11,18 @@ import ContactsUI
 import Foundation
 import CoreLocation
 
-class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     //MARK: - Properties
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     var contacts = [CNContact]()
+    var results = [CNContact]()
     var contactStore = CNContactStore()
     @IBOutlet weak var tableView: UITableView!
     var geocoder = CLGeocoder()
+    @IBOutlet weak var searchBar: UISearchBar!
     
     //MARK: - Functions
 
@@ -28,11 +30,24 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         self.dismiss(animated: false) {
         }
     }
+    
+    func dismissKeyboard(){
+        view.endEditing(true)
+    }
 
     //MARK: - Lifecycles
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        swipeUp.direction = UISwipeGestureRecognizerDirection.up
+        view.addGestureRecognizer(tap)
+        view.addGestureRecognizer(swipeDown)
+        view.addGestureRecognizer(swipeUp)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +69,26 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         catch {
             print("unable to fetch contacts")
         }
+        self.results = contacts
+    }
+    
+    //MARK: - Search bar delegate
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.results.removeAll()
+        if searchBar.text == ""{
+            self.results = self.contacts
+        }
+        for contact in contacts{
+            let name = contact.givenName + contact.familyName
+            if name.contains((searchBar.text)!){
+                self.results.append(contact)
+            }
+        }
+        self.tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dismissKeyboard()
     }
     
     // MARK: - Table view data source
@@ -68,19 +103,19 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return contacts.count
+            return results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactsTableViewCell
-        cell.nameLabel.text = contacts[indexPath.row].givenName + " " + contacts[indexPath.row].familyName
+        cell.nameLabel.text = results[indexPath.row].givenName + " " + results[indexPath.row].familyName
         return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "contactSelected" {
             let indexPath = tableView.indexPathForSelectedRow!
-            let contact = contacts[indexPath.row]
+            let contact = results[indexPath.row]
             let displayTaskViewController = segue.destination as! AddEntryViewController
             if contact.givenName.isEmpty == false {
                 displayTaskViewController.firstName = contact.givenName

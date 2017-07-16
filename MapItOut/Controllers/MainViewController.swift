@@ -164,8 +164,8 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     
     func userImageForAnnotation(image: UIImage) -> UIImage {
         let pinImage = UIImage(named: "redPin.png")
-        print(pinImage?.size.height)
-        print(pinImage?.size.width)
+        //print(pinImage?.size.height)
+        //print(pinImage?.size.width)
         let userPinImg : UIImage = UIImage(cgImage: pinImage!.cgImage!, scale: 52/7, orientation: .up)
         UIGraphicsBeginImageContextWithOptions(userPinImg.size, false, 0.0);
         

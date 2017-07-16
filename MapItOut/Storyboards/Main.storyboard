@@ -302,6 +302,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="kfW-QP-neD" id="MT0-Ru-OeR"/>
                         <outlet property="tableView" destination="IbE-9A-UlL" id="tIa-pZ-PA2"/>
                     </connections>
                 </viewController>
@@ -343,16 +344,16 @@
                                                     <rect key="frame" x="113" y="22" width="249" height="60.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rory Mcilroy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTU-7U-Q2O">
-                                                            <rect key="frame" x="0.0" y="0.0" width="83" height="13.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="83" height="16"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="13.5" id="h8O-r3-r2y"/>
+                                                                <constraint firstAttribute="height" constant="16" id="h8O-r3-r2y"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jupiter, Florida, USA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPT-rz-VAa">
-                                                            <rect key="frame" x="0.0" y="17.5" width="128.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="20" width="128.5" height="19.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="19.5" id="6TJ-ok-eyI"/>
                                                             </constraints>
@@ -361,7 +362,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best Friend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5r-ab-Lw2">
-                                                            <rect key="frame" x="0.0" y="41" width="71.5" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="43.5" width="71.5" height="17"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                                             <color key="textColor" red="0.3883214593" green="0.38831362130000002" blue="0.38831892610000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
@@ -920,8 +921,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h3e-dj-j96"/>
-        <segue reference="sz0-VJ-i1G"/>
+        <segue reference="Xjx-vg-KDV"/>
+        <segue reference="9ej-53-kgX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
