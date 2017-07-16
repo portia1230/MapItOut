@@ -18,10 +18,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         return .lightContent
     }
     var contacts = [CNContact]()
-    let letterSet = NSCharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    var sectionedContacts = [[CNContact]]()
-    var specialContacts = [CNContact]()
-    var results = [[CNContact]]()
+    var results = [CNContact]()
     var contactStore = CNContactStore()
     var sectionName = [String]()
     
@@ -56,7 +53,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         self.contacts.removeAll()
         self.results.removeAll()
-        self.sectionedContacts.removeAll()
         let keys = [CNContactIdentifierKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName)] as [Any]
         let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
         
@@ -68,104 +64,80 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     return contact1.givenName.compare(contact2.givenName) == ComparisonResult.orderedAscending
                 })
             }
+            self.results = self.contacts
         }
         catch {
             print("unable to fetch contacts")
         }
-        for contact in self.contacts{
-            let letter = String(describing: contact.givenName.characters.first)
-            if sectionedContacts.count == 0{
-                self.sectionedContacts.append([contact])
-            } else {
-                if (String(describing: sectionedContacts[sectionedContacts.count - 1][0].givenName.characters.first)) == letter {
-                    self.sectionedContacts[self.sectionedContacts.count - 1].append(contact)
-                } else {
-                    if (String(contact.givenName.characters.first!)).rangeOfCharacter(from: letterSet as CharacterSet) == nil{
-                        self.specialContacts.append(contact)
-                    } else {
-                    self.sectionedContacts.append([contact])
-                    }
-                }
-            }
-        }
-        self.results = self.sectionedContacts
-        
     }
     
     //MARK: - Search bar delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.results.removeAll()
         if searchBar.text == ""{
-            self.results = self.sectionedContacts
+            self.results = self.contacts
         }
-        var n = 0
-        while n < sectionedContacts.count{
             var i = 0
-            while i < sectionedContacts[n].count {
-                let name = sectionedContacts[n][i].givenName + sectionedContacts[n][i].familyName
+            while i < contacts.count {
+                let name = contacts[i].givenName + contacts[i].familyName
                 if name.contains((searchBar.text)!){
-                    results[n].remove(at: i)
+                    results.append(contacts[i])
                 }
                 i += 1
             }
-            n += 1
-        }
         self.tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.results.removeAll()
+        if searchBar.text == ""{
+            self.results = self.contacts
+        }
+        var i = 0
+        while i < contacts.count {
+            let name = contacts[i].givenName + contacts[i].familyName
+            if name.contains((searchBar.text)!){
+                results.append(contacts[i])
+            }
+            i += 1
+        }
+        self.tableView.reloadData()
         dismissKeyboard()
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        self.results = self.sectionedContacts
+        self.results = self.contacts
         self.tableView.reloadData()
         dismissKeyboard()
     }
     
     // MARK: - Table view data source
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        self.sectionName.removeAll()
-        for contactGroup in results {
-            let name = String(describing: (contactGroup[0].givenName.characters.first)!)
-            sectionName.append(name.capitalized)
-        }
-        if self.specialContacts.isEmpty == false{
-            sectionName.append("#")
-        }
-        return sectionName
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
+        
         performSegue(withIdentifier: "contactSelected", sender: self)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if self.specialContacts.isEmpty{
-            return sectionName.count
-        }
-        return sectionName.count + 1
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == results[section].count{
-            return specialContacts.count
-        }
-        return results[section].count
+        return results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactsTableViewCell
-        cell.nameLabel.text = results[indexPath.section][indexPath.row].givenName + " " + results[indexPath.section][indexPath.row].familyName
+        cell.nameLabel.text = results[indexPath.row].givenName + " " + results[indexPath.row].familyName
         return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "contactSelected" {
             let indexPath = tableView.indexPathForSelectedRow!
-            let contact = results[indexPath.section][indexPath.row]
+            let contact = self.results[indexPath.row]
             let displayTaskViewController = segue.destination as! AddEntryViewController
             if contact.givenName.isEmpty == false {
                 displayTaskViewController.firstName = contact.givenName

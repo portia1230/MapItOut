@@ -9,11 +9,16 @@
 import Foundation
 import FirebaseStorage
 
+
+import Foundation
+import FirebaseStorage
+
 extension StorageReference {
     static let dateFormatter = ISO8601DateFormatter()
     
     static func newPostImageReference() -> StorageReference {
         let uid = User.currentUser.uid
-        return Storage.storage().reference().child("images/contacts/\(uid).jpg")
+        let timestamp = dateFormatter.string(from: Date())
+        return Storage.storage().reference().child("images/contacts/\(uid)/\(timestamp).jpg")
     }
 }
