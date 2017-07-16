@@ -157,9 +157,4 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     
-    @IBAction func refreshButtonTapped(_ sender: Any) {
-        self.tableView.reloadData()
-    }
-    
-    
 }

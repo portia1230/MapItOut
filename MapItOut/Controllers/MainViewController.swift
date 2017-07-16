@@ -46,7 +46,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         let span = MKCoordinateSpanMake(10, 10)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
-        self.mapView.setRegion(region, animated: false)
+        self.mapView.setRegion(region, animated: true)
         
         UserService.contacts(for: User.currentUser) { (contacts) in
             self.contacts = contacts
@@ -230,7 +230,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         let span = MKCoordinateSpanMake(10, 10)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
-        self.mapView.setRegion(region, animated: false)
+        self.mapView.setRegion(region, animated: true)
         UserService.contacts(for: User.currentUser) { (contacts) in
             self.contacts = contacts
             var i = 0
