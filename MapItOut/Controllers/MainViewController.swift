@@ -225,32 +225,10 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     @IBAction func refreshButtonTapped(_ sender: Any) {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "redPin.png")
-        let annotations = self.mapView.annotations
-        self.mapView.removeAnnotations(annotations)
         let span = MKCoordinateSpanMake(10, 10)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
         self.mapView.setRegion(region, animated: true)
-        UserService.contacts(for: User.currentUser) { (contacts) in
-            self.contacts = contacts
-            var i = 0
-            while i < contacts.count{
-                let imageURL = URL(string
-                    : contacts[i].imageURL)
-                imageView.kf.setImage(with: imageURL!)
-                if imageView.image == nil{
-                } else {
-                    let thisLongitude = contacts[i].longitude
-                    let thisLatitude = contacts[i].latitude
-                    coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
-                    var anno = CustomPointAnnotation()
-                    anno.image = imageView.image!
-                    anno.coordinate = coordinate
-                    anno.indexOfContact = i
-                    self.mapView.addAnnotation(anno)
-                }
-                i += 1
-            }
             
             if contacts.isEmpty{
                 self.contactNameLabel.backgroundColor = UIColor.clear
@@ -284,7 +262,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
             
         }
 
-    }
     
 }
 
