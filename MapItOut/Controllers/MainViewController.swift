@@ -267,13 +267,15 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     @IBAction func detailsButtonTapped(_ sender: Any) {
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let imageURL = URL(string: self.selectedContact.imageURL)
-        popOverVC.firstNameTextField.text = self.selectedContact.firstName
-        popOverVC.lastNameTextField.text = self.selectedContact.lastName
-        popOverVC.addressDescription.text = self.selectedContact.locationDescription
-        popOverVC.relationshipTextField.text = self.selectedContact.relationship
-        popOverVC.contactImage.kf.setImage(with: imageURL!)
-        popOverVC.emailTextField.text = self.selectedContact.email
-        popOverVC.phoneNumberTextField.text = self.selectedContact.number
+        popOverVC.firstName = self.selectedContact.firstName
+        popOverVC.lastName = self.selectedContact.lastName
+        popOverVC.address = self.selectedContact.locationDescription
+        popOverVC.relationship = self.selectedContact.relationship
+        popOverVC.contactPhoto.kf.setImage(with: imageURL!)
+        popOverVC.email = self.selectedContact.email
+        popOverVC.phoneNumber = self.selectedContact.number
+        popOverVC.latitude = self.selectedContact.latitude
+        popOverVC.longitude = self.selectedContact.longitude
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
         self.view.addSubview(popOverVC.view)
