@@ -95,6 +95,10 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         popOverVC.longitude = selectedContact.longitude
         popOverVC.keyOfContact = selectedContact.key
         
+        if popOverVC.contactPhoto.image == nil{
+            popOverVC.contactPhoto.kf.setImage(with: imageURL!)
+        }
+        
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve, animations: { _ in
