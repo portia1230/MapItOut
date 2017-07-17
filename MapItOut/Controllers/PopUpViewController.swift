@@ -14,8 +14,10 @@ import FirebaseStorage
 import FirebaseDatabase
 
 class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+    
     //MARK: - Properties
     
+    @IBOutlet weak var changeImageButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -41,6 +43,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var originalLocation = ""
     var locationManager = CLLocationManager()
     var location = CLLocationCoordinate2D()
+    var photoHelper = MGPhotoHelper()
+    var keyOfContact = ""
     
     var pickOption = ["Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
     
@@ -77,9 +81,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         
         //dismiss keyboard gesture recognizer
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissKeyboard))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissKeyboard))
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissKeyboard))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         view.addGestureRecognizer(tap)
@@ -93,6 +97,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     override func viewWillAppear(_ animated: Bool) {
         self.isEditingContact = false
         self.contactImage.layer.cornerRadius = 75
+        self.changeImageButton.layer.cornerRadius = 75
         self.contactImage.clipsToBounds = true
         contactMapView.isUserInteractionEnabled = false
         self.firstNameTextField.text = firstName
@@ -121,16 +126,36 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     
     //MARK: - VC Functions
+    
+    @IBAction func changeImageButton(_ sender: Any) {
+        photoHelper.presentActionSheet(from: self)
+        photoHelper.completionHandler = { image in
+            self.contactImage.image = image
+        }
+    }
+    
     @IBAction func editButtonTapped(_ sender: Any) {
-        self.isEditingContact = true
-        firstNameTextField.isUserInteractionEnabled = true
-        lastNameTextField.isUserInteractionEnabled = true
-        relationshipTextField.isUserInteractionEnabled = true
-        phoneNumberTextField.isUserInteractionEnabled = true
-        emailTextField.isUserInteractionEnabled = true
-        addressDescription.isUserInteractionEnabled = true
-        editButton.setTitle("Cancel", for: .normal)
-        doneButton.setTitle("Save", for: .normal)
+        if self.isEditingContact == false {
+            self.isEditingContact = true
+            firstNameTextField.isUserInteractionEnabled = true
+            lastNameTextField.isUserInteractionEnabled = true
+            relationshipTextField.isUserInteractionEnabled = true
+            phoneNumberTextField.isUserInteractionEnabled = true
+            emailTextField.isUserInteractionEnabled = true
+            addressDescription.isUserInteractionEnabled = true
+            editButton.setTitle("Cancel", for: .normal)
+            doneButton.setTitle("Save", for: .normal)
+        } else {
+            self.isEditingContact = false
+            firstNameTextField.isUserInteractionEnabled = false
+            lastNameTextField.isUserInteractionEnabled = false
+            relationshipTextField.isUserInteractionEnabled = false
+            phoneNumberTextField.isUserInteractionEnabled = false
+            emailTextField.isUserInteractionEnabled = false
+            addressDescription.isUserInteractionEnabled = false
+            editButton.setTitle("Edit", for: .normal)
+            doneButton.setTitle("Done", for: .normal)
+        }
         
     }
     func dismissKeyboard(){
@@ -150,6 +175,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             doneButton.setTitle("Done", for: .normal)
         } else {
             self.view.removeFromSuperview()
+            var contact = Entry(firstName: firstNameTextField.text, lastName: lastNameTextField.text, longitude: location.longitude, latitude: location,latitude, relationship: relationshipTextField.text, imageURL: <#T##String#>, number: phoneNumberTextField.text, email: emailTextField.text, key: keyOfContact, locationDescription: addressDescription.text)
         }
     }
     
@@ -195,7 +221,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             
         }
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         if let nextTextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
@@ -245,7 +271,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         relationshipTextField.text = pickOption[row]
     }
     
-    //MARK: - Reverse Geocoding 
+    //MARK: - Reverse Geocoding
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         var trimmed = ""
         let location = CLLocation(latitude: latitude, longitude: longitude)

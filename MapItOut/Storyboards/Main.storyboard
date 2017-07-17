@@ -372,7 +372,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cmk-SS-nsi">
-                                <rect key="frame" x="0.0" y="50" width="375" height="496"/>
+                                <rect key="frame" x="0.0" y="50" width="375" height="484"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIV-eT-zDZ">
                                         <rect key="frame" x="83" y="324" width="1" height="40"/>
@@ -473,7 +473,7 @@
                                     <constraint firstItem="uLu-Wt-jmp" firstAttribute="top" secondItem="Ehb-qa-Ms6" secondAttribute="bottom" constant="8" id="vvh-L8-4f6"/>
                                     <constraint firstAttribute="trailing" secondItem="jXS-Cq-p06" secondAttribute="trailing" constant="55" id="xK6-RF-7tJ"/>
                                     <constraint firstItem="jXS-Cq-p06" firstAttribute="leading" secondItem="dA3-VB-E9q" secondAttribute="trailing" constant="10" id="xOl-a4-l2m"/>
-                                    <constraint firstAttribute="height" constant="496" id="xeE-QI-YSM"/>
+                                    <constraint firstAttribute="height" constant="484" id="xeE-QI-YSM"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="yI8-jM-mNj">
@@ -646,6 +646,16 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-IY-Rap">
+                                <rect key="frame" x="16" y="97" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Drg-F1-pox"/>
+                                    <constraint firstAttribute="height" constant="150" id="Z4A-Z0-xrQ"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="changeImageButton:" destination="dmp-N2-oVo" eventType="touchUpInside" id="Hi1-eF-a4H"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -665,13 +675,15 @@
                             <constraint firstAttribute="trailing" secondItem="Cmk-SS-nsi" secondAttribute="trailing" id="Hcr-He-qb5"/>
                             <constraint firstItem="Cmk-SS-nsi" firstAttribute="top" secondItem="vF5-Bn-lJz" secondAttribute="bottom" constant="30" id="IBb-jB-Cui"/>
                             <constraint firstAttribute="trailing" secondItem="wyz-6E-ofs" secondAttribute="trailing" id="IWB-d9-dVC"/>
+                            <constraint firstItem="ryj-IY-Rap" firstAttribute="top" secondItem="wyz-6E-ofs" secondAttribute="bottom" constant="14" id="Ltx-6g-TSz"/>
                             <constraint firstItem="bhp-ym-lbc" firstAttribute="top" secondItem="cvz-uI-0tL" secondAttribute="bottom" constant="15" id="LxZ-JF-djf"/>
                             <constraint firstItem="IpU-78-yhJ" firstAttribute="top" secondItem="wyz-6E-ofs" secondAttribute="bottom" constant="14" id="Mh1-9i-WtJ"/>
+                            <constraint firstItem="ryj-IY-Rap" firstAttribute="leading" secondItem="V90-tU-nrb" secondAttribute="leadingMargin" id="MuY-L1-dct"/>
                             <constraint firstItem="laK-qd-3mp" firstAttribute="top" secondItem="ZMU-nt-eZt" secondAttribute="bottom" constant="15" id="PTg-Pn-8pc"/>
                             <constraint firstItem="ZMU-nt-eZt" firstAttribute="top" secondItem="bhp-ym-lbc" secondAttribute="bottom" constant="15" id="QeH-MN-El8"/>
                             <constraint firstAttribute="trailing" secondItem="FuR-iH-dcG" secondAttribute="trailing" id="TAd-Lk-1d4"/>
                             <constraint firstItem="0wi-mG-uzg" firstAttribute="top" secondItem="FuR-iH-dcG" secondAttribute="bottom" constant="12" id="W9V-Na-Us5"/>
-                            <constraint firstItem="JD9-TW-jdV" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="bottom" constant="1" id="WOj-4I-NPe"/>
+                            <constraint firstItem="JD9-TW-jdV" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="bottom" constant="13" id="WOj-4I-NPe"/>
                             <constraint firstAttribute="trailing" secondItem="ZMU-nt-eZt" secondAttribute="trailing" id="Wn6-WF-BLs"/>
                             <constraint firstItem="wyz-6E-ofs" firstAttribute="leading" secondItem="V90-tU-nrb" secondAttribute="leading" id="Y5D-TH-2nQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fCb-sS-adp" secondAttribute="trailing" constant="20" id="b7K-BN-Ktv"/>
@@ -691,6 +703,7 @@
                     <navigationItem key="navigationItem" id="QDA-GH-GT3"/>
                     <connections>
                         <outlet property="addressDescription" destination="Ehb-qa-Ms6" id="Gvd-sg-B3M"/>
+                        <outlet property="changeImageButton" destination="ryj-IY-Rap" id="qNN-HL-gH1"/>
                         <outlet property="contactImage" destination="IpU-78-yhJ" id="tac-1c-Cda"/>
                         <outlet property="contactMapView" destination="uLu-Wt-jmp" id="2Nl-Mt-hfG"/>
                         <outlet property="deleteButton" destination="JD9-TW-jdV" id="tE8-wb-OLO"/>

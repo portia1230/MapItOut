@@ -83,9 +83,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         locationTextField.tag = 5
         
         //dismiss keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         view.addGestureRecognizer(tap)

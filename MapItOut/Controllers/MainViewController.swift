@@ -61,7 +61,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                     let thisLongitude = contacts[i].longitude
                     let thisLatitude = contacts[i].latitude
                     coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
-                    var anno = CustomPointAnnotation()
+                    let anno = CustomPointAnnotation()
                     anno.image = imageView.image!
                     anno.coordinate = coordinate
                     anno.indexOfContact = i
@@ -276,6 +276,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         popOverVC.phoneNumber = self.selectedContact.number
         popOverVC.latitude = self.selectedContact.latitude
         popOverVC.longitude = self.selectedContact.longitude
+        popOverVC.keyOfContact = self.selectedContact.key
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
