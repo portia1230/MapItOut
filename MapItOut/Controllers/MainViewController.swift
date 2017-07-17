@@ -40,6 +40,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     override func viewWillAppear(_ animated: Bool) {
         
         let imageView = UIImageView()
+        self.contactButton.isEnabled = false
         imageView.image = #imageLiteral(resourceName: "redPin.png")
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
@@ -98,6 +99,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                 self.contactRelationshipLabel.text = sortedContacts[0].relationship
                 self.contactImage.kf.setImage(with: imageURL)
             }
+            self.contactButton.isEnabled = true
             
         }
     }
@@ -264,6 +266,14 @@ class MainViewController : UIViewController, MKMapViewDelegate{
 
     @IBAction func detailsButtonTapped(_ sender: Any) {
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+        let imageURL = URL(string: self.selectedContact.imageURL)
+        popOverVC.firstNameTextField.text = self.selectedContact.firstName
+        popOverVC.lastNameTextField.text = self.selectedContact.lastName
+        popOverVC.addressDescription.text = self.selectedContact.locationDescription
+        popOverVC.relationshipTextField.text = self.selectedContact.relationship
+        popOverVC.contactImage.kf.setImage(with: imageURL!)
+        popOverVC.emailTextField.text = self.selectedContact.email
+        popOverVC.phoneNumberTextField.text = self.selectedContact.number
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
         self.view.addSubview(popOverVC.view)

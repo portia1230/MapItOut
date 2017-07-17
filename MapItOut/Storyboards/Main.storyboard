@@ -522,8 +522,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="backButtonTapped:" destination="vum-u9-FU0" eventType="touchUpInside" id="RLD-rF-rbv"/>
-                                            <action selector="cancelButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="Nu9-PM-rUq"/>
+                                            <action selector="doneButtonTapped:" destination="dmp-N2-oVo" eventType="touchUpInside" id="V3W-VE-qGX"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -687,6 +686,17 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QDA-GH-GT3"/>
+                    <connections>
+                        <outlet property="addressDescription" destination="hif-Ag-S6u" id="eBa-jh-4PQ"/>
+                        <outlet property="contactImage" destination="IpU-78-yhJ" id="tac-1c-Cda"/>
+                        <outlet property="contactMapView" destination="uLu-Wt-jmp" id="2Nl-Mt-hfG"/>
+                        <outlet property="deleteButton" destination="JD9-TW-jdV" id="tE8-wb-OLO"/>
+                        <outlet property="emailTextField" destination="jXS-Cq-p06" id="7Qn-9v-BKp"/>
+                        <outlet property="firstNameTextField" destination="RKR-2P-ARE" id="7vj-wt-dwc"/>
+                        <outlet property="lastNameTextField" destination="ZZD-8E-FfG" id="reY-21-w4w"/>
+                        <outlet property="phoneNumberTextField" destination="ERb-lS-yVG" id="b1T-LM-QRs"/>
+                        <outlet property="relationshipTextField" destination="AdL-st-Ap9" id="9tr-qk-ZTx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TP7-QN-sPb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
