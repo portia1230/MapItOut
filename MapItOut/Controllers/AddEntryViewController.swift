@@ -11,6 +11,7 @@ import MapKit
 import AddressBookUI
 import FirebaseStorage
 import FirebaseDatabase
+import Contacts
 
 class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate{
     
@@ -168,19 +169,20 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        var trimmed = ""
+        var address = ""
         let location = CLLocation(latitude: latitude, longitude: longitude)
         CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) -> Void in
             if error != nil{
                 print(error as Any)
                 return
             } else if (placemarks?.count)! > 0 {
-                let pm = placemarks![0]
-                let address = ABCreateStringWithAddressDictionary(pm.addressDictionary!, false)
-                trimmed = address
+                let pm = placemarks![0].addressDictionary
+                let addressLine = pm?["FormattedAddressLines"] as? [String]
+                address = (addressLine?.joined(separator: ", "))!
             }
-            trimmed = trimmed.replacingOccurrences(of: "\n", with: ", ")
-            self.locationTextField.text = trimmed
+            //trimmed = trimmed.replacingOccurrences(of: "\n", with: ", ")
+           // self.locationTextField.text = trimmed
+            self.locationTextField.text = address
         }
     }
     
