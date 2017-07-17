@@ -127,14 +127,17 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     
-   
+    
     
     //MARK: - VC Functions
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
         
         EntryService.deleteEntry(key: self.keyOfContact)
-        self.view.removeFromSuperview()
+        
+        UIView.transition(with: self.view.superview!, duration: 0.3, options: .transitionCrossDissolve, animations: { _ in
+            self.view.removeFromSuperview()
+        }, completion: nil)
         self.parent?.viewDidLoad()
         self.parent?.viewWillAppear(true)
     }
@@ -201,7 +204,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 EntryService.editEntry(entry: contact)
             }
         } else {
-            self.view.removeFromSuperview()
+            UIView.transition(with: self.view.superview!, duration: 0.3, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
             self.parent?.viewDidLoad()
             self.parent?.viewWillAppear(true)
         }
@@ -260,7 +265,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         }
         return false
     }
-    
     
     //MARK: - Map View delegate
     

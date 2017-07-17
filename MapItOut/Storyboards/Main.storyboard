@@ -683,8 +683,8 @@
                                     <constraint firstAttribute="trailing" secondItem="ZMU-nt-eZt" secondAttribute="trailing" id="zz7-le-bTT"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JD9-TW-jdV">
-                                <rect key="frame" x="50" y="562" width="300" height="33"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JD9-TW-jdV">
+                                <rect key="frame" x="37.5" y="557" width="300" height="33"/>
                                 <color key="backgroundColor" red="0.92096400260925293" green="0.27257329225540161" blue="0.22357378900051117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="fnG-vN-uuJ"/>
@@ -701,9 +701,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="JD9-TW-jdV" firstAttribute="centerX" secondItem="V90-tU-nrb" secondAttribute="centerX" id="95X-Iy-0Fk"/>
                             <constraint firstItem="Cmk-SS-nsi" firstAttribute="leading" secondItem="V90-tU-nrb" secondAttribute="leading" id="9Fu-ry-Odr"/>
                             <constraint firstAttribute="trailing" secondItem="Cmk-SS-nsi" secondAttribute="trailing" id="Hcr-He-qb5"/>
                             <constraint firstItem="Cmk-SS-nsi" firstAttribute="top" secondItem="vF5-Bn-lJz" secondAttribute="bottom" constant="45" id="IBb-jB-Cui"/>
+                            <constraint firstItem="JD9-TW-jdV" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="bottom" constant="8" id="gga-Jc-F8e"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QDA-GH-GT3"/>

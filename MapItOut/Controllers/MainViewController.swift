@@ -281,7 +281,9 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
-        self.view.addSubview(popOverVC.view)
+        UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve, animations: { _ in
+            self.view.addSubview(popOverVC.view)
+        }, completion: nil)
         popOverVC.didMove(toParentViewController: self)
     }
     
