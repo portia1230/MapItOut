@@ -190,18 +190,18 @@
                                     <constraint firstAttribute="height" constant="10" id="L7n-MZ-tJF"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Refresh.png" translatesAutoresizingMaskIntoConstraints="NO" id="c5z-Sq-t6j">
-                                <rect key="frame" x="337" y="514" width="28" height="25"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="findContact.png" translatesAutoresizingMaskIntoConstraints="NO" id="c5z-Sq-t6j">
+                                <rect key="frame" x="327" y="125" width="35" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="BXw-Tg-0Ej"/>
-                                    <constraint firstAttribute="width" constant="28" id="WfJ-TD-syD"/>
+                                    <constraint firstAttribute="height" constant="35" id="BXw-Tg-0Ej"/>
+                                    <constraint firstAttribute="width" constant="35" id="WfJ-TD-syD"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9z-Nx-AiL">
-                                <rect key="frame" x="325" y="499" width="50" height="50"/>
+                                <rect key="frame" x="300" y="105" width="75" height="75"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="dkZ-ho-vwh"/>
-                                    <constraint firstAttribute="width" constant="50" id="uES-7y-a3y"/>
+                                    <constraint firstAttribute="width" constant="75" id="33j-LB-erd"/>
+                                    <constraint firstAttribute="height" constant="75" id="YFx-NL-VUL"/>
                                 </constraints>
                                 <connections>
                                     <action selector="refreshButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="XUd-6Z-XPb"/>
@@ -211,16 +211,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Uaa-Mm-d0Q" firstAttribute="top" secondItem="fSa-RG-Zbw" secondAttribute="bottom" constant="108" id="IiC-SD-KWf"/>
-                            <constraint firstItem="fSa-RG-Zbw" firstAttribute="top" secondItem="c5z-Sq-t6j" secondAttribute="bottom" constant="10" id="MLh-sR-jBG"/>
                             <constraint firstItem="aSz-Hc-R3b" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="Obc-Gl-NHS"/>
                             <constraint firstItem="aSz-Hc-R3b" firstAttribute="top" secondItem="Wvs-BV-AH6" secondAttribute="top" id="Szw-Kb-PIu"/>
                             <constraint firstItem="fSa-RG-Zbw" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="Tva-5I-VP0"/>
-                            <constraint firstAttribute="trailing" secondItem="c5z-Sq-t6j" secondAttribute="trailing" constant="10" id="UP4-1L-fHG"/>
+                            <constraint firstAttribute="trailing" secondItem="c5z-Sq-t6j" secondAttribute="trailing" constant="13" id="UP4-1L-fHG"/>
+                            <constraint firstAttribute="trailing" secondItem="i9z-Nx-AiL" secondAttribute="trailing" id="bDS-zT-8zr"/>
                             <constraint firstItem="Uaa-Mm-d0Q" firstAttribute="top" secondItem="eYu-6d-W7D" secondAttribute="bottom" id="cGL-vE-5py"/>
-                            <constraint firstItem="fSa-RG-Zbw" firstAttribute="top" secondItem="i9z-Nx-AiL" secondAttribute="bottom" id="eXf-oI-bJv"/>
                             <constraint firstItem="eYu-6d-W7D" firstAttribute="top" secondItem="gZu-wW-qCT" secondAttribute="bottom" constant="10" id="jOz-N9-baj"/>
                             <constraint firstItem="gZu-wW-qCT" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" id="kdX-Fj-yz5"/>
-                            <constraint firstAttribute="trailing" secondItem="i9z-Nx-AiL" secondAttribute="trailing" id="rSf-q8-EeN"/>
+                            <constraint firstItem="c5z-Sq-t6j" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" constant="60" id="nwg-wB-TL5"/>
+                            <constraint firstItem="i9z-Nx-AiL" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" constant="40" id="sfO-Go-8w0"/>
                             <constraint firstAttribute="trailing" secondItem="gZu-wW-qCT" secondAttribute="trailing" id="szw-rx-pHj"/>
                             <constraint firstItem="eYu-6d-W7D" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="xDG-xb-neI"/>
                             <constraint firstAttribute="trailing" secondItem="eYu-6d-W7D" secondAttribute="trailing" id="zSc-BF-3U7"/>
@@ -251,6 +251,7 @@
                         <outlet property="contactImage" destination="sHw-2M-bg3" id="9ta-Ka-x1c"/>
                         <outlet property="contactNameLabel" destination="BaJ-CN-Oi1" id="1qb-7E-tGO"/>
                         <outlet property="contactRelationshipLabel" destination="EWo-dO-CNT" id="SKS-iV-GmA"/>
+                        <outlet property="locationImage" destination="c5z-Sq-t6j" id="TLn-2s-rev"/>
                         <outlet property="mapView" destination="gZu-wW-qCT" id="5KU-Qc-gNO"/>
                         <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" id="sz0-VJ-i1G"/>
                         <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" id="h3e-dj-j96"/>
@@ -1277,14 +1278,14 @@
         <image name="500*20Shadow.png" width="500" height="21"/>
         <image name="List icon.png" width="520" height="520"/>
         <image name="Map Icon.png" width="520" height="520"/>
-        <image name="Refresh.png" width="155" height="137"/>
         <image name="arrowGreen.png" width="550" height="550"/>
+        <image name="findContact.png" width="250" height="250"/>
         <image name="plusImage.png" width="202" height="202"/>
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9ej-53-kgX"/>
-        <segue reference="e1G-mV-pNx"/>
+        <segue reference="h3e-dj-j96"/>
+        <segue reference="sz0-VJ-i1G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

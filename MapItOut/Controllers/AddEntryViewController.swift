@@ -180,8 +180,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 let addressLine = pm?["FormattedAddressLines"] as? [String]
                 address = (addressLine?.joined(separator: ", "))!
             }
-            //trimmed = trimmed.replacingOccurrences(of: "\n", with: ", ")
-           // self.locationTextField.text = trimmed
             self.locationTextField.text = address
         }
     }
