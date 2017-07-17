@@ -77,8 +77,10 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                 self.contactButton.isHidden = true
             } else {
                 self.contactButton.isHidden = false
-                var sortedContacts = LocationService.rankDistance(entries: contacts)
+                
+                var sortedContacts = LocationService.rankDistance(entries: self.contacts)
                 let imageURL = URL(string: sortedContacts[0].imageURL)
+                
                 let coordinate = LocationService.getLocation(manager: self.locationManager)
                 let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
@@ -111,9 +113,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         contactImage.layer.cornerRadius = 35
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
-        self.viewWillAppear(true)
-        self.viewWillAppear(true)
-        self.viewWillAppear(true)
         
     }
     

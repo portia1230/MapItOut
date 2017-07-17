@@ -429,7 +429,7 @@
                                         </constraints>
                                         <color key="textColor" red="0.92096400260925293" green="0.27257329225540161" blue="0.22357378900051117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                                         <connections>
                                             <outlet property="delegate" destination="Y6f-BZ-apC" id="Zq7-iA-oFc"/>
                                         </connections>
@@ -646,12 +646,17 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-IY-Rap">
+                            <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-IY-Rap">
                                 <rect key="frame" x="16" y="97" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.91374325752258301" green="0.9137260913848877" blue="0.91373777389526367" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Drg-F1-pox"/>
                                     <constraint firstAttribute="height" constant="150" id="Z4A-Z0-xrQ"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                <state key="normal" title="Change image">
+                                    <color key="titleColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <action selector="changeImageButton:" destination="dmp-N2-oVo" eventType="touchUpInside" id="Hi1-eF-a4H"/>
                                 </connections>
@@ -951,7 +956,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-Lk-LqR">
                                 <rect key="frame" x="18" y="85" width="150" height="150"/>
-                                <color key="backgroundColor" red="0.90982222560000003" green="0.90980517859999999" blue="0.90981662269999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.92158538103103638" green="0.92156803607940674" blue="0.92157983779907227" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="IIW-s9-J37"/>
                                     <constraint firstAttribute="height" constant="150" id="ROL-jQ-D1A"/>
@@ -1269,8 +1274,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e1G-mV-pNx"/>
-        <segue reference="9ej-53-kgX"/>
+        <segue reference="h3e-dj-j96"/>
+        <segue reference="sz0-VJ-i1G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

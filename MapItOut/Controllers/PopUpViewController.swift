@@ -78,6 +78,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         phoneNumberTextField.isUserInteractionEnabled = false
         emailTextField.isUserInteractionEnabled = false
         addressDescription.isUserInteractionEnabled = false
+        changeImageButton.isEnabled = false
         
         
         //dismiss keyboard gesture recognizer
@@ -95,6 +96,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.changeImageButton.isHidden = true
         self.isEditingContact = false
         self.contactImage.layer.cornerRadius = 75
         self.changeImageButton.layer.cornerRadius = 75
@@ -107,6 +109,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.emailTextField.text = email
         self.addressDescription.text = address
         let location = CLLocationCoordinate2DMake(latitude, longitude)
+        self.location = location
         let annos = contactMapView.annotations
         let anno = MKPointAnnotation()
         self.contactImage.image = self.contactPhoto.image
@@ -137,16 +140,20 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBAction func editButtonTapped(_ sender: Any) {
         if self.isEditingContact == false {
             self.isEditingContact = true
+            self.changeImageButton.isHidden = false
             firstNameTextField.isUserInteractionEnabled = true
             lastNameTextField.isUserInteractionEnabled = true
             relationshipTextField.isUserInteractionEnabled = true
             phoneNumberTextField.isUserInteractionEnabled = true
             emailTextField.isUserInteractionEnabled = true
             addressDescription.isUserInteractionEnabled = true
+            changeImageButton.isEnabled = true
             editButton.setTitle("Cancel", for: .normal)
             doneButton.setTitle("Save", for: .normal)
         } else {
             self.isEditingContact = false
+            changeImageButton.isEnabled = false
+            self.changeImageButton.isHidden = true
             firstNameTextField.isUserInteractionEnabled = false
             lastNameTextField.isUserInteractionEnabled = false
             relationshipTextField.isUserInteractionEnabled = false
@@ -164,6 +171,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     @IBAction func doneButtonTapped(_ sender: Any) {
         if isEditingContact == true{
+            changeImageButton.isEnabled = false
+            self.changeImageButton.isHidden = true
             firstNameTextField.isUserInteractionEnabled = false
             lastNameTextField.isUserInteractionEnabled = false
             relationshipTextField.isUserInteractionEnabled = false
