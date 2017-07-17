@@ -12,6 +12,7 @@ import Kingfisher
 import MapKit
 import ContactsUI
 import QuartzCore
+import FirebaseAuth
 
 
 class MainViewController : UIViewController, MKMapViewDelegate{
@@ -24,12 +25,14 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
     var selectedContact : Entry!
-    var contactStore = CNContactStore()
-    
-    var locationManager = CLLocationManager()
     var contacts : [Entry] = []
+    
+    var contactStore = CNContactStore()
+    var locationManager = CLLocationManager()
+    var authHandle: AuthStateDidChangeListenerHandle?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -116,6 +119,20 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         contactImage.layer.cornerRadius = 35
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
+        
+        authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+            guard user == nil else { return }
+            
+            let loginViewController = UIStoryboard.initialViewController(for: .login)
+            self.view.window?.rootViewController = loginViewController
+            self.view.window?.makeKeyAndVisible()
+        }
+    }
+    
+    deinit {
+        if let authHandle = authHandle {
+            Auth.auth().removeStateDidChangeListener(authHandle)
+        }
     }
     
     //MARK: - Functions
@@ -223,7 +240,22 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         return resultImg
         
     }
+    //MARK: - Buttons Tapped 
     
+    @IBAction func settingButtonTapped(_ sender: Any) {
+        let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
+        let signOutAction = UIAlertAction(title: "Sign Out", style: .default) { _ in
+            do {
+                try Auth.auth().signOut()
+            } catch let error as NSError {
+                assertionFailure("Error signing out: \(error.localizedDescription)")
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(signOutAction)
+        self.present(alertController, animated: true)
+    }
     
     @IBAction func refreshButtonTapped(_ sender: Any) {
         let imageView = UIImageView()
@@ -286,6 +318,8 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)
     }
+    
+    
     
 }
 

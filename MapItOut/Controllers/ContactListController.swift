@@ -12,10 +12,10 @@ import Kingfisher
 import MapKit
 import AddressBookUI
 import ContactsUI
+import FirebaseAuth
 
 class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var popUpTableView: UIView!
     //MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
@@ -26,13 +26,31 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         return .lightContent
     }
     var contactStore = CNContactStore()
+    var authHandle: AuthStateDidChangeListenerHandle?
     
     
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+
+        authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+            guard user == nil else { return }
+            
+            let loginViewController = UIStoryboard.initialViewController(for: .login)
+            self.view.window?.rootViewController = loginViewController
+            self.view.window?.makeKeyAndVisible()
+        }
+        
     }
+    
+    deinit {
+        if let authHandle = authHandle {
+            Auth.auth().removeStateDidChangeListener(authHandle)
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.delegate = self
@@ -152,6 +170,16 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     }
     
+    
+    @IBAction func settingButtonTapped(_ sender: Any) {
+        let signOutAction = UIAlertAction(title: "Sign Out", style: .default) { _ in
+            do {
+                try Auth.auth().signOut()
+            } catch let error as NSError {
+                assertionFailure("Error signing out: \(error.localizedDescription)")
+            }
+        }
+    }
     
     @IBAction func mapButtonTapped(_ sender: Any) {
         dismiss(animated: false) {

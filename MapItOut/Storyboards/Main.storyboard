@@ -34,6 +34,9 @@
                                             <constraint firstAttribute="height" constant="42" id="AKV-Is-ClN"/>
                                             <constraint firstAttribute="width" constant="40" id="rDk-kQ-dKf"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="settingButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="GMT-mS-WWp"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMz-QN-dUa">
                                         <rect key="frame" x="295" y="25" width="75" height="35"/>
@@ -859,6 +862,9 @@
                                         <state key="normal">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="settingButtonTapped:" destination="M4Q-aG-t6d" eventType="touchUpInside" id="v7V-f6-e78"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gu-QI-yXo">
                                         <rect key="frame" x="50" y="20" width="45" height="43"/>
@@ -1277,8 +1283,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h3e-dj-j96"/>
-        <segue reference="sz0-VJ-i1G"/>
+        <segue reference="9ej-53-kgX"/>
+        <segue reference="e1G-mV-pNx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
