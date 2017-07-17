@@ -111,7 +111,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         if (self.image) != nil{
             self.photoImageView.image = self.image
         }
-        
         self.locationMapView.showsUserLocation = false
         
         if let _ = self.contactLocationDescription {
@@ -129,7 +128,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
                 let span = MKCoordinateSpanMake(0.1, 0.1)
                 let region = MKCoordinateRegionMake(coordinate, span)
-                self.locationMapView.setRegion(region, animated: false)
+                self.locationMapView.setRegion(region, animated: true)
                 dispatchGroup.notify(queue: .main, execute: {
                 })
             })
@@ -147,7 +146,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.locationMapView.addAnnotation(anno)
             let span = MKCoordinateSpanMake(0.1, 0.1)
             let region = MKCoordinateRegionMake(coordinate, span)
-            locationMapView.setRegion(region, animated: false)
+            locationMapView.setRegion(region, animated: true)
         }
     }
     
@@ -326,6 +325,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         relationshipTextField.text = pickOption[row]
     }
+    
+    //MARK: - Image rotating functions
     
     func imageRotatedByDegrees(oldImage: UIImage, deg degrees: CGFloat) -> UIImage {
         let rotatedViewBox: UIView = UIView(frame: CGRect(x: 0, y: 0, width: oldImage.size.width, height: oldImage.size.height))

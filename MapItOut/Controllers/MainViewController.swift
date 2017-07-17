@@ -229,7 +229,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         imageView.image = #imageLiteral(resourceName: "redPin.png")
         let span = MKCoordinateSpanMake(10, 10)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-        var coordinate: CLLocationCoordinate2D!
         self.mapView.setRegion(region, animated: true)
             
             if contacts.isEmpty{

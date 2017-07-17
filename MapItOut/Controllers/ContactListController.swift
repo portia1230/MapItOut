@@ -32,7 +32,6 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.popUpTableView.isHidden = true
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
