@@ -39,15 +39,17 @@ class MainViewController : UIViewController, MKMapViewDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         
+        super.viewWillAppear(true)
+        
         let imageView = UIImageView()
         self.contactButton.isEnabled = false
         imageView.image = #imageLiteral(resourceName: "redPin.png")
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
-        let span = MKCoordinateSpanMake(10, 10)
-        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+//        let span = MKCoordinateSpanMake(10, 10)
+//        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
-        self.mapView.setRegion(region, animated: true)
+//        self.mapView.setRegion(region, animated: true)
         
         UserService.contacts(for: User.currentUser) { (contacts) in
             self.contacts = contacts
@@ -57,6 +59,7 @@ class MainViewController : UIViewController, MKMapViewDelegate{
                     : contacts[i].imageURL)
                 imageView.kf.setImage(with: imageURL!)
                 if imageView.image == nil{
+                    self.viewWillAppear(true)
                 } else {
                     let thisLongitude = contacts[i].longitude
                     let thisLatitude = contacts[i].latitude
@@ -113,7 +116,6 @@ class MainViewController : UIViewController, MKMapViewDelegate{
         contactImage.layer.cornerRadius = 35
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
-        
     }
     
     //MARK: - Functions
