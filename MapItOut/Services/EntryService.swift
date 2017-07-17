@@ -21,10 +21,10 @@ struct EntryService{
         
     }
     
-    static func deleteEntry(entry: Entry){
+    static func deleteEntry(key: String){
         let currentUser = User.currentUser
         //let dict = entry.dictValue
-        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(entry.key)
+        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(key)
         entryRef.removeValue()
     }
     

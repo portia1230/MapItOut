@@ -127,8 +127,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     
+   
     
     //MARK: - VC Functions
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        EntryService.deleteEntry(key: self.keyOfContact)
+        self.view.removeFromSuperview()
+    }
     
     @IBAction func changeImageButton(_ sender: Any) {
         photoHelper.presentActionSheet(from: self)

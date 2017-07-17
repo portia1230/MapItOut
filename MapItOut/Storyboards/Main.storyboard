@@ -645,6 +645,9 @@
                                 <state key="normal" title="Delete Contact">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="deleteButtonTapped:" destination="dmp-N2-oVo" eventType="touchUpInside" id="gnT-yV-N8o"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-IY-Rap">
                                 <rect key="frame" x="16" y="97" width="150" height="150"/>
