@@ -172,13 +172,18 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     
     @IBAction func settingButtonTapped(_ sender: Any) {
-        let signOutAction = UIAlertAction(title: "Sign Out", style: .default) { _ in
+        let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
+        let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
             do {
                 try Auth.auth().signOut()
             } catch let error as NSError {
                 assertionFailure("Error signing out: \(error.localizedDescription)")
             }
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(signOutAction)
+        self.present(alertController, animated: true)
     }
     
     @IBAction func mapButtonTapped(_ sender: Any) {
