@@ -272,7 +272,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if photoImageView.image == nil {
                 photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
             }
-            let imageRef = StorageReference.newPostImageReference()
+            let imageRef = StorageReference.newContactImageReference()
             StorageService.uploadImage(photoImageView.image!, at: imageRef) { (downloadURL) in
                 guard let downloadURL = downloadURL else {
                     return

@@ -173,9 +173,17 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             isEditingContact = false
             editButton.setTitle("Edit", for: .normal)
             doneButton.setTitle("Done", for: .normal)
+            let imageRef = StorageReference.newContactImageReference()
+            StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
+                guard let downloadURL = downloadURL else {
+                    return
+                }
+                let urlString = downloadURL.absoluteString
+                let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+                EntryService.editEntry(entry: contact)
+            }
         } else {
             self.view.removeFromSuperview()
-            var contact = Entry(firstName: firstNameTextField.text, lastName: lastNameTextField.text, longitude: location.longitude, latitude: location,latitude, relationship: relationshipTextField.text, imageURL: <#T##String#>, number: phoneNumberTextField.text, email: emailTextField.text, key: keyOfContact, locationDescription: addressDescription.text)
         }
     }
     
