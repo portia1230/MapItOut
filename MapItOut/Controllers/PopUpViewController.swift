@@ -16,7 +16,7 @@ class PopUpViewController : UIViewController{
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
     //self.view.removeFromSuperVIew()
