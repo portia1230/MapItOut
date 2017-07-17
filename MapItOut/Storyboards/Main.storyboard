@@ -424,20 +424,44 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyz-6E-ofs">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="33"/>
                                 <subviews>
-                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVk-qw-8xJ">
-                                        <rect key="frame" x="77.5" y="18" width="220" height="8"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7B-Q0-IPS">
+                                        <rect key="frame" x="10" y="7" width="65" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="8" id="UFZ-3I-45a"/>
-                                            <constraint firstAttribute="width" constant="220" id="bf3-Ax-NLz"/>
+                                            <constraint firstAttribute="width" constant="65" id="6OK-e1-bO1"/>
+                                            <constraint firstAttribute="height" constant="24" id="n1t-3b-tAF"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <state key="normal" title="Edit">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="vum-u9-FU0" eventType="touchUpInside" id="93O-ug-4Be"/>
+                                            <action selector="cancelButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="ChZ-El-5vK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yp7-rc-12g">
+                                        <rect key="frame" x="300" y="7" width="65" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="4Nj-GJ-dOU"/>
+                                            <constraint firstAttribute="width" constant="65" id="L8N-W3-V2t"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="vum-u9-FU0" eventType="touchUpInside" id="RLD-rF-rbv"/>
+                                            <action selector="cancelButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="Nu9-PM-rUq"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="tVk-qw-8xJ" firstAttribute="centerX" secondItem="wyz-6E-ofs" secondAttribute="centerX" id="BC0-wE-Vak"/>
-                                    <constraint firstItem="tVk-qw-8xJ" firstAttribute="top" secondItem="wyz-6E-ofs" secondAttribute="top" constant="18" id="UR4-ku-oqg"/>
+                                    <constraint firstItem="d7B-Q0-IPS" firstAttribute="top" secondItem="wyz-6E-ofs" secondAttribute="top" constant="7" id="EY0-Qt-P0H"/>
+                                    <constraint firstAttribute="trailing" secondItem="yp7-rc-12g" secondAttribute="trailing" constant="10" id="aJF-17-Uuq"/>
+                                    <constraint firstItem="yp7-rc-12g" firstAttribute="top" secondItem="wyz-6E-ofs" secondAttribute="top" constant="7" id="rlD-Hy-Cdc"/>
                                     <constraint firstAttribute="height" constant="33" id="s0D-xx-2YA"/>
+                                    <constraint firstItem="d7B-Q0-IPS" firstAttribute="leading" secondItem="wyz-6E-ofs" secondAttribute="leading" constant="10" id="v7Z-2j-oUF"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FuR-iH-dcG">
@@ -658,12 +682,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="6EF-oF-0KN" secondAttribute="trailing" constant="10" id="zI0-qI-wOL"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="QDA-GH-GT3"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="560"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TP7-QN-sPb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-31.199999999999999" y="342.72863568215894"/>
+            <point key="canvasLocation" x="671.20000000000005" y="308.54572713643182"/>
         </scene>
         <!--Contact List Controller-->
         <scene sceneID="qOC-wK-11n">
@@ -848,7 +873,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Adx-nZ-1rZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="671" y="358"/>
+            <point key="canvasLocation" x="1608.8" y="357.57121439280365"/>
         </scene>
         <!--Add Entry View Controller-->
         <scene sceneID="1jl-VQ-fQe">
@@ -1181,7 +1206,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPb-xv-DCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1645.5999999999999" y="419.64017991004499"/>
+            <point key="canvasLocation" x="2584.8000000000002" y="357.57121439280365"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nYK-Xd-eHY">
