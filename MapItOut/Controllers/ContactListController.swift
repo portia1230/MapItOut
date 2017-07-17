@@ -33,15 +33,18 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         UserService.contacts(for: User.currentUser) { (contacts) in
+            if contacts == nil{
+                self.viewWillAppear(true)
+            } else {
             let sortedContacts = LocationService.rankDistance(entries: contacts)
             self.contacts = sortedContacts
             self.tableView.reloadData()
-            
+            }
         }
         
     }
@@ -75,6 +78,29 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             return cell
         
         }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+        let selectedContact = contacts[indexPath.row]
+        
+        let imageURL = URL(string: selectedContact.imageURL)
+        popOverVC.firstName = selectedContact.firstName
+        popOverVC.lastName = selectedContact.lastName
+        popOverVC.address = selectedContact.locationDescription
+        popOverVC.relationship = selectedContact.relationship
+        popOverVC.contactPhoto.kf.setImage(with: imageURL!)
+        popOverVC.email = selectedContact.email
+        popOverVC.phoneNumber = selectedContact.number
+        popOverVC.latitude = selectedContact.latitude
+        popOverVC.longitude = selectedContact.longitude
+        popOverVC.keyOfContact = selectedContact.key
+        
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
+    }
+    
     
     
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -115,7 +141,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         if editingStyle == .delete{
             let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(contacts[indexPath.row].key)
             ref.removeValue()
-            viewDidAppear(true)
+            viewWillAppear(true)
             
         }
     }
