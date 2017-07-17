@@ -262,6 +262,13 @@ class MainViewController : UIViewController, MKMapViewDelegate{
             
         }
 
+    @IBAction func detailsButtonTapped(_ sender: Any) {
+        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParentViewController: self)
+    }
     
 }
 

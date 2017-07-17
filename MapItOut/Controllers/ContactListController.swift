@@ -15,6 +15,7 @@ import ContactsUI
 
 class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var popUpTableView: UIView!
     //MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
@@ -31,6 +32,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.popUpTableView.isHidden = true
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
