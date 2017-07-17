@@ -16,6 +16,7 @@ struct EntryService{
     static func addEntry(entry: Entry){
         let currentUser = User.currentUser
         let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
+        entry.key = entryRef.key
         let dict = entry.dictValue
         entryRef.setValue(dict)
         
@@ -32,6 +33,7 @@ struct EntryService{
         let currentUser = User.currentUser
         let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(entry.key)
         let dict = entry.dictValue
+        //entry.key = entryRef.key
         entryRef.updateChildValues(dict)
     }
     

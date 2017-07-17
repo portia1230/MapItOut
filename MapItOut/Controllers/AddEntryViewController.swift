@@ -242,7 +242,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        
         self.dismiss(animated: true) {
         }
     }
@@ -280,8 +279,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 let urlString = downloadURL.absoluteString
                 let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationTextField.text!)
                 EntryService.addEntry(entry: entry)
-                self.dismiss(animated: true) {
-                }
+                self.dismiss(animated: true, completion: { 
+                })
+            
             }
         } else {
             let alertController = UIAlertController(title: "", message:

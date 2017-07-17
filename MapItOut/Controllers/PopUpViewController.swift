@@ -132,8 +132,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     //MARK: - VC Functions
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
+        
         EntryService.deleteEntry(key: self.keyOfContact)
         self.view.removeFromSuperview()
+        self.parent?.viewDidLoad()
+        self.parent?.viewWillAppear(true)
     }
     
     @IBAction func changeImageButton(_ sender: Any) {
@@ -199,6 +202,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             }
         } else {
             self.view.removeFromSuperview()
+            self.parent?.viewDidLoad()
+            self.parent?.viewWillAppear(true)
         }
     }
     
