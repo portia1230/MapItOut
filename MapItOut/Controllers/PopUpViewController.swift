@@ -42,6 +42,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.contactImage.layer.cornerRadius = 75
+        self.contactImage.clipsToBounds = true
         contactMapView.isUserInteractionEnabled = false
         self.firstNameTextField.text = firstName
         self.lastNameTextField.text = lastName
@@ -52,9 +54,16 @@ class PopUpViewController : UIViewController, MKMapViewDelegate{
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         let annos = contactMapView.annotations
         let anno = MKPointAnnotation()
+        self.contactImage.image = self.contactPhoto.image
         anno.coordinate = location
+
         contactMapView.removeAnnotations(annos)
         contactMapView.addAnnotation(anno)
+        
+        let span = MKCoordinateSpanMake(0.1, 0.1)
+        let region = MKCoordinateRegionMake(location, span)
+        self.contactMapView.setRegion(region, animated: true)
+        
     }
     
     @IBAction func doneButtonTapped(_ sender: Any) {

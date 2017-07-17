@@ -278,9 +278,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 guard let downloadURL = downloadURL else {
                     return
                 }
-                
                 let urlString = downloadURL.absoluteString
-                
                 let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationTextField.text!)
                 EntryService.addEntry(entry: entry)
                 self.dismiss(animated: true) {

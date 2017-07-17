@@ -390,7 +390,7 @@
                                             <constraint firstAttribute="width" constant="1" id="Ki1-Jy-DU1"/>
                                         </constraints>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jXS-Cq-p06">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="No email entered" placeholder="Enter Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jXS-Cq-p06">
                                         <rect key="frame" x="94" y="277" width="226" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="zDN-Le-ufV"/>
@@ -402,7 +402,7 @@
                                             <outlet property="delegate" destination="Y6f-BZ-apC" id="iqs-RI-e39"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ERb-lS-yVG">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="No phone number entered" placeholder="Enter Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ERb-lS-yVG">
                                         <rect key="frame" x="94" y="225" width="226" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Luc-ey-uNG"/>
@@ -466,7 +466,7 @@
                                     <constraint firstAttribute="height" constant="73" id="3cl-kq-yX2"/>
                                 </constraints>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IpU-78-yhJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IpU-78-yhJ">
                                 <rect key="frame" x="16" y="97" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="Us6-vQ-dUR"/>
