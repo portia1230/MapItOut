@@ -18,6 +18,8 @@ import CoreLocation
 class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     
     //MARK: - Properties
+    
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var locationImage: UIImageView!
     
     @IBOutlet weak var contactAddressLabel: UILabel!
@@ -30,6 +32,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
     var selectedContact : Entry!
     var contacts : [Entry] = []
+    var isUpdatingHeading = false
     
     var contactStore = CNContactStore()
     var locationManager = CLLocationManager()
@@ -42,15 +45,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(true)
-        
+        activityIndicatorView.startAnimating()
         let imageView = UIImageView()
         self.contactButton.isEnabled = false
         imageView.image = #imageLiteral(resourceName: "redPin.png")
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
-        let span = MKCoordinateSpanMake(1000, 1000)
+        let span = MKCoordinateSpanMake(100, 100)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
         self.mapView.setRegion(region, animated: true)
@@ -109,7 +111,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.contactImage.kf.setImage(with: imageURL)
             }
             self.contactButton.isEnabled = true
-            
+            self.activityIndicatorView.stopAnimating()
         }
     }
     
@@ -305,17 +307,21 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         //            self.contactImage.kf.setImage(with: imageURL)
         //        }
         //
-        let span = MKCoordinateSpanMake(1000, 1000)
-        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-        self.mapView.setRegion(region, animated: true)
         
-        if self.locationImage.image == #imageLiteral(resourceName: "findContact.png"){
+        if isUpdatingHeading == false {
+            self.isUpdatingHeading = true
             self.locationImage.image = #imageLiteral(resourceName: "selectedFindcontact.png")
             self.locationManager.startUpdatingHeading()
         } else {
             self.locationImage.image = #imageLiteral(resourceName: "findContact.png")
             self.locationManager.stopUpdatingHeading()
             self.mapView.isRotateEnabled = false
+            self.isUpdatingHeading = false
+            usleep(500000) //sleep for 0.1 second
+            let span = MKCoordinateSpanMake(100, 100)
+            let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+            self.mapView.setRegion(region, animated: true)
+            
             
         }
         
