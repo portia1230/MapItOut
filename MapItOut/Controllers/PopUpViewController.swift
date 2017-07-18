@@ -65,6 +65,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         let pickerView = UIPickerView()
@@ -111,11 +112,13 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
         self.backgroundView.layer.backgroundColor = greyColor.cgColor
         self.undoButton.setTitleColor(darkTextColor, for: .normal)
         self.backgroundView.layer.cornerRadius = 30
         self.undoButton.isEnabled = false
-        self.changeImageButton.isHidden = true
         self.undoButton.layer.cornerRadius = 30
         self.contactImage.layer.cornerRadius = 70
         self.changeImageButton.layer.cornerRadius = 70
@@ -152,6 +155,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.OLatitude = self.latitude
         self.OLongitude = self.longitude
         self.OLocation = self.location
+        self.OOriginalLocation = self.originalLocation
         self.OContactPhoto = self.contactPhoto
         
     }
@@ -170,6 +174,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.addressDescription.text = self.OOriginalLocation
         let annotations = self.contactMapView.annotations
         self.contactMapView.removeAnnotations(annotations)
+        self.addressDescription.text = self.OOriginalLocation
         let anno = MKPointAnnotation()
         anno.coordinate = CLLocationCoordinate2D(latitude: self.OLatitude, longitude: self.OLongitude)
         self.contactMapView.addAnnotation(anno)
@@ -194,37 +199,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         photoHelper.presentActionSheet(from: self)
         photoHelper.completionHandler = { image in
             self.contactImage.image = image
+            self.contactPhoto.image = image
         }
     }
-    
-    //    @IBAction func editButtonTapped(_ sender: Any) {
-    //        if self.isEditingContact == false {
-    //            self.isEditingContact = true
-    //            self.changeImageButton.isHidden = false
-    //            firstNameTextField.isUserInteractionEnabled = true
-    //            lastNameTextField.isUserInteractionEnabled = true
-    //            relationshipTextField.isUserInteractionEnabled = true
-    //            phoneNumberTextField.isUserInteractionEnabled = true
-    //            emailTextField.isUserInteractionEnabled = true
-    //            addressDescription.isUserInteractionEnabled = true
-    //            changeImageButton.isEnabled = true
-    //            editButton.setTitle("Cancel", for: .normal)
-    //            doneButton.setTitle("Save", for: .normal)
-    //        } else {
-    //            self.isEditingContact = false
-    //            changeImageButton.isEnabled = false
-    //            self.changeImageButton.isHidden = true
-    //            firstNameTextField.isUserInteractionEnabled = false
-    //            lastNameTextField.isUserInteractionEnabled = false
-    //            relationshipTextField.isUserInteractionEnabled = false
-    //            phoneNumberTextField.isUserInteractionEnabled = false
-    //            emailTextField.isUserInteractionEnabled = false
-    //            addressDescription.isUserInteractionEnabled = false
-    //            editButton.setTitle("Edit", for: .normal)
-    //            doneButton.setTitle("Done", for: .normal)
-    //        }
-    //
-    //    }
     
     func dismissKeyboard(){
         self.view.endEditing(true)
@@ -234,7 +211,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
         } else {
-            
+         //   let dispatchGroup = DispatchGroup()
+          //  dispatchGroup.enter()
             let imageRef = StorageReference.newContactImageReference()
             StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
                 guard let downloadURL = downloadURL else {
@@ -243,13 +221,15 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 let urlString = downloadURL.absoluteString
                 let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
                 EntryService.editEntry(entry: contact)
+             //   dispatchGroup.leave()
+                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.removeFromSuperview()
+                }, completion: nil)
+                self.parent?.viewDidLoad()
+                self.parent?.viewWillAppear(true)
+
             }
             
-            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                self.view.removeFromSuperview()
-            }, completion: nil)
-            self.parent?.viewDidLoad()
-            self.parent?.viewWillAppear(true)
         }
     }
     

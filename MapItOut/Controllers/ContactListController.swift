@@ -56,13 +56,13 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         self.tableView.delegate = self
         self.tableView.dataSource = self
         UserService.contacts(for: User.currentUser) { (contacts) in
-            if contacts == nil{
-                self.viewWillAppear(true)
-            } else {
+//            if contacts == nil{
+//                self.viewWillAppear(true)
+//            } else {
             let sortedContacts = LocationService.rankDistance(entries: contacts)
             self.contacts = sortedContacts
             self.tableView.reloadData()
-            }
+            //}
         }
         
     }

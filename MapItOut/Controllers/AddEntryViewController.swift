@@ -66,8 +66,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = true
         locationMapView.tintColor = blueColor
-        photoImageView.layer.cornerRadius = 75
-        uploadPhotoButton.layer.cornerRadius = 75
+        photoImageView.layer.cornerRadius = 70
+        uploadPhotoButton.layer.cornerRadius = 70
         photoImageView.clipsToBounds = true
         locationMapView.showsUserLocation = true
         

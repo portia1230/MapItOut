@@ -289,7 +289,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     @IBAction func detailsButtonTapped(_ sender: Any) {
         
-        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+        var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let imageURL = URL(string: self.selectedContact.imageURL)
         
         popOverVC.firstName = self.selectedContact.firstName
