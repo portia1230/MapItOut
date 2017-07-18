@@ -42,10 +42,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ContactsViewController.dismissKeyboard))
-        
-        view.addGestureRecognizer(tap)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,15 +73,17 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         if searchBar.text == ""{
             self.results = self.contacts
         }
+        else {
             var i = 0
             while i < contacts.count {
                 let name = contacts[i].givenName + contacts[i].familyName
                 if name.contains((searchBar.text)!){
-                    results.append(contacts[i])
+                    self.results.append(contacts[i])
                 }
                 i += 1
             }
         self.tableView.reloadData()
+        }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

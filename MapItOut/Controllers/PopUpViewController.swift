@@ -101,7 +101,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.contactImage.layer.cornerRadius = 75
         self.changeImageButton.layer.cornerRadius = 75
         self.contactImage.clipsToBounds = true
-        contactMapView.isUserInteractionEnabled = false
+        contactMapView.isUserInteractionEnabled = true
         self.firstNameTextField.text = firstName
         self.lastNameTextField.text = lastName
         self.relationshipTextField.text = relationship
@@ -259,6 +259,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     {
         if let nextTextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
             nextTextField.becomeFirstResponder()
+            if nextTextField.tag == 5 {
+                self.originalLocation = nextTextField.text!
+                nextTextField.text = ""
+            }
+            
         } else {
             // Not found, so remove keyboard.
             textField.resignFirstResponder()

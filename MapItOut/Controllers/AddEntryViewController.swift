@@ -64,7 +64,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         relationshipTextField.tintColor = UIColor.clear
         relationshipTextField.inputView = pickerView
         locationMapView.delegate = self
-        locationMapView.isUserInteractionEnabled = false
+        locationMapView.isUserInteractionEnabled = true
         locationMapView.tintColor = blueColor
         photoImageView.layer.cornerRadius = 75
         uploadPhotoButton.layer.cornerRadius = 75
@@ -95,8 +95,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         //set region/zoom in for map
+        
         if let firstName = self.firstName {
             self.firstNameTextField.text = firstName
         }
@@ -141,7 +142,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             anno.coordinate = coordinate
             self.longitude = anno.coordinate.longitude
             self.latitude = anno.coordinate.latitude
-            
             let annotations = self.locationMapView.annotations
             self.locationMapView.removeAnnotations(annotations)
             self.locationMapView.addAnnotation(anno)
@@ -160,6 +160,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         // Try to find next responder
         if let nextTextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
             nextTextField.becomeFirstResponder()
+            if nextTextField.tag == 5 {
+                self.originalLocation = nextTextField.text!
+                nextTextField.text = ""
+            }
         } else {
             // Not found, so remove keyboard.
             textField.resignFirstResponder()
@@ -181,6 +185,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 address = (addressLine?.joined(separator: ", "))!
             }
             self.locationTextField.text = address
+            self.originalLocation = address
         }
     }
     
@@ -197,6 +202,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
+        
         if self.locationTextField.text == ""{
             self.locationTextField.text = self.originalLocation
         } else {
@@ -220,13 +226,22 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
                     self.longitude = anno.coordinate.longitude
                     self.latitude = anno.coordinate.latitude
+                    self.originalLocation = self.locationTextField.text!
+                    
                     
                 } else {
                     print(error?.localizedDescription ?? "error" )
                 }
             }
-            
         }
+        self.firstName = self.firstNameTextField.text!
+        self.lastName = self.lastNameTextField.text!
+        self.relationship = self.relationshipTextField.text!
+        self.email = self.emailTextField.text!
+        self.phone = self.phoneTextField.text!
+        self.originalLocation = self.locationTextField.text!
+        self.latitude = self.location.latitude
+        self.longitude = self.location.longitude
     }
     
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
@@ -299,7 +314,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if error == nil {
                 if let placemark = placemarks?[0] {
                     let location = placemark.location!
-                    
                     completionHandler(location.coordinate, nil)
                     return
                 }
