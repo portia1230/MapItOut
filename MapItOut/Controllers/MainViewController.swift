@@ -18,8 +18,8 @@ import CoreLocation
 class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     
     //MARK: - Properties
+
     @IBOutlet weak var locationImage: UIImageView!
-    
     @IBOutlet weak var contactAddressLabel: UILabel!
     @IBOutlet weak var contactRelationshipLabel: UILabel!
     @IBOutlet weak var contactNameLabel: UILabel!
@@ -44,14 +44,13 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
         let imageView = UIImageView()
         self.contactButton.isEnabled = false
         imageView.image = #imageLiteral(resourceName: "redPin.png")
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
         let span = MKCoordinateSpanMake(100, 100)
-        let region = MKCoordinateRegionMake(mapView.userLocation.coordinate, span)
+        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         var coordinate: CLLocationCoordinate2D!
         self.mapView.setRegion(region, animated: true)
         
@@ -75,7 +74,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     self.mapView.addAnnotation(anno)
                 }
                 i += 1
-
             }
             
             if contacts.isEmpty{
@@ -88,9 +86,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 
                 var sortedContacts = LocationService.rankDistance(entries: self.contacts)
                 let imageURL = URL(string: sortedContacts[0].imageURL)
+                
+                let coordinate = LocationService.getLocation(manager: self.locationManager)
+                let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
                 self.selectedContact = sortedContacts[0]
-                let distance = contactLocation.distance(from: self.mapView.userLocation.location!)
+                let distance = myLocation.distance(from: contactLocation)
                 
                 self.contactAddressLabel.backgroundColor = UIColor.clear
                 self.contactNameLabel.backgroundColor = UIColor.clear
@@ -143,7 +144,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Functions
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .alert)
         
         //Import from Contacts segue
         alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in
@@ -205,8 +206,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.contactImage.kf.setImage(with: url!)
             self.contactNameLabel.text = self.selectedContact.firstName + " " + self.selectedContact.lastName
             self.contactRelationshipLabel.text = self.selectedContact.relationship
+            let location = LocationService.getLocation(manager: locationManager)
+            let myLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
             let contactLocation = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
-            let distance = contactLocation.distance(from: self.mapView.userLocation.location!)
+            let distance = contactLocation.distance(from: myLocation)
             
             if distance > 1000.0
             {
@@ -264,21 +267,59 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     @IBAction func refreshButtonTapped(_ sender: Any) {
+        //        let imageView = UIImageView()
+        //        imageView.image = #imageLiteral(resourceName: "redPin.png")
+        //        let span = MKCoordinateSpanMake(10, 10)
+        //        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+        //        self.mapView.setRegion(region, animated: true)
+        //
+        //        if contacts.isEmpty{
+        //            self.contactNameLabel.backgroundColor = UIColor.clear
+        //            self.contactNameLabel.text = "No contact entered"
+        //            self.contactAddressLabel.text = ""
+        //            self.contactButton.isHidden = true
+        //        } else {
+        //            self.contactButton.isHidden = false
+        //            var sortedContacts = LocationService.rankDistance(entries: contacts)
+        //            let imageURL = URL(string: sortedContacts[0].imageURL)
+        //            let coordinate = LocationService.getLocation(manager: self.locationManager)
+        //            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        //            let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
+        //            self.selectedContact = sortedContacts[0]
+        //            let distance = myLocation.distance(from: contactLocation)
+        //
+        //            self.contactAddressLabel.backgroundColor = UIColor.clear
+        //            self.contactNameLabel.backgroundColor = UIColor.clear
+        //            self.contactRelationshipLabel.backgroundColor = UIColor.clear
+        //
+        //            if distance > 1000.0
+        //            {
+        //                self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
+        //            } else {
+        //                self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+        //            }
+        //            self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
+        //            self.contactRelationshipLabel.text = sortedContacts[0].relationship
+        //            self.contactImage.kf.setImage(with: imageURL)
+        //        }
+        //
+        
         if isUpdatingHeading == false {
             self.isUpdatingHeading = true
             self.locationImage.image = #imageLiteral(resourceName: "selectedFindcontact.png")
             self.locationManager.startUpdatingHeading()
         } else {
-            self.isUpdatingHeading = false
-            let span = MKCoordinateSpanMake(100, 100)
-            let region = MKCoordinateRegionMake(self.mapView.userLocation.coordinate, span)
-            self.mapView.setRegion(region, animated: true)
             self.locationImage.image = #imageLiteral(resourceName: "findContact.png")
             self.locationManager.stopUpdatingHeading()
             self.mapView.isRotateEnabled = false
+            self.isUpdatingHeading = false
+            usleep(500000) //sleep for 0.1 second
+            let span = MKCoordinateSpanMake(100, 100)
+            let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+            self.mapView.setRegion(region, animated: true)
+            
             
         }
-        usleep(700000) //sleep for 0.4 second
         
     }
     

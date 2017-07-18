@@ -29,7 +29,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: - Functions
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        self.dismiss(animated: false) {
+        self.dismiss(animated: true) {
         }
     }
     

@@ -191,7 +191,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .alert)
         
         //Import from Contacts segue
         alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in
