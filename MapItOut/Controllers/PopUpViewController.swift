@@ -17,6 +17,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     //MARK: - Properties
     
+    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
@@ -30,6 +32,18 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var contactImage: UIImageView!
     
+    var OFirstName = ""
+    var OLastName = ""
+    var ORelationship = ""
+    var OPhoneNumber = "No number entered"
+    var OEmail = "No email entered"
+    var OAddress = ""
+    var OLongitude = 0.0
+    var OLatitude = 0.0
+    var OContactPhoto = UIImageView()
+    var OOriginalLocation = ""
+    var OLocation = CLLocationCoordinate2D()
+    
     var firstName = ""
     var lastName = ""
     var relationship = ""
@@ -39,13 +53,15 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var longitude = 0.0
     var latitude = 0.0
     var contactPhoto = UIImageView()
-    var isEditingContact = false
     var originalLocation = ""
     var locationManager = CLLocationManager()
     var location = CLLocationCoordinate2D()
     var photoHelper = MGPhotoHelper()
     var keyOfContact = ""
     
+    
+    var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
+    var greyColor = UIColor
     var pickOption = ["Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
     
     //MARK: - Lifecycle
@@ -72,36 +88,37 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         emailTextField.tag = 4
         addressDescription.tag = 5
         
-        firstNameTextField.isUserInteractionEnabled = false
-        lastNameTextField.isUserInteractionEnabled = false
-        relationshipTextField.isUserInteractionEnabled = false
-        phoneNumberTextField.isUserInteractionEnabled = false
-        emailTextField.isUserInteractionEnabled = false
-        addressDescription.isUserInteractionEnabled = false
-        changeImageButton.isEnabled = false
+        firstNameTextField.isUserInteractionEnabled = true
+        lastNameTextField.isUserInteractionEnabled = true
+        relationshipTextField.isUserInteractionEnabled = true
+        phoneNumberTextField.isUserInteractionEnabled = true
+        emailTextField.isUserInteractionEnabled = true
+        addressDescription.isUserInteractionEnabled = true
+        changeImageButton.isEnabled = true
         
         
         //dismiss keyboard gesture recognizer
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissKeyboard))
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissKeyboard))
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissKeyboard))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissView))
+        //let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissView))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
-        swipeUp.direction = UISwipeGestureRecognizerDirection.up
+        //swipeUp.direction = UISwipeGestureRecognizerDirection.up
         view.addGestureRecognizer(tap)
         view.addGestureRecognizer(swipeDown)
-        view.addGestureRecognizer(swipeUp)
+        //view.addGestureRecognizer(swipeUp)
         
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         deleteButton.layer.cornerRadius = 15
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.backgroundView.backgroundColor
         self.changeImageButton.isHidden = true
-        self.isEditingContact = false
+        self.undoButton.layer.cornerRadius = 30
         self.contactImage.layer.cornerRadius = 75
         self.changeImageButton.layer.cornerRadius = 75
         self.contactImage.clipsToBounds = true
-        contactMapView.isUserInteractionEnabled = true
+        contactMapView.isUserInteractionEnabled = false
         self.firstNameTextField.text = firstName
         self.lastNameTextField.text = lastName
         self.relationshipTextField.text = relationship
@@ -124,6 +141,17 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         self.originalLocation = self.addressDescription.text!
         
+        self.OFirstName = self.firstName
+        self.OLastName = self.lastName
+        self.ORelationship = self.relationship
+        self.OEmail = self.email
+        self.OPhoneNumber = self.phoneNumber
+        self.OAddress = self.originalLocation
+        self.OLatitude = self.latitude
+        self.OLongitude = self.longitude
+        self.OLocation = self.location
+        self.OContactPhoto = self.contactPhoto
+        
     }
     
     
@@ -131,11 +159,27 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     //MARK: - VC Functions
     
+    @IBAction func undoButtonTapped(_ sender: Any) {
+        self.firstNameTextField.text = self.OFirstName
+        self.lastNameTextField.text = self.OLastName
+        self.relationshipTextField.text = self.ORelationship
+        self.emailTextField.text = self.OEmail
+        self.phoneNumberTextField.text = self.OPhoneNumber
+        self.addressDescription.text = self.OOriginalLocation
+        let annotations = self.contactMapView.annotations
+        self.contactMapView.removeAnnotations(annotations)
+        let anno = MKPointAnnotation()
+        anno.coordinate = CLLocationCoordinate2D(latitude: self.OLatitude, longitude: self.OLongitude)
+        self.contactMapView.addAnnotation(anno)
+        undoButton.color
+    }
+    
+    
     @IBAction func deleteButtonTapped(_ sender: Any) {
         
         EntryService.deleteEntry(key: self.keyOfContact)
         
-        UIView.transition(with: self.view.superview!, duration: 0.3, options: .transitionCrossDissolve, animations: { _ in
+        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.removeFromSuperview()
         }, completion: nil)
         self.parent?.viewDidLoad()
@@ -149,51 +193,44 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         }
     }
     
-    @IBAction func editButtonTapped(_ sender: Any) {
-        if self.isEditingContact == false {
-            self.isEditingContact = true
-            self.changeImageButton.isHidden = false
-            firstNameTextField.isUserInteractionEnabled = true
-            lastNameTextField.isUserInteractionEnabled = true
-            relationshipTextField.isUserInteractionEnabled = true
-            phoneNumberTextField.isUserInteractionEnabled = true
-            emailTextField.isUserInteractionEnabled = true
-            addressDescription.isUserInteractionEnabled = true
-            changeImageButton.isEnabled = true
-            editButton.setTitle("Cancel", for: .normal)
-            doneButton.setTitle("Save", for: .normal)
-        } else {
-            self.isEditingContact = false
-            changeImageButton.isEnabled = false
-            self.changeImageButton.isHidden = true
-            firstNameTextField.isUserInteractionEnabled = false
-            lastNameTextField.isUserInteractionEnabled = false
-            relationshipTextField.isUserInteractionEnabled = false
-            phoneNumberTextField.isUserInteractionEnabled = false
-            emailTextField.isUserInteractionEnabled = false
-            addressDescription.isUserInteractionEnabled = false
-            editButton.setTitle("Edit", for: .normal)
-            doneButton.setTitle("Done", for: .normal)
-        }
-        
-    }
+    //    @IBAction func editButtonTapped(_ sender: Any) {
+    //        if self.isEditingContact == false {
+    //            self.isEditingContact = true
+    //            self.changeImageButton.isHidden = false
+    //            firstNameTextField.isUserInteractionEnabled = true
+    //            lastNameTextField.isUserInteractionEnabled = true
+    //            relationshipTextField.isUserInteractionEnabled = true
+    //            phoneNumberTextField.isUserInteractionEnabled = true
+    //            emailTextField.isUserInteractionEnabled = true
+    //            addressDescription.isUserInteractionEnabled = true
+    //            changeImageButton.isEnabled = true
+    //            editButton.setTitle("Cancel", for: .normal)
+    //            doneButton.setTitle("Save", for: .normal)
+    //        } else {
+    //            self.isEditingContact = false
+    //            changeImageButton.isEnabled = false
+    //            self.changeImageButton.isHidden = true
+    //            firstNameTextField.isUserInteractionEnabled = false
+    //            lastNameTextField.isUserInteractionEnabled = false
+    //            relationshipTextField.isUserInteractionEnabled = false
+    //            phoneNumberTextField.isUserInteractionEnabled = false
+    //            emailTextField.isUserInteractionEnabled = false
+    //            addressDescription.isUserInteractionEnabled = false
+    //            editButton.setTitle("Edit", for: .normal)
+    //            doneButton.setTitle("Done", for: .normal)
+    //        }
+    //
+    //    }
+    
     func dismissKeyboard(){
         self.view.endEditing(true)
     }
     
-    @IBAction func doneButtonTapped(_ sender: Any) {
-        if isEditingContact == true{
-            changeImageButton.isEnabled = false
-            self.changeImageButton.isHidden = true
-            firstNameTextField.isUserInteractionEnabled = false
-            lastNameTextField.isUserInteractionEnabled = false
-            relationshipTextField.isUserInteractionEnabled = false
-            phoneNumberTextField.isUserInteractionEnabled = false
-            emailTextField.isUserInteractionEnabled = false
-            addressDescription.isUserInteractionEnabled = false
-            isEditingContact = false
-            editButton.setTitle("Edit", for: .normal)
-            doneButton.setTitle("Done", for: .normal)
+    func dismissView(){
+        if UIApplication.shared.isKeyboardPresented{
+            self.view.endEditing(true)
+        } else {
+            
             let imageRef = StorageReference.newContactImageReference()
             StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
                 guard let downloadURL = downloadURL else {
@@ -203,14 +240,45 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
                 EntryService.editEntry(entry: contact)
             }
-        } else {
-            UIView.transition(with: self.view.superview!, duration: 0.3, options: .transitionCrossDissolve, animations: { _ in
+            
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                 self.view.removeFromSuperview()
             }, completion: nil)
             self.parent?.viewDidLoad()
             self.parent?.viewWillAppear(true)
         }
     }
+    
+//    @IBAction func doneButtonTapped(_ sender: Any) {
+//        if isEditingContact == true{
+//            changeImageButton.isEnabled = false
+//            self.changeImageButton.isHidden = true
+//            firstNameTextField.isUserInteractionEnabled = false
+//            lastNameTextField.isUserInteractionEnabled = false
+//            relationshipTextField.isUserInteractionEnabled = false
+//            phoneNumberTextField.isUserInteractionEnabled = false
+//            emailTextField.isUserInteractionEnabled = false
+//            addressDescription.isUserInteractionEnabled = false
+//            isEditingContact = false
+//            editButton.setTitle("Edit", for: .normal)
+//            doneButton.setTitle("Done", for: .normal)
+//            let imageRef = StorageReference.newContactImageReference()
+//            StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
+//                guard let downloadURL = downloadURL else {
+//                    return
+//                }
+//                let urlString = downloadURL.absoluteString
+//                let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+//                EntryService.editEntry(entry: contact)
+//            }
+//        } else {
+//            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+//                self.view.removeFromSuperview()
+//            }, completion: nil)
+//            self.parent?.viewDidLoad()
+//            self.parent?.viewWillAppear(true)
+//        }
+//    }
     
     //MARK: - Text field delegate functions
     
@@ -326,4 +394,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     
+}
+
+extension UIApplication {
+    var isKeyboardPresented: Bool {
+        if let keyboardWindowClass = NSClassFromString("UIRemoteKeyboardWindow"), self.windows.contains(where: { $0.isKind(of: keyboardWindowClass) }) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
