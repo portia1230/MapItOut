@@ -134,11 +134,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 })
             })
         }  else {
-            let coordinate = getLocation(manager: locationManager)
-            self.location = coordinate
-            reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            self.location = locationMapView.userLocation.coordinate
+            reverseGeocoding(latitude: self.location.latitude, longitude: self.location.longitude)
             let anno = MKPointAnnotation()
-            anno.coordinate = coordinate
+            anno.coordinate = self.location
             self.longitude = anno.coordinate.longitude
             self.latitude = anno.coordinate.latitude
             
@@ -146,7 +145,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.locationMapView.removeAnnotations(annotations)
             self.locationMapView.addAnnotation(anno)
             let span = MKCoordinateSpanMake(0.1, 0.1)
-            let region = MKCoordinateRegionMake(coordinate, span)
+            let region = MKCoordinateRegionMake(self.location, span)
             locationMapView.setRegion(region, animated: true)
         }
     }
@@ -234,11 +233,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         photoHelper.completionHandler = { image in
             self.photoImageView.image = image
         }
-    }
-    
-    func getLocation(manager: CLLocationManager) -> CLLocationCoordinate2D {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        return locValue
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
