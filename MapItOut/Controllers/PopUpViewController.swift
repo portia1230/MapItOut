@@ -20,8 +20,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var relationshipTextField: UITextField!
@@ -61,7 +59,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     
     var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
-    var greyColor = UIColor
+    var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+    var darkTextColor = UIColor(red: 90/255, green: 92/255, blue: 92/255, alpha: 1)
     var pickOption = ["Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
     
     //MARK: - Lifecycle
@@ -112,11 +111,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.backgroundView.backgroundColor
+        self.backgroundView.layer.backgroundColor = greyColor.cgColor
+        self.undoButton.setTitleColor(darkTextColor, for: .normal)
+        self.backgroundView.layer.cornerRadius = 30
+        self.undoButton.isEnabled = false
         self.changeImageButton.isHidden = true
         self.undoButton.layer.cornerRadius = 30
-        self.contactImage.layer.cornerRadius = 75
-        self.changeImageButton.layer.cornerRadius = 75
+        self.contactImage.layer.cornerRadius = 70
+        self.changeImageButton.layer.cornerRadius = 70
         self.contactImage.clipsToBounds = true
         contactMapView.isUserInteractionEnabled = false
         self.firstNameTextField.text = firstName
@@ -171,7 +173,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let anno = MKPointAnnotation()
         anno.coordinate = CLLocationCoordinate2D(latitude: self.OLatitude, longitude: self.OLongitude)
         self.contactMapView.addAnnotation(anno)
-        undoButton.color
+        self.backgroundView.layer.backgroundColor = greyColor.cgColor
+        self.undoButton.setTitleColor(darkTextColor, for: .normal)
+        self.undoButton.isEnabled = false
     }
     
     
@@ -283,6 +287,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     //MARK: - Text field delegate functions
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        self.undoButton.isEnabled = true
+        self.backgroundView.layer.backgroundColor = greenColor.cgColor
+        self.undoButton.setTitleColor(UIColor.white, for: .normal)
         if textField == addressDescription{
             self.originalLocation = addressDescription.text!
             self.addressDescription.text = ""
@@ -290,7 +297,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         }
         return true
     }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
+        self.undoButton.isEnabled = true
+        self.backgroundView.layer.backgroundColor = greenColor.cgColor
+        self.undoButton.setTitleColor(UIColor.white, for: .normal)
         if self.addressDescription.text == ""{
             self.addressDescription.text = self.originalLocation
         } else {

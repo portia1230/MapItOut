@@ -18,7 +18,7 @@ import CoreLocation
 class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     
     //MARK: - Properties
-
+    
     @IBOutlet weak var locationImage: UIImageView!
     @IBOutlet weak var contactAddressLabel: UILabel!
     @IBOutlet weak var contactRelationshipLabel: UILabel!
@@ -106,8 +106,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
                 self.contactRelationshipLabel.text = sortedContacts[0].relationship
                 self.contactImage.kf.setImage(with: imageURL)
+                if self.contactImage.image != nil{
+                    self.contactButton.isEnabled = true
+                    
+                }
             }
-            self.contactButton.isEnabled = true
         }
     }
     
@@ -267,43 +270,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     @IBAction func refreshButtonTapped(_ sender: Any) {
-        //        let imageView = UIImageView()
-        //        imageView.image = #imageLiteral(resourceName: "redPin.png")
-        //        let span = MKCoordinateSpanMake(10, 10)
-        //        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-        //        self.mapView.setRegion(region, animated: true)
-        //
-        //        if contacts.isEmpty{
-        //            self.contactNameLabel.backgroundColor = UIColor.clear
-        //            self.contactNameLabel.text = "No contact entered"
-        //            self.contactAddressLabel.text = ""
-        //            self.contactButton.isHidden = true
-        //        } else {
-        //            self.contactButton.isHidden = false
-        //            var sortedContacts = LocationService.rankDistance(entries: contacts)
-        //            let imageURL = URL(string: sortedContacts[0].imageURL)
-        //            let coordinate = LocationService.getLocation(manager: self.locationManager)
-        //            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        //            let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
-        //            self.selectedContact = sortedContacts[0]
-        //            let distance = myLocation.distance(from: contactLocation)
-        //
-        //            self.contactAddressLabel.backgroundColor = UIColor.clear
-        //            self.contactNameLabel.backgroundColor = UIColor.clear
-        //            self.contactRelationshipLabel.backgroundColor = UIColor.clear
-        //
-        //            if distance > 1000.0
-        //            {
-        //                self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
-        //            } else {
-        //                self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-        //            }
-        //            self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
-        //            self.contactRelationshipLabel.text = sortedContacts[0].relationship
-        //            self.contactImage.kf.setImage(with: imageURL)
-        //        }
-        //
-        
         if isUpdatingHeading == false {
             self.isUpdatingHeading = true
             self.locationImage.image = #imageLiteral(resourceName: "selectedFindcontact.png")
@@ -317,13 +283,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let span = MKCoordinateSpanMake(100, 100)
             let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
             self.mapView.setRegion(region, animated: true)
-            
-            
         }
         
     }
     
     @IBAction func detailsButtonTapped(_ sender: Any) {
+        
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let imageURL = URL(string: self.selectedContact.imageURL)
         
@@ -338,12 +303,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         popOverVC.longitude = self.selectedContact.longitude
         popOverVC.keyOfContact = self.selectedContact.key
         
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
-        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(popOverVC.view)
-        }, completion: nil)
-        popOverVC.didMove(toParentViewController: self)
+            self.addChildViewController(popOverVC)
+            popOverVC.view.frame = self.view.frame
+            UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.addSubview(popOverVC.view)
+            }, completion: nil)
+            popOverVC.didMove(toParentViewController: self)
     }
     
     
