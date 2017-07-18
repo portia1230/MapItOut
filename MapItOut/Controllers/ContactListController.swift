@@ -119,45 +119,14 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
-        UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve, animations: { _ in
+        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.addSubview(popOverVC.view)
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)
     }
     
     
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "bigCell", for: indexPath) as! SelectedTableViewCell
-//        let contact = self.contacts[indexPath.row]
-//        let imageURL = URL(string: contact.imageURL)
-//        let locationManager = CLLocationManager()
-//        let myCoordinate = LocationService.getLocation(manager: locationManager)
-//        let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
-//        let contactLocation = CLLocation(latitude: contacts[indexPath.row].latitude, longitude: contacts[indexPath.row].longitude)
-//        let distance = myLocation.distance(from: contactLocation)
-//        
-//        if distance > 1000.0
-//        {
-//            cell.distanceLabel.text = " \(Int(distance/1000)) KM away"
-//        } else {
-//            cell.distanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-//        }
-//        
-//        cell.photoImageView.layer.cornerRadius = 62.5
-//        cell.addressLabel.text = contact.locationDescription
-//        cell.nameLabel.text = contact.firstName + " " + contact.lastName
-//        cell.relationshipLabel.text = contact.relationship
-//        cell.photoImageView.kf.setImage(with: imageURL)
-//        cell.photoImageView.clipsToBounds = true
-//
-//    }
-    
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if (tableView.cellForRow(at: indexPath)?.isSelected)!{
-//            return 200
-//        }
         return 108
     }
     
