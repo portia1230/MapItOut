@@ -27,6 +27,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var contactButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     
+    var images = [UIImage]()
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
     var selectedContact : Entry!
     var sortedContacts : [Entry] = []
@@ -78,6 +79,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     anno.coordinate = coordinate
                     anno.indexOfContact = i
                     annos.append(anno)
+                    self.images.append(imageView.image!)
                     //self.mapView.addAnnotation(anno)
                 }
                 i += 1
@@ -169,6 +171,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
 //        imageView.kf.setImage(with: url)
 //        if imageView.image != nil{
             anno.image = image
+            self.images[selectedIndex] = image
             self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
             let imageURL = URL(string: self.sortedContacts[0].imageURL)
             let myCoordinate = LocationService.getLocation(manager: self.locationManager)
@@ -286,8 +289,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
 //            self.selectedContact = contacts[customView.indexOfContact]
 //            self.selectedIndex = customView.indexOfContact
             
-            let url = URL(string: self.selectedContact.imageURL)
-            self.contactImage.kf.setImage(with: url!)
+            //let url = URL(string: self.selectedContact.imageURL)
+            self.contactImage.image = self.images[selectedIndex]
             self.contactNameLabel.text = self.selectedContact.firstName + " " + self.selectedContact.lastName
             self.contactRelationshipLabel.text = self.selectedContact.relationship
             let location = LocationService.getLocation(manager: locationManager)
@@ -377,7 +380,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         popOverVC.lastName = self.selectedContact.lastName
         popOverVC.address = self.selectedContact.locationDescription
         popOverVC.relationship = self.selectedContact.relationship
-        popOverVC.contactPhoto.kf.setImage(with: imageURL!)
+        //popOverVC.contactPhoto.kf.setImage(with: imageURL!)
+        popOverVC.contactPhoto.image = self.images[selectedIndex]
         popOverVC.email = self.selectedContact.email
         popOverVC.phoneNumber = self.selectedContact.number
         popOverVC.latitude = self.selectedContact.latitude

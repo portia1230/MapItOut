@@ -22,7 +22,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     var keys : [String] = []
     var sortedContacts : [Entry] = []
     var locationDescription = ""
-    var selectedIndex = IndexPath()
+    var selectedIndex = 0
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -68,9 +68,11 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     func updateValue(entry: Entry, image : UIImage){
-        User.currentUser.entries.remove(at: self.selectedIndex.row)
+        User.currentUser.entries.remove(at: self.selectedIndex)
+        
         User.currentUser.entries.append(entry)
-        tableView.cellForRow(at: self.selectedIndex )
+//        let cell = .tableView.dequeueReusableCell(withIdentifier: "cell", for: self.selectedIndex.row) as CustomTableCell
+//        cell = tableView.cellForRow(at: self.selectedIndex)
         self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
         self.tableView.reloadData()
         
@@ -113,7 +115,13 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
-        self.selectedIndex = indexPath
+        var i = 0
+        while i < User.currentUser.entries.count{
+            if sortedContacts[indexPath.row].key == User.currentUser.entries[i].key{
+                self.selectedIndex = i
+            }
+            i += 1
+        }
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let selectedContact = self.sortedContacts[indexPath.row]
         
