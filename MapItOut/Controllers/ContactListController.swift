@@ -188,6 +188,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     @IBAction func mapButtonTapped(_ sender: Any) {
         dismiss(animated: false) {
+            self.parent?.viewWillAppear(true)
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {

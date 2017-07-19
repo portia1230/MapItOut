@@ -47,9 +47,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.images.removeAll()
+        var allImages = [UIImage]()
         let imageView = UIImageView()
-        self.contactButton.isEnabled = false
         imageView.image = #imageLiteral(resourceName: "redPin.png")
+        self.contactButton.isEnabled = false
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
         let span = MKCoordinateSpanMake(100, 100)
@@ -70,6 +72,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     self.viewWillAppear(true)
                 } else {
                     let allAnnos = self.mapView.annotations
+                    self.images.append(imageView.image!)
                     self.mapView.removeAnnotations(allAnnos)
                     let thisLongitude = contacts[i].longitude
                     let thisLatitude = contacts[i].latitude
@@ -79,8 +82,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     anno.coordinate = coordinate
                     anno.indexOfContact = i
                     annos.append(anno)
-                    self.images.append(imageView.image!)
-                    //self.mapView.addAnnotation(anno)
+                    allImages.append(imageView.image!)
+                   // self.mapView.addAnnotation(anno)
                 }
                 i += 1
             }
@@ -128,6 +131,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 if self.contactImage.image != nil{
                     self.contactButton.isEnabled = true
                     self.mapView.addAnnotations(annos)
+                    self.images = allImages
+                    
+                    
+                    
                 }
             }
         }
@@ -159,49 +166,51 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Update annotations
     
     func updateValue(entry: Entry, image: UIImage){
-       // self.mapView.removeAnnotation(self.editedAnno)
+        // self.mapView.removeAnnotation(self.editedAnno)
         User.currentUser.entries.remove(at: self.selectedIndex)
         User.currentUser.entries.append(entry)
         self.mapView.removeAnnotation(self.editedAnno)
         let coordinate = CLLocationCoordinate2DMake(entry.latitude, entry.longitude)
         let anno = CustomPointAnnotation()
         anno.coordinate = coordinate
-//        let imageView = UIImageView()
-        let url = URL(string: entry.imageURL)
-//        imageView.kf.setImage(with: url)
-//        if imageView.image != nil{
-            anno.image = image
-            self.images[selectedIndex] = image
-            self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
-            let imageURL = URL(string: self.sortedContacts[0].imageURL)
-            let myCoordinate = LocationService.getLocation(manager: self.locationManager)
-            let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
-            let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
-            self.selectedContact = self.sortedContacts[0]
+        anno.image = image
+        self.images.remove(at: selectedIndex)
+        self.images.insert(image, at: selectedIndex)
+        
+
+//        var i = 0
+        
+//        while i <  User.currentUser.entries.count{
+//            if User.currentUser.entries[i].key == self.sortedContacts[0].key{
+//                self.selectedIndex = i
+//                self.images.insert(image, at: i)
+//                break
+//            }
+//            i += 1
+//        }
+        
+        self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
+        let imageURL = URL(string: self.sortedContacts[0].imageURL)
+        let myCoordinate = LocationService.getLocation(manager: self.locationManager)
+        let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
+        let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
+        self.selectedContact = self.sortedContacts[0]
         self.mapView.addAnnotation(anno)
-            var i = 0
-            while i <  User.currentUser.entries.count{
-                if User.currentUser.entries[i].key == self.sortedContacts[0].key{
-                    self.selectedIndex = i
-                    break
-                }
-                i += 1
-            }
-            
-            let distance = myLocation.distance(from: contactLocation)
-            
-            if distance > 1000.0
-            {
-                self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
-            } else {
-                self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-            }
-            self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
-            self.contactRelationshipLabel.text = sortedContacts[0].relationship
-            self.contactImage.kf.setImage(with: imageURL)
-            if self.contactImage.image != nil{
-                self.contactButton.isEnabled = true
-           // }
+       
+        let distance = myLocation.distance(from: contactLocation)
+        
+        if distance > 1000.0
+        {
+            self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
+        } else {
+            self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+        }
+        self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
+        self.contactRelationshipLabel.text = sortedContacts[0].relationship
+        self.contactImage.kf.setImage(with: imageURL)
+        if self.contactImage.image != nil{
+            self.contactButton.isEnabled = true
+            // }
         }
     }
     
@@ -249,7 +258,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if(annotation is MKUserLocation){
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
             annotationView?.isUserInteractionEnabled = false
             annotationView?.canShowCallout = false
             return annotationView
@@ -286,8 +295,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 i += 1
             }
             
-//            self.selectedContact = contacts[customView.indexOfContact]
-//            self.selectedIndex = customView.indexOfContact
+            //            self.selectedContact = contacts[customView.indexOfContact]
+            //            self.selectedIndex = customView.indexOfContact
             
             //let url = URL(string: self.selectedContact.imageURL)
             self.contactImage.image = self.images[selectedIndex]
@@ -374,7 +383,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBAction func detailsButtonTapped(_ sender: Any) {
         
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-        let imageURL = URL(string: self.selectedContact.imageURL)
+        //let imageURL = URL(string: self.selectedContact.imageURL)
         
         popOverVC.firstName = self.selectedContact.firstName
         popOverVC.lastName = self.selectedContact.lastName
