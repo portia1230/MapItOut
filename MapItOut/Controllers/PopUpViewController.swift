@@ -107,7 +107,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         view.addGestureRecognizer(swipeDown)
         //view.addGestureRecognizer(swipeUp)
         
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         deleteButton.layer.cornerRadius = 15
     }
     

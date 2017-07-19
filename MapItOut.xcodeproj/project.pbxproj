@@ -238,10 +238,10 @@
 			children = (
 				8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */,
 				83DDC2391F1693F90072BCFB /* ContactListController.swift */,
-				83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */,
 				83533A711F1340C7002EEE74 /* MainViewController.swift */,
 				837938931F136CE1003B4B34 /* AddEntryViewController.swift */,
 				83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */,
+				83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */,
 				83777A791F2009730023C51C /* SignInPopUpViewController.swift */,
 			);
 			name = Controllers;
