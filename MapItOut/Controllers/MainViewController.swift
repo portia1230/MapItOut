@@ -48,6 +48,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.images.removeAll()
+        self.mapView.userLocation.subtitle = ""
+        self.mapView.userLocation.title = ""
         var allImages = [UIImage]()
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "redPin.png")
@@ -258,10 +260,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if(annotation is MKUserLocation){
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
-            annotationView?.isUserInteractionEnabled = false
-            annotationView?.canShowCallout = false
-            return annotationView
+            return nil
         }
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
         if annotationView == nil {
