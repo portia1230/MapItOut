@@ -14,6 +14,7 @@ import ContactsUI
 import QuartzCore
 import FirebaseAuth
 import CoreLocation
+import FirebaseDatabase
 
 class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     
@@ -46,6 +47,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(true)
         self.images.removeAll()
         self.mapView.userLocation.subtitle = ""
@@ -71,7 +73,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     : contacts[i].imageURL)
                 imageView.kf.setImage(with: imageURL!)
                 if imageView.image == nil{
-                    self.viewWillAppear(true)
+                    //              self.viewWillAppear(true)
                 } else {
                     let allAnnos = self.mapView.annotations
                     self.images.append(imageView.image!)
@@ -85,7 +87,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     anno.indexOfContact = i
                     annos.append(anno)
                     allImages.append(imageView.image!)
-                   // self.mapView.addAnnotation(anno)
+                    // self.mapView.addAnnotation(anno)
                 }
                 i += 1
             }
@@ -135,8 +137,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     self.mapView.addAnnotations(annos)
                     self.images = allImages
                     
-                    
-                    
                 }
             }
         }
@@ -168,7 +168,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Update annotations
     
     func updateValue(entry: Entry, image: UIImage){
-        // self.mapView.removeAnnotation(self.editedAnno)
+        self.mapView.removeAnnotation(self.editedAnno)
         User.currentUser.entries.remove(at: self.selectedIndex)
         User.currentUser.entries.insert(entry, at: self.selectedIndex)
         self.mapView.removeAnnotation(self.editedAnno)
@@ -179,26 +179,26 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.images.remove(at: selectedIndex)
         self.images.insert(image, at: selectedIndex)
         
-
-//        var i = 0
         
-//        while i <  User.currentUser.entries.count{
-//            if User.currentUser.entries[i].key == self.sortedContacts[0].key{
-//                self.selectedIndex = i
-//                self.images.insert(image, at: i)
-//                break
-//            }
-//            i += 1
-//        }
+        //        var i = 0
+        
+        //        while i <  User.currentUser.entries.count{
+        //            if User.currentUser.entries[i].key == self.sortedContacts[0].key{
+        //                self.selectedIndex = i
+        //                self.images.insert(image, at: i)
+        //                break
+        //            }
+        //            i += 1
+        //        }
         
         self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
-        let imageURL = URL(string: self.sortedContacts[0].imageURL)
+        
         let myCoordinate = LocationService.getLocation(manager: self.locationManager)
         let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
-        let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
-        self.selectedContact = self.sortedContacts[0]
+        let contactLocation = CLLocation(latitude: User.currentUser.entries[self.selectedIndex].latitude, longitude: User.currentUser.entries[self.selectedIndex].longitude)
+        
         self.mapView.addAnnotation(anno)
-       
+        
         let distance = myLocation.distance(from: contactLocation)
         
         if distance > 1000.0
@@ -207,13 +207,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         } else {
             self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
         }
-        self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
-        self.contactRelationshipLabel.text = sortedContacts[0].relationship
-        self.contactImage.kf.setImage(with: imageURL)
-        if self.contactImage.image != nil{
-            self.contactButton.isEnabled = true
-            // }
-        }
+        self.contactNameLabel.text = User.currentUser.entries[selectedIndex].firstName + " " + User.currentUser.entries[selectedIndex].lastName
+        self.contactRelationshipLabel.text = User.currentUser.entries[selectedIndex].relationship
+        self.contactImage.image = self.images[self.selectedIndex]
+        self.contactButton.isEnabled = true
     }
     
     
@@ -269,10 +266,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         } else {
             annotationView?.annotation = annotation
         }
-        let custum = annotation as! CustomPointAnnotation
-        annotationView?.image = custum.image
+        let custom = annotation as! CustomPointAnnotation
+        annotationView?.image = custom.image
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
-        annotationView?.image = userImageForAnnotation(image: custum.image)
+        annotationView?.image = userImageForAnnotation(image: custom.image)
         annotationView?.centerOffset = CGPoint(x: 0, y: -43.4135)
         return annotationView
     }
@@ -293,7 +290,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 }
                 i += 1
             }
-
+            
             self.contactImage.image = self.images[selectedIndex]
             self.contactNameLabel.text = self.selectedContact.firstName + " " + self.selectedContact.lastName
             self.contactRelationshipLabel.text = self.selectedContact.relationship
@@ -351,9 +348,20 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 assertionFailure("Error signing out: \(error.localizedDescription)")
             }
         }
+        let resetPasswordAction = UIAlertAction(title: "Reset password", style: .default) { _ in
+            do {
+                Auth.auth().sendPasswordReset(withEmail: (Auth.auth().currentUser?.email)!) { error in
+                    let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.present(alertController, animated: true)
+                }
+            }
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         alertController.addAction(signOutAction)
+        alertController.addAction(resetPasswordAction)
         self.present(alertController, animated: true)
     }
     
