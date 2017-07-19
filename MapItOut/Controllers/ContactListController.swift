@@ -22,6 +22,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     var keys : [String] = []
     var contacts : [Entry] = []
     var locationDescription = ""
+    var selectedIndex = IndexPath()
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -64,6 +65,18 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             self.tableView.reloadData()
             //}
         }
+    }
+    
+    func updateValue(entry: Entry){
+        self.contacts.remove(at: self.selectedIndex.row)
+        self.contacts.append(entry)
+        tableView.cellForRow(at: self.selectedIndex )
+        
+        UserService.contacts(for: User.currentUser) { (contacts) in
+            let sortedContacts = LocationService.rankDistance(entries: contacts)
+            self.contacts = sortedContacts
+            self.tableView.reloadData()
+        }
         
     }
     
@@ -98,6 +111,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
+        self.selectedIndex = indexPath
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let selectedContact = contacts[indexPath.row]
         
