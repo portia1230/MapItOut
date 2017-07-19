@@ -25,6 +25,7 @@
 		83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B601F149F2B003A14CC /* plusButton200*200.png */; };
 		83680B631F14A83D003A14CC /* arrowGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B621F14A83D003A14CC /* arrowGreen.png */; };
 		83761FC01F16BC1E00CE33D7 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83761FBF1F16BC1E00CE33D7 /* LocationService.swift */; };
+		83777A7A1F2009730023C51C /* SignInPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83777A791F2009730023C51C /* SignInPopUpViewController.swift */; };
 		837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938931F136CE1003B4B34 /* AddEntryViewController.swift */; };
 		837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938951F137213003B4B34 /* MGPhotoHelper.swift */; };
 		838AC93D1F16EB8300D0EDCA /* 500*20Shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */; };
@@ -69,6 +70,7 @@
 		83680B601F149F2B003A14CC /* plusButton200*200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plusButton200*200.png"; path = "Arts/plusButton200*200.png"; sourceTree = "<group>"; };
 		83680B621F14A83D003A14CC /* arrowGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrowGreen.png; path = Arts/arrowGreen.png; sourceTree = "<group>"; };
 		83761FBF1F16BC1E00CE33D7 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/LocationService.swift; sourceTree = "<group>"; };
+		83777A791F2009730023C51C /* SignInPopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInPopUpViewController.swift; path = Controllers/SignInPopUpViewController.swift; sourceTree = "<group>"; };
 		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; };
 		837938951F137213003B4B34 /* MGPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGPhotoHelper.swift; path = Helpers/MGPhotoHelper.swift; sourceTree = "<group>"; };
 		838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "500*20Shadow.png"; path = "Arts/500*20Shadow.png"; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				83533A711F1340C7002EEE74 /* MainViewController.swift */,
 				837938931F136CE1003B4B34 /* AddEntryViewController.swift */,
 				83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */,
+				83777A791F2009730023C51C /* SignInPopUpViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */,
 				83533A7D1F135272002EEE74 /* StorageService.swift in Sources */,
 				837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */,
+				83777A7A1F2009730023C51C /* SignInPopUpViewController.swift in Sources */,
 				83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

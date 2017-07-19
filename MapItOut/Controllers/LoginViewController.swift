@@ -15,11 +15,13 @@ typealias FIRUser = FirebaseAuth.User
 class LoginViewController: UIViewController {
     
     //MARK: - Properties
-    @IBOutlet weak var getStartedButton: UIButton!
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    @IBOutlet weak var loginButton: UIButton!
     
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     //MARK: - Funtions
     
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
@@ -34,11 +36,16 @@ class LoginViewController: UIViewController {
         
     }
     
+    @IBAction func loginButtonTapped(_ sender: Any) {
+        
+    }
+    
+    
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getStartedButton.layer.cornerRadius = 15
+        self.loginButton.layer.cornerRadius = 15
     }
     
     override func didReceiveMemoryWarning() {
