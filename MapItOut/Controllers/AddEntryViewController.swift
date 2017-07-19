@@ -45,7 +45,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         return .lightContent
     }
     
-    var pickOption = ["Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
+    var pickOption = ["Acquaintance","Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
     
     //MARK: - IBoutlets for text fields
     @IBOutlet weak var firstNameTextField: UITextField!

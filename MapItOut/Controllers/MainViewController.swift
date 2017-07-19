@@ -251,6 +251,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if(annotation is MKUserLocation){
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
+            annotationView?.canShowCallout = false
             return nil
         }
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
