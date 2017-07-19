@@ -23,6 +23,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     var sortedContacts : [Entry] = []
     var locationDescription = ""
     var selectedIndex = 0
+    var images = [UIImage]()
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -54,6 +55,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.images.removeAll()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         UserService.contacts(for: User.currentUser) { (contacts) in
@@ -63,17 +65,27 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             let sortedContacts = LocationService.rankDistance(entries: contacts)
             self.sortedContacts = sortedContacts
             self.tableView.reloadData()
+            for contact in sortedContacts{
+                let url = URL(string: contact.imageURL)
+                let imageView = UIImageView()
+                imageView.kf.setImage(with: url)
+                if imageView != nil{
+                    self.images.append(imageView.image!)
+                }
+            }
             //}
         }
     }
     
     func updateValue(entry: Entry, image : UIImage){
         User.currentUser.entries.remove(at: self.selectedIndex)
-        
         User.currentUser.entries.append(entry)
 //        let cell = .tableView.dequeueReusableCell(withIdentifier: "cell", for: self.selectedIndex.row) as CustomTableCell
 //        cell = tableView.cellForRow(at: self.selectedIndex)
         self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
+        self.images.remove(at: self.selectedIndex)
+        self.images.insert(image, at: self.selectedIndex)
+        
         self.tableView.reloadData()
         
         UserService.contacts(for: User.currentUser) { (contacts) in
@@ -102,14 +114,13 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
             let contact = self.sortedContacts[indexPath.row]
-            let imageURL = URL(string: contact.imageURL)
-            
             cell.addressLabel.text = contact.locationDescription
             cell.nameLabel.text = contact.firstName + " " + contact.lastName
             cell.relationshipLabel.text = contact.relationship
-            cell.photoImageView.kf.setImage(with: imageURL)
+            cell.photoImageView.image = self.images[indexPath.row]
             cell.photoImageView.layer.cornerRadius = 35
             cell.photoImageView.clipsToBounds = true
+            self.images.append(cell.photoImageView.image!)
             return cell
         
         }
@@ -125,21 +136,16 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let selectedContact = self.sortedContacts[indexPath.row]
         
-        let imageURL = URL(string: selectedContact.imageURL)
         popOverVC.firstName = selectedContact.firstName
         popOverVC.lastName = selectedContact.lastName
         popOverVC.address = selectedContact.locationDescription
         popOverVC.relationship = selectedContact.relationship
-        popOverVC.contactPhoto.kf.setImage(with: imageURL!)
+        popOverVC.contactPhoto.image = self.images[indexPath.row]
         popOverVC.email = selectedContact.email
         popOverVC.phoneNumber = selectedContact.number
         popOverVC.latitude = selectedContact.latitude
         popOverVC.longitude = selectedContact.longitude
         popOverVC.keyOfContact = selectedContact.key
-        
-        if popOverVC.contactPhoto.image == nil{
-            popOverVC.contactPhoto.kf.setImage(with: imageURL!)
-        }
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
@@ -170,7 +176,6 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     }
     
-    
     @IBAction func settingButtonTapped(_ sender: Any) {
         let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
@@ -180,10 +185,22 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 assertionFailure("Error signing out: \(error.localizedDescription)")
             }
         }
+        let resetPasswordAction = UIAlertAction(title: "Reset password", style: .default) { _ in
+            do {
+                Auth.auth().sendPasswordReset(withEmail: (Auth.auth().currentUser?.email)!) { error in
+                    let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.present(alertController, animated: true)
+                }
+            }
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         alertController.addAction(signOutAction)
+        alertController.addAction(resetPasswordAction)
         self.present(alertController, animated: true)
+
     }
     
     @IBAction func mapButtonTapped(_ sender: Any) {

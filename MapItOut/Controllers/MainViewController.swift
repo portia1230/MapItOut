@@ -388,12 +388,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         //let imageURL = URL(string: self.selectedContact.imageURL)
         
+        popOverVC.contactPhoto.image = self.images[selectedIndex]
         popOverVC.firstName = self.selectedContact.firstName
         popOverVC.lastName = self.selectedContact.lastName
         popOverVC.address = self.selectedContact.locationDescription
         popOverVC.relationship = self.selectedContact.relationship
         //popOverVC.contactPhoto.kf.setImage(with: imageURL!)
-        popOverVC.contactPhoto.image = self.images[selectedIndex]
         popOverVC.email = self.selectedContact.email
         popOverVC.phoneNumber = self.selectedContact.number
         popOverVC.latitude = self.selectedContact.latitude
