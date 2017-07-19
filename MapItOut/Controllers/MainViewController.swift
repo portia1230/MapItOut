@@ -168,7 +168,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     func updateValue(entry: Entry, image: UIImage){
         // self.mapView.removeAnnotation(self.editedAnno)
         User.currentUser.entries.remove(at: self.selectedIndex)
-        User.currentUser.entries.append(entry)
+        User.currentUser.entries.insert(entry, at: self.selectedIndex)
         self.mapView.removeAnnotation(self.editedAnno)
         let coordinate = CLLocationCoordinate2DMake(entry.latitude, entry.longitude)
         let anno = CustomPointAnnotation()
@@ -294,11 +294,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 }
                 i += 1
             }
-            
-            //            self.selectedContact = contacts[customView.indexOfContact]
-            //            self.selectedIndex = customView.indexOfContact
-            
-            //let url = URL(string: self.selectedContact.imageURL)
+
             self.contactImage.image = self.images[selectedIndex]
             self.contactNameLabel.text = self.selectedContact.firstName + " " + self.selectedContact.lastName
             self.contactRelationshipLabel.text = self.selectedContact.relationship

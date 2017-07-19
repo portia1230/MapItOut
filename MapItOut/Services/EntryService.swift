@@ -35,6 +35,15 @@ struct EntryService{
         let dict = entry.dictValue
         //entry.key = entryRef.key
         entryRef.updateChildValues(dict)
+//        var i = 0
+//        while i < User.currentUser.entries.count{
+//            if User.currentUser.entries[i].key == entry.key{
+//                User.currentUser.entries.remove(at: i)
+//                User.currentUser.entries.insert(entry, at: i)
+//                break
+//            }
+//            i += 1
+//        }
     }
     
 }
