@@ -67,6 +67,7 @@ struct UserService {
                             else { return nil }
                         return contact
             }
+            User.currentUser.entries = contacts
             dispatchGroup.notify(queue: .main, execute: {
                 completion(contacts)
             })

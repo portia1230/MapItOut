@@ -29,7 +29,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
     var selectedContact : Entry!
-    var contacts : [Entry] = []
+    var sortedContacts : [Entry] = []
     var isUpdatingHeading = false
     var editedAnno = MKPointAnnotation()
     var selectedIndex = 0
@@ -58,16 +58,15 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.mapView.setRegion(region, animated: true)
         
         UserService.contacts(for: User.currentUser) { (contacts) in
-            self.contacts = contacts
+            User.currentUser.entries = contacts
+            self.sortedContacts = LocationService.rankDistance(entries: contacts)
             var i = 0
-            while i < contacts.count{
+            while i < self.sortedContacts.count{
                 let imageURL = URL(string
                     : contacts[i].imageURL)
                 imageView.kf.setImage(with: imageURL!)
                 if imageView.image == nil{
                     self.viewWillAppear(true)
-                    //                    let allAnnos = self.mapView.annotations
-                    //                    self.mapView.removeAnnotations(allAnnos)
                 } else {
                     let allAnnos = self.mapView.annotations
                     self.mapView.removeAnnotations(allAnnos)
@@ -79,7 +78,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     anno.coordinate = coordinate
                     anno.indexOfContact = i
                     annos.append(anno)
-                    
                     //self.mapView.addAnnotation(anno)
                 }
                 i += 1
@@ -93,17 +91,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             } else {
                 self.contactButton.isHidden = false
                 
-                var sortedContacts = LocationService.rankDistance(entries: self.contacts)
-                let imageURL = URL(string: sortedContacts[0].imageURL)
+                self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
+                let imageURL = URL(string: self.sortedContacts[0].imageURL)
                 
                 let coordinate = LocationService.getLocation(manager: self.locationManager)
                 let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
-                self.selectedContact = sortedContacts[0]
+                let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: self.sortedContacts[0].longitude)
+                self.selectedContact = self.sortedContacts[0]
                 
                 var i = 0
-                while i <  self.contacts.count{
-                    if self.contacts[i].key == self.selectedContact.key{
+                while i < User.currentUser.entries.count {
+                    if User.currentUser.entries[i].key == self.selectedContact.key{
                         self.selectedIndex = i
                         break
                     }
@@ -122,8 +120,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 } else {
                     self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
                 }
-                self.contactNameLabel.text = sortedContacts[0].firstName + " " + sortedContacts[0].lastName
-                self.contactRelationshipLabel.text = sortedContacts[0].relationship
+                self.contactNameLabel.text = self.sortedContacts[0].firstName + " " + self.sortedContacts[0].lastName
+                self.contactRelationshipLabel.text = self.sortedContacts[0].relationship
                 self.contactImage.kf.setImage(with: imageURL)
                 if self.contactImage.image != nil{
                     self.contactButton.isEnabled = true
@@ -158,31 +156,29 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Update annotations
     
-    func updateValue(entry: Entry){
+    func updateValue(entry: Entry, image: UIImage){
        // self.mapView.removeAnnotation(self.editedAnno)
-        self.contacts.remove(at: self.selectedIndex)
-        self.contacts.append(entry)
+        User.currentUser.entries.remove(at: self.selectedIndex)
+        User.currentUser.entries.append(entry)
+        self.mapView.removeAnnotation(self.editedAnno)
         let coordinate = CLLocationCoordinate2DMake(entry.latitude, entry.longitude)
         let anno = CustomPointAnnotation()
         anno.coordinate = coordinate
-        let imageView = UIImageView()
+//        let imageView = UIImageView()
         let url = URL(string: entry.imageURL)
-        imageView.kf.setImage(with: url)
-        if imageView.image != nil{
-            anno.image = imageView.image!
-            self.mapView.removeAnnotation(self.editedAnno)
-            self.contacts.remove(at: self.selectedIndex)
-            var sortedContacts = LocationService.rankDistance(entries: self.contacts)
-            let imageURL = URL(string: sortedContacts[0].imageURL)
-            
+//        imageView.kf.setImage(with: url)
+//        if imageView.image != nil{
+            anno.image = image
+            self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
+            let imageURL = URL(string: self.sortedContacts[0].imageURL)
             let myCoordinate = LocationService.getLocation(manager: self.locationManager)
             let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
-            let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
-            self.selectedContact = sortedContacts[0]
-            
+            let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
+            self.selectedContact = self.sortedContacts[0]
+        self.mapView.addAnnotation(anno)
             var i = 0
-            while i <  self.contacts.count{
-                if self.contacts[i].key == sortedContacts[0].key{
+            while i <  User.currentUser.entries.count{
+                if User.currentUser.entries[i].key == self.sortedContacts[0].key{
                     self.selectedIndex = i
                     break
                 }
@@ -202,8 +198,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.contactImage.kf.setImage(with: imageURL)
             if self.contactImage.image != nil{
                 self.contactButton.isEnabled = true
-                self.mapView.addAnnotation(anno)
-            }
+           // }
         }
     }
     
@@ -252,8 +247,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if(annotation is MKUserLocation){
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
+            annotationView?.isUserInteractionEnabled = false
             annotationView?.canShowCallout = false
-            return nil
+            return annotationView
         }
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pinIdentifier")
         if annotationView == nil {
@@ -278,9 +274,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.editedAnno = view.annotation! as! CustomPointAnnotation
             
             var i = 0
-            while i < self.contacts.count{
-                if (self.contacts[i].latitude == self.editedAnno.coordinate.latitude) && ( self.contacts[i].longitude == self.editedAnno.coordinate.longitude){
-                    self.selectedContact = contacts[i]
+            while i < User.currentUser.entries.count{
+                if (User.currentUser.entries[i].latitude == self.editedAnno.coordinate.latitude) && ( User.currentUser.entries[i].longitude == self.editedAnno.coordinate.longitude){
+                    self.selectedContact = User.currentUser.entries[i]
                     self.selectedIndex = i
                     break
                 }

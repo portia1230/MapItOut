@@ -224,7 +224,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     let urlString = downloadURL.absoluteString
                     let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
                     
-                    parent.updateValue(entry: contact)
+                    parent.updateValue(entry: contact, image: self.contactImage.image!)
                     EntryService.editEntry(entry: contact)
                 }
             } else {
@@ -240,7 +240,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     let urlString = downloadURL.absoluteString
                     let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
                     
-                    parent.updateValue(entry: contact)
+                    parent.updateValue(entry: contact, image: self.contactImage.image!)
                     EntryService.editEntry(entry: contact)
                 }
                 

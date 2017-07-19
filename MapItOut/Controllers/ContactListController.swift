@@ -20,7 +20,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     @IBOutlet weak var tableView: UITableView!
     var keys : [String] = []
-    var contacts : [Entry] = []
+    var sortedContacts : [Entry] = []
     var locationDescription = ""
     var selectedIndex = IndexPath()
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -61,21 +61,23 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
 //                self.viewWillAppear(true)
 //            } else {
             let sortedContacts = LocationService.rankDistance(entries: contacts)
-            self.contacts = sortedContacts
+            self.sortedContacts = sortedContacts
             self.tableView.reloadData()
             //}
         }
     }
     
-    func updateValue(entry: Entry){
-        self.contacts.remove(at: self.selectedIndex.row)
-        self.contacts.append(entry)
+    func updateValue(entry: Entry, image : UIImage){
+        User.currentUser.entries.remove(at: self.selectedIndex.row)
+        User.currentUser.entries.append(entry)
         tableView.cellForRow(at: self.selectedIndex )
+        self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
+        self.tableView.reloadData()
         
         UserService.contacts(for: User.currentUser) { (contacts) in
-            let sortedContacts = LocationService.rankDistance(entries: contacts)
-            self.contacts = sortedContacts
-            self.tableView.reloadData()
+            let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(entry.key)
+            let dictValue = entry.dictValue
+            ref.updateChildValues(dictValue)
         }
         
     }
@@ -90,14 +92,14 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        return self.contacts.count
+        return self.sortedContacts.count
         
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
-            let contact = self.contacts[indexPath.row]
+            let contact = self.sortedContacts[indexPath.row]
             let imageURL = URL(string: contact.imageURL)
             
             cell.addressLabel.text = contact.locationDescription
@@ -113,7 +115,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         tableView.cellForRow(at: indexPath)?.isSelected = false
         self.selectedIndex = indexPath
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-        let selectedContact = contacts[indexPath.row]
+        let selectedContact = self.sortedContacts[indexPath.row]
         
         let imageURL = URL(string: selectedContact.imageURL)
         popOverVC.firstName = selectedContact.firstName
@@ -146,8 +148,15 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete{
-            let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(contacts[indexPath.row].key)
+            let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(self.sortedContacts[indexPath.row].key)
             ref.removeValue()
+            var i = 0
+            while i <  User.currentUser.entries.count{
+                if User.currentUser.entries[i].key == self.sortedContacts[indexPath.row].key{
+                    User.currentUser.entries.remove(at: i)
+                }
+                i += 1
+            }
             viewWillAppear(true)
             
         }
