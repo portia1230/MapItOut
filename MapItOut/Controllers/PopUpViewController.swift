@@ -211,26 +211,40 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
         } else {
-            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                self.view.removeFromSuperview()
-            }, completion: nil)
-            let imageRef = StorageReference.newContactImageReference()
-            StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
-                guard let downloadURL = downloadURL else {
-                    return
-                }
-                let urlString = downloadURL.absoluteString
-                let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
-                if self.parent is MainViewController{
-                    let parent = self.parent as! MainViewController
+            if self.parent is MainViewController{
+                let parent = self.parent as! MainViewController
+                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.removeFromSuperview()
+                }, completion: nil)
+                let imageRef = StorageReference.newContactImageReference()
+                StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
+                    guard let downloadURL = downloadURL else {
+                        return
+                    }
+                    let urlString = downloadURL.absoluteString
+                    let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+                    
                     parent.updateValue(entry: contact)
-                } else {
-                    let parent = self.parent as! ContactListController
-                    parent.updateValue(entry: contact)
+                    EntryService.editEntry(entry: contact)
                 }
-                EntryService.editEntry(entry: contact)
+            } else {
+                let parent = self.parent as! ContactListController
+                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.removeFromSuperview()
+                }, completion: nil)
+                let imageRef = StorageReference.newContactImageReference()
+                StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
+                    guard let downloadURL = downloadURL else {
+                        return
+                    }
+                    let urlString = downloadURL.absoluteString
+                    let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+                    
+                    parent.updateValue(entry: contact)
+                    EntryService.editEntry(entry: contact)
+                }
+                
             }
-            
         }
     }
     
