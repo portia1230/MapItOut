@@ -66,7 +66,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 imageView.kf.setImage(with: imageURL!)
                 if imageView.image == nil{
                     self.viewWillAppear(true)
+//                    let allAnnos = self.mapView.annotations
+//                    self.mapView.removeAnnotations(allAnnos)
                 } else {
+                    let allAnnos = self.mapView.annotations
+                    self.mapView.removeAnnotations(allAnnos)
                     let thisLongitude = contacts[i].longitude
                     let thisLatitude = contacts[i].latitude
                     coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
@@ -149,9 +153,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.contacts.remove(at: self.selectedIndex)
         self.contacts.append(entry)
         let coordinate = CLLocationCoordinate2DMake(entry.latitude, entry.longitude)
-        let anno = MKPointAnnotation()
+        let anno = CustomPointAnnotation()
         anno.coordinate = coordinate
-        self.mapView.addAnnotation(anno)
+        let imageView = UIImageView()
+        let url = URL(string: entry.imageURL)
+        imageView.kf.setImage(with: url)
+        if imageView.image != nil{
+            anno.image = imageView.image!
+        }
         
         var sortedContacts = LocationService.rankDistance(entries: self.contacts)
         let imageURL = URL(string: sortedContacts[0].imageURL)
@@ -160,7 +169,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
         let contactLocation = CLLocation(latitude: sortedContacts[0].latitude, longitude: sortedContacts[0].longitude)
         self.selectedContact = sortedContacts[0]
-        self.selectedIndex = 0
+        
+        var i = 0
+        while i <  self.contacts.count{
+            if self.contacts[i].key == sortedContacts[0].key{
+                self.selectedIndex = i
+                break
+            }
+            i += 1
+        }
+        
         let distance = myLocation.distance(from: contactLocation)
         
         if distance > 1000.0
@@ -243,7 +261,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if(view.annotation is MKUserLocation){
         } else {
             let coordinate = view.annotation?.coordinate
-            self.editedAnno = view.annotation! as! MKPointAnnotation
+            self.editedAnno = view.annotation! as! CustomPointAnnotation
             let customView = view.annotation as! CustomPointAnnotation
             self.selectedContact = contacts[customView.indexOfContact]
             self.selectedIndex = customView.indexOfContact

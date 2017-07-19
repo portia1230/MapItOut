@@ -211,6 +211,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
         } else {
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
             let imageRef = StorageReference.newContactImageReference()
             StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
                 guard let downloadURL = downloadURL else {
@@ -225,10 +228,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     let parent = self.parent as! ContactListController
                     parent.updateValue(entry: contact)
                 }
-                
-                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                    self.view.removeFromSuperview()
-                }, completion: nil)
                 EntryService.editEntry(entry: contact)
             }
             
