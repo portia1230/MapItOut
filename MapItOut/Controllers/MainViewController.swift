@@ -5,7 +5,6 @@
 //  Created by Portia Wang on 7/9/17.
 //  Copyright © 2017 Portia Wang. All rights reserved.
 //
-
 import Foundation
 import UIKit
 import Kingfisher
@@ -72,79 +71,80 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             
             let allAnnos = self.mapView.annotations
             self.mapView.removeAnnotations(allAnnos)
-            
             while i < self.sortedContacts.count{
                 let imageURL = URL(string
                     : contacts[i].lowImageURL)
-                imageView.kf.setImage(with: imageURL, placeholder: nil, options: nil, progressBlock: nil, completionHandler: { (image, error, cachetype, URL) in
-                    self.images.append(image!)
-                    let thisLongitude = contacts[i].longitude
-                    let thisLatitude = contacts[i].latitude
-                    coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
-                    let anno = CustomPointAnnotation()
-                    anno.image = imageView.image!
-                    anno.coordinate = coordinate
-                    anno.indexOfContact = i
-                    self.mapView.addAnnotation(anno)
-                })
+                imageView.kf.setImage(with: imageURL)
+                let thisLongitude = contacts[i].longitude
+                let thisLatitude = contacts[i].latitude
+                coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
+                let anno = CustomPointAnnotation()
+                anno.coordinate = coordinate
+                anno.indexOfContact = i
+                self.mapView.addAnnotation(anno)
                 
-                
-                
-                (with: imageURL!)
                 if imageView.image == nil{
-                    //              self.viewWillAppear(true)
+                    self.viewWillAppear(true)
                 } else {
-                   
-                    //allImages.append(imageView.image!)
-                    // self.mapView.addAnnotation(anno)
+                    
+                    anno.image = imageView.image!
+                    self.images.append(imageView.image!)
+                    self.mapView.addAnnotation(anno)
+                    if i == self.sortedContacts.count-1{
+                        self.finishLoading()
+                    }
+                }
+                i += 1
+                
+            }
+        }
+    }
+    //self.images = allImages
+    
+    func finishLoading(){
+        
+        if User.currentUser.entries.isEmpty{
+            self.contactNameLabel.backgroundColor = UIColor.clear
+            self.contactNameLabel.text = "No contact entered"
+            self.contactAddressLabel.text = ""
+            self.contactButton.isHidden = true
+        } else {
+            self.contactButton.isHidden = false
+            
+            self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
+            
+            let coordinate = LocationService.getLocation(manager: self.locationManager)
+            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: self.sortedContacts[0].longitude)
+            self.selectedContact = self.sortedContacts[0]
+            
+            var i = 0
+            while i < User.currentUser.entries.count {
+                if User.currentUser.entries[i].key == self.selectedContact.key{
+                    self.selectedIndex = i
+                    break
                 }
                 i += 1
             }
-            //self.images = allImages
             
-            if contacts.isEmpty{
-                self.contactNameLabel.backgroundColor = UIColor.clear
-                self.contactNameLabel.text = "No contact entered"
-                self.contactAddressLabel.text = ""
-                self.contactButton.isHidden = true
+            let distance = myLocation.distance(from: contactLocation)
+            
+            self.contactAddressLabel.backgroundColor = UIColor.clear
+            self.contactNameLabel.backgroundColor = UIColor.clear
+            self.contactRelationshipLabel.backgroundColor = UIColor.clear
+            
+            if distance > 1000.0
+            {
+                self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
             } else {
-                self.contactButton.isHidden = false
-                
-                self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
-                
-                let coordinate = LocationService.getLocation(manager: self.locationManager)
-                let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: self.sortedContacts[0].longitude)
-                self.selectedContact = self.sortedContacts[0]
-                
-                var i = 0
-                while i < User.currentUser.entries.count {
-                    if User.currentUser.entries[i].key == self.selectedContact.key{
-                        self.selectedIndex = i
-                        break
-                    }
-                    i += 1
-                }
-                
-                let distance = myLocation.distance(from: contactLocation)
-                
-                self.contactAddressLabel.backgroundColor = UIColor.clear
-                self.contactNameLabel.backgroundColor = UIColor.clear
-                self.contactRelationshipLabel.backgroundColor = UIColor.clear
-                
-                if distance > 1000.0
-                {
-                    self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
-                } else {
-                    self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-                }
-                self.contactNameLabel.text = self.sortedContacts[0].firstName + " " + self.sortedContacts[0].lastName
-                self.contactRelationshipLabel.text = self.sortedContacts[0].relationship
-                self.contactImage.image = self.images[self.selectedIndex]
-                self.contactButton.isEnabled = true
-                self.mapView.addAnnotations(annos)
-                
+                self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
             }
+            self.contactNameLabel.text = self.sortedContacts[0].firstName + " " + self.sortedContacts[0].lastName
+            self.contactRelationshipLabel.text = self.sortedContacts[0].relationship
+            self.contactImage.image = self.images[self.selectedIndex]
+            self.contactButton.isEnabled = true
+            //self.mapView.addAnnotations(anno)
+            
         }
     }
     
@@ -415,4 +415,3 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     
 }
-
