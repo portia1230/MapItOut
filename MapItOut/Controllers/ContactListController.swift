@@ -63,17 +63,24 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         UserService.contacts(for: User.currentUser) { (contacts) in
             let sortedContacts = LocationService.rankDistance(entries: contacts)
             self.sortedContacts = sortedContacts
-            self.tableView.reloadData()
-            for contact in sortedContacts{
-                let url = URL(string: contact.imageURL)
-                let imageView = UIImageView()
-                imageView.image = #imageLiteral(resourceName: "Rory.jpg")
-                imageView.kf.setImage(with: url)
-                if imageView.image != nil{
-                self.images.append((imageView.image!))
-                } else {
+            //self.tableView.reloadData()
+            var i = 0
+            var imageView = UIImageView()
+            while i < self.sortedContacts.count{
+                let imageURL = URL(string
+                    : contacts[i].lowImageURL)
+                imageView.kf.setImage(with: imageURL)
+                
+                if imageView.image == nil{
                     self.viewWillAppear(true)
+                } else {
+                    self.images.append(imageView.image!)
+                    
+                    if (self.images.count == User.currentUser.entries.count ) && ( self.sortedContacts.count == User.currentUser.entries.count ){
+                        self.tableView.reloadData()
+                    }
                 }
+                i += 1
             }
         }
     }
