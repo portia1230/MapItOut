@@ -54,34 +54,29 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
+        
         self.images.removeAll()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         UserService.contacts(for: User.currentUser) { (contacts) in
-//            if contacts == nil{
-//                self.viewWillAppear(true)
-//            } else {
             let sortedContacts = LocationService.rankDistance(entries: contacts)
             self.sortedContacts = sortedContacts
             self.tableView.reloadData()
             for contact in sortedContacts{
                 let url = URL(string: contact.imageURL)
                 let imageView = UIImageView()
+                imageView.image = #imageLiteral(resourceName: "Rory.jpg")
                 imageView.kf.setImage(with: url)
-                if imageView != nil{
-                    self.images.append(imageView.image!)
-                }
+                self.images.append((imageView.image!))
             }
-            //}
         }
     }
     
     func updateValue(entry: Entry, image : UIImage){
         User.currentUser.entries.remove(at: self.selectedIndex)
         User.currentUser.entries.append(entry)
-//        let cell = .tableView.dequeueReusableCell(withIdentifier: "cell", for: self.selectedIndex.row) as CustomTableCell
-//        cell = tableView.cellForRow(at: self.selectedIndex)
         self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
         self.images.remove(at: self.selectedIndex)
         self.images.insert(image, at: self.selectedIndex)

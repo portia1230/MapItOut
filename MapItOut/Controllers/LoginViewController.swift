@@ -10,8 +10,6 @@ import FirebaseAuth
 import FirebaseAuthUI
 import FirebaseDatabase
 
-typealias FIRUser = FirebaseAuth.User
-
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Properties
@@ -27,8 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
         
         guard let authUI = FUIAuth.defaultAuthUI()
-            else { return }
-        
+            else { return }        
         authUI.delegate = self
         
         let authViewController = authUI.authViewController()
@@ -83,6 +80,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
+    @IBAction func resetButtonTapped(_ sender: Any) {
+//        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+        
+//        self.addChildViewController(popOverVC)
+//        popOverVC.view.frame = self.view.frame
+//        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+//            self.view.addSubview(popOverVC.view)
+//        }, completion: nil)
+//        popOverVC.didMove(toParentViewController: self)
+    }
     
     //MARK: - Lifecycles
     
@@ -111,7 +118,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 extension LoginViewController: FUIAuthDelegate {
     func authUI(_ authUI: FUIAuth, didSignInWith user: FIRUser?, error: Error?) {
         //report error
-        UserService.create(user!, name: (user?.displayName!)!, email: (user?.email!
+        UserService.create(user!, email: (user?.email!
             )!) { (user) in
         }
         if let error = error {

@@ -13,13 +13,10 @@ import FirebaseDatabase
 struct UserService {
     
     //Create user
-    static func create(_ firUser: FIRUser, name: String, email: String, completion: @escaping (User?) -> Void) {
+    static func create(_ firUser: FIRUser, email: String, completion: @escaping (User?) -> Void) {
         let data = [
-            "username": name,
             "userEmail": email
         ]
-        
-        print("\(name) \(email)")
         
         let ref = Database.database().reference().child("Users").child(firUser.uid)
         

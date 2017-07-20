@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseAuthUI
+import FirebaseDatabase
 
-class SignInPopUpViewController: UIViewController, UITextFieldDelegate {
+typealias FIRUser = FirebaseAuth.User
+
+class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthDelegate {
     
     //MARK: - Properties
     
-    @IBOutlet weak var nameTextField: UITextField!
+
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var rePasswordTextField: UITextField!
@@ -27,16 +32,14 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
         rePasswordTextField.delegate = self
         passwordWarningLabel.isHidden = true
         createButton.layer.cornerRadius = 15
-        nameTextField.tag = 0
-        emailTextField.tag = 1
-        passwordTextField.tag = 2
-        rePasswordTextField.tag = 3
+        emailTextField.tag = 0
+        passwordTextField.tag = 1
+        rePasswordTextField.tag = 2
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignInPopUpViewController.dismissKeyboard))
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(SignInPopUpViewController.dismissKeyboard))
@@ -61,6 +64,22 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func createButtonTapped(_ sender: Any) {
         
+        let auth = FUIAuth(uiWith: Auth.auth())
+        auth?.delegate = self
+        
+        auth?.auth?.createUser(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user, error) in
+            if error != nil{
+                print(error.debugDescription)
+                return
+            }
+            auth?.auth?.signIn(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user, error) in
+                
+                self.authUI(auth!, didSignInWith: user!, error: error)
+                if error != nil{
+                    print(error.debugDescription)
+                }
+            }
+        }
     }
     
     //MARK: - Text field delegate functions
@@ -93,7 +112,32 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
-    
-    
+
+    func authUI(_ authUI: FUIAuth, didSignInWith user: FIRUser?, error: Error?) {
+        
+        UserService.create(user!, email: (user?.email!
+                    )!) { (user) in
+                }
+                if let error = error {
+                    assertionFailure("Error signing in: \(error.localizedDescription)")
+        
+                }
+                // check to see whether user had been authorized
+                guard let user = user
+                    else { return }
+                //redirect
+                UserService.show(forUID: user.uid) { (user) in
+                    if let user = user {
+                        // handle existing user
+                        User.setCurrent(user, writeToUserDefaults:  true)
+                        let initialViewController = UIStoryboard.initialViewController(for: .main)
+                        self.view.window?.rootViewController = initialViewController
+                        self.view.window?.makeKeyAndVisible()
+                    }
+                }
+
+    }
     
 }
+
+
