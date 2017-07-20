@@ -223,12 +223,15 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 imageRef.delete(completion: nil)
                 lowImageRef.delete(completion: nil)
                 
-                //let imageRef = StorageReference.newContactImageReference(key: parent.selectedContact.key)
-                StorageService.uploadHighImage(contactImage.image!, at: imageRef) { (downloadURL) in
+                
+                let newImageRef = StorageReference.newContactImageReference(key: parent.selectedContact.key)
+                let newLowImageRef = StorageReference.newLowContactImageReference(key: parent.selectedContact.key)
+                
+                StorageService.uploadHighImage(contactImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    StorageService.uploadLowImage(self.contactImage.image!, at: lowImageRef) { (lowDownloadURL) in
+                    StorageService.uploadLowImage(self.contactImage.image!, at: newLowImageRef) { (lowDownloadURL) in
                         guard let lowDownloadURL = lowDownloadURL else {
                             return
                         }
@@ -251,12 +254,16 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 
                 imageRef.delete(completion: nil)
                 lowImageRef.delete(completion: nil)
+                
+                let newImageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
+                let newLowImageRef = StorageReference.newLowContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
+                
                 //let imageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
-                StorageService.uploadHighImage(contactImage.image!, at: imageRef) { (downloadURL) in
+                StorageService.uploadHighImage(contactImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    StorageService.uploadLowImage(self.contactImage.image!, at: lowImageRef) { (lowDownloadURL) in
+                    StorageService.uploadLowImage(self.contactImage.image!, at: newLowImageRef) { (lowDownloadURL) in
                         guard let lowDownloadURL = lowDownloadURL else {
                             return
                         }

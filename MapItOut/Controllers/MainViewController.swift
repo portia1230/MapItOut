@@ -79,7 +79,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 let anno = CustomPointAnnotation()
                 anno.coordinate = coordinate
                 anno.indexOfContact = i
-                //self.mapView.addAnnotation(anno)
+                self.mapView.addAnnotation(anno)
                 
                 if imageView.image == nil{
                     self.viewWillAppear(true)
@@ -88,7 +88,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     self.images.append(imageView.image!)
                     
                     if (self.images.count == User.currentUser.entries.count ) && ( self.sortedContacts.count == User.currentUser.entries.count ){
-    
                         self.mapView.addAnnotation(anno)
                         self.finishLoading()
                     }
@@ -100,7 +99,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //self.images = allImages
     
     func finishLoading(){
-        
         if User.currentUser.entries.isEmpty{
             self.contactNameLabel.backgroundColor = UIColor.clear
             self.contactNameLabel.text = "No contact entered"
