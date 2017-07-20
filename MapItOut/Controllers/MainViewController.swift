@@ -67,8 +67,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             User.currentUser.entries = contacts
             self.sortedContacts = LocationService.rankDistance(entries: contacts)
             var i = 0
-            
-            
             let allAnnos = self.mapView.annotations
             self.mapView.removeAnnotations(allAnnos)
             while i < self.sortedContacts.count{
@@ -81,44 +79,25 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 let anno = CustomPointAnnotation()
                 anno.coordinate = coordinate
                 anno.indexOfContact = i
-                self.mapView.addAnnotation(anno)
+                //self.mapView.addAnnotation(anno)
                 
                 if imageView.image == nil{
                     self.viewWillAppear(true)
                 } else {
                     anno.image = imageView.image!
                     self.images.append(imageView.image!)
-                    self.mapView.addAnnotation(anno)
-                    if (i == self.sortedContacts.count-1) && (self.sortedContacts.count == self.images.count){
-                        
+                    
+                    if (self.images.count == User.currentUser.entries.count ) && ( self.sortedContacts.count == User.currentUser.entries.count ){
+    
+                        self.mapView.addAnnotation(anno)
                         self.finishLoading()
                     }
                 }
                 i += 1
-                
             }
         }
     }
     //self.images = allImages
-    
-    func loadBetterImage(index: Int) -> UIImage{
-        let clearImage = UIImageView()
-        let clearURL = URL(string: User.currentUser.entries[index].imageURL)
-        clearImage.kf.setImage(with: clearURL)
-        if clearImage.image == nil{
-            clearImage.image! = loadBetterImage(index: index)
-        }
-        return clearImage.image!
-    }
-    
-    func loadBetterImages(){
-        var n = 0
-        while n < User.currentUser.entries.count{
-            let betterImage = loadBetterImage(index: n)
-            self.images[n] = betterImage
-                n += 1
-        }
-    }
     
     func finishLoading(){
         
@@ -128,7 +107,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.contactAddressLabel.text = ""
             self.contactButton.isHidden = true
         } else {
-            
             self.contactButton.isHidden = false
             
             self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
@@ -142,7 +120,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             while i < User.currentUser.entries.count {
                 if User.currentUser.entries[i].key == self.selectedContact.key{
                     self.selectedIndex = i
-                    //break
+                    break
                 }
                 i += 1
             }
