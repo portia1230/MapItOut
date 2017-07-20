@@ -14,7 +14,7 @@ import FirebaseStorage
 import FirebaseDatabase
 import MessageUI
 
-class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate{
+class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate{
     
     //MARK: - Properties
     
@@ -31,8 +31,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var phoneButton: UIButton!
+    @IBOutlet weak var emailButton: UIButton!
     
     @IBOutlet weak var phoneImageView: UIImageView!
+    @IBOutlet weak var emailImageView: UIImageView!
     
     var OFirstName = ""
     var OLastName = ""
@@ -141,9 +143,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.contactImage.image = self.contactPhoto.image
         anno.coordinate = location
         
-        if self.phoneNumberTextField.text == ""{
+        if self.phoneNumberTextField.text! == ""{
             self.phoneButton.isHidden = true
             self.phoneImageView.isHidden = true
+        }
+        
+        if self.emailTextField.text! == ""{
+            self.emailButton.isHidden = true
+            self.emailImageView.isHidden = true
         }
         
         contactMapView.removeAnnotations(annos)
@@ -218,6 +225,29 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         composeVC.recipients = [self.phoneNumberTextField.text!]
         composeVC.body = "Hey \(name), "
         self.present(composeVC, animated: true,completion: nil)
+    }
+    
+    
+    @IBAction func emailButtonTapped(_ sender: Any) {
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.setToRecipients([self.emailTextField.text!])
+        //composeVC.setSubject("")
+        composeVC.setMessageBody("Hey \(self.firstNameTextField.text!)", isHTML: false)
+        
+        // Present the view controller modally.
+        self.present(composeVC, animated: true, completion: nil)
+        
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController,
+                               didFinishWith result: MFMailComposeResult, error: Error?) {
+        // Check the result or perform other tasks.
+        
+        // Dismiss the mail compose view controller.
+        controller.dismiss(animated: true, completion: nil)
     }
     
     
@@ -334,13 +364,23 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.undoButton.isEnabled = true
         self.backgroundView.layer.backgroundColor = greenColor.cgColor
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
-        if self.phoneNumberTextField.text != ""{
+        
+        if self.phoneNumberTextField.text! != ""{
             self.phoneButton.isHidden = false
             self.phoneImageView.isHidden = false
         } else {
             self.phoneButton.isHidden = true
             self.phoneImageView.isHidden = true
         }
+        
+        if self.emailTextField.text! != ""{
+            self.emailButton.isHidden = false
+            self.emailImageView.isHidden = false
+        } else {
+            self.emailButton.isHidden = true
+            self.emailImageView.isHidden = true
+        }
+        
         if self.addressDescription.text == ""{
             self.addressDescription.text = self.originalLocation
         } else {

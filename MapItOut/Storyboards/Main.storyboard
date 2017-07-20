@@ -601,6 +601,16 @@
                                             <action selector="phoneButtonTapped:" destination="dmp-N2-oVo" eventType="touchUpInside" id="BiH-1U-dim"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3g-HC-g3C">
+                                        <rect key="frame" x="320" y="217" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="gtT-FA-0x4"/>
+                                            <constraint firstAttribute="width" constant="40" id="vlC-AW-xQO"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="emailButtonTapped:" destination="dmp-N2-oVo" eventType="touchUpInside" id="YN3-vK-WHC"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -614,6 +624,7 @@
                                     <constraint firstItem="LHr-Tb-qKH" firstAttribute="top" secondItem="cvz-uI-0tL" secondAttribute="bottom" constant="15" id="9Pu-RQ-qJB"/>
                                     <constraint firstItem="SCt-XI-qUT" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="top" constant="165" id="ATy-P1-4zR"/>
                                     <constraint firstItem="6EF-oF-0KN" firstAttribute="top" secondItem="FuR-iH-dcG" secondAttribute="bottom" constant="15" id="BYr-qa-gwd"/>
+                                    <constraint firstItem="W3g-HC-g3C" firstAttribute="top" secondItem="cvz-uI-0tL" secondAttribute="bottom" constant="5" id="CQl-FX-FYn"/>
                                     <constraint firstItem="4qv-xk-dbw" firstAttribute="top" secondItem="FuR-iH-dcG" secondAttribute="bottom" constant="5" id="Cap-p0-tUc"/>
                                     <constraint firstItem="bYy-xP-nr6" firstAttribute="leading" secondItem="Cmk-SS-nsi" secondAttribute="leading" constant="10" id="Dc9-6D-laZ"/>
                                     <constraint firstItem="IpU-78-yhJ" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="top" constant="10" id="E06-9e-Yf3"/>
@@ -635,6 +646,7 @@
                                     <constraint firstItem="Ehb-qa-Ms6" firstAttribute="top" secondItem="ZMU-nt-eZt" secondAttribute="bottom" constant="10" id="TeH-wU-96d"/>
                                     <constraint firstItem="fCb-sS-adp" firstAttribute="top" secondItem="yI8-jM-mNj" secondAttribute="bottom" constant="20" id="XLz-Wt-fSk"/>
                                     <constraint firstItem="IpU-78-yhJ" firstAttribute="leading" secondItem="Cmk-SS-nsi" secondAttribute="leading" constant="10" id="ZU5-dy-u6P"/>
+                                    <constraint firstAttribute="trailing" secondItem="W3g-HC-g3C" secondAttribute="trailing" constant="15" id="ZVS-IR-4Je"/>
                                     <constraint firstAttribute="trailing" secondItem="cvz-uI-0tL" secondAttribute="trailing" id="aQz-ha-xBB"/>
                                     <constraint firstAttribute="trailing" secondItem="LHr-Tb-qKH" secondAttribute="trailing" constant="25" id="axQ-Ct-M6J"/>
                                     <constraint firstItem="ryj-IY-Rap" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="top" constant="10" id="cCG-Kf-D7S"/>
@@ -721,11 +733,13 @@
                         <outlet property="contactImage" destination="IpU-78-yhJ" id="tac-1c-Cda"/>
                         <outlet property="contactMapView" destination="uLu-Wt-jmp" id="2Nl-Mt-hfG"/>
                         <outlet property="deleteButton" destination="JD9-TW-jdV" id="tE8-wb-OLO"/>
+                        <outlet property="emailButton" destination="W3g-HC-g3C" id="JBJ-4H-6vQ"/>
+                        <outlet property="emailImageView" destination="LHr-Tb-qKH" id="7el-kL-QfD"/>
                         <outlet property="emailTextField" destination="jXS-Cq-p06" id="7Qn-9v-BKp"/>
                         <outlet property="firstNameTextField" destination="RKR-2P-ARE" id="7vj-wt-dwc"/>
                         <outlet property="lastNameTextField" destination="ZZD-8E-FfG" id="reY-21-w4w"/>
                         <outlet property="phoneButton" destination="4qv-xk-dbw" id="3gq-d8-0Qv"/>
-                        <outlet property="phoneImageView" destination="6EF-oF-0KN" id="nlx-Hx-dCH"/>
+                        <outlet property="phoneImageView" destination="6EF-oF-0KN" id="qdj-zY-N33"/>
                         <outlet property="phoneNumberTextField" destination="ERb-lS-yVG" id="b1T-LM-QRs"/>
                         <outlet property="relationshipTextField" destination="AdL-st-Ap9" id="9tr-qk-ZTx"/>
                         <outlet property="undoButton" destination="BH5-KS-zal" id="oWw-Zw-eb3"/>
