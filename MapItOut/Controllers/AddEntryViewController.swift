@@ -31,7 +31,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     var phone : String!
     var contactLocationDescription : String!
     var relationship: String!
-    
     var latitude = 0.0
     var longitude = 0.0
     var location : CLLocationCoordinate2D!
@@ -97,7 +96,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     override func viewWillAppear(_ animated: Bool) {
         //set region/zoom in for map
-        
         if let firstName = self.firstName {
             self.firstNameTextField.text = firstName
         }
@@ -202,7 +200,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+        if textField == self.locationTextField{
         if self.locationTextField.text == ""{
             self.locationTextField.text = self.originalLocation
         } else {
@@ -227,6 +225,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     self.longitude = anno.coordinate.longitude
                     self.latitude = anno.coordinate.latitude
                     self.originalLocation = self.locationTextField.text!
+                    self.contactLocationDescription = self.originalLocation
+                    
                     
                     
                 } else {
@@ -234,14 +234,15 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 }
             }
         }
+        }
         self.firstName = self.firstNameTextField.text!
         self.lastName = self.lastNameTextField.text!
         self.relationship = self.relationshipTextField.text!
         self.email = self.emailTextField.text!
         self.phone = self.phoneTextField.text!
-        self.originalLocation = self.locationTextField.text!
         self.latitude = self.location.latitude
         self.longitude = self.location.longitude
+        
     }
     
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
@@ -280,13 +281,13 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
+        
         if self.firstNameTextField.text != "",
             self.lastNameTextField.text != "",
             self.relationshipTextField.text != "Relationship Status"{
             if photoImageView.image == nil {
                 photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
             }
-
             let currentUser = User.currentUser
             let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
             let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
@@ -302,9 +303,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let urlString = downloadURL.absoluteString
                     let lowURLString = lowDownloadURL.absoluteString
                     let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString, lowImageURL: lowURLString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
-                    EntryService.addEntry(entry: entry)
+                    User.currentUser.entries.append(entry)
                     self.dismiss(animated: true, completion: {
                     })
+                    EntryService.addEntry(entry: entry)
                 })
                 
             

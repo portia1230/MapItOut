@@ -75,7 +75,6 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                     self.viewWillAppear(true)
                 } else {
                     self.images.append(imageView.image!)
-                    
                     if (self.images.count == User.currentUser.entries.count ) && ( self.sortedContacts.count == User.currentUser.entries.count ){
                         self.tableView.reloadData()
                     }
