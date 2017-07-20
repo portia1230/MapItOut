@@ -286,13 +286,17 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if photoImageView.image == nil {
                 photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
             }
-            let imageRef = StorageReference.newContactImageReference()
+            
+            
+            let currentUser = User.currentUser
+            let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
+            let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
             StorageService.uploadImage(photoImageView.image!, at: imageRef) { (downloadURL) in
                 guard let downloadURL = downloadURL else {
                     return
                 }
                 let urlString = downloadURL.absoluteString
-                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: "", locationDescription: self.locationTextField.text!)
+                let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
                 EntryService.addEntry(entry: entry)
                 self.dismiss(animated: true, completion: { 
                 })

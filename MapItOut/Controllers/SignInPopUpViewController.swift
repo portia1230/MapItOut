@@ -114,13 +114,11 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
     }
 
     func authUI(_ authUI: FUIAuth, didSignInWith user: FIRUser?, error: Error?) {
-        
         UserService.create(user!, email: (user?.email!
                     )!) { (user) in
                 }
                 if let error = error {
                     assertionFailure("Error signing in: \(error.localizedDescription)")
-        
                 }
                 // check to see whether user had been authorized
                 guard let user = user

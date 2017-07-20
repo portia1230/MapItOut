@@ -216,7 +216,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
-                let imageRef = StorageReference.newContactImageReference()
+                
+                let imageRef = StorageReference.newContactImageReference(key: parent.selectedContact.key)
                 StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
@@ -232,7 +233,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
-                let imageRef = StorageReference.newContactImageReference()
+                let imageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
                 StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return

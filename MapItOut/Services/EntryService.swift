@@ -15,11 +15,9 @@ struct EntryService{
     
     static func addEntry(entry: Entry){
         let currentUser = User.currentUser
-        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
-        entry.key = entryRef.key
+        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(entry.key)
         let dict = entry.dictValue
         entryRef.setValue(dict)
-        
     }
     
     static func deleteEntry(key: String){
@@ -33,8 +31,12 @@ struct EntryService{
         let currentUser = User.currentUser
         let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(entry.key)
         let dict = entry.dictValue
-        //entry.key = entryRef.key
+        
+        let imageRef = Storage.storage().reference().child("images/contacts/\(currentUser.uid)/\(entry.key).jpg")
+        imageRef.delete { (error) in
+        }
         entryRef.updateChildValues(dict)
+        
 //        var i = 0
 //        while i < User.currentUser.entries.count{
 //            if User.currentUser.entries[i].key == entry.key{
