@@ -86,11 +86,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 if imageView.image == nil{
                     self.viewWillAppear(true)
                 } else {
-                    
                     anno.image = imageView.image!
                     self.images.append(imageView.image!)
                     self.mapView.addAnnotation(anno)
-                    if i == self.sortedContacts.count-1{
+                    if (i == self.sortedContacts.count-1) && (self.sortedContacts.count == self.images.count){
+                        
                         self.finishLoading()
                     }
                 }
@@ -109,6 +109,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.contactAddressLabel.text = ""
             self.contactButton.isHidden = true
         } else {
+            
             self.contactButton.isHidden = false
             
             self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
@@ -122,7 +123,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             while i < User.currentUser.entries.count {
                 if User.currentUser.entries[i].key == self.selectedContact.key{
                     self.selectedIndex = i
-                    break
+                    //break
                 }
                 i += 1
             }
