@@ -309,27 +309,31 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         }
                     let lowURLString = lowDownloadURL.absoluteString
                     let urlString = downloadURL.absoluteString
-                    let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), lowImageURL: String(describing: lowURLString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
-                    
-                    EntryService.editEntry(entry: contact)
+                    firstContact.lowImageURL = lowURLString
+                    firstContact.imageURL = urlString
+                    EntryService.editEntry(entry: firstContact)
                     }
                 }
             } else {
                 let parent = self.parent as! ContactListController
+                let firstContact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: "", lowImageURL: "", number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+                
+                parent.updateValue(entry: firstContact, image: self.contactImage.image!)
+                
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
                 
                 let imageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.sortedContacts[parent.selectedIndex].key).jpg")
-                let lowImageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.sortedContacts[parent.selectedIndex].key))low.jpg")
+                let lowImageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.sortedContacts[parent.selectedIndex].key)low.jpg")
                 
                 imageRef.delete(completion: nil)
                 lowImageRef.delete(completion: nil)
                 
+                
                 let newImageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
                 let newLowImageRef = StorageReference.newLowContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
                 
-                //let imageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
                 StorageService.uploadHighImage(contactImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
@@ -340,10 +344,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         }
                         let lowURLString = lowDownloadURL.absoluteString
                         let urlString = downloadURL.absoluteString
-                        let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), lowImageURL: String(describing: lowURLString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
-                        
-                        parent.updateValue(entry: contact, image: self.contactImage.image!)
-                        EntryService.editEntry(entry: contact)
+                        firstContact.lowImageURL = lowURLString
+                        firstContact.imageURL = urlString
+                        EntryService.editEntry(entry: firstContact)
                     }
                 }
             }

@@ -31,10 +31,6 @@ struct EntryService{
         let currentUser = User.currentUser
         let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(entry.key)
         let dict = entry.dictValue
-        
-        let imageRef = Storage.storage().reference().child("images/contacts/\(currentUser.uid)/\(entry.key).jpg")
-        imageRef.delete { (error) in
-        }
         entryRef.updateChildValues(dict)
         
 //        var i = 0

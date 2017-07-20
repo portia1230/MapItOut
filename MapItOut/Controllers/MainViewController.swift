@@ -214,6 +214,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.images.insert(image, at: selectedIndex)
         
         self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
+        self.selectedContact = entry
         
         let myCoordinate = LocationService.getLocation(manager: self.locationManager)
         let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
@@ -231,7 +232,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         self.contactNameLabel.text = User.currentUser.entries[selectedIndex].firstName + " " + User.currentUser.entries[selectedIndex].lastName
         self.contactRelationshipLabel.text = User.currentUser.entries[selectedIndex].relationship
-        self.contactImage.image = self.images[self.selectedIndex]
+        self.contactImage.image = image
         self.contactButton.isEnabled = true
     }
     
