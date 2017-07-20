@@ -223,6 +223,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 let newImageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
                 let newLowImageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
                 
+                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.removeFromSuperview()
+                }, completion: nil)
+                
                 //let imageRef = StorageReference.newContactImageReference(key: parent.selectedContact.key)
                 StorageService.uploadHighImage(contactImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
@@ -237,9 +241,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), lowImageURL: String(describing: lowURLString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
                         
                         parent.updateValue(entry: contact, image: self.contactImage.image!)
-                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                            self.view.removeFromSuperview()
-                        }, completion: nil)
                         EntryService.editEntry(entry: contact)
                     }
                 }

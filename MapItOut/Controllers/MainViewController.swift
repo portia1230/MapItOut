@@ -101,6 +101,25 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     //self.images = allImages
     
+    func loadBetterImage(index: Int) -> UIImage{
+        let clearImage = UIImageView()
+        let clearURL = URL(string: User.currentUser.entries[index].imageURL)
+        clearImage.kf.setImage(with: clearURL)
+        if clearImage.image == nil{
+            clearImage.image! = loadBetterImage(index: index)
+        }
+        return clearImage.image!
+    }
+    
+    func loadBetterImages(){
+        var n = 0
+        while n < User.currentUser.entries.count{
+            let betterImage = loadBetterImage(index: n)
+            self.images[n] = betterImage
+                n += 1
+        }
+    }
+    
     func finishLoading(){
         
         if User.currentUser.entries.isEmpty{
