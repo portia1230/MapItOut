@@ -280,6 +280,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             if self.parent is MainViewController{
                 let parent = self.parent as! MainViewController
+                
+                 let firstContact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: "", lowImageURL: "", number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+                
+                parent.updateValue(entry: firstContact, image: self.contactImage.image!)
+
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
@@ -306,7 +311,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     let urlString = downloadURL.absoluteString
                     let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), lowImageURL: String(describing: lowURLString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
                     
-                    parent.updateValue(entry: contact, image: self.contactImage.image!)
                     EntryService.editEntry(entry: contact)
                     }
                 }

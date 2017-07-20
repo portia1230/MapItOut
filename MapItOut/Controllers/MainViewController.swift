@@ -201,6 +201,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     
     func updateValue(entry: Entry, image: UIImage){
+        
         self.mapView.removeAnnotation(self.editedAnno)
         User.currentUser.entries.remove(at: self.selectedIndex)
         User.currentUser.entries.insert(entry, at: self.selectedIndex)
