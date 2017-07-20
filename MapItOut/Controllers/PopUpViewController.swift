@@ -217,34 +217,57 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     self.view.removeFromSuperview()
                 }, completion: nil)
                 
-                let imageRef = StorageReference.newContactImageReference(key: parent.selectedContact.key)
-                StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
+                let imageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.selectedContact.key).jpg")
+                let lowImageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.selectedContact.key)low.jpg")
+                
+                imageRef.delete(completion: nil)
+                lowImageRef.delete(completion: nil)
+                
+                //let imageRef = StorageReference.newContactImageReference(key: parent.selectedContact.key)
+                StorageService.uploadHighImage(contactImage.image!, at: imageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
                     }
+                    StorageService.uploadLowImage(self.contactImage.image!, at: lowImageRef) { (lowDownloadURL) in
+                        guard let lowDownloadURL = lowDownloadURL else {
+                            return
+                        }
+                    let lowURLString = lowDownloadURL.absoluteString
                     let urlString = downloadURL.absoluteString
-                    let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+                    let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), lowImageURL: String(describing: lowURLString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
                     
                     parent.updateValue(entry: contact, image: self.contactImage.image!)
                     EntryService.editEntry(entry: contact)
+                    }
                 }
             } else {
                 let parent = self.parent as! ContactListController
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
-                let imageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
-                StorageService.uploadImage(contactImage.image!, at: imageRef) { (downloadURL) in
+                
+                let imageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.sortedContacts[parent.selectedIndex].key).jpg")
+                let lowImageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.sortedContacts[parent.selectedIndex].key))low.jpg")
+                
+                imageRef.delete(completion: nil)
+                lowImageRef.delete(completion: nil)
+                //let imageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
+                StorageService.uploadHighImage(contactImage.image!, at: imageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    let urlString = downloadURL.absoluteString
-                    let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
-                    
-                    parent.updateValue(entry: contact, image: self.contactImage.image!)
-                    EntryService.editEntry(entry: contact)
+                    StorageService.uploadLowImage(self.contactImage.image!, at: lowImageRef) { (lowDownloadURL) in
+                        guard let lowDownloadURL = lowDownloadURL else {
+                            return
+                        }
+                        let lowURLString = lowDownloadURL.absoluteString
+                        let urlString = downloadURL.absoluteString
+                        let contact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: String(describing: urlString), lowImageURL: String(describing: lowURLString), number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
+                        
+                        parent.updateValue(entry: contact, image: self.contactImage.image!)
+                        EntryService.editEntry(entry: contact)
+                    }
                 }
-                
             }
         }
     }

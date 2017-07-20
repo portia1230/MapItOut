@@ -19,6 +19,7 @@ class Entry {
     var latitude: CLLocationDegrees
     var relationship: String
     var imageURL: String
+    var lowImageURL: String
     var number: String
     var email: String
     var locationDescription: String
@@ -29,19 +30,21 @@ class Entry {
                 "latitude": latitude,
                 "relationship": relationship,
                 "imageURL": imageURL,
+                "lowImageURL": lowImageURL,
                 "number": number,
                 "email": email,
                 "key": key,
                 "locationDescription": locationDescription]
     }
     
-    init( firstName: String, lastName: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, relationship: String, imageURL: String, number: String, email: String, key: String, locationDescription: String) {
+    init( firstName: String, lastName: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, relationship: String, imageURL: String, lowImageURL: String, number: String, email: String, key: String, locationDescription: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.longitude = longitude
         self.latitude = latitude
         self.relationship = relationship
         self.imageURL = imageURL
+        self.lowImageURL = lowImageURL
         self.number = number
         self.email = email
         self.key = key
@@ -51,6 +54,7 @@ class Entry {
     init?(snapshot: DataSnapshot) {
         guard let dict = snapshot.value as? [String : Any],
             let imageURL = dict["imageURL"] as? String,
+            let lowImageURL = dict["lowImageURL"] as? String,
             let firstName = dict["firstName"] as? String,
             let lastName = dict["lastName"] as? String,
             let longitude = dict["longitude"] as? Double,
@@ -64,6 +68,7 @@ class Entry {
         
         self.key = key
         self.imageURL = imageURL
+        self.lowImageURL = lowImageURL
         self.firstName = firstName
         self.lastName = lastName
         self.longitude = longitude

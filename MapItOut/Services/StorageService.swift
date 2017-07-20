@@ -11,8 +11,8 @@ import UIKit
 import Foundation
 
 struct StorageService{
-    static func uploadImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {
-        guard let imageData = UIImageJPEGRepresentation(image, 0.1) else {
+    static func uploadHighImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {
+        guard let imageData = UIImageJPEGRepresentation(image, 1) else {
             return completion(nil)
         }
         reference.putData(imageData, metadata: nil, completion: { (metadata, error) in
@@ -24,4 +24,19 @@ struct StorageService{
             completion(metadata?.downloadURL())
         })
     }
+    
+    static func uploadLowImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {
+        guard let imageData = UIImageJPEGRepresentation(image, 0.01) else {
+            return completion(nil)
+        }
+        reference.putData(imageData, metadata: nil, completion: { (metadata, error) in
+            if let error = error {
+                assertionFailure(error.localizedDescription)
+                return completion(nil)
+            }
+            
+            completion(metadata?.downloadURL())
+        })
+    }
+    
 }

@@ -14,10 +14,14 @@ import Foundation
 import FirebaseStorage
 
 extension StorageReference {
-    static let dateFormatter = ISO8601DateFormatter()
     
     static func newContactImageReference(key: String) -> StorageReference {
         let uid = User.currentUser.uid
         return Storage.storage().reference().child("images/contacts/\(uid)/\(key).jpg")
+    }
+    
+    static func newLowContactImageReference(key: String) -> StorageReference {
+        let uid = User.currentUser.uid
+        return Storage.storage().reference().child("images/contacts/\(uid)/\(key)low.jpg")
     }
 }

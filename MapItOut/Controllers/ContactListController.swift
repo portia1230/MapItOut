@@ -69,7 +69,11 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 let imageView = UIImageView()
                 imageView.image = #imageLiteral(resourceName: "Rory.jpg")
                 imageView.kf.setImage(with: url)
+                if imageView.image != nil{
                 self.images.append((imageView.image!))
+                } else {
+                    self.viewWillAppear(true)
+                }
             }
         }
     }
