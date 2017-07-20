@@ -12,8 +12,9 @@ import MapKit
 import AddressBookUI
 import FirebaseStorage
 import FirebaseDatabase
+import MessageUI
 
-class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate{
     
     //MARK: - Properties
     
@@ -29,6 +30,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var contactMapView: MKMapView!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var contactImage: UIImageView!
+    @IBOutlet weak var phoneButton: UIButton!
+    
+    @IBOutlet weak var phoneImageView: UIImageView!
     
     var OFirstName = ""
     var OLastName = ""
@@ -137,6 +141,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.contactImage.image = self.contactPhoto.image
         anno.coordinate = location
         
+        if self.phoneNumberTextField.text == ""{
+            self.phoneButton.isHidden = true
+            self.phoneImageView.isHidden = true
+        }
+        
         contactMapView.removeAnnotations(annos)
         contactMapView.addAnnotation(anno)
         
@@ -181,6 +190,34 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.backgroundView.layer.backgroundColor = greyColor.cgColor
         self.undoButton.setTitleColor(darkTextColor, for: .normal)
         self.undoButton.isEnabled = false
+    }
+    
+    @IBAction func mapButtonTapped(_ sender: Any) {
+        
+        let regionDistance:CLLocationDistance = 100000
+        let coordinates = CLLocationCoordinate2DMake(self.location.latitude, self.location.longitude)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = self.firstNameTextField.text! + " " + self.lastNameTextField.text!
+        mapItem.openInMaps(launchOptions: options)
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func phoneButtonTapped(_ sender: Any) {
+        let composeVC = MFMessageComposeViewController()
+        let name = self.firstNameTextField.text!
+        composeVC.messageComposeDelegate = self
+        composeVC.recipients = [self.phoneNumberTextField.text!]
+        composeVC.body = "Hey \(name), "
+        self.present(composeVC, animated: true,completion: nil)
     }
     
     
@@ -297,6 +334,13 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.undoButton.isEnabled = true
         self.backgroundView.layer.backgroundColor = greenColor.cgColor
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
+        if self.phoneNumberTextField.text != ""{
+            self.phoneButton.isHidden = false
+            self.phoneImageView.isHidden = false
+        } else {
+            self.phoneButton.isHidden = true
+            self.phoneImageView.isHidden = true
+        }
         if self.addressDescription.text == ""{
             self.addressDescription.text = self.originalLocation
         } else {

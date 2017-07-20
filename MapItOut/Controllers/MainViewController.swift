@@ -99,6 +99,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //self.images = allImages
     
     func finishLoading(){
+        
         if User.currentUser.entries.isEmpty{
             self.contactNameLabel.backgroundColor = UIColor.clear
             self.contactNameLabel.text = "No contact entered"
@@ -255,11 +256,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.performSegue(withIdentifier: "contactsSegue", sender: self)
             case .notDetermined: // needs to ask for authorization
                 self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
+                    
                     if error != nil{
                         let alertController = UIAlertController(title: nil, message:
                             "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
                         alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
                         self.present(alertController, animated: true, completion: nil)
+                    } else {
+                        self.performSegue(withIdentifier: "contactsSegue", sender: self)
                     }
                 })
             default:
