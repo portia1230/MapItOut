@@ -18,6 +18,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     //MARK: - Properties
     
+    var item: Item!
+    
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
@@ -296,7 +298,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 item.organization = self.organizationTextField.text
                 item.type = self.typeTextField.text
                 item.phone = self.phoneTextField.text
-                parent.updateValue(item: item)
+                parent.updateValue(item: item, replacedItem: self.item)
                 
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
@@ -310,7 +312,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    
                     let urlString = downloadURL.absoluteString
                     let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.addressDescription.text!)
                     ItemService.editEntry(entry: entry)
@@ -328,16 +329,17 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 item.organization = self.organizationTextField.text
                 item.type = self.typeTextField.text
                 item.phone = self.phoneTextField.text
-                parent.updateValue(item: item)
+                
+                parent.updateValue(item: item, replacedItem: self.item)
                 
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
                 
                 
-                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(parent.sortedItems[parent.selectedIndex].key!).jpg")
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
                 imageRef.delete(completion: nil)
-                let newImageRef = StorageReference.newContactImageReference(key: parent.sortedItems[parent.selectedIndex].key!)
+                let newImageRef = StorageReference.newContactImageReference(key: item.key!)
                 
                 StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {

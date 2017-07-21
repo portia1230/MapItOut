@@ -69,6 +69,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.mapView.addAnnotation(anno)
             i += 1
         }
+        
         let sortedItems = LocationService.rankDistance(items: items)
         self.sortedItems = sortedItems
         if sortedItems.isEmpty{
@@ -142,13 +143,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Update annotations
     
-    func updateValue(item: Item){
+    func updateValue(item: Item, replacedItem: Item){
         
         self.mapView.removeAnnotation(self.editedAnno)
 
-        var items = CoreDataHelper.retrieveItems()
-        items[self.selectedIndex] = item
+        CoreDataHelper.deleteItems(item: replacedItem)
+        var newItem = CoreDataHelper.newItem()
+        newItem = item
         CoreDataHelper.saveItem()
+        let items = CoreDataHelper.retrieveItems()
+        
         let coordinate = CLLocationCoordinate2DMake(item.latitude, item.longitude)
         let anno = CustomPointAnnotation()
         anno.coordinate = coordinate
@@ -350,8 +354,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBAction func detailsButtonTapped(_ sender: Any) {
         
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-        //let imageURL = URL(string: self.selectedContact.imageURL)
+        //let imageURL = URL(string: self.selectedContact.imageURrL)
         
+        popOverVC.item = self.selectedItem
         popOverVC.itemImage.image = self.selectedItem.image as? UIImage
         popOverVC.name = self.selectedItem.name!
         popOverVC.organization = self.selectedItem.organization!

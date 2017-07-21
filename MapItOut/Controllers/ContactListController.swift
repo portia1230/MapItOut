@@ -66,12 +66,14 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         
     }
     
-    func updateValue(item: Item){
-        var items = CoreDataHelper.retrieveItems()
-        items[self.selectedIndex] = item
+    func updateValue(item: Item, replacedItem: Item){
+        CoreDataHelper.deleteItems(item: replacedItem)
+        var newItem = CoreDataHelper.newItem()
+        newItem = item
         CoreDataHelper.saveItem()
-        self.sortedItems = LocationService.rankDistance(items: items)
         
+        let items = CoreDataHelper.retrieveItems()
+        self.sortedItems = LocationService.rankDistance(items: items)
         self.tableView.reloadData()
     }
     
@@ -112,6 +114,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let selectedItem = self.sortedItems[indexPath.row]
         
+        popOverVC.item = selectedItem
         popOverVC.name = selectedItem.name!
         popOverVC.organization = selectedItem.organization!
         popOverVC.address = selectedItem.locationDescription!
@@ -138,22 +141,13 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
+        
         if editingStyle == .delete{
-            var items = CoreDataHelper.retrieveItems()
-            var i = 0
-            while i < items.count{
-                if items[i].key == sortedItems[selectedIndex].key{
-                    items.remove(at: i)
-                    CoreDataHelper.saveItem()
-                    break
-                }
-                i += 1
-            }
-            self.tableView.reloadData()
-            
+            CoreDataHelper.deleteItems(item: self.sortedItems[selectedIndex])
             let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
             imageRef.delete(completion: nil)
             ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
+            self.tableView.reloadData()
         }
     }
     
