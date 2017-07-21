@@ -24,13 +24,13 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var locationTextField: UITextField!
     
     var originalLocation : String!
-    var firstName : String!
-    var lastName : String!
+    var name : String!
+    var organization : String!
     var image : UIImage!
     var email : String!
     var phone : String!
     var contactLocationDescription : String!
-    var relationship: String!
+    var type: String!
     var latitude = 0.0
     var longitude = 0.0
     var location : CLLocationCoordinate2D!
@@ -47,9 +47,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     var pickOption = ["Acquaintance","Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
     
     //MARK: - IBoutlets for text fields
-    @IBOutlet weak var firstNameTextField: UITextField!
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var relationshipTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var organizationTextField: UITextField!
+    @IBOutlet weak var typeTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
@@ -60,8 +60,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         super.viewDidLoad()
         let pickerView = UIPickerView()
         pickerView.delegate = self
-        relationshipTextField.tintColor = UIColor.clear
-        relationshipTextField.inputView = pickerView
+        typeTextField.tintColor = UIColor.clear
+        typeTextField.inputView = pickerView
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = true
         locationMapView.tintColor = blueColor
@@ -70,14 +70,14 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         photoImageView.clipsToBounds = true
         locationMapView.showsUserLocation = true
         
-        firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
-        relationshipTextField.delegate = self
+        nameTextField.delegate = self
+        organizationTextField.delegate = self
+        typeTextField.delegate = self
         phoneTextField.delegate = self
         emailTextField.delegate = self
-        firstNameTextField.tag = 0
-        lastNameTextField.tag = 1
-        relationshipTextField.tag = 2
+        nameTextField.tag = 0
+        organizationTextField.tag = 1
+        typeTextField.tag = 2
         phoneTextField.tag = 3
         emailTextField.tag = 4
         locationTextField.tag = 5
@@ -96,11 +96,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     override func viewWillAppear(_ animated: Bool) {
         //set region/zoom in for map
-        if let firstName = self.firstName {
-            self.firstNameTextField.text = firstName
+        if let name = self.name {
+            self.nameTextField.text = name
         }
-        if let lastName = self.lastName {
-            self.lastNameTextField.text = lastName
+        if let organization = self.organization {
+            self.organizationTextField.text = organization
         }
         if let email = self.email {
             self.emailTextField.text = email
@@ -148,7 +148,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             locationMapView.setRegion(region, animated: true)
         }
     }
-    
     
     
     //MARK: - Functions
@@ -201,43 +200,43 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == self.locationTextField{
-        if self.locationTextField.text == ""{
-            self.locationTextField.text = self.originalLocation
-        } else {
-            let geocoder = CLGeocoder()
-            geocoder.geocodeAddressString(locationTextField.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
-                if error == nil{
-                    let placemark = placemarks?.first
-                    let anno = MKPointAnnotation()
-                    anno.coordinate = (placemark?.location?.coordinate)!
-                    
-                    let annotations = self.locationMapView.annotations
-                    
-                    //centering and clearing other annotations
-                    let span = MKCoordinateSpanMake(0.1, 0.1)
-                    self.location = anno.coordinate
-                    let region = MKCoordinateRegion(center: anno.coordinate, span: span)
-                    self.locationMapView.setRegion(region, animated: true)
-                    self.locationMapView.removeAnnotations(annotations)
-                    self.locationMapView.addAnnotation(anno)
-                    
-                    self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
-                    self.longitude = anno.coordinate.longitude
-                    self.latitude = anno.coordinate.latitude
-                    self.originalLocation = self.locationTextField.text!
-                    self.contactLocationDescription = self.originalLocation
-                    
-                    
-                    
-                } else {
-                    print(error?.localizedDescription ?? "error" )
+            if self.locationTextField.text == ""{
+                self.locationTextField.text = self.originalLocation
+            } else {
+                let geocoder = CLGeocoder()
+                geocoder.geocodeAddressString(locationTextField.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+                    if error == nil{
+                        let placemark = placemarks?.first
+                        let anno = MKPointAnnotation()
+                        anno.coordinate = (placemark?.location?.coordinate)!
+                        
+                        let annotations = self.locationMapView.annotations
+                        
+                        //centering and clearing other annotations
+                        let span = MKCoordinateSpanMake(0.1, 0.1)
+                        self.location = anno.coordinate
+                        let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                        self.locationMapView.setRegion(region, animated: true)
+                        self.locationMapView.removeAnnotations(annotations)
+                        self.locationMapView.addAnnotation(anno)
+                        
+                        self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+                        self.longitude = anno.coordinate.longitude
+                        self.latitude = anno.coordinate.latitude
+                        self.originalLocation = self.locationTextField.text!
+                        self.contactLocationDescription = self.originalLocation
+                        
+                        
+                        
+                    } else {
+                        print(error?.localizedDescription ?? "error" )
+                    }
                 }
             }
         }
-        }
-        self.firstName = self.firstNameTextField.text!
-        self.lastName = self.lastNameTextField.text!
-        self.relationship = self.relationshipTextField.text!
+        self.name = self.nameTextField.text!
+        self.organization = self.organizationTextField.text!
+        self.type = self.typeTextField.text!
         self.email = self.emailTextField.text!
         self.phone = self.phoneTextField.text!
         self.latitude = self.location.latitude
@@ -282,34 +281,40 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
         
-        if self.firstNameTextField.text != "",
-            self.lastNameTextField.text != "",
-            self.relationshipTextField.text != "Relationship Status"{
+        if self.nameTextField.text != "",
+            self.organizationTextField.text != "",
+            self.typeTextField.text != "Select type"{
             if photoImageView.image == nil {
                 photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
             }
+            
             let currentUser = User.currentUser
             let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
+            
+            var items = CoreDataHelper.retrieveItems()
+            let item = Item()
+            item.name = self.nameTextField.text
+            item.organization = self.organizationTextField.text
+            item.type = self.typeTextField.text
+            item.phone = self.phoneTextField.text
+            item.email = self.emailTextField.text
+            item.latitude = self.latitude
+            item.longitude = self.longitude
+            item.locationDescription = self.locationTextField.text
+            item.key = entryRef.key
+            items.append(item)
+            CoreDataHelper.saveItem()
+            
+            
+            
             let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
-            let lowImageRef = StorageReference.newLowContactImageReference(key: entryRef.key)
             StorageService.uploadHighImage(photoImageView.image!, at: imageRef) { (downloadURL) in
                 guard let downloadURL = downloadURL else {
                     return
                 }
-                StorageService.uploadLowImage(self.photoImageView.image!, at: lowImageRef, completion: { (lowDownloadURL) in
-                    guard let lowDownloadURL = lowDownloadURL else {
-                        return
-                    }
-                    let urlString = downloadURL.absoluteString
-                    let lowURLString = lowDownloadURL.absoluteString
-                    let entry = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.longitude, latitude: self.latitude, relationship: self.relationshipTextField.text!, imageURL: urlString, lowImageURL: lowURLString , number: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
-                    User.currentUser.entries.append(entry)
-                    self.dismiss(animated: true, completion: {
-                    })
-                    EntryService.addEntry(entry: entry)
-                })
-                
-            
+                let urlString = downloadURL.absoluteString
+                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
+                ItemService.addEntry(entry: entry)
             }
         } else {
             let alertController = UIAlertController(title: "", message:
@@ -350,7 +355,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        relationshipTextField.text = pickOption[row]
+        typeTextField.text = pickOption[row]
     }
     
     //MARK: - Image rotating functions
