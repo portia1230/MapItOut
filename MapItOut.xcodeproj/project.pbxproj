@@ -36,6 +36,7 @@
 		83A00C791F14B6A90033E821 /* Rory.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C781F14B6A90033E821 /* Rory.jpg */; };
 		83A43C461F1D75E3000F4324 /* findContact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A43C441F1D75E3000F4324 /* findContact.png */; };
 		83A43C471F1D75E3000F4324 /* selectedFindcontact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A43C451F1D75E3000F4324 /* selectedFindcontact.png */; };
+		83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */; };
 		83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */; };
 		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
@@ -81,6 +82,7 @@
 		83A00C781F14B6A90033E821 /* Rory.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Rory.jpg; sourceTree = "<group>"; };
 		83A43C441F1D75E3000F4324 /* findContact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = findContact.png; path = Arts/findContact.png; sourceTree = "<group>"; };
 		83A43C451F1D75E3000F4324 /* selectedFindcontact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selectedFindcontact.png; path = Arts/selectedFindcontact.png; sourceTree = "<group>"; };
+		83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelper.swift; path = Helpers/CoreDataHelper.swift; sourceTree = "<group>"; };
 		83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopUpViewController.swift; path = Controllers/PopUpViewController.swift; sourceTree = "<group>"; };
 		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
 		83D529761F12F38800ED4EEE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		837938971F137216003B4B34 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */,
 				837938951F137213003B4B34 /* MGPhotoHelper.swift */,
 			);
 			name = Helpers;
@@ -419,6 +422,7 @@
 				8362EE821F19E1C40055BF6C /* CustomPointAnnotation.swift in Sources */,
 				83533A761F134706002EEE74 /* CustomTableCell.swift in Sources */,
 				83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */,
+				83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
 				8341D2371F17D78100242BC8 /* ContactsTableViewController.swift in Sources */,
 				83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */,
