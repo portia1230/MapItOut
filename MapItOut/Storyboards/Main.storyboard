@@ -295,7 +295,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9c3-40-vcp" id="U5R-Ut-xLc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOZ-iM-YuU">
@@ -396,7 +396,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="No phone number entered" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ERb-lS-yVG">
-                                        <rect key="frame" x="99" y="171" width="209" height="30"/>
+                                        <rect key="frame" x="99" y="171" width="208.5" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="hNC-Z4-lTu"/>
                                         </constraints>
@@ -754,7 +754,7 @@
                                         <rect key="frame" x="0.0" y="1" width="375" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SDZ-pq-bZg" id="4PH-JJ-jFI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="107"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="107.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Fx-eh-Nak">
@@ -777,7 +777,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jupiter, Florida, USA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPT-rz-VAa">
-                                                            <rect key="frame" x="0.0" y="20" width="129" height="20"/>
+                                                            <rect key="frame" x="0.0" y="20" width="128.5" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="19.5" id="6TJ-ok-eyI"/>
                                                             </constraints>
@@ -1254,15 +1254,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqi-E5-Ccj" customClass="CustomCircularProgress" customModule="MapItOut" customModuleProvider="target">
-                                <rect key="frame" x="62" y="165" width="250" height="250"/>
+                                <rect key="frame" x="87" y="167" width="200" height="200"/>
                                 <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="gih-Ez-Fsc"/>
-                                    <constraint firstAttribute="width" constant="250" id="wEN-2D-45k"/>
+                                    <constraint firstAttribute="height" constant="200" id="gih-Ez-Fsc"/>
+                                    <constraint firstAttribute="width" constant="200" id="wEN-2D-45k"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="angle">
-                                        <real key="value" value="50"/>
+                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="startAngle">
                                         <real key="value" value="-90"/>
@@ -1288,11 +1288,23 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
+                                <rect key="frame" x="107" y="377" width="160" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="6KP-6I-PQ0"/>
+                                    <constraint firstAttribute="height" constant="38" id="fWW-1o-4r8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="30"/>
+                                <color key="textColor" red="0.40570312738418579" green="0.75298976898193359" blue="0.52552276849746704" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vqi-E5-Ccj" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="OQF-l7-Sfb"/>
-                            <constraint firstItem="LWL-uj-rtC" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="252" id="bcc-FI-Rb0"/>
+                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="10" id="UzT-8e-LAM"/>
+                            <constraint firstItem="LWL-uj-rtC" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="300" id="bcc-FI-Rb0"/>
+                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="eZr-hH-LlM"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1301,7 +1313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9RL-hJ-m8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-921" y="-385"/>
+            <point key="canvasLocation" x="-922.39999999999998" y="-385.45727136431788"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nYK-Xd-eHY">

@@ -9,7 +9,7 @@
 import UIKit
 
 class InitalLoadingViewController: UIViewController {
-
+    
     
     //MARK: - Properties
     
@@ -20,21 +20,22 @@ class InitalLoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
-        circularProgress.startAngle = 0
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+        circularProgress.startAngle = -90
+        //circularProgress.progress = 10
         var items = CoreDataHelper.retrieveItems()
         items.removeAll()
         CoreDataHelper.saveItem()
         
         UserService.items(for: User.currentUser, completion: { (entries) in
             var i = 0
-            let increaseAngle = Double( 360 / (entries.count) )
+            let increaseAngle = Double( 350 / (entries.count) )
             while i < entries.count{
                 let imageView = UIImageView()
                 let url = URL(string: entries[i].imageURL)
@@ -55,13 +56,15 @@ class InitalLoadingViewController: UIViewController {
                 CoreDataHelper.saveItem()
                 
                 if i == entries.count - 1{
-                    self.circularProgress.animate(fromAngle: self.circularProgress.angle, toAngle: 500, duration: 1.0, completion: nil)
-                    UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                        self.view.removeFromSuperview()
-                        self.parent?.viewWillAppear(true)
-                    }, completion: nil)
+                    self.circularProgress.animate(fromAngle: self.circularProgress.angle, toAngle: 360, duration: 1.0, completion: { (bool) in
+                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                            self.parent?.viewWillAppear(true)
+                            self.view.removeFromSuperview()
+                        }, completion: nil)
+                        
+                    })
                 } else {
-                self.circularProgress.animate(toAngle: self.circularProgress.angle + increaseAngle, duration: 0.5, completion:  nil)
+                    self.circularProgress.animate(toAngle: self.circularProgress.angle + increaseAngle, duration: 0.5, completion:  nil)
                 }
                 i += 1
             }
