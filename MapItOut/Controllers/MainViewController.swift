@@ -20,17 +20,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Properties
     
     @IBOutlet weak var locationImage: UIImageView!
-    @IBOutlet weak var contactAddressLabel: UILabel!
-    @IBOutlet weak var contactRelationshipLabel: UILabel!
-    @IBOutlet weak var contactNameLabel: UILabel!
-    @IBOutlet weak var contactImage: UIImageView!
-    @IBOutlet weak var contactButton: UIButton!
+    @IBOutlet weak var itemDistanceLabel: UILabel!
+    @IBOutlet weak var itemTypeLabel: UILabel!
+    @IBOutlet weak var itemImage: UIImageView!
+    @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var itemNameLabel: UILabel!
     
     var images = [UIImage]()
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
-    var selectedContact : Entry!
-    var sortedContacts : [Entry] = []
+    var selectedItem : Item!
+    var sortedItems : [Item] = []
     var isUpdatingHeading = false
     var editedAnno = MKPointAnnotation()
     var selectedIndex = 0
@@ -48,13 +48,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-            
-        self.images.removeAll()
+        
         self.mapView.userLocation.subtitle = ""
         self.mapView.userLocation.title = ""
-        //var allImages = [UIImage]()
-        //imageView.image = #imageLiteral(resourceName: "redPin.png")
-        self.contactButton.isEnabled = false
+
+        self.detailsButton.isEnabled = false
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
         let span = MKCoordinateSpanMake(100, 100)
@@ -72,64 +70,54 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.mapView.addAnnotation(anno)
             i += 1
         }
-        ItemService
-
-    }
-    //self.images = allImages
-    
-    func finishLoading(){
-        
-        if User.currentUser.entries.isEmpty{
-            self.contactNameLabel.backgroundColor = UIColor.clear
-            self.contactNameLabel.text = "No contact entered"
-            self.contactAddressLabel.text = ""
-            self.contactButton.isHidden = true
+        let sortedItems = LocationService.rankDistance(items: items)
+        self.sortedItems = sortedItems
+        if sortedItems.isEmpty{
+            self.itemNameLabel.backgroundColor = UIColor.clear
+            self.itemNameLabel.text = "No contact entered"
+            self.itemDistanceLabel.text = ""
+            self.detailsButton.isHidden = true
         } else {
-            self.contactButton.isHidden = false
-            
-            self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
-            
             let coordinate = LocationService.getLocation(manager: self.locationManager)
             let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            let contactLocation = CLLocation(latitude: self.sortedContacts[0].latitude, longitude: self.sortedContacts[0].longitude)
-            self.selectedContact = self.sortedContacts[0]
+            let contactLocation = CLLocation(latitude: sortedItems[0].latitude, longitude: sortedItems[0].longitude)
+            self.selectedItem = sortedItems[0]
             
             var n = 0
-            while n < User.currentUser.entries.count {
-                if User.currentUser.entries[n].key == self.selectedContact.key{
+            while n < items.count {
+                if items[n].key == self.selectedItem.key{
                     self.selectedIndex = n
                 }
                 n += 1
             }
             
             let distance = myLocation.distance(from: contactLocation)
-            
-            self.contactAddressLabel.backgroundColor = UIColor.clear
-            self.contactNameLabel.backgroundColor = UIColor.clear
-            self.contactRelationshipLabel.backgroundColor = UIColor.clear
+            self.itemDistanceLabel.backgroundColor = UIColor.clear
+            self.itemNameLabel.backgroundColor = UIColor.clear
+            self.itemTypeLabel.backgroundColor = UIColor.clear
             
             if distance > 1000.0
             {
-                self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
             } else {
-                self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
             }
-            self.contactNameLabel.text = self.sortedContacts[0].firstName + " " + self.sortedContacts[0].lastName
-            self.contactRelationshipLabel.text = self.sortedContacts[0].relationship
-            self.contactImage.image = self.images[self.selectedIndex]
-            self.contactButton.isEnabled = true
-            //self.mapView.addAnnotations(anno)
-            
+            self.itemNameLabel.text = sortedItems[0].name
+            self.itemTypeLabel.text = sortedItems[0].type
+            self.itemImage.image = sortedItems[0].image as? UIImage
         }
+        
     }
+    //self.images = allImages
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //fittng the photo
         mapView.delegate = self
-        contactImage.layer.cornerRadius = 35
-        contactButton.layer.cornerRadius = 15
-        contactImage.clipsToBounds = true
+        itemImage.layer.cornerRadius = 35
+        detailsButton.layer.cornerRadius = 15
+        itemImage.clipsToBounds = true
         locationManager.delegate = self
         
         let items = CoreDataHelper.retrieveItems()
@@ -155,19 +143,22 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Update annotations
     
-    func newValue(entry: Entry, image: UIImage){
-        User.currentUser.entries.append(entry)
-        let coordinate = CLLocationCoordinate2DMake(entry.latitude, entry.longitude)
+    func updateValue(item: Item){
+        
+        self.mapView.removeAnnotation(self.editedAnno)
+
+        var items = CoreDataHelper.retrieveItems()
+        items[self.selectedIndex] = item
+        CoreDataHelper.saveItem()
+        let coordinate = CLLocationCoordinate2DMake(item.latitude, item.longitude)
         let anno = CustomPointAnnotation()
         anno.coordinate = coordinate
-        anno.image = image
-        self.images.append(image)
-        self.selectedIndex = User.currentUser.entries.count - 1
-        self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
-        
+        anno.image = (item.image as? UIImage)!
+        self.sortedItems = LocationService.rankDistance(items: items)
+        self.selectedItem = item
         let myCoordinate = LocationService.getLocation(manager: self.locationManager)
         let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
-        let contactLocation = CLLocation(latitude: User.currentUser.entries[self.selectedIndex].latitude, longitude: User.currentUser.entries[self.selectedIndex].longitude)
+        let contactLocation = CLLocation(latitude: item.latitude, longitude: item.longitude)
         
         self.mapView.addAnnotation(anno)
         
@@ -175,54 +166,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         if distance > 1000.0
         {
-            self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
+            self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
         } else {
-            self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
         }
-        self.contactNameLabel.text = User.currentUser.entries[selectedIndex].firstName + " " + User.currentUser.entries[selectedIndex].lastName
-        self.contactRelationshipLabel.text = User.currentUser.entries[selectedIndex].relationship
-        self.contactImage.image = self.images[self.selectedIndex]
-        self.contactButton.isEnabled = true
+        self.itemNameLabel.text = sortedItems[0].name
+        self.itemTypeLabel.text = sortedItems[0].type
+        self.itemImage.image = sortedItems[0].image as? UIImage
     }
-    
-    
-    func updateValue(entry: Entry, image: UIImage){
-        
-        self.mapView.removeAnnotation(self.editedAnno)
-        User.currentUser.entries.remove(at: self.selectedIndex)
-        User.currentUser.entries.insert(entry, at: self.selectedIndex)
-        self.mapView.removeAnnotation(self.editedAnno)
-        let coordinate = CLLocationCoordinate2DMake(entry.latitude, entry.longitude)
-        let anno = CustomPointAnnotation()
-        anno.coordinate = coordinate
-        anno.image = image
-        self.images.remove(at: selectedIndex)
-        self.images.insert(image, at: selectedIndex)
-        
-        self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
-        self.selectedContact = entry
-        
-        let myCoordinate = LocationService.getLocation(manager: self.locationManager)
-        let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
-        let contactLocation = CLLocation(latitude: User.currentUser.entries[self.selectedIndex].latitude, longitude: User.currentUser.entries[self.selectedIndex].longitude)
-        
-        self.mapView.addAnnotation(anno)
-        
-        let distance = myLocation.distance(from: contactLocation)
-        
-        if distance > 1000.0
-        {
-            self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
-        } else {
-            self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-        }
-        self.contactNameLabel.text = User.currentUser.entries[selectedIndex].firstName + " " + User.currentUser.entries[selectedIndex].lastName
-        self.contactRelationshipLabel.text = User.currentUser.entries[selectedIndex].relationship
-        self.contactImage.image = image
-        self.contactButton.isEnabled = true
-    }
-    
-    
+
+
     //MARK: - Location Manager Functions
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
@@ -292,30 +245,29 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         } else {
             let coordinate = view.annotation?.coordinate
             self.editedAnno = view.annotation! as! CustomPointAnnotation
-            
+            let items = CoreDataHelper.retrieveItems()
             var i = 0
-            while i < User.currentUser.entries.count{
-                if (User.currentUser.entries[i].latitude == self.editedAnno.coordinate.latitude) && ( User.currentUser.entries[i].longitude == self.editedAnno.coordinate.longitude){
-                    self.selectedContact = User.currentUser.entries[i]
+            while i < items.count{
+                if (items[i].latitude == self.editedAnno.coordinate.latitude) && ( items[i].longitude == self.editedAnno.coordinate.longitude){
+                    self.selectedItem = items[i]
                     self.selectedIndex = i
                     break
                 }
                 i += 1
             }
             
-            self.contactImage.image = self.images[selectedIndex]
-            self.contactNameLabel.text = self.selectedContact.firstName + " " + self.selectedContact.lastName
-            self.contactRelationshipLabel.text = self.selectedContact.relationship
+            self.itemNameLabel.text = self.selectedItem.name
+            self.itemTypeLabel.text = self.selectedItem.type
+            
             let location = LocationService.getLocation(manager: locationManager)
             let myLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
             let contactLocation = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
             let distance = contactLocation.distance(from: myLocation)
-            
             if distance > 1000.0
             {
-                self.contactAddressLabel.text = " \(Int(distance/1000)) KM away"
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
             } else {
-                self.contactAddressLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
             }
         }
     }
@@ -400,17 +352,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         //let imageURL = URL(string: self.selectedContact.imageURL)
         
-        popOverVC.contactPhoto.image = self.images[selectedIndex]
-        popOverVC.firstName = self.selectedContact.firstName
-        popOverVC.lastName = self.selectedContact.lastName
-        popOverVC.address = self.selectedContact.locationDescription
-        popOverVC.relationship = self.selectedContact.relationship
-        //popOverVC.contactPhoto.kf.setImage(with: imageURL!)
-        popOverVC.email = self.selectedContact.email
-        popOverVC.phoneNumber = self.selectedContact.number
-        popOverVC.latitude = self.selectedContact.latitude
-        popOverVC.longitude = self.selectedContact.longitude
-        popOverVC.keyOfContact = self.selectedContact.key
+        popOverVC.contactPhoto.image = self.selectedItem.image as? UIImage
+        popOverVC.name = self.selectedItem.name
+        popOverVC.organization = self.selectedItem.organization
+        popOverVC.type = self.selectedItem.type
+        popOverVC.address = self.selectedItem.locationDescription!
+        popOverVC.email = self.selectedItem.email!
+        popOverVC.phoneNumber = self.selectedItem.phone!
+        popOverVC.latitude = self.selectedItem.latitude
+        popOverVC.longitude = self.selectedItem.longitude
+        popOverVC.keyOfContact = self.selectedItem.key!
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame

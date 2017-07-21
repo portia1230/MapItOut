@@ -21,53 +21,53 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
-    @IBOutlet weak var firstNameTextField: UITextField!
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var relationshipTextField: UITextField!
-    @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var organizationTextField: UITextField!
+    @IBOutlet weak var typeTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var addressDescription: UITextField!
     @IBOutlet weak var contactMapView: MKMapView!
     @IBOutlet weak var deleteButton: UIButton!
-    @IBOutlet weak var contactImage: UIImageView!
+    @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var phoneButton: UIButton!
     @IBOutlet weak var emailButton: UIButton!
     
     @IBOutlet weak var phoneImageView: UIImageView!
     @IBOutlet weak var emailImageView: UIImageView!
     
-    var OFirstName = ""
-    var OLastName = ""
-    var ORelationship = ""
-    var OPhoneNumber = "No number entered"
+    var OName = ""
+    var OOrganization = ""
+    var OType = ""
+    var OPhone = "No number entered"
     var OEmail = "No email entered"
     var OAddress = ""
     var OLongitude = 0.0
     var OLatitude = 0.0
-    var OContactPhoto = UIImageView()
+    var OContactPhoto = UIImage()
     var OOriginalLocation = ""
     var OLocation = CLLocationCoordinate2D()
     
-    var firstName = ""
-    var lastName = ""
-    var relationship = ""
-    var phoneNumber = "No number entered"
+    var name = ""
+    var organization = ""
+    var type = ""
+    var phone = "No number entered"
     var email = "No email entered"
     var address = ""
     var longitude = 0.0
     var latitude = 0.0
-    var contactPhoto = UIImageView()
+    var contactPhoto = UIImage()
     var originalLocation = ""
     var locationManager = CLLocationManager()
     var location = CLLocationCoordinate2D()
     var photoHelper = MGPhotoHelper()
-    var keyOfContact = ""
+    var keyOfItem= ""
     
     
     var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var darkTextColor = UIColor(red: 90/255, green: 92/255, blue: 92/255, alpha: 1)
-    var pickOption = ["Acquaintance","Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Friend"]
+    var pickOption = ["Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Food", "Friend"]
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -78,26 +78,26 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         pickerView.delegate = self
         
         contactMapView.delegate = self
-        firstNameTextField.delegate = self
-        lastNameTextField.delegate = self
-        relationshipTextField.delegate = self
-        phoneNumberTextField.delegate = self
+        nameTextField.delegate = self
+        organizationTextField.delegate = self
+        typeTextField.delegate = self
+        phoneTextField.delegate = self
         emailTextField.delegate = self
         addressDescription.delegate = self
         
-        relationshipTextField.inputView = pickerView
+        typeTextField.inputView = pickerView
         
-        firstNameTextField.tag = 0
-        lastNameTextField.tag = 1
-        relationshipTextField.tag = 2
-        phoneNumberTextField.tag = 3
+        nameTextField.tag = 0
+        organizationTextField.tag = 1
+        typeTextField.tag = 2
+        phoneTextField.tag = 3
         emailTextField.tag = 4
         addressDescription.tag = 5
         
-        firstNameTextField.isUserInteractionEnabled = true
-        lastNameTextField.isUserInteractionEnabled = true
-        relationshipTextField.isUserInteractionEnabled = true
-        phoneNumberTextField.isUserInteractionEnabled = true
+        phoneTextField.isUserInteractionEnabled = true
+        nameTextField.isUserInteractionEnabled = true
+        typeTextField.isUserInteractionEnabled = true
+        organizationTextField.isUserInteractionEnabled = true
         emailTextField.isUserInteractionEnabled = true
         addressDescription.isUserInteractionEnabled = true
         changeImageButton.isEnabled = true
@@ -126,24 +126,24 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.backgroundView.layer.cornerRadius = 30
         self.undoButton.isEnabled = false
         self.undoButton.layer.cornerRadius = 30
-        self.contactImage.layer.cornerRadius = 70
+        self.itemImage.layer.cornerRadius = 70
         self.changeImageButton.layer.cornerRadius = 70
-        self.contactImage.clipsToBounds = true
+        self.itemImage.clipsToBounds = true
         contactMapView.isUserInteractionEnabled = false
-        self.firstNameTextField.text = firstName
-        self.lastNameTextField.text = lastName
-        self.relationshipTextField.text = relationship
-        self.phoneNumberTextField.text = phoneNumber
+        self.nameTextField.text = name
+        self.organizationTextField.text = organization
+        self.typeTextField.text = type
+        self.phoneTextField.text = phone
         self.emailTextField.text = email
         self.addressDescription.text = address
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         self.location = location
         let annos = contactMapView.annotations
         let anno = MKPointAnnotation()
-        self.contactImage.image = self.contactPhoto.image
+        self.itemImage.image = self.contactPhoto
         anno.coordinate = location
         
-        if self.phoneNumberTextField.text! == ""{
+        if self.phoneTextField.text! == ""{
             self.phoneButton.isHidden = true
             self.phoneImageView.isHidden = true
         }
@@ -162,11 +162,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         self.originalLocation = self.addressDescription.text!
         
-        self.OFirstName = self.firstName
-        self.OLastName = self.lastName
-        self.ORelationship = self.relationship
+        self.OName = self.name
+        self.OOrganization = self.organization
+        self.OType = self.type
         self.OEmail = self.email
-        self.OPhoneNumber = self.phoneNumber
+        self.OPhone = self.phone
         self.OAddress = self.originalLocation
         self.OLatitude = self.latitude
         self.OLongitude = self.longitude
@@ -182,11 +182,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     //MARK: - VC Functions
     
     @IBAction func undoButtonTapped(_ sender: Any) {
-        self.firstNameTextField.text = self.OFirstName
-        self.lastNameTextField.text = self.OLastName
-        self.relationshipTextField.text = self.ORelationship
+        self.nameTextField.text = self.OName
+        self.organizationTextField.text = self.OOrganization
+        self.typeTextField.text = self.OType
         self.emailTextField.text = self.OEmail
-        self.phoneNumberTextField.text = self.OPhoneNumber
+        self.phoneTextField.text = self.OPhone
         self.addressDescription.text = self.OOriginalLocation
         let annotations = self.contactMapView.annotations
         self.contactMapView.removeAnnotations(annotations)
@@ -210,7 +210,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         ]
         let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = self.firstNameTextField.text! + " " + self.lastNameTextField.text!
+        mapItem.name = self.nameTextField!
         mapItem.openInMaps(launchOptions: options)
     }
     
@@ -220,9 +220,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     @IBAction func phoneButtonTapped(_ sender: Any) {
         let composeVC = MFMessageComposeViewController()
-        let name = self.firstNameTextField.text!
+        let name = self.nameTextField.text!
         composeVC.messageComposeDelegate = self
-        composeVC.recipients = [self.phoneNumberTextField.text!]
+        composeVC.recipients = [self.phoneTextField.text!]
         composeVC.body = "Hey \(name), "
         self.present(composeVC, animated: true,completion: nil)
     }
@@ -235,7 +235,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         // Configure the fields of the interface.
         composeVC.setToRecipients([self.emailTextField.text!])
         //composeVC.setSubject("")
-        composeVC.setMessageBody("Hey \(self.firstNameTextField.text!)", isHTML: false)
+        composeVC.setMessageBody("Hey \(self.nameTextField.text!)", isHTML: false)
         
         // Present the view controller modally.
         self.present(composeVC, animated: true, completion: nil)
@@ -252,21 +252,26 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
-        
-        EntryService.deleteEntry(key: self.keyOfContact)
+        ItemService.deleteEntry(key: self.keyOfItem)
+        let items = CoreDataHelper.retrieveItems()
+        for item in items{
+            if item.key == self.keyOfItem{
+                CoreDataHelper.deleteItems(item: item)
+                break
+            }
+        }
         
         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.removeFromSuperview()
         }, completion: nil)
-        self.parent?.viewDidLoad()
         self.parent?.viewWillAppear(true)
     }
     
     @IBAction func changeImageButton(_ sender: Any) {
         photoHelper.presentActionSheet(from: self)
         photoHelper.completionHandler = { image in
-            self.contactImage.image = image
-            self.contactPhoto.image = image
+            self.itemImage.image = image
+            self.contactPhoto = image
         }
     }
     
@@ -280,76 +285,72 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             if self.parent is MainViewController{
                 let parent = self.parent as! MainViewController
+                let item = Item()
+                item.email = self.emailTextField.text
+                item.image = self.itemImage.image
+                item.key = self.keyOfItem
+                item.latitude = self.latitude
+                item.longitude = self.longitude
+                item.name = self.nameTextField.text
+                item.locationDescription = self.addressDescription.text
+                item.organization = self.organizationTextField.text
+                item.type = self.typeTextField.text
+                item.phone = self.phoneTextField.text
+                parent.updateValue(item: item)
                 
-                 let firstContact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: "", lowImageURL: "", number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
-                
-                parent.updateValue(entry: firstContact, image: self.contactImage.image!)
-
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
                 
-                let imageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.selectedContact.key).jpg")
-                let lowImageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.selectedContact.key)low.jpg")
-                
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedItem.key)!).jpg")
                 imageRef.delete(completion: nil)
-                lowImageRef.delete(completion: nil)
+                let newImageRef = StorageReference.newContactImageReference(key: parent.selectedItem.key!)
                 
-                
-                let newImageRef = StorageReference.newContactImageReference(key: parent.selectedContact.key)
-                let newLowImageRef = StorageReference.newLowContactImageReference(key: parent.selectedContact.key)
-                
-                StorageService.uploadHighImage(contactImage.image!, at: newImageRef) { (downloadURL) in
+                StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    StorageService.uploadLowImage(self.contactImage.image!, at: newLowImageRef) { (lowDownloadURL) in
-                        guard let lowDownloadURL = lowDownloadURL else {
-                            return
-                        }
-                    let lowURLString = lowDownloadURL.absoluteString
+                    
                     let urlString = downloadURL.absoluteString
-                    firstContact.lowImageURL = lowURLString
-                    firstContact.imageURL = urlString
-                    EntryService.editEntry(entry: firstContact)
-                    }
+                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: longitude, latitude: latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: addressDescription.text!)
+                    ItemService.editEntry(entry: entry)
                 }
             } else {
                 let parent = self.parent as! ContactListController
-                let firstContact = Entry(firstName: self.firstNameTextField.text!, lastName: self.lastNameTextField.text!, longitude: self.location.longitude, latitude: self.location.latitude, relationship: self.relationshipTextField.text!, imageURL: "", lowImageURL: "", number: self.phoneNumberTextField.text!, email: self.emailTextField.text!, key: self.keyOfContact, locationDescription: self.addressDescription.text!)
-                
-                parent.updateValue(entry: firstContact, image: self.contactImage.image!)
+                let item = Item()
+                item.email = self.emailTextField.text
+                item.image = self.itemImage.image
+                item.key = self.keyOfItem
+                item.latitude = self.latitude
+                item.longitude = self.longitude
+                item.name = self.nameTextField.text
+                item.locationDescription = self.addressDescription.text
+                item.organization = self.organizationTextField.text
+                item.type = self.typeTextField.text
+                item.phone = self.phoneTextField.text
+                parent.updateValue(item: item)
                 
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
                 
-                let imageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.sortedContacts[parent.selectedIndex].key).jpg")
-                let lowImageRef = Storage.storage().reference().child("images/contacts/\(User.currentUser.uid)/\(parent.sortedContacts[parent.selectedIndex].key)low.jpg")
                 
+                afborufnoaifnaofuenfouan
+                
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedIndex.key)!).jpg")
                 imageRef.delete(completion: nil)
-                lowImageRef.delete(completion: nil)
+                let newImageRef = StorageReference.newContactImageReference(key: parent.selectedItem.key!)
                 
-                
-                let newImageRef = StorageReference.newContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
-                let newLowImageRef = StorageReference.newLowContactImageReference(key: parent.sortedContacts[parent.selectedIndex].key)
-                
-                StorageService.uploadHighImage(contactImage.image!, at: newImageRef) { (downloadURL) in
+                StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    StorageService.uploadLowImage(self.contactImage.image!, at: newLowImageRef) { (lowDownloadURL) in
-                        guard let lowDownloadURL = lowDownloadURL else {
-                            return
-                        }
-                        let lowURLString = lowDownloadURL.absoluteString
-                        let urlString = downloadURL.absoluteString
-                        firstContact.lowImageURL = lowURLString
-                        firstContact.imageURL = urlString
-                        EntryService.editEntry(entry: firstContact)
-                    }
+                    
+                    let urlString = downloadURL.absoluteString
+                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: longitude, latitude: latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: addressDescription.text!)
+                    ItemService.editEntry(entry: entry)
                 }
-            }
+
         }
     }
     

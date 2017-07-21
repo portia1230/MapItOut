@@ -17,11 +17,6 @@ extension StorageReference {
     
     static func newContactImageReference(key: String) -> StorageReference {
         let uid = User.currentUser.uid
-        return Storage.storage().reference().child("images/contacts/\(uid)/\(key).jpg")
-    }
-    
-    static func newLowContactImageReference(key: String) -> StorageReference {
-        let uid = User.currentUser.uid
-        return Storage.storage().reference().child("images/contacts/\(uid)/\(key)low.jpg")
+        return Storage.storage().reference().child("images/items/\(uid)/\(key).jpg")
     }
 }

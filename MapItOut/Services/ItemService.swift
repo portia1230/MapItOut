@@ -15,7 +15,7 @@ struct ItemService{
     
     static func addEntry(entry: Entry){
         let currentUser = User.currentUser
-        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(entry.key)
+        let entryRef = Database.database().reference().child("Items").child(currentUser.uid).child(entry.key)
         let dict = entry.dictValue
         entryRef.setValue(dict)
     }
@@ -23,13 +23,13 @@ struct ItemService{
     static func deleteEntry(key: String){
         let currentUser = User.currentUser
         //let dict = entry.dictValue
-        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(key)
+        let entryRef = Database.database().reference().child("Items").child(currentUser.uid).child(key)
         entryRef.removeValue()
     }
     
     static func editEntry(entry: Entry){
         let currentUser = User.currentUser
-        let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).child(entry.key)
+        let entryRef = Database.database().reference().child("Items").child(currentUser.uid).child(entry.key)
         let dict = entry.dictValue
         entryRef.updateChildValues(dict)
         

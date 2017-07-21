@@ -50,7 +50,7 @@ struct UserService {
     
     
     static func items(for user: User, completion: @escaping ([Entry]) -> Void) {
-        let ref = Database.database().reference().child("Contacts").child(user.uid)
+        let ref = Database.database().reference().child("Items").child(user.uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let snapshot = snapshot.children.allObjects as? [DataSnapshot] else {
                 return completion([])
@@ -79,7 +79,7 @@ struct UserService {
         var items = CoreDataHelper.retrieveItems()
         items.removeAll()
         for entry in contacts{
-            var imageView = UIImageView()
+            let imageView = UIImageView()
             let item = Item()
             item.email = entry.email
             item.key = entry.key

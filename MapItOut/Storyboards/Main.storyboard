@@ -246,11 +246,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="contactAddressLabel" destination="Ab6-xr-fWC" id="q88-VL-OsH"/>
-                        <outlet property="contactButton" destination="3xa-qc-06L" id="Dqh-gq-Qe6"/>
-                        <outlet property="contactImage" destination="sHw-2M-bg3" id="9ta-Ka-x1c"/>
-                        <outlet property="contactNameLabel" destination="BaJ-CN-Oi1" id="1qb-7E-tGO"/>
-                        <outlet property="contactRelationshipLabel" destination="EWo-dO-CNT" id="SKS-iV-GmA"/>
+                        <outlet property="detailsButton" destination="3xa-qc-06L" id="OOa-ns-msg"/>
+                        <outlet property="itemDistanceLabel" destination="Ab6-xr-fWC" id="KOn-vi-cS5"/>
+                        <outlet property="itemImage" destination="sHw-2M-bg3" id="dDF-06-q6u"/>
+                        <outlet property="itemNameLabel" destination="BaJ-CN-Oi1" id="8Te-gG-kvC"/>
+                        <outlet property="itemTypeLabel" destination="EWo-dO-CNT" id="wxJ-6j-Q2d"/>
                         <outlet property="locationImage" destination="c5z-Sq-t6j" id="TLn-2s-rev"/>
                         <outlet property="mapView" destination="gZu-wW-qCT" id="5KU-Qc-gNO"/>
                         <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" id="sz0-VJ-i1G"/>
@@ -394,9 +394,6 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="Y6f-BZ-apC" id="iqs-RI-e39"/>
-                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="No phone number entered" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ERb-lS-yVG">
                                         <rect key="frame" x="99" y="171" width="208.5" height="30"/>
@@ -406,9 +403,6 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="Y6f-BZ-apC" id="MGX-YO-Ief"/>
-                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dA3-VB-E9q">
                                         <rect key="frame" x="83" y="217" width="1" height="40"/>
@@ -527,11 +521,8 @@
                                         <color key="textColor" red="0.92096400260925293" green="0.27257329225540161" blue="0.22357378900051117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="Y6f-BZ-apC" id="Zq7-iA-oFc"/>
-                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Relationship Status" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AdL-st-Ap9">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Type" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AdL-st-Ap9">
                                         <rect key="frame" x="167" y="114" width="175" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="DdZ-Lx-s7b"/>
@@ -540,14 +531,11 @@
                                         <color key="textColor" red="0.40570312739999997" green="0.75298976900000003" blue="0.52552276850000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="19"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="Y6f-BZ-apC" id="udJ-dQ-WZI"/>
-                                        </connections>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="yI8-jM-mNj">
                                         <rect key="frame" x="165" y="10" width="203" height="73"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contact's First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RKR-2P-ARE">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RKR-2P-ARE">
                                                 <rect key="frame" x="0.0" y="0.0" width="203" height="33"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="33" id="99R-eb-rLl"/>
@@ -556,14 +544,11 @@
                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Contact's Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZZD-8E-FfG">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Organization" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZZD-8E-FfG">
                                                 <rect key="frame" x="0.0" y="48" width="203" height="25"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="Y6f-BZ-apC" id="bH8-nF-LGd"/>
-                                                </connections>
                                             </textField>
                                         </subviews>
                                         <constraints>
@@ -681,7 +666,7 @@
                                     <constraint firstAttribute="height" constant="33" id="oQZ-j8-qCV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
-                                <state key="normal" title="Delete Contact">
+                                <state key="normal" title="Delete item">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -727,21 +712,21 @@
                     </view>
                     <navigationItem key="navigationItem" id="QDA-GH-GT3"/>
                     <connections>
-                        <outlet property="addressDescription" destination="Ehb-qa-Ms6" id="Gvd-sg-B3M"/>
+                        <outlet property="addressDescription" destination="Ehb-qa-Ms6" id="a6n-Wz-CJF"/>
                         <outlet property="backgroundView" destination="IzD-vu-ptJ" id="dTd-Go-hgk"/>
                         <outlet property="changeImageButton" destination="ryj-IY-Rap" id="qNN-HL-gH1"/>
-                        <outlet property="contactImage" destination="IpU-78-yhJ" id="tac-1c-Cda"/>
                         <outlet property="contactMapView" destination="uLu-Wt-jmp" id="2Nl-Mt-hfG"/>
                         <outlet property="deleteButton" destination="JD9-TW-jdV" id="tE8-wb-OLO"/>
                         <outlet property="emailButton" destination="W3g-HC-g3C" id="JBJ-4H-6vQ"/>
                         <outlet property="emailImageView" destination="LHr-Tb-qKH" id="7el-kL-QfD"/>
-                        <outlet property="emailTextField" destination="jXS-Cq-p06" id="7Qn-9v-BKp"/>
-                        <outlet property="firstNameTextField" destination="RKR-2P-ARE" id="7vj-wt-dwc"/>
-                        <outlet property="lastNameTextField" destination="ZZD-8E-FfG" id="reY-21-w4w"/>
+                        <outlet property="emailTextField" destination="jXS-Cq-p06" id="UH0-12-7qm"/>
+                        <outlet property="itemImage" destination="IpU-78-yhJ" id="rTN-ty-0N7"/>
+                        <outlet property="nameTextField" destination="RKR-2P-ARE" id="cuY-Vl-I0k"/>
+                        <outlet property="organizationTextField" destination="ZZD-8E-FfG" id="aVN-Gq-x2C"/>
                         <outlet property="phoneButton" destination="4qv-xk-dbw" id="3gq-d8-0Qv"/>
                         <outlet property="phoneImageView" destination="6EF-oF-0KN" id="qdj-zY-N33"/>
-                        <outlet property="phoneNumberTextField" destination="ERb-lS-yVG" id="b1T-LM-QRs"/>
-                        <outlet property="relationshipTextField" destination="AdL-st-Ap9" id="9tr-qk-ZTx"/>
+                        <outlet property="phoneTextField" destination="ERb-lS-yVG" id="3RG-8c-82C"/>
+                        <outlet property="typeTextField" destination="AdL-st-Ap9" id="Iw0-Wx-4N7"/>
                         <outlet property="undoButton" destination="BH5-KS-zal" id="oWw-Zw-eb3"/>
                     </connections>
                 </viewController>
@@ -1302,8 +1287,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9ej-53-kgX"/>
-        <segue reference="Xjx-vg-KDV"/>
+        <segue reference="sz0-VJ-i1G"/>
+        <segue reference="h3e-dj-j96"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
