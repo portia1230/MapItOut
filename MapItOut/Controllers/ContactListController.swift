@@ -13,6 +13,7 @@ import MapKit
 import AddressBookUI
 import ContactsUI
 import FirebaseAuth
+import CoreData
 
 class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,10 +21,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     @IBOutlet weak var tableView: UITableView!
     var keys : [String] = []
-    var sortedContacts : [Entry] = []
+    var sortedItems : [Item] = []
     var locationDescription = ""
     var selectedIndex = 0
-    var images = [UIImage]()
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -56,79 +56,47 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        
-        self.images.removeAll()
+
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        UserService.contacts(for: User.currentUser) { (contacts) in
-            let sortedContacts = LocationService.rankDistance(entries: contacts)
-            self.sortedContacts = sortedContacts
-            //self.tableView.reloadData()
-            var i = 0
-            var imageView = UIImageView()
-            while i < self.sortedContacts.count{
-                let imageURL = URL(string
-                    : contacts[i].lowImageURL)
-                imageView.kf.setImage(with: imageURL)
-                
-                if imageView.image == nil{
-                    self.viewWillAppear(true)
-                } else {
-                    self.images.append(imageView.image!)
-                    if (self.images.count == User.currentUser.entries.count ) && ( self.sortedContacts.count == User.currentUser.entries.count ){
-                        self.tableView.reloadData()
-                    }
-                }
-                i += 1
-            }
-        }
-    }
-    
-    func updateValue(entry: Entry, image : UIImage){
-        User.currentUser.entries.remove(at: self.selectedIndex)
-        User.currentUser.entries.append(entry)
-        self.sortedContacts = LocationService.rankDistance(entries: User.currentUser.entries)
-        self.images.remove(at: self.selectedIndex)
-        self.images.insert(image, at: self.selectedIndex)
-        
+        let items = CoreDataHelper.retrieveItems()
+        self.sortedItems = LocationService.rankDistance(items: items)
         self.tableView.reloadData()
         
-        UserService.contacts(for: User.currentUser) { (contacts) in
-            let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(entry.key)
-            let dictValue = entry.dictValue
-            ref.updateChildValues(dictValue)
-        }
+    }
+    
+    func updateValue(item: Item){
+        var items = CoreDataHelper.retrieveItems()
+        items[self.selectedIndex] = item
+        CoreDataHelper.saveItem()
+        self.sortedItems = LocationService.rankDistance(items: items)
         
+        self.tableView.reloadData()
     }
     
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        
-        return self.sortedContacts.count
-        
+        return self.sortedItems.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
-            let contact = self.sortedContacts[indexPath.row]
-            cell.addressLabel.text = contact.locationDescription
-            cell.nameLabel.text = contact.firstName + " " + contact.lastName
-            cell.relationshipLabel.text = contact.relationship
-            cell.photoImageView.image = self.images[indexPath.row]
+            let item = self.sortedItems[indexPath.row]
+            cell.addressLabel.text = item.locationDescription
+            cell.nameLabel.text = item.name
+            cell.typeLabel.text = item.type
+            cell.photoImageView.image = item.image as? UIImage
             cell.photoImageView.layer.cornerRadius = 35
             cell.photoImageView.clipsToBounds = true
-            self.images.append(cell.photoImageView.image!)
             return cell
-        
         }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
         var i = 0

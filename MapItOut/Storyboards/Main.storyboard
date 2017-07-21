@@ -785,8 +785,8 @@
                                                             <color key="textColor" red="0.99499177930000005" green="0.18655474480000001" blue="0.1686470062" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best Friend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5r-ab-Lw2">
-                                                            <rect key="frame" x="0.0" y="43.5" width="71.5" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5r-ab-Lw2">
+                                                            <rect key="frame" x="0.0" y="43.5" width="46" height="17"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                                             <color key="textColor" red="0.3883214593" green="0.38831362130000002" blue="0.38831892610000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
@@ -810,7 +810,7 @@
                                             <outlet property="addressLabel" destination="NPT-rz-VAa" id="hpM-Gz-JaU"/>
                                             <outlet property="nameLabel" destination="vTU-7U-Q2O" id="aeO-Nh-45q"/>
                                             <outlet property="photoImageView" destination="9Fx-eh-Nak" id="gVO-AC-cwA"/>
-                                            <outlet property="relationshipLabel" destination="K5r-ab-Lw2" id="U0z-qg-xu6"/>
+                                            <outlet property="typeLabel" destination="K5r-ab-Lw2" id="fZ4-Zl-iQs"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1287,8 +1287,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sz0-VJ-i1G"/>
-        <segue reference="h3e-dj-j96"/>
+        <segue reference="e1G-mV-pNx"/>
+        <segue reference="9ej-53-kgX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>
