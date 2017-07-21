@@ -14,6 +14,7 @@ import AddressBookUI
 import ContactsUI
 import FirebaseAuth
 import CoreData
+import FirebaseStorage
 
 class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -100,25 +101,28 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
         var i = 0
-        while i < User.currentUser.entries.count{
-            if sortedContacts[indexPath.row].key == User.currentUser.entries[i].key{
+        var items = CoreDataHelper.retrieveItems()
+        while i < items.count {
+            if sortedItems[indexPath.row].key == items[i].key{
                 self.selectedIndex = i
             }
             i += 1
         }
+
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-        let selectedContact = self.sortedContacts[indexPath.row]
+        let selectedItem = self.sortedItems[indexPath.row]
         
-        popOverVC.firstName = selectedContact.firstName
-        popOverVC.lastName = selectedContact.lastName
-        popOverVC.address = selectedContact.locationDescription
-        popOverVC.relationship = selectedContact.relationship
-        popOverVC.contactPhoto.image = self.images[indexPath.row]
-        popOverVC.email = selectedContact.email
-        popOverVC.phoneNumber = selectedContact.number
-        popOverVC.latitude = selectedContact.latitude
-        popOverVC.longitude = selectedContact.longitude
-        popOverVC.keyOfContact = selectedContact.key
+        popOverVC.name = selectedItem.name!
+        popOverVC.organization = selectedItem.organization!
+        popOverVC.address = selectedItem.locationDescription!
+        popOverVC.type = selectedItem.type!
+        popOverVC.contactPhoto = (selectedItem.image as? UIImage)!
+        popOverVC.email = selectedItem.email!
+        popOverVC.phone = selectedItem.phone!
+        
+        popOverVC.latitude = selectedItem.latitude
+        popOverVC.longitude = selectedItem.longitude
+        popOverVC.keyOfItem = selectedItem.key!
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
@@ -135,17 +139,21 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete{
-            let ref = Database.database().reference().child("Contacts").child(User.currentUser.uid).child(self.sortedContacts[indexPath.row].key)
-            ref.removeValue()
+            var items = CoreDataHelper.retrieveItems()
             var i = 0
-            while i <  User.currentUser.entries.count{
-                if User.currentUser.entries[i].key == self.sortedContacts[indexPath.row].key{
-                    User.currentUser.entries.remove(at: i)
+            while i < items.count{
+                if items[i].key == sortedItems[selectedIndex].key{
+                    items.remove(at: i)
+                    CoreDataHelper.saveItem()
+                    break
                 }
                 i += 1
             }
-            viewWillAppear(true)
+            self.tableView.reloadData()
             
+            let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
+            imageRef.delete(completion: nil)
+            ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
         }
     }
     

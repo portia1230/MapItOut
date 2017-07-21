@@ -312,7 +312,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     }
                     
                     let urlString = downloadURL.absoluteString
-                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: longitude, latitude: latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: addressDescription.text!)
+                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.addressDescription.text!)
                     ItemService.editEntry(entry: entry)
                 }
             } else {
@@ -335,11 +335,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 }, completion: nil)
                 
                 
-                afborufnoaifnaofuenfouan
-                
-                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedIndex.key)!).jpg")
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(parent.sortedItems[parent.selectedIndex].key!).jpg")
                 imageRef.delete(completion: nil)
-                let newImageRef = StorageReference.newContactImageReference(key: parent.selectedItem.key!)
+                let newImageRef = StorageReference.newContactImageReference(key: parent.sortedItems[parent.selectedIndex].key!)
                 
                 StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
@@ -347,10 +345,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     }
                     
                     let urlString = downloadURL.absoluteString
-                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: longitude, latitude: latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: addressDescription.text!)
+                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.addressDescription.text!)
                     ItemService.editEntry(entry: entry)
                 }
-
+            }
         }
     }
     
@@ -373,7 +371,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.backgroundView.layer.backgroundColor = greenColor.cgColor
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
         
-        if self.phoneNumberTextField.text! != ""{
+        if self.phoneTextField.text! != ""{
             self.phoneButton.isHidden = false
             self.phoneImageView.isHidden = false
         } else {
@@ -468,7 +466,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        relationshipTextField.text = pickOption[row]
+        typeTextField.text = pickOption[row]
     }
     
     //MARK: - Reverse Geocoding
