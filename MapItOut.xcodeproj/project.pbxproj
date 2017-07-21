@@ -51,6 +51,8 @@
 		83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */; };
 		83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB351F12EC2600EDDD91 /* Icon.png */; };
 		83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EB67661F22A12400BD9BD8 /* placeHolder.png */; };
+		83EB67691F22AA5B00BD9BD8 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB67681F22AA5B00BD9BD8 /* CustomProgressView.swift */; };
+		83EB676B1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB676A1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift */; };
 		83EC9DCD1F148BAD00AAC07B /* 200*274pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +102,8 @@
 		83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
 		83E4CB351F12EC2600EDDD91 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Arts/Icon.png; sourceTree = "<group>"; };
 		83EB67661F22A12400BD9BD8 /* placeHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeHolder.png; path = Arts/placeHolder.png; sourceTree = "<group>"; };
+		83EB67681F22AA5B00BD9BD8 /* CustomProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomProgressView.swift; path = CustomClasses/CustomProgressView.swift; sourceTree = "<group>"; };
+		83EB676A1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitalLoadingViewController.swift; path = Controllers/InitalLoadingViewController.swift; sourceTree = "<group>"; };
 		83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "200*274pin.png"; path = "Arts/200*274pin.png"; sourceTree = "<group>"; };
 		A3FBD0AC450289A1FC033061 /* Pods-MapItOut.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapItOut.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapItOut/Pods-MapItOut.debug.xcconfig"; sourceTree = "<group>"; };
 		DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapItOut.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +147,7 @@
 				8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */,
 				83533A751F134706002EEE74 /* CustomTableCell.swift */,
 				8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */,
+				83EB67681F22AA5B00BD9BD8 /* CustomProgressView.swift */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 				83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */,
 				83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */,
 				83777A791F2009730023C51C /* SignInPopUpViewController.swift */,
+				83EB676A1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -433,12 +439,14 @@
 				83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */,
 				8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
+				83EB67691F22AA5B00BD9BD8 /* CustomProgressView.swift in Sources */,
 				83761FC01F16BC1E00CE33D7 /* LocationService.swift in Sources */,
 				832C70781F15350A00E213F4 /* StorageReference.swift in Sources */,
 				837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */,
 				83533A7D1F135272002EEE74 /* StorageService.swift in Sources */,
 				837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */,
 				83777A7A1F2009730023C51C /* SignInPopUpViewController.swift in Sources */,
+				83EB676B1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift in Sources */,
 				83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

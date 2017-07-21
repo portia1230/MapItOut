@@ -765,7 +765,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Heg-Cg-6hm">
-                                                    <rect key="frame" x="113" y="22" width="249" height="61"/>
+                                                    <rect key="frame" x="113" y="22" width="249" height="60"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rory Mcilroy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTU-7U-Q2O">
                                                             <rect key="frame" x="0.0" y="0.0" width="83" height="16"/>
@@ -786,7 +786,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5r-ab-Lw2">
-                                                            <rect key="frame" x="0.0" y="44" width="46" height="17"/>
+                                                            <rect key="frame" x="0.0" y="44" width="46" height="16"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                                             <color key="textColor" red="0.3883214593" green="0.38831362130000002" blue="0.38831892610000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
@@ -1241,6 +1241,68 @@
             </objects>
             <point key="canvasLocation" x="1646" y="394"/>
         </scene>
+        <!--Inital Loading View Controller-->
+        <scene sceneID="QdC-SB-tAP">
+            <objects>
+                <viewController id="Z96-5O-Fiy" customClass="InitalLoadingViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jZB-nA-Akt"/>
+                        <viewControllerLayoutGuide type="bottom" id="LWL-uj-rtC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="r17-wD-LoA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqi-E5-Ccj" customClass="CustomCircularProgress" customModule="MapItOut" customModuleProvider="target">
+                                <rect key="frame" x="62" y="165" width="250" height="250"/>
+                                <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="gih-Ez-Fsc"/>
+                                    <constraint firstAttribute="width" constant="250" id="wEN-2D-45k"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="angle">
+                                        <real key="value" value="50"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="startAngle">
+                                        <real key="value" value="-90"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clockwise" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="trackColor">
+                                        <color key="value" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="trackThickness">
+                                        <real key="value" value="0.80000000000000004"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="progressThickness">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="glowAmount">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="IBColor1">
+                                        <color key="value" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="IBColor3">
+                                        <color key="value" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vqi-E5-Ccj" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="OQF-l7-Sfb"/>
+                            <constraint firstItem="LWL-uj-rtC" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="252" id="bcc-FI-Rb0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="circularProgress" destination="vqi-E5-Ccj" id="NrK-qS-hKt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9RL-hJ-m8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-921" y="-385"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="nYK-Xd-eHY">
             <objects>
@@ -1258,7 +1320,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0nk-0j-hqJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-268" y="-384.55772113943033"/>
+            <point key="canvasLocation" x="-114" y="-385"/>
         </scene>
     </scenes>
     <resources>

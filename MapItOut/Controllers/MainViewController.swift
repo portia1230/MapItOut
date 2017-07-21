@@ -49,66 +49,66 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         super.viewWillAppear(true)
         
-            self.mapView.userLocation.subtitle = ""
-            self.mapView.userLocation.title = ""
+        self.mapView.userLocation.subtitle = ""
+        self.mapView.userLocation.title = ""
+        
+        self.detailsButton.isEnabled = false
+        let annotations = self.mapView.annotations
+        self.mapView.removeAnnotations(annotations)
+        let span = MKCoordinateSpanMake(100, 100)
+        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+        self.mapView.setRegion(region, animated: true)
+        let items = CoreDataHelper.retrieveItems()
+        var i = 0
+        while i < items.count {
+            let longitude = items[i].longitude
+            let latitude = items[i].latitude
+            let anno = CustomPointAnnotation()
+            anno.image = items[i].image as! UIImage
+            anno.indexOfContact = i
+            anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            self.mapView.addAnnotation(anno)
+            i += 1
+        }
+        
+        let sortedItems = LocationService.rankDistance(items: items)
+        self.sortedItems = sortedItems
+        if sortedItems.isEmpty{
+            self.itemNameLabel.backgroundColor = UIColor.clear
+            self.itemNameLabel.text = "No contact entered"
+            self.itemDistanceLabel.text = ""
+            self.detailsButton.isHidden = true
+        } else {
+            let coordinate = LocationService.getLocation(manager: self.locationManager)
+            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            let contactLocation = CLLocation(latitude: sortedItems[0].latitude, longitude: sortedItems[0].longitude)
+            self.selectedItem = sortedItems[0]
             
-            self.detailsButton.isEnabled = false
-            let annotations = self.mapView.annotations
-            self.mapView.removeAnnotations(annotations)
-            let span = MKCoordinateSpanMake(100, 100)
-            let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-            self.mapView.setRegion(region, animated: true)
-            let items = CoreDataHelper.retrieveItems()
-            var i = 0
-            while i < items.count {
-                let longitude = items[i].longitude
-                let latitude = items[i].latitude
-                let anno = CustomPointAnnotation()
-                anno.image = items[i].image as! UIImage
-                anno.indexOfContact = i
-                anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-                self.mapView.addAnnotation(anno)
-                i += 1
+            var n = 0
+            while n < items.count {
+                if items[n].key == self.selectedItem.key{
+                    self.selectedIndex = n
+                }
+                n += 1
             }
             
-            let sortedItems = LocationService.rankDistance(items: items)
-            self.sortedItems = sortedItems
-            if sortedItems.isEmpty{
-                self.itemNameLabel.backgroundColor = UIColor.clear
-                self.itemNameLabel.text = "No contact entered"
-                self.itemDistanceLabel.text = ""
-                self.detailsButton.isHidden = true
+            let distance = myLocation.distance(from: contactLocation)
+            self.itemDistanceLabel.backgroundColor = UIColor.clear
+            self.itemNameLabel.backgroundColor = UIColor.clear
+            self.itemTypeLabel.backgroundColor = UIColor.clear
+            
+            if distance > 1000.0
+            {
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
             } else {
-                let coordinate = LocationService.getLocation(manager: self.locationManager)
-                let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                let contactLocation = CLLocation(latitude: sortedItems[0].latitude, longitude: sortedItems[0].longitude)
-                self.selectedItem = sortedItems[0]
-                
-                var n = 0
-                while n < items.count {
-                    if items[n].key == self.selectedItem.key{
-                        self.selectedIndex = n
-                    }
-                    n += 1
-                }
-                
-                let distance = myLocation.distance(from: contactLocation)
-                self.itemDistanceLabel.backgroundColor = UIColor.clear
-                self.itemNameLabel.backgroundColor = UIColor.clear
-                self.itemTypeLabel.backgroundColor = UIColor.clear
-                
-                if distance > 1000.0
-                {
-                    self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
-                } else {
-                    self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-                }
-                self.itemNameLabel.text = sortedItems[0].name
-                self.itemTypeLabel.text = sortedItems[0].type
-                self.itemImage.image = sortedItems[0].image as? UIImage
-                self.selectedItem = sortedItems[0]
-                self.detailsButton.isHidden = false
-                self.detailsButton.isEnabled = true
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            }
+            self.itemNameLabel.text = sortedItems[0].name
+            self.itemTypeLabel.text = sortedItems[0].type
+            self.itemImage.image = sortedItems[0].image as? UIImage
+            self.selectedItem = sortedItems[0]
+            self.detailsButton.isHidden = false
+            self.detailsButton.isEnabled = true
         }
     }
     //self.images = allImages
@@ -136,17 +136,18 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 let imageData:NSData = NSData(contentsOf: url!)!
                 imageView.image = UIImage(data: imageData as Data)
                 
-                    let item = CoreDataHelper.newItem()
-                    item.email = entries[i].email
-                    item.name = entries[i].name
-                    item.type = entries[i].type
-                    item.phone = entries[i].phone
-                    item.organization = entries[i].organization
-                    item.latitude = entries[i].latitude
-                    item.longitude = entries[i].longitude
-                    item.locationDescription = entries[i].locationDescription
-                    item.image = imageView.image
-                    CoreDataHelper.saveItem()
+                let item = CoreDataHelper.newItem()
+                item.email = entries[i].email
+                item.name = entries[i].name
+                item.type = entries[i].type
+                item.phone = entries[i].phone
+                item.organization = entries[i].organization
+                item.latitude = entries[i].latitude
+                item.longitude = entries[i].longitude
+                item.locationDescription = entries[i].locationDescription
+                item.key = entries[i].key
+                item.image = imageView.image
+                CoreDataHelper.saveItem()
                 i += 1
             }
             
