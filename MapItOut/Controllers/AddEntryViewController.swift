@@ -75,6 +75,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         typeTextField.delegate = self
         phoneTextField.delegate = self
         emailTextField.delegate = self
+        locationTextField.delegate = self
         nameTextField.tag = 0
         organizationTextField.tag = 1
         typeTextField.tag = 2
@@ -292,7 +293,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
             
             var items = CoreDataHelper.retrieveItems()
-            let item = Item()
+            let item = CoreDataHelper.newItem()
+            
             item.name = self.nameTextField.text
             item.organization = self.organizationTextField.text
             item.type = self.typeTextField.text
@@ -302,23 +304,29 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             item.longitude = self.longitude
             item.locationDescription = self.locationTextField.text
             item.key = entryRef.key
+            item.image = self.photoImageView.image!
             items.append(item)
             CoreDataHelper.saveItem()
-            
+            self.dismiss(animated: true, completion: { 
+            })
             
             
             let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
             StorageService.uploadHighImage(photoImageView.image!, at: imageRef) { (downloadURL) in
+                
                 guard let downloadURL = downloadURL else {
                     return
                 }
+                
                 let urlString = downloadURL.absoluteString
                 let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
+                
                 ItemService.addEntry(entry: entry)
+                
             }
         } else {
             let alertController = UIAlertController(title: "", message:
-                "Did you put in a full name, image, and relationship status?", preferredStyle: UIAlertControllerStyle.alert)
+                "Did you put in a name, organization, and type?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }

@@ -27,7 +27,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var itemNameLabel: UILabel!
     
-    var images = [UIImage]()
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
     var selectedItem : Item!
     var sortedItems : [Item] = []
@@ -258,6 +257,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             
             self.itemNameLabel.text = self.selectedItem.name
             self.itemTypeLabel.text = self.selectedItem.type
+            self.itemImage.image = self.selectedItem.image as? UIImage
             
             let location = LocationService.getLocation(manager: locationManager)
             let myLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)

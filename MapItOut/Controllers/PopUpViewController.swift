@@ -285,7 +285,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             if self.parent is MainViewController{
                 let parent = self.parent as! MainViewController
-                let item = Item()
+                let item = CoreDataHelper.newItem()
                 item.email = self.emailTextField.text
                 item.image = self.itemImage.image
                 item.key = self.keyOfItem
@@ -317,7 +317,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 }
             } else {
                 let parent = self.parent as! ContactListController
-                let item = Item()
+                let item = CoreDataHelper.newItem()
                 item.email = self.emailTextField.text
                 item.image = self.itemImage.image
                 item.key = self.keyOfItem

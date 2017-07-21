@@ -95,16 +95,16 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="18M-SB-uTg">
-                                <rect key="frame" x="41" y="434" width="293.5" height="33"/>
+                                <rect key="frame" x="41" y="434" width="294" height="33"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Having trouble signing in? " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUh-GF-mTc">
-                                        <rect key="frame" x="0.0" y="0.0" width="179.5" height="33"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="180" height="33"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
                                         <color key="textColor" red="0.78431372549019607" green="0.78431372549019607" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wtV-J1-xhx">
-                                        <rect key="frame" x="179.5" y="0.0" width="114" height="33"/>
+                                        <rect key="frame" x="180" y="0.0" width="114" height="33"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
                                         <state key="normal" title="Reset password!">
                                             <color key="titleColor" red="0.2617306113243103" green="0.31526783108711243" blue="0.68635404109954834" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -283,7 +283,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="8x7-g1-h2a"/>
                                         </constraints>
-                                        <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                     </textField>
@@ -304,7 +304,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passwords do not match!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qts-Mk-cQ1">
-                                <rect key="frame" x="166.5" y="431" width="193.5" height="21"/>
+                                <rect key="frame" x="166" y="431" width="194" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Jsz-RL-J5b"/>
                                 </constraints>
