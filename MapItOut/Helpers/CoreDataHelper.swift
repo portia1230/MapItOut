@@ -32,14 +32,14 @@ class CoreDataHelper {
     }
     
     //delete activity
-    static func deleteActivity (item: Item){
+    static func deleteItems (item: Item){
         managedContext.delete(item)
         saveItem()
     }
     
     //retreive activity
     
-    static func retrieveActivities() -> [Item] {
+    static func retrieveItems() -> [Item] {
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
         do {
             let results = try managedContext.fetch(fetchRequest)

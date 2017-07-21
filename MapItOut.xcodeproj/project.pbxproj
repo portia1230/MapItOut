@@ -20,7 +20,7 @@
 		83533A761F134706002EEE74 /* CustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A751F134706002EEE74 /* CustomTableCell.swift */; };
 		83533A7B1F134CC5002EEE74 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7A1F134CC5002EEE74 /* Entry.swift */; };
 		83533A7D1F135272002EEE74 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7C1F135272002EEE74 /* StorageService.swift */; };
-		83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7E1F1359A4002EEE74 /* EntryService.swift */; };
+		83533A7F1F1359A4002EEE74 /* ItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7E1F1359A4002EEE74 /* ItemService.swift */; };
 		8362EE821F19E1C40055BF6C /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */; };
 		83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B601F149F2B003A14CC /* plusButton200*200.png */; };
 		83680B631F14A83D003A14CC /* arrowGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B621F14A83D003A14CC /* arrowGreen.png */; };
@@ -66,7 +66,7 @@
 		83533A751F134706002EEE74 /* CustomTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTableCell.swift; path = CustomClasses/CustomTableCell.swift; sourceTree = "<group>"; };
 		83533A7A1F134CC5002EEE74 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = Models/Entry.swift; sourceTree = "<group>"; };
 		83533A7C1F135272002EEE74 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = Services/StorageService.swift; sourceTree = "<group>"; };
-		83533A7E1F1359A4002EEE74 /* EntryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntryService.swift; path = Services/EntryService.swift; sourceTree = "<group>"; };
+		83533A7E1F1359A4002EEE74 /* ItemService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemService.swift; path = Services/ItemService.swift; sourceTree = "<group>"; };
 		8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPointAnnotation.swift; path = CustomClasses/CustomPointAnnotation.swift; sourceTree = "<group>"; };
 		83680B601F149F2B003A14CC /* plusButton200*200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plusButton200*200.png"; path = "Arts/plusButton200*200.png"; sourceTree = "<group>"; };
 		83680B621F14A83D003A14CC /* arrowGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrowGreen.png; path = Arts/arrowGreen.png; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 			children = (
 				83D529791F12FCAD00ED4EEE /* UserService.swift */,
 				83533A7C1F135272002EEE74 /* StorageService.swift */,
-				83533A7E1F1359A4002EEE74 /* EntryService.swift */,
+				83533A7E1F1359A4002EEE74 /* ItemService.swift */,
 				83761FBF1F16BC1E00CE33D7 /* LocationService.swift */,
 			);
 			name = Services;
@@ -213,6 +213,7 @@
 				83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */,
 				83533A6F1F133F64002EEE74 /* plusImage.png */,
 				83E4CB351F12EC2600EDDD91 /* Icon.png */,
+				83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */,
 				837938971F137216003B4B34 /* Helpers */,
 				83533A771F13470C002EEE74 /* Custom Classes */,
 				83E4CB2F1F12EB8300EDDD91 /* Controllers */,
@@ -221,7 +222,6 @@
 				8312E0011F13316600AD0054 /* Extensions */,
 				83E4CB321F12EB9600EDDD91 /* Supports */,
 				83E4CB1D1F12EA5D00EDDD91 /* Assets.xcassets */,
-				83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */,
 			);
 			path = MapItOut;
 			sourceTree = "<group>";
@@ -425,7 +425,7 @@
 				83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
 				8341D2371F17D78100242BC8 /* ContactsTableViewController.swift in Sources */,
-				83533A7F1F1359A4002EEE74 /* EntryService.swift in Sources */,
+				83533A7F1F1359A4002EEE74 /* ItemService.swift in Sources */,
 				83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */,
 				8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,

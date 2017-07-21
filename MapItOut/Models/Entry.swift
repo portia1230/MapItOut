@@ -13,39 +13,36 @@ import FirebaseDatabase.FIRDataSnapshot
 
 class Entry {
     var key: String
-    var firstName: String
-    var lastName: String
+    var name: String
+    var organization: String
     var longitude: CLLocationDegrees
     var latitude: CLLocationDegrees
-    var relationship: String
+    var type: String
     var imageURL: String
-    var lowImageURL: String
-    var number: String
+    var phone: String
     var email: String
     var locationDescription: String
     var dictValue: [String : Any]{
-        return ["firstName": firstName,
-                "lastName": lastName,
+        return ["name": name,
+                "organization": organization,
                 "longitude": longitude,
                 "latitude": latitude,
-                "relationship": relationship,
+                "type": type,
                 "imageURL": imageURL,
-                "lowImageURL": lowImageURL,
-                "number": number,
+                "phone": phone,
                 "email": email,
                 "key": key,
                 "locationDescription": locationDescription]
     }
     
-    init( firstName: String, lastName: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, relationship: String, imageURL: String, lowImageURL: String, number: String, email: String, key: String, locationDescription: String) {
-        self.firstName = firstName
-        self.lastName = lastName
+    init( name: String, organization: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, type: String, imageURL: String, phone: String, email: String, key: String, locationDescription: String) {
+        self.name = name
+        self.organization = organization
         self.longitude = longitude
         self.latitude = latitude
-        self.relationship = relationship
+        self.type = type
         self.imageURL = imageURL
-        self.lowImageURL = lowImageURL
-        self.number = number
+        self.phone = phone
         self.email = email
         self.key = key
         self.locationDescription = locationDescription
@@ -54,13 +51,12 @@ class Entry {
     init?(snapshot: DataSnapshot) {
         guard let dict = snapshot.value as? [String : Any],
             let imageURL = dict["imageURL"] as? String,
-            let lowImageURL = dict["lowImageURL"] as? String,
-            let firstName = dict["firstName"] as? String,
-            let lastName = dict["lastName"] as? String,
+            let name = dict["name"] as? String,
+            let organization = dict["organization"] as? String,
             let longitude = dict["longitude"] as? Double,
             let latitude = dict["latitude"] as? Double,
-            let relationship = dict["relationship"] as? String,
-            let number = dict["number"] as? String,
+            let type = dict["type"] as? String,
+            let phone = dict["phone"] as? String,
             let email = dict["email"] as? String,
             let key = dict["key"] as? String,
             let locationDescription = dict["locationDescription"] as? String
@@ -68,13 +64,12 @@ class Entry {
         
         self.key = key
         self.imageURL = imageURL
-        self.lowImageURL = lowImageURL
-        self.firstName = firstName
-        self.lastName = lastName
+        self.name = name
+        self.organization = organization
         self.longitude = longitude
         self.latitude = latitude
-        self.relationship = relationship
-        self.number = number
+        self.type = type
+        self.phone = phone
         self.email = email
         self.locationDescription = locationDescription
     }

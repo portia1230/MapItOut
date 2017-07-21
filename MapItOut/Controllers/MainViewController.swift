@@ -53,48 +53,27 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.mapView.userLocation.subtitle = ""
         self.mapView.userLocation.title = ""
         //var allImages = [UIImage]()
-        let imageView = UIImageView()
         //imageView.image = #imageLiteral(resourceName: "redPin.png")
         self.contactButton.isEnabled = false
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
         let span = MKCoordinateSpanMake(100, 100)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-        var coordinate: CLLocationCoordinate2D!
         self.mapView.setRegion(region, animated: true)
-        
-        UserService.contacts(for: User.currentUser) { (contacts) in
-            User.currentUser.entries = contacts
-            self.sortedContacts = LocationService.rankDistance(entries: contacts)
-            var i = 0
-            let allAnnos = self.mapView.annotations
-            self.mapView.removeAnnotations(allAnnos)
-            while i < self.sortedContacts.count{
-                let imageURL = URL(string
-                    : contacts[i].lowImageURL)
-                imageView.kf.setImage(with: imageURL)
-                let thisLongitude = contacts[i].longitude
-                let thisLatitude = contacts[i].latitude
-                coordinate = CLLocationCoordinate2DMake(thisLatitude, thisLongitude)
-                let anno = CustomPointAnnotation()
-                anno.coordinate = coordinate
-                anno.indexOfContact = i
-                self.mapView.addAnnotation(anno)
-                
-                if imageView.image == nil{
-                    self.viewWillAppear(true)
-                } else {
-                    anno.image = imageView.image!
-                    self.images.append(imageView.image!)
-                    if (self.images.count == User.currentUser.entries.count ) && ( self.sortedContacts.count == User.currentUser.entries.count ){
-                        //self.mapView.addAnnotation(anno)
-                        self.finishLoading()
-                        
-                    }
-                }
-                i += 1
-            }
+        let items = CoreDataHelper.retrieveItems()
+        var i = 0
+        while i < items.count {
+            let longitude = items[i].longitude
+            let latitude = items[i].latitude
+            let anno = CustomPointAnnotation()
+            anno.image = items[i].image as! UIImage
+            anno.indexOfContact = i
+            anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            self.mapView.addAnnotation(anno)
+            i += 1
         }
+        ItemService
+
     }
     //self.images = allImages
     
@@ -152,6 +131,13 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         contactButton.layer.cornerRadius = 15
         contactImage.clipsToBounds = true
         locationManager.delegate = self
+        
+        let items = CoreDataHelper.retrieveItems()
+        if items.count == 0 {
+            UserService.items(for: User.currentUser, completion: { (entries) in
+            })
+        }
+        
         authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
             guard user == nil else { return }
             

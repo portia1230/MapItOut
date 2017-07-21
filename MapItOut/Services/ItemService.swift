@@ -11,7 +11,7 @@ import UIKit
 import FirebaseDatabase
 import FirebaseStorage
 
-struct EntryService{
+struct ItemService{
     
     static func addEntry(entry: Entry){
         let currentUser = User.currentUser
