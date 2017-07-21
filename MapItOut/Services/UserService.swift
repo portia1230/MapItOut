@@ -67,7 +67,7 @@ struct UserService {
                         return contact
             }
             //User.currentUser.entries = contacts
-            updateItems(contacts: contacts)
+            //updateItems(contacts: contacts)
             
             dispatchGroup.notify(queue: .main, execute: {
                 completion(contacts)

@@ -154,6 +154,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
             do {
                 try Auth.auth().signOut()
+                var items = CoreDataHelper.retrieveItems()
+                items.removeAll()
+                CoreDataHelper.saveItem()
             } catch let error as NSError {
                 assertionFailure("Error signing out: \(error.localizedDescription)")
             }

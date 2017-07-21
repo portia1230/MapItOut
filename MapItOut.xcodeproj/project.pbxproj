@@ -50,6 +50,7 @@
 		83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB291F12EB5800EDDD91 /* Main.storyboard */; };
 		83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */; };
 		83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB351F12EC2600EDDD91 /* Icon.png */; };
+		83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EB67661F22A12400BD9BD8 /* placeHolder.png */; };
 		83EC9DCD1F148BAD00AAC07B /* 200*274pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		83E4CB291F12EB5800EDDD91 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Storyboards/Main.storyboard; sourceTree = "<group>"; };
 		83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
 		83E4CB351F12EC2600EDDD91 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Arts/Icon.png; sourceTree = "<group>"; };
+		83EB67661F22A12400BD9BD8 /* placeHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeHolder.png; path = Arts/placeHolder.png; sourceTree = "<group>"; };
 		83EC9DCC1F148BAD00AAC07B /* 200*274pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "200*274pin.png"; path = "Arts/200*274pin.png"; sourceTree = "<group>"; };
 		A3FBD0AC450289A1FC033061 /* Pods-MapItOut.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapItOut.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapItOut/Pods-MapItOut.debug.xcconfig"; sourceTree = "<group>"; };
 		DA73A6F5A94BFE32E29BB6AB /* Pods_MapItOut.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MapItOut.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +199,7 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
+				83EB67661F22A12400BD9BD8 /* placeHolder.png */,
 				83A43C441F1D75E3000F4324 /* findContact.png */,
 				83A43C451F1D75E3000F4324 /* selectedFindcontact.png */,
 				832E167B1F1BF2BE005FCE55 /* whiteGearImage.png */,
@@ -346,6 +349,7 @@
 				83A00C791F14B6A90033E821 /* Rory.jpg in Resources */,
 				83680B631F14A83D003A14CC /* arrowGreen.png in Resources */,
 				83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */,
+				83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */,
 				832E167A1F1BF1D1005FCE55 /* Refresh.png in Resources */,
 				83A00C771F14B40B0033E821 /* Map Icon.png in Resources */,
 				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
