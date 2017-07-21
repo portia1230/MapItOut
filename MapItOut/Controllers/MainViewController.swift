@@ -122,7 +122,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         detailsButton.layer.cornerRadius = 15
         itemImage.clipsToBounds = true
         locationManager.delegate = self
+        let loadedItems = defaults.string(forKey: "loadedItems")
         
+        if loadedItems == "false" {
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
         
         self.addChildViewController(popOverVC)
@@ -131,13 +133,15 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.view.addSubview(popOverVC.view)
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)
-        
+        defaults.set("true", forKey:"loadedItems")
+        }
         authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
             guard user == nil else { return }
             
             let loginViewController = UIStoryboard.initialViewController(for: .login)
             self.view.window?.rootViewController = loginViewController
             self.view.window?.makeKeyAndVisible()
+            defaults.set("false", forKey:"loadedItems")
         }
     }
     

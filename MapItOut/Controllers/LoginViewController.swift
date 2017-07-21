@@ -10,6 +10,8 @@ import FirebaseAuth
 import FirebaseAuthUI
 import FirebaseDatabase
 
+var defaults: UserDefaults = UserDefaults.standard
+
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Properties
@@ -51,6 +53,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     guard let user = user
                         else { return }
                     //redirect
+                    defaults.set("false", forKey:"loadedItems")
+                    
                     UserService.show(forUID: user.uid) { (user) in
                         if let user = user {
                             User.setCurrent(user, writeToUserDefaults:  true)

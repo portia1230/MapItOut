@@ -44,6 +44,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             let loginViewController = UIStoryboard.initialViewController(for: .login)
             self.view.window?.rootViewController = loginViewController
             self.view.window?.makeKeyAndVisible()
+            defaults.set("false", forKey:"loadedItems")
         }
         
     }
