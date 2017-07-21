@@ -123,36 +123,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         itemImage.clipsToBounds = true
         locationManager.delegate = self
         
-        UserService.items(for: User.currentUser, completion: { (entries) in
-            var i = 0
-            while i < entries.count{
-                let imageView = UIImageView()
-                let url = URL(string: entries[i].imageURL)
-                //imageView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "placeHolder.png"))
-                //imageView.kf.setImage(with: url, completionHandler: {
-                //    (image, error, cacheType, imageUrl) in
-                //    imageView.image = image
-                //})
-                let imageData:NSData = NSData(contentsOf: url!)!
-                imageView.image = UIImage(data: imageData as Data)
-                
-                let item = CoreDataHelper.newItem()
-                item.email = entries[i].email
-                item.name = entries[i].name
-                item.type = entries[i].type
-                item.phone = entries[i].phone
-                item.organization = entries[i].organization
-                item.latitude = entries[i].latitude
-                item.longitude = entries[i].longitude
-                item.locationDescription = entries[i].locationDescription
-                item.key = entries[i].key
-                item.image = imageView.image
-                CoreDataHelper.saveItem()
-                i += 1
-            }
-            
-            self.viewWillAppear(true)
-        })
+        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+        
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
+            self.view.addSubview(popOverVC.view)
+        }, completion: nil)
+        popOverVC.didMove(toParentViewController: self)
         
         authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
             guard user == nil else { return }

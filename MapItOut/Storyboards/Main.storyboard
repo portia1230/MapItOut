@@ -1244,7 +1244,7 @@
         <!--Inital Loading View Controller-->
         <scene sceneID="QdC-SB-tAP">
             <objects>
-                <viewController id="Z96-5O-Fiy" customClass="InitalLoadingViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InitalLoadingViewController" id="Z96-5O-Fiy" customClass="InitalLoadingViewController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jZB-nA-Akt"/>
                         <viewControllerLayoutGuide type="bottom" id="LWL-uj-rtC"/>
