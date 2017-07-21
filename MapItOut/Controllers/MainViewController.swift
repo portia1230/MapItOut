@@ -105,6 +105,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.itemNameLabel.text = sortedItems[0].name
             self.itemTypeLabel.text = sortedItems[0].type
             self.itemImage.image = sortedItems[0].image as? UIImage
+            self.selectedItem = sortedItems[0]
+            self.detailsButton.isHidden = false
+            self.detailsButton.isEnabled = true
         }
         
     }
@@ -349,19 +352,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBAction func detailsButtonTapped(_ sender: Any) {
         
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-        //let imageURL = URL(string: self.selectedContact.imageURrL)
-        
-        popOverVC.item = self.selectedItem
-        popOverVC.itemImage.image = self.selectedItem.image as? UIImage
-        popOverVC.name = self.selectedItem.name!
-        popOverVC.organization = self.selectedItem.organization!
-        popOverVC.type = self.selectedItem.type!
-        popOverVC.address = self.selectedItem.locationDescription!
-        popOverVC.email = self.selectedItem.email!
-        popOverVC.phone = self.selectedItem.phone!
-        popOverVC.latitude = self.selectedItem.latitude
-        popOverVC.longitude = self.selectedItem.longitude
-        popOverVC.keyOfItem = self.selectedItem.key!
+        popOverVC.item = selectedItem
+        popOverVC.name = selectedItem.name!
+        popOverVC.organization = selectedItem.organization!
+        popOverVC.address = selectedItem.locationDescription!
+        popOverVC.type = selectedItem.type!
+        popOverVC.contactPhoto = (selectedItem.image as? UIImage)!
+        popOverVC.email = selectedItem.email!
+        popOverVC.phone = selectedItem.phone!
+        popOverVC.latitude = selectedItem.latitude
+        popOverVC.longitude = selectedItem.longitude
+        popOverVC.keyOfItem = selectedItem.key!
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame

@@ -78,9 +78,10 @@ struct UserService {
     static func updateItems(contacts: [Entry]){
         var items = CoreDataHelper.retrieveItems()
         items.removeAll()
+        CoreDataHelper.saveItem()
         for entry in contacts{
             let imageView = UIImageView()
-            let item = Item()
+            let item = CoreDataHelper.newItem()
             item.email = entry.email
             item.key = entry.key
             item.longitude = entry.longitude
@@ -90,7 +91,6 @@ struct UserService {
             item.organization = entry.organization
             item.locationDescription = entry.locationDescription
             item.phone = entry.phone
-            
             let url = URL(string: entry.imageURL)
             
             imageView.kf.setImage(with: url)
