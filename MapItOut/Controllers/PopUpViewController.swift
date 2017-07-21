@@ -61,7 +61,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var locationManager = CLLocationManager()
     var location = CLLocationCoordinate2D()
     var photoHelper = MGPhotoHelper()
-    var keyOfItem= ""
+    var keyOfItem = ""
     
     
     var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
@@ -210,7 +210,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         ]
         let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = self.nameTextField!
+        mapItem.name = self.nameTextField.text!
         mapItem.openInMaps(launchOptions: options)
     }
     

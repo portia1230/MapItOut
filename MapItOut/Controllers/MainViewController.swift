@@ -352,16 +352,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         //let imageURL = URL(string: self.selectedContact.imageURL)
         
-        popOverVC.contactPhoto.image = self.selectedItem.image as? UIImage
-        popOverVC.name = self.selectedItem.name
-        popOverVC.organization = self.selectedItem.organization
-        popOverVC.type = self.selectedItem.type
+        popOverVC.itemImage.image = self.selectedItem.image as? UIImage
+        popOverVC.name = self.selectedItem.name!
+        popOverVC.organization = self.selectedItem.organization!
+        popOverVC.type = self.selectedItem.type!
         popOverVC.address = self.selectedItem.locationDescription!
         popOverVC.email = self.selectedItem.email!
-        popOverVC.phoneNumber = self.selectedItem.phone!
+        popOverVC.phone = self.selectedItem.phone!
         popOverVC.latitude = self.selectedItem.latitude
         popOverVC.longitude = self.selectedItem.longitude
-        popOverVC.keyOfContact = self.selectedItem.key!
+        popOverVC.keyOfItem = self.selectedItem.key!
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
