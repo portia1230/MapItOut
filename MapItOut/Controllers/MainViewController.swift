@@ -143,14 +143,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Update annotations
     
-    func updateValue(item: Item, replacedItem: Item){
+    func updateValue(item: Item){
         
         self.mapView.removeAnnotation(self.editedAnno)
-
-        CoreDataHelper.deleteItems(item: replacedItem)
-        var newItem = CoreDataHelper.newItem()
-        newItem = item
-        CoreDataHelper.saveItem()
         let items = CoreDataHelper.retrieveItems()
         
         let coordinate = CLLocationCoordinate2DMake(item.latitude, item.longitude)

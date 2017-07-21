@@ -287,6 +287,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             if self.parent is MainViewController{
                 let parent = self.parent as! MainViewController
+                CoreDataHelper.deleteItems(item: self.item)
                 let item = CoreDataHelper.newItem()
                 item.email = self.emailTextField.text
                 item.image = self.itemImage.image
@@ -298,8 +299,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 item.organization = self.organizationTextField.text
                 item.type = self.typeTextField.text
                 item.phone = self.phoneTextField.text
-                parent.updateValue(item: item, replacedItem: self.item)
-                
+                parent.updateValue(item: item)
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
@@ -318,6 +318,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 }
             } else {
                 let parent = self.parent as! ContactListController
+                CoreDataHelper.deleteItems(item: self.item)
                 let item = CoreDataHelper.newItem()
                 item.email = self.emailTextField.text
                 item.image = self.itemImage.image
@@ -330,7 +331,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 item.type = self.typeTextField.text
                 item.phone = self.phoneTextField.text
                 
-                parent.updateValue(item: item, replacedItem: self.item)
+                parent.updateValue(item: item)
                 
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()

@@ -66,14 +66,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         
     }
     
-    func updateValue(item: Item, replacedItem: Item){
-        CoreDataHelper.deleteItems(item: replacedItem)
-        var newItem = CoreDataHelper.newItem()
-        newItem = item
-        CoreDataHelper.saveItem()
-        
-        let items = CoreDataHelper.retrieveItems()
-        self.sortedItems = LocationService.rankDistance(items: items)
+    func updateValue(item: Item){
+        self.sortedItems[selectedIndex] = item
+        self.sortedItems = LocationService.rankDistance(items: self.sortedItems)
         self.tableView.reloadData()
     }
     
@@ -144,10 +139,13 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         
         if editingStyle == .delete{
             CoreDataHelper.deleteItems(item: self.sortedItems[selectedIndex])
+            
+            self.tableView.reloadData()
+            
+            
             let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
             imageRef.delete(completion: nil)
             ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
-            self.tableView.reloadData()
         }
     }
     

@@ -137,7 +137,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             let indexPath = tableView.indexPathForSelectedRow!
             let contact = self.results[indexPath.row]
             let displayTaskViewController = segue.destination as! AddEntryViewController
-            if contact.givenName.isEmpty == false && contact.familyName.isEmpty == false {
+            if (contact.givenName.isEmpty == false) && (contact.familyName.isEmpty == false) {
                 displayTaskViewController.name = contact.givenName + " " + contact.familyName
             }
             if contact.emailAddresses.isEmpty == false {
