@@ -15,7 +15,6 @@ class InitalLoadingViewController: UIViewController {
     
     @IBOutlet weak var circularProgress: CustomCircularProgress!
     
-    
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -57,14 +56,15 @@ class InitalLoadingViewController: UIViewController {
                 
                 if i == entries.count - 1{
                     self.circularProgress.animate(fromAngle: self.circularProgress.angle, toAngle: 360, duration: 1.0, completion: { (bool) in
-                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                            self.parent?.viewWillAppear(true)
-                            self.view.removeFromSuperview()
-                        }, completion: nil)
-                        
+                        if bool == true{
+                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                self.parent?.viewWillAppear(true)
+                                self.view.removeFromSuperview()
+                            }, completion: nil)
+                        }
                     })
                 } else {
-                    self.circularProgress.animate(toAngle: self.circularProgress.angle + increaseAngle, duration: 0.5, completion:  nil)
+                    self.circularProgress.animate(toAngle: self.circularProgress.angle + increaseAngle, duration: 1.0, completion:  nil)
                 }
                 i += 1
             }

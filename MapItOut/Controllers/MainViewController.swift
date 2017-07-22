@@ -205,7 +205,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Functions
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "How would you like to create a new item", preferredStyle: .alert)
         
         //Import from Contacts segue
         alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in
@@ -234,7 +234,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             }
         }))
         
-        alert.addAction(UIAlertAction(title: "Create new contact", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
+        alert.addAction(UIAlertAction(title: "Create new item", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
         alert.addAction(UIAlertAction(title: "Back", style: .cancel , handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -329,8 +329,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             do {
                 try Auth.auth().signOut()
                 var items = CoreDataHelper.retrieveItems()
-                items.removeAll()
-                CoreDataHelper.saveItem()
+                for item in items {
+                    CoreDataHelper.deleteItems(item: item)
+                }
+                //CoreDataHelper.saveItem()
             } catch let error as NSError {
                 assertionFailure("Error signing out: \(error.localizedDescription)")
             }
@@ -387,7 +389,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
-        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+        UIView.transition(with: self.view, duration: 0.25, options: .transitionCurlUp, animations: { _ in
             self.view.addSubview(popOverVC.view)
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)

@@ -69,7 +69,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var darkTextColor = UIColor(red: 90/255, green: 92/255, blue: 92/255, alpha: 1)
-    var pickOption = ["Business partners", "Classmate", "Close Friend", "Co-worker", "Family", "Food", "Friend"]
+    var pickOption = ["Close Friend", "Co-worker", "Family", "Food", "Friend"]
     
     //MARK: - Lifecycle
     override func viewDidLoad() {

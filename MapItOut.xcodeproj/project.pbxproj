@@ -30,6 +30,7 @@
 		837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938951F137213003B4B34 /* MGPhotoHelper.swift */; };
 		838AC93D1F16EB8300D0EDCA /* 500*20Shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */; };
 		839149271F23195300D1E959 /* defaultNoItemImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 839149261F23195300D1E959 /* defaultNoItemImage.png */; };
+		839149291F23E45500D1E959 /* redIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 839149281F23E45500D1E959 /* redIcon.png */; };
 		839DF3B81F147E250029D556 /* redPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DF3B71F147E250029D556 /* redPin.png */; };
 		83A00C761F14B40B0033E821 /* List icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C741F14B40B0033E821 /* List icon.png */; };
 		83A00C771F14B40B0033E821 /* Map Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C751F14B40B0033E821 /* Map Icon.png */; };
@@ -79,6 +80,7 @@
 		837938951F137213003B4B34 /* MGPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGPhotoHelper.swift; path = Helpers/MGPhotoHelper.swift; sourceTree = "<group>"; };
 		838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "500*20Shadow.png"; path = "Arts/500*20Shadow.png"; sourceTree = "<group>"; };
 		839149261F23195300D1E959 /* defaultNoItemImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = defaultNoItemImage.png; path = Arts/defaultNoItemImage.png; sourceTree = "<group>"; };
+		839149281F23E45500D1E959 /* redIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redIcon.png; path = Arts/redIcon.png; sourceTree = "<group>"; };
 		839DF3B71F147E250029D556 /* redPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redPin.png; path = Arts/redPin.png; sourceTree = "<group>"; };
 		83A00C741F14B40B0033E821 /* List icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "List icon.png"; path = "Arts/List icon.png"; sourceTree = "<group>"; };
 		83A00C751F14B40B0033E821 /* Map Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Map Icon.png"; path = "Arts/Map Icon.png"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
+				839149281F23E45500D1E959 /* redIcon.png */,
 				839149261F23195300D1E959 /* defaultNoItemImage.png */,
 				83EB67661F22A12400BD9BD8 /* placeHolder.png */,
 				83A43C441F1D75E3000F4324 /* findContact.png */,
@@ -353,6 +356,7 @@
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83A43C461F1D75E3000F4324 /* findContact.png in Resources */,
 				83A00C791F14B6A90033E821 /* Rory.jpg in Resources */,
+				839149291F23E45500D1E959 /* redIcon.png in Resources */,
 				83680B631F14A83D003A14CC /* arrowGreen.png in Resources */,
 				83E4CB1E1F12EA5D00EDDD91 /* Assets.xcassets in Resources */,
 				83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */,

@@ -154,8 +154,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             do {
                 try Auth.auth().signOut()
                 var items = CoreDataHelper.retrieveItems()
-                items.removeAll()
-                CoreDataHelper.saveItem()
+                for item in items {
+                    CoreDataHelper.deleteItems(item: item)
+                }
             } catch let error as NSError {
                 assertionFailure("Error signing out: \(error.localizedDescription)")
             }
@@ -184,7 +185,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "How would you like to create a new contact", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "How would you like to create a new item", preferredStyle: .alert)
         
         //Import from Contacts segue
         alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in
@@ -195,11 +196,14 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 self.performSegue(withIdentifier: "contactsSegue", sender: self)
             case .notDetermined: // needs to ask for authorization
                 self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
+                    
                     if error != nil{
                         let alertController = UIAlertController(title: nil, message:
                             "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
                         alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
                         self.present(alertController, animated: true, completion: nil)
+                    } else {
+                        self.performSegue(withIdentifier: "contactsSegue", sender: self)
                     }
                 })
             default:
@@ -210,7 +214,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             }
         }))
         
-        alert.addAction(UIAlertAction(title: "Create new contact", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
+        alert.addAction(UIAlertAction(title: "Create new item", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
         alert.addAction(UIAlertAction(title: "Back", style: .cancel , handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
