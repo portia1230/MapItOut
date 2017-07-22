@@ -29,6 +29,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+    var greenColor = UIColor(red: 64/255, green: 196/255, blue: 128/255, alpha: 1)
     var selectedItem : Item!
     var sortedItems : [Item] = []
     var isUpdatingHeading = false
@@ -75,14 +76,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let sortedItems = LocationService.rankDistance(items: items)
         self.sortedItems = sortedItems
         if sortedItems.isEmpty{
-            self.itemNameLabel.backgroundColor = UIColor.clear
-            self.itemNameLabel.text = "NO ITEM ENTERED"
+            self.itemNameLabel.text = ""
             self.itemDistanceLabel.text = ""
             self.itemTypeLabel.text = ""
             self.itemImage.image = #imageLiteral(resourceName: "defaultNoItemImage.png")
+            self.itemNameLabel.backgroundColor = greyColor
             self.itemDistanceLabel.backgroundColor = greyColor
             self.itemTypeLabel.backgroundColor = greyColor
-            self.detailsButton.isHidden = true
+            self.detailsButton.isEnabled = false
+            self.detailsButton.setTitle("", for: .normal)
+            self.detailsButton.backgroundColor = greyColor
+            
         } else {
             let coordinate = LocationService.getLocation(manager: self.locationManager)
             let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
@@ -112,8 +116,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.itemTypeLabel.text = sortedItems[0].type
             self.itemImage.image = sortedItems[0].image as? UIImage
             self.selectedItem = sortedItems[0]
-            self.detailsButton.isHidden = false
+            self.detailsButton.setTitle("Details", for: .normal)
+            //self.detailsButton.isHidden = false
             self.detailsButton.isEnabled = true
+            self.detailsButton.backgroundColor = greenColor
         }
     }
     //self.images = allImages
