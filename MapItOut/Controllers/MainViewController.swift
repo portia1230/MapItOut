@@ -28,6 +28,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var itemNameLabel: UILabel!
     
     var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
+    var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var selectedItem : Item!
     var sortedItems : [Item] = []
     var isUpdatingHeading = false
@@ -75,8 +76,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.sortedItems = sortedItems
         if sortedItems.isEmpty{
             self.itemNameLabel.backgroundColor = UIColor.clear
-            self.itemNameLabel.text = "No contact entered"
+            self.itemNameLabel.text = "NO ITEM ENTERED"
             self.itemDistanceLabel.text = ""
+            self.itemTypeLabel.text = ""
+            self.itemImage.image = #imageLiteral(resourceName: "defaultNoItemImage.png")
+            self.itemDistanceLabel.backgroundColor = greyColor
+            self.itemTypeLabel.backgroundColor = greyColor
             self.detailsButton.isHidden = true
         } else {
             let coordinate = LocationService.getLocation(manager: self.locationManager)

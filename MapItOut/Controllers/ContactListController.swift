@@ -139,14 +139,12 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
         
         if editingStyle == .delete{
-            CoreDataHelper.deleteItems(item: self.sortedItems[selectedIndex])
-            
-            self.tableView.reloadData()
-            
-            
             let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
             imageRef.delete(completion: nil)
+            
             ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
+            CoreDataHelper.deleteItems(item: self.sortedItems[selectedIndex])
+            self.tableView.reloadData()
         }
     }
     

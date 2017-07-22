@@ -259,6 +259,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         for item in items{
             if item.key == self.keyOfItem{
                 CoreDataHelper.deleteItems(item: item)
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(String(describing: item.key)).jpg")
+                imageRef.delete(completion: nil)
                 break
             }
         }
@@ -288,7 +290,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             if self.parent is MainViewController{
                 let parent = self.parent as! MainViewController
                 CoreDataHelper.deleteItems(item: self.item)
+                
                 let item = CoreDataHelper.newItem()
+                
                 item.email = self.emailTextField.text
                 item.image = self.itemImage.image
                 item.key = self.keyOfItem
@@ -316,10 +320,13 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.addressDescription.text!)
                     ItemService.editEntry(entry: entry)
                 }
+                
             } else {
                 let parent = self.parent as! ContactListController
                 CoreDataHelper.deleteItems(item: self.item)
+                
                 let item = CoreDataHelper.newItem()
+                
                 item.email = self.emailTextField.text
                 item.image = self.itemImage.image
                 item.key = self.keyOfItem
