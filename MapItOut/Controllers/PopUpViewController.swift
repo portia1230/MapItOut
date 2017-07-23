@@ -338,16 +338,15 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 item.type = self.typeTextField.text
                 item.phone = self.phoneTextField.text
                 
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
+                imageRef.delete(completion: nil)
+                let newImageRef = StorageReference.newContactImageReference(key: item.key!)
+                
                 parent.updateValue(item: item)
                 
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
-                
-                
-                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
-                imageRef.delete(completion: nil)
-                let newImageRef = StorageReference.newContactImageReference(key: item.key!)
                 
                 StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {

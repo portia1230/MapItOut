@@ -16,13 +16,18 @@ import FirebaseAuth
 import CoreData
 import FirebaseStorage
 
-class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate {
     
     //MARK: - Properties
-    
+    @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var typeTextField: UILabel!
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var pickerUIView: UIView!
+    
     var keys : [String] = []
     var sortedItems : [Item] = []
+    var filteredItems : [Item] = []
     var locationDescription = ""
     var selectedIndex = 0
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -30,14 +35,65 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     var contactStore = CNContactStore()
     var authHandle: AuthStateDidChangeListenerHandle?
+    var pickerOptions = ["All items"]
     
+    
+    //MARK: - Functions
+    
+    @IBAction func filterButtonTapped(_ sender: Any) {
+        if pickerUIView.isHidden == true {
+            pickerOptions.removeAll()
+            pickerOptions.append("All items")
+            let items = CoreDataHelper.retrieveItems()
+            for item in items {
+                if pickerOptions.contains(item.type!) == false{
+                    self.pickerOptions.append(item.type!)
+                    self.pickerOptions.sort()
+                }
+                self.pickerView.reloadAllComponents()
+            }
+            self.pickerUIView.isHidden = false
+        } else {
+            pickerUIView.isHidden = true
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.pickerOptions.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.pickerOptions[row]
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        typeTextField.text = pickerOptions[row]
+        self.filteredItems.removeAll()
+        if pickerOptions[row] == "All items"{
+            self.filteredItems = self.sortedItems
+        } else {
+            for item in self.sortedItems{
+                if item.type == self.typeTextField.text!{
+                    self.filteredItems.append(item)
+                }
+            }
+        }
+        self.tableView.reloadData()
+        self.pickerUIView.isHidden = true
+    }
     
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        pickerView.delegate = self
+        
         authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
             guard user == nil else { return }
             
@@ -46,6 +102,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             self.view.window?.makeKeyAndVisible()
             defaults.set("false", forKey:"loadedItems")
         }
+        
+        
         
     }
     
@@ -58,18 +116,34 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-
+        self.pickerUIView.isHidden = true
         self.tableView.delegate = self
         self.tableView.dataSource = self
         let items = CoreDataHelper.retrieveItems()
         self.sortedItems = LocationService.rankDistance(items: items)
+        self.filteredItems = self.sortedItems
         self.tableView.reloadData()
         
     }
     
     func updateValue(item: Item){
-        self.sortedItems[selectedIndex] = item
+        self.sortedItems.remove(at: self.selectedIndex)
+        self.sortedItems.append(item)
         self.sortedItems = LocationService.rankDistance(items: self.sortedItems)
+        
+        CoreDataHelper.deleteItems(item: item)
+        let newItem = CoreDataHelper.newItem()
+        newItem.name = item.name
+        newItem.organization = item.organization
+        newItem.type = item.type
+        newItem.phone = item.phone
+        newItem.email = item.email
+        newItem.locationDescription = item.locationDescription
+        newItem.latitude = item.latitude
+        newItem.longitude = item.longitude
+        newItem.key = item.key
+        CoreDataHelper.saveItem()
+        
         self.tableView.reloadData()
     }
     
@@ -80,35 +154,35 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sortedItems.count
+        return self.filteredItems.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
-            let item = self.sortedItems[indexPath.row]
-            cell.addressLabel.text = item.locationDescription
-            cell.nameLabel.text = item.name
-            cell.typeLabel.text = item.type
-            cell.photoImageView.image = item.image as? UIImage
-            cell.photoImageView.layer.cornerRadius = 35
-            cell.photoImageView.clipsToBounds = true
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
+        let item = self.filteredItems[indexPath.row]
+        cell.addressLabel.text = item.locationDescription
+        cell.nameLabel.text = item.name
+        cell.typeLabel.text = item.type
+        cell.photoImageView.image = item.image as? UIImage
+        cell.photoImageView.layer.cornerRadius = 35
+        cell.photoImageView.clipsToBounds = true
+        return cell
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
         var i = 0
         var items = CoreDataHelper.retrieveItems()
-        while i < items.count {
-            if sortedItems[indexPath.row].key == items[i].key{
+        while i < self.filteredItems.count {
+            if self.filteredItems[indexPath.row].key == items[i].key{
                 self.selectedIndex = i
             }
             i += 1
         }
-
+        
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-        let selectedItem = self.sortedItems[indexPath.row]
+        let selectedItem = self.filteredItems[indexPath.row]
         
         popOverVC.item = selectedItem
         popOverVC.name = selectedItem.name!
@@ -153,7 +227,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
             do {
                 try Auth.auth().signOut()
-                var items = CoreDataHelper.retrieveItems()
+                defaults.set("false", forKey:"loadedItems")
+                let items = CoreDataHelper.retrieveItems()
                 for item in items {
                     CoreDataHelper.deleteItems(item: item)
                 }
@@ -176,7 +251,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         alertController.addAction(signOutAction)
         alertController.addAction(resetPasswordAction)
         self.present(alertController, animated: true)
-
+        
     }
     
     @IBAction func mapButtonTapped(_ sender: Any) {

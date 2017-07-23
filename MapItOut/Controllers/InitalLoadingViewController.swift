@@ -34,6 +34,7 @@ class InitalLoadingViewController: UIViewController {
         
         UserService.items(for: User.currentUser, completion: { (entries) in
             var i = 0
+            if entries.count != 0{
             let increaseAngle = Double( 350 / (entries.count) )
             while i < entries.count{
                 let imageView = UIImageView()
@@ -56,17 +57,19 @@ class InitalLoadingViewController: UIViewController {
                 
                 if i == entries.count - 1{
                     self.circularProgress.animate(fromAngle: self.circularProgress.angle, toAngle: 360, duration: 1.0, completion: { (bool) in
-                        if bool == true{
                             UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                 self.parent?.viewWillAppear(true)
                                 self.view.removeFromSuperview()
                             }, completion: nil)
-                        }
                     })
                 } else {
                     self.circularProgress.animate(toAngle: self.circularProgress.angle + increaseAngle, duration: 1.0, completion:  nil)
                 }
                 i += 1
+            }
+            } else{
+                self.parent?.viewWillAppear(true)
+                self.view.removeFromSuperview()
             }
         })
     }

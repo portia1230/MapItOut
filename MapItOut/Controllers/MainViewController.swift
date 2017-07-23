@@ -27,7 +27,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var itemNameLabel: UILabel!
     
-    var redColor = UIColor(red: 1, green: 47/255, blue: 43/255, alpha: 1)
+    var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var greenColor = UIColor(red: 64/255, green: 196/255, blue: 128/255, alpha: 1)
     var selectedItem : Item!
@@ -61,6 +61,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         self.mapView.setRegion(region, animated: true)
         let items = CoreDataHelper.retrieveItems()
+        
         var i = 0
         while i < items.count {
             let longitude = items[i].longitude
@@ -328,6 +329,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
             do {
                 try Auth.auth().signOut()
+                defaults.set("false", forKey:"loadedItems")
                 var items = CoreDataHelper.retrieveItems()
                 for item in items {
                     CoreDataHelper.deleteItems(item: item)
@@ -389,7 +391,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
-        UIView.transition(with: self.view, duration: 0.25, options: .transitionCurlUp, animations: { _ in
+        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.addSubview(popOverVC.view)
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)

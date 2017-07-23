@@ -364,6 +364,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         typeTextField.text = pickOption[row]
+        
     }
     
     //MARK: - Image rotating functions
