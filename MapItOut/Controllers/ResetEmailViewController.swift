@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class ResetEmailViewController: UIViewController {
+class ResetEmailViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Properties
     
@@ -20,6 +20,7 @@ class ResetEmailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.delegate = self
         self.popUpView.layer.cornerRadius = 15
         self.popUpView.clipsToBounds = true
         
@@ -33,6 +34,10 @@ class ResetEmailViewController: UIViewController {
         view.addGestureRecognizer(swipeUp)
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.emailTextField.becomeFirstResponder()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -58,6 +63,11 @@ class ResetEmailViewController: UIViewController {
             }
             
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        sendEmailButtonTapped(self)
+        return true
     }
     
     func dismissView(){

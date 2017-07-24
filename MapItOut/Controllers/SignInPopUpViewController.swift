@@ -70,6 +70,10 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
         auth?.auth?.createUser(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user, error) in
             if error != nil{
                 print(error.debugDescription)
+                let alertController = UIAlertController(title: nil, message: error?.localizedDescription, preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                self.present(alertController, animated: true)
                 return
             }
             auth?.auth?.signIn(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user, error) in
@@ -101,12 +105,15 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
             if passwordTextField.text != textField.text{
                 passwordWarningLabel.isHidden = false
                 passwordWarningLabel.text = "Passwords do not match!"
+                self.createButton.isHidden = true
             } else {
                 if (rePasswordTextField.text?.characters.count)! < 6{
                     passwordWarningLabel.isHidden = false
                     passwordWarningLabel.text = "Password does not exceed 6 characters!"
+                    self.createButton.isHidden = true
                 } else {
                     passwordWarningLabel.isHidden = true
+                    self.createButton.isHidden = false
                 }
             }
         }
