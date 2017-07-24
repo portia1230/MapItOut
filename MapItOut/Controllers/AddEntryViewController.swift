@@ -96,6 +96,17 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+            let alertController = UIAlertController(title: nil, message:
+                "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+            let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                self.viewWillAppear(true)
+            })
+            alertController.addAction(cancel)
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
         //set region/zoom in for map
         if let name = self.name {
             self.nameTextField.text = name
@@ -253,7 +264,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     func getLocation(manager: CLLocationManager) -> CLLocationCoordinate2D {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        guard let locValue:CLLocationCoordinate2D = manager.location!.coordinate else{
+            let locValue = CLLocationCoordinate2DMake(0.0, 0.0)
+        }
         return locValue
     }
     
@@ -285,9 +298,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         if self.nameTextField.text != "",
             self.organizationTextField.text != "",
             self.typeTextField.text != "Select type"{
-            if photoImageView.image == nil {
-                photoImageView.image = #imageLiteral(resourceName: "Rory.jpg")
-            }
             
             let currentUser = User.currentUser
             let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
@@ -304,7 +314,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             item.longitude = self.longitude
             item.locationDescription = self.locationTextField.text
             item.key = entryRef.key
-            item.image = self.photoImageView.image!
+            if self.photoImageView.image == nil{
+                item.image = #imageLiteral(resourceName: "defaultNoItemImage.png")
+            } else {
+                item.image = self.photoImageView.image!
+            }
+            
             items.append(item)
             CoreDataHelper.saveItem()
             self.dismiss(animated: true, completion: { 
@@ -312,7 +327,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             
             
             let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
-            StorageService.uploadHighImage(photoImageView.image!, at: imageRef) { (downloadURL) in
+            StorageService.uploadHighImage(item.image as! UIImage, at: imageRef) { (downloadURL) in
                 
                 guard let downloadURL = downloadURL else {
                     return

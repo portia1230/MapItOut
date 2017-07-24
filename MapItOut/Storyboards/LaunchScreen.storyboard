@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map It Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sz-o9-L0B">
-                                <rect key="frame" x="137" y="539" width="212" height="68"/>
+                                <rect key="frame" x="137" y="569" width="212" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="212" id="CWt-3b-Qzk"/>
                                     <constraint firstAttribute="height" constant="68" id="qdM-n3-pXR"/>
@@ -33,19 +33,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePin.png" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThO-K8-4vn">
-                                <rect key="frame" x="56" y="517" width="80" height="110"/>
+                                <rect key="frame" x="93" y="562" width="60" height="82.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="110" id="77S-Sh-FlU"/>
-                                    <constraint firstAttribute="width" constant="80" id="rZy-QL-vsF"/>
+                                    <constraint firstAttribute="width" constant="60" id="bAH-zW-qRC"/>
+                                    <constraint firstAttribute="height" constant="82.5" id="eIi-yK-BRm"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.86669296026229858" green="0.3698144257068634" blue="0.34123608469963074" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="ThO-K8-4vn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="40" id="4Gp-eQ-jLd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ThO-K8-4vn" secondAttribute="trailing" constant="206" id="9vZ-WS-8Co"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ThO-K8-4vn" secondAttribute="bottom" constant="22.5" id="QMY-o7-qgH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7Sz-o9-L0B" secondAttribute="trailing" constant="10" id="Tfs-gs-CNv"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="7Sz-o9-L0B" secondAttribute="bottom" constant="60" id="b5n-QX-as2"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ThO-K8-4vn" secondAttribute="bottom" constant="40" id="xwW-k3-MUg"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="7Sz-o9-L0B" secondAttribute="bottom" constant="30" id="b5n-QX-as2"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>

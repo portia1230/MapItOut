@@ -56,6 +56,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+            let alertController = UIAlertController(title: nil, message:
+                "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+            let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                self.viewWillAppear(true)
+            })
+            alertController.addAction(cancel)
+            self.present(alertController, animated: true, completion: nil)
+        }
+
         self.typeLabel.text = defaults.string(forKey: "type")
         self.pickerUIView.isHidden = true
         self.pickerView.delegate = self
