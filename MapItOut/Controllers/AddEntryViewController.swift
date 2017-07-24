@@ -109,6 +109,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             
         } else {
             
+            for item in CoreDataHelper.retrieveItems(){
+                if pickOption.contains(item.type!) == false{
+                    pickOption.append(item.type!)
+                }
+            }
+            
             //set region/zoom in for map
             if let name = self.name {
                 self.nameTextField.text = name
@@ -311,7 +317,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBAction func addContactButtonTapped(_ sender: Any) {
         
         if self.nameTextField.text != "",
-            self.organizationTextField.text != "",
             self.typeTextField.text != "Select type"{
             
             let currentUser = User.currentUser
@@ -356,7 +361,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
         } else {
             let alertController = UIAlertController(title: "", message:
-                "Did you put in a name, organization, and type?", preferredStyle: UIAlertControllerStyle.alert)
+                "Did you put in a name, and type?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }
