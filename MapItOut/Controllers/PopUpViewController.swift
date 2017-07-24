@@ -292,7 +292,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 CoreDataHelper.deleteItems(item: self.item)
                 
                 let item = CoreDataHelper.newItem()
-                
                 item.email = self.emailTextField.text
                 item.image = self.itemImage.image
                 item.key = self.keyOfItem
@@ -303,10 +302,15 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 item.organization = self.organizationTextField.text
                 item.type = self.typeTextField.text
                 item.phone = self.phoneTextField.text
-                parent.updateValue(item: item)
+                
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
                 }, completion: nil)
+                
+                parent.updateValue(item: item)
+                CoreDataHelper.saveItem()
+                
+                
                 
                 let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedItem.key)!).jpg")
                 imageRef.delete(completion: nil)
@@ -338,11 +342,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 item.type = self.typeTextField.text
                 item.phone = self.phoneTextField.text
                 
+                CoreDataHelper.saveItem()
+                parent.updateValue(item: item)
+                
                 let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
                 imageRef.delete(completion: nil)
                 let newImageRef = StorageReference.newContactImageReference(key: item.key!)
-                
-                parent.updateValue(item: item)
                 
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()

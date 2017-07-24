@@ -15,10 +15,12 @@ import FirebaseAuth
 import CoreLocation
 import FirebaseDatabase
 
-class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
+class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate{
     
     //MARK: - Properties
     
+    @IBOutlet weak var pickerUIView: UIView!
+    @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var locationImage: UIImageView!
     @IBOutlet weak var itemDistanceLabel: UILabel!
     @IBOutlet weak var itemTypeLabel: UILabel!
@@ -26,11 +28,13 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var itemNameLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
     
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var greenColor = UIColor(red: 64/255, green: 196/255, blue: 128/255, alpha: 1)
     var selectedItem : Item!
+    var filteredItems : [Item] = []
     var sortedItems : [Item] = []
     var isUpdatingHeading = false
     var editedAnno = MKPointAnnotation()
@@ -40,6 +44,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var contactStore = CNContactStore()
     var locationManager = CLLocationManager()
     var authHandle: AuthStateDidChangeListenerHandle?
+    var pickerOptions = ["All items"]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -48,9 +53,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(true)
-        
+        self.typeLabel.text = defaults.string(forKey: "type")
+        self.pickerUIView.isHidden = true
+        self.pickerView.delegate = self
         self.mapView.userLocation.subtitle = ""
         self.mapView.userLocation.title = ""
         
@@ -61,67 +67,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         self.mapView.setRegion(region, animated: true)
         let items = CoreDataHelper.retrieveItems()
-        
-        var i = 0
-        while i < items.count {
-            let longitude = items[i].longitude
-            let latitude = items[i].latitude
-            let anno = CustomPointAnnotation()
-            anno.image = items[i].image as! UIImage
-            anno.indexOfContact = i
-            anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-            self.mapView.addAnnotation(anno)
-            i += 1
-        }
-        
-        let sortedItems = LocationService.rankDistance(items: items)
-        self.sortedItems = sortedItems
-        if sortedItems.isEmpty{
-            self.itemNameLabel.text = ""
-            self.itemDistanceLabel.text = ""
-            self.itemTypeLabel.text = ""
-            self.itemImage.image = #imageLiteral(resourceName: "defaultNoItemImage.png")
-            self.itemNameLabel.backgroundColor = greyColor
-            self.itemDistanceLabel.backgroundColor = greyColor
-            self.itemTypeLabel.backgroundColor = greyColor
-            self.detailsButton.isEnabled = false
-            self.detailsButton.setTitle("", for: .normal)
-            self.detailsButton.backgroundColor = greyColor
-            
-        } else {
-            let coordinate = LocationService.getLocation(manager: self.locationManager)
-            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            let contactLocation = CLLocation(latitude: sortedItems[0].latitude, longitude: sortedItems[0].longitude)
-            self.selectedItem = sortedItems[0]
-            
-            var n = 0
-            while n < items.count {
-                if items[n].key == self.selectedItem.key{
-                    self.selectedIndex = n
-                }
-                n += 1
-            }
-            
-            let distance = myLocation.distance(from: contactLocation)
-            self.itemDistanceLabel.backgroundColor = UIColor.clear
-            self.itemNameLabel.backgroundColor = UIColor.clear
-            self.itemTypeLabel.backgroundColor = UIColor.clear
-            
-            if distance > 1000.0
-            {
-                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
-            } else {
-                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-            }
-            self.itemNameLabel.text = sortedItems[0].name
-            self.itemTypeLabel.text = sortedItems[0].type
-            self.itemImage.image = sortedItems[0].image as? UIImage
-            self.selectedItem = sortedItems[0]
-            self.detailsButton.setTitle("Details", for: .normal)
-            //self.detailsButton.isHidden = false
-            self.detailsButton.isEnabled = true
-            self.detailsButton.backgroundColor = greenColor
-        }
+        self.sortedItems = LocationService.rankDistance(items: items)
+        filterResults(type: self.typeLabel.text!)
     }
     //self.images = allImages
     
@@ -135,6 +82,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         itemImage.clipsToBounds = true
         locationManager.delegate = self
         let loadedItems = defaults.string(forKey: "loadedItems")
+        defaults.set("All items", forKey: "type")
         
         if loadedItems == "false" {
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
@@ -168,31 +116,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     func updateValue(item: Item){
         
         self.mapView.removeAnnotation(self.editedAnno)
-        let items = CoreDataHelper.retrieveItems()
-        
-        let coordinate = CLLocationCoordinate2DMake(item.latitude, item.longitude)
-        let anno = CustomPointAnnotation()
-        anno.coordinate = coordinate
-        anno.image = (item.image as? UIImage)!
-        self.sortedItems = LocationService.rankDistance(items: items)
-        self.selectedItem = item
-        let myCoordinate = LocationService.getLocation(manager: self.locationManager)
-        let myLocation = CLLocation(latitude: myCoordinate.latitude, longitude: myCoordinate.longitude)
-        let contactLocation = CLLocation(latitude: item.latitude, longitude: item.longitude)
-        
-        self.mapView.addAnnotation(anno)
-        
-        let distance = myLocation.distance(from: contactLocation)
-        
-        if distance > 1000.0
-        {
-            self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
-        } else {
-            self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-        }
-        self.itemNameLabel.text = sortedItems[0].name
-        self.itemTypeLabel.text = sortedItems[0].type
-        self.itemImage.image = sortedItems[0].image as? UIImage
+        self.sortedItems = LocationService.rankDistance(items: CoreDataHelper.retrieveItems())
+        filterResults(type: self.typeLabel.text!)
     }
     
     
@@ -203,7 +128,200 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         mapView.setCamera(mapView.camera, animated: true)
     }
     
+    
+    //MARK: - Picker view delegate functions 
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.pickerOptions.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.pickerOptions[row]
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        typeLabel.text = pickerOptions[row]
+        defaults.set(typeLabel.text, forKey: "type")
+        self.filteredItems.removeAll()
+        
+        if pickerOptions[row] == "All items"{
+            self.filteredItems = self.sortedItems
+        } else {
+            for item in self.sortedItems{
+                if item.type == self.typeLabel.text!{
+                    self.filteredItems.append(item)
+                }
+            }
+        }
+        
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        
+        var i = 0
+        while i < self.filteredItems.count {
+            let longitude = filteredItems[i].longitude
+            let latitude = filteredItems[i].latitude
+            let anno = CustomPointAnnotation()
+            anno.image = filteredItems[i].image as! UIImage
+            anno.indexOfContact = i
+            anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            self.mapView.addAnnotation(anno)
+            i += 1
+        }
+        
+        if self.filteredItems.isEmpty{
+            self.itemNameLabel.text = ""
+            self.itemDistanceLabel.text = ""
+            self.itemTypeLabel.text = ""
+            self.itemImage.image = #imageLiteral(resourceName: "defaultNoItemImage.png")
+            self.itemNameLabel.backgroundColor = greyColor
+            self.itemDistanceLabel.backgroundColor = greyColor
+            self.itemTypeLabel.backgroundColor = greyColor
+            self.detailsButton.isEnabled = false
+            self.detailsButton.setTitle("", for: .normal)
+            self.detailsButton.backgroundColor = greyColor
+        } else {
+            let coordinate = LocationService.getLocation(manager: self.locationManager)
+            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
+            self.selectedItem = filteredItems[0]
+            let items = CoreDataHelper.retrieveItems()
+            var n = 0
+            while n < items.count {
+                if items[n].key == self.selectedItem.key{
+                    self.selectedIndex = n
+                }
+                n += 1
+            }
+            let distance = myLocation.distance(from: contactLocation)
+            self.itemDistanceLabel.backgroundColor = UIColor.clear
+            self.itemNameLabel.backgroundColor = UIColor.clear
+            self.itemTypeLabel.backgroundColor = UIColor.clear
+            
+            if distance > 1000.0
+            {
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
+            } else {
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            }
+            self.itemNameLabel.text = filteredItems[0].name
+            self.itemTypeLabel.text = filteredItems[0].type
+            self.itemImage.image = filteredItems[0].image as? UIImage
+            self.selectedItem = filteredItems[0]
+            self.detailsButton.setTitle("Details", for: .normal)
+            //self.detailsButton.isHidden = false
+            self.detailsButton.isEnabled = true
+            self.detailsButton.backgroundColor = greenColor
+        }
+
+        self.pickerUIView.isHidden = true
+    }
+    
+    
     //MARK: - Functions
+    
+    
+    @IBAction func listButtonTapped(_ sender: Any) {
+        self.performSegue(withIdentifier: "showListSegue", sender: self)
+    }
+    
+    
+    func filterResults( type: String){
+        self.filteredItems.removeAll()
+        if type == "All items"{
+            self.filteredItems = self.sortedItems
+        } else {
+            for item in self.sortedItems{
+                if item.type == self.typeLabel.text!{
+                    self.filteredItems.append(item)
+                }
+            }
+        }
+        
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        
+        var i = 0
+        while i < self.filteredItems.count {
+            let longitude = filteredItems[i].longitude
+            let latitude = filteredItems[i].latitude
+            let anno = CustomPointAnnotation()
+            anno.image = filteredItems[i].image as! UIImage
+            anno.indexOfContact = i
+            anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            self.mapView.addAnnotation(anno)
+            i += 1
+        }
+        
+        if self.filteredItems.isEmpty{
+            self.itemNameLabel.text = ""
+            self.itemDistanceLabel.text = ""
+            self.itemTypeLabel.text = ""
+            self.itemImage.image = #imageLiteral(resourceName: "defaultNoItemImage.png")
+            self.itemNameLabel.backgroundColor = greyColor
+            self.itemDistanceLabel.backgroundColor = greyColor
+            self.itemTypeLabel.backgroundColor = greyColor
+            self.detailsButton.isEnabled = false
+            self.detailsButton.setTitle("", for: .normal)
+            self.detailsButton.backgroundColor = greyColor
+        } else {
+            let coordinate = LocationService.getLocation(manager: self.locationManager)
+            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
+            self.selectedItem = filteredItems[0]
+            let items = CoreDataHelper.retrieveItems()
+            var n = 0
+            while n < items.count {
+                if items[n].key == self.selectedItem.key{
+                    self.selectedIndex = n
+                }
+                n += 1
+            }
+            let distance = myLocation.distance(from: contactLocation)
+            self.itemDistanceLabel.backgroundColor = UIColor.clear
+            self.itemNameLabel.backgroundColor = UIColor.clear
+            self.itemTypeLabel.backgroundColor = UIColor.clear
+            
+            if distance > 1000.0
+            {
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
+            } else {
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            }
+            self.itemNameLabel.text = filteredItems[0].name
+            self.itemTypeLabel.text = filteredItems[0].type
+            self.itemImage.image = filteredItems[0].image as? UIImage
+            self.selectedItem = filteredItems[0]
+            self.detailsButton.setTitle("Details", for: .normal)
+            //self.detailsButton.isHidden = false
+            self.detailsButton.isEnabled = true
+            self.detailsButton.backgroundColor = greenColor
+        }
+        
+        self.pickerUIView.isHidden = true
+
+    }
+    
+    @IBAction func filterButtonTapped(_ sender: Any) {
+        if pickerUIView.isHidden == true {
+            pickerOptions.removeAll()
+            pickerOptions.append("All items")
+            let items = CoreDataHelper.retrieveItems()
+            for item in items {
+                if pickerOptions.contains(item.type!) == false{
+                    self.pickerOptions.append(item.type!)
+                    self.pickerOptions.sort()
+                }
+                self.pickerView.reloadAllComponents()
+            }
+            self.pickerUIView.isHidden = false
+        } else {
+            pickerUIView.isHidden = true
+        }
+    }
     
     @IBAction func addButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: "How would you like to create a new item", preferredStyle: .alert)
@@ -258,7 +376,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         annotationView?.centerOffset = CGPoint(x: 0, y: -43.4135)
         return annotationView
     }
-    
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if(view.annotation is MKUserLocation){

@@ -55,7 +55,7 @@
                                             <constraint firstAttribute="height" constant="43" id="gz2-xd-rIN"/>
                                         </constraints>
                                         <connections>
-                                            <segue destination="M4Q-aG-t6d" kind="presentation" animates="NO" id="BYu-2L-pCR"/>
+                                            <action selector="listButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="Lcb-WT-2rl"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="cAt-mG-5ko">
@@ -84,6 +84,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="J7I-jU-b2i"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="filterButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="p7y-zg-A6b"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All items" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Wx-FP-xSg">
                                         <rect key="frame" x="155" y="31" width="130" height="25"/>
@@ -228,33 +231,43 @@
                                     <action selector="refreshButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="XUd-6Z-XPb"/>
                                 </connections>
                             </button>
-                            <pickerView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Sd-yB-deR">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRB-lZ-ICl">
                                 <rect key="frame" x="0.0" y="65" width="375" height="110"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <subviews>
+                                    <pickerView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Sd-yB-deR">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </pickerView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="110" id="9eM-rx-LD7"/>
+                                    <constraint firstAttribute="bottom" secondItem="6Sd-yB-deR" secondAttribute="bottom" id="DIr-SZ-AZ5"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Sd-yB-deR" secondAttribute="trailing" id="LY4-kw-SXu"/>
+                                    <constraint firstItem="6Sd-yB-deR" firstAttribute="top" secondItem="JRB-lZ-ICl" secondAttribute="top" id="buj-nf-wfD"/>
+                                    <constraint firstAttribute="height" constant="110" id="cYY-50-MOe"/>
+                                    <constraint firstItem="6Sd-yB-deR" firstAttribute="leading" secondItem="JRB-lZ-ICl" secondAttribute="leading" id="oEa-om-NgO"/>
                                 </constraints>
-                            </pickerView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Uaa-Mm-d0Q" firstAttribute="top" secondItem="fSa-RG-Zbw" secondAttribute="bottom" constant="108" id="IiC-SD-KWf"/>
-                            <constraint firstItem="6Sd-yB-deR" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" id="Mhi-lj-SIG"/>
-                            <constraint firstAttribute="trailing" secondItem="6Sd-yB-deR" secondAttribute="trailing" id="NaG-lt-w9J"/>
                             <constraint firstItem="aSz-Hc-R3b" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="Obc-Gl-NHS"/>
                             <constraint firstItem="aSz-Hc-R3b" firstAttribute="top" secondItem="Wvs-BV-AH6" secondAttribute="top" id="Szw-Kb-PIu"/>
                             <constraint firstItem="fSa-RG-Zbw" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="Tva-5I-VP0"/>
                             <constraint firstAttribute="trailing" secondItem="c5z-Sq-t6j" secondAttribute="trailing" constant="13" id="UP4-1L-fHG"/>
                             <constraint firstAttribute="trailing" secondItem="i9z-Nx-AiL" secondAttribute="trailing" id="bDS-zT-8zr"/>
                             <constraint firstItem="Uaa-Mm-d0Q" firstAttribute="top" secondItem="eYu-6d-W7D" secondAttribute="bottom" id="cGL-vE-5py"/>
+                            <constraint firstItem="JRB-lZ-ICl" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="hu4-8H-7UI"/>
                             <constraint firstItem="eYu-6d-W7D" firstAttribute="top" secondItem="gZu-wW-qCT" secondAttribute="bottom" constant="10" id="jOz-N9-baj"/>
+                            <constraint firstAttribute="trailing" secondItem="JRB-lZ-ICl" secondAttribute="trailing" id="kIK-vW-H5O"/>
                             <constraint firstItem="gZu-wW-qCT" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" id="kdX-Fj-yz5"/>
                             <constraint firstItem="c5z-Sq-t6j" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" constant="60" id="nwg-wB-TL5"/>
                             <constraint firstItem="i9z-Nx-AiL" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" constant="40" id="sfO-Go-8w0"/>
                             <constraint firstAttribute="trailing" secondItem="gZu-wW-qCT" secondAttribute="trailing" id="szw-rx-pHj"/>
+                            <constraint firstItem="JRB-lZ-ICl" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="bottom" id="vtB-uX-SfB"/>
                             <constraint firstItem="eYu-6d-W7D" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="xDG-xb-neI"/>
-                            <constraint firstItem="6Sd-yB-deR" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="yHe-R2-YhF"/>
                             <constraint firstAttribute="trailing" secondItem="eYu-6d-W7D" secondAttribute="trailing" id="zSc-BF-3U7"/>
                             <constraint firstItem="gZu-wW-qCT" firstAttribute="leading" secondItem="Wvs-BV-AH6" secondAttribute="leading" id="zeV-7e-2u4"/>
                             <constraint firstAttribute="trailing" secondItem="aSz-Hc-R3b" secondAttribute="trailing" id="zgf-pw-TO4"/>
@@ -285,13 +298,17 @@
                         <outlet property="itemTypeLabel" destination="EWo-dO-CNT" id="wxJ-6j-Q2d"/>
                         <outlet property="locationImage" destination="c5z-Sq-t6j" id="TLn-2s-rev"/>
                         <outlet property="mapView" destination="gZu-wW-qCT" id="5KU-Qc-gNO"/>
+                        <outlet property="pickerUIView" destination="JRB-lZ-ICl" id="47o-47-ecH"/>
+                        <outlet property="pickerView" destination="6Sd-yB-deR" id="BrU-Zq-dyd"/>
+                        <outlet property="typeLabel" destination="2Wx-FP-xSg" id="4RQ-2S-kII"/>
                         <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" id="sz0-VJ-i1G"/>
                         <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" id="h3e-dj-j96"/>
+                        <segue destination="M4Q-aG-t6d" kind="presentation" identifier="showListSegue" animates="NO" id="6Ku-7n-pEW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xoh-YE-JaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="671.20000000000005" y="-384.55772113943033"/>
+            <point key="canvasLocation" x="670" y="-385"/>
         </scene>
         <!--Contacts View Controller-->
         <scene sceneID="foj-Qk-OZ0">
@@ -1428,8 +1445,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sz0-VJ-i1G"/>
         <segue reference="h3e-dj-j96"/>
+        <segue reference="sz0-VJ-i1G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

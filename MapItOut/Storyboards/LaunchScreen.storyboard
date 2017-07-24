@@ -25,8 +25,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="PSx-ME-uyD">
                                 <rect key="frame" x="23" y="498" width="150" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="93d-Vf-ujj"/>
-                                    <constraint firstAttribute="width" constant="150" id="uu9-i4-XlT"/>
+                                    <constraint firstAttribute="height" constant="150" id="ZxD-gB-lyv"/>
+                                    <constraint firstAttribute="width" constant="150" id="amY-8i-hkP"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map It Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sz-o9-L0B">
@@ -42,12 +42,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.86669296026229858" green="0.3698144257068634" blue="0.34123608469963074" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="PSx-ME-uyD" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="7" id="8cj-Ot-HT9"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="PSx-ME-uyD" secondAttribute="bottom" constant="19" id="MXY-Wi-LQA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7Sz-o9-L0B" secondAttribute="trailing" constant="10" id="Tfs-gs-CNv"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="PSx-ME-uyD" secondAttribute="bottom" constant="19" id="Tjb-ze-VdM"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="7Sz-o9-L0B" secondAttribute="bottom" constant="60" id="b5n-QX-as2"/>
-                            <constraint firstItem="PSx-ME-uyD" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="7" id="tZv-Em-lTb"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

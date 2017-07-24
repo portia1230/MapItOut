@@ -73,6 +73,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         typeTextField.text = pickerOptions[row]
+        defaults.set(typeTextField.text, forKey: "type")
         self.filteredItems.removeAll()
         if pickerOptions[row] == "All items"{
             self.filteredItems = self.sortedItems
@@ -116,36 +117,35 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        self.typeTextField.text = defaults.string(forKey: "type")
         self.pickerUIView.isHidden = true
         self.tableView.delegate = self
         self.tableView.dataSource = self
         let items = CoreDataHelper.retrieveItems()
         self.sortedItems = LocationService.rankDistance(items: items)
-        self.filteredItems = self.sortedItems
-        self.tableView.reloadData()
-        
+        filterItems(type: self.typeTextField.text!)
     }
     
     func updateValue(item: Item){
+        
         self.sortedItems.remove(at: self.selectedIndex)
         self.sortedItems.append(item)
         self.sortedItems = LocationService.rankDistance(items: self.sortedItems)
+        filterItems(type: self.typeTextField.text!)
         
-        CoreDataHelper.deleteItems(item: item)
-        let newItem = CoreDataHelper.newItem()
-        newItem.name = item.name
-        newItem.organization = item.organization
-        newItem.type = item.type
-        newItem.phone = item.phone
-        newItem.email = item.email
-        newItem.locationDescription = item.locationDescription
-        newItem.latitude = item.latitude
-        newItem.longitude = item.longitude
-        newItem.key = item.key
-        CoreDataHelper.saveItem()
-        
+    }
+    
+    func filterItems(type : String){
+        self.sortedItems = LocationService.rankDistance(items: CoreDataHelper.retrieveItems())
+        self.filteredItems.removeAll()
+        for item in self.sortedItems{
+            if item.type == type{
+                self.filteredItems.append(item)
+            }
+        }
         self.tableView.reloadData()
     }
+    
     
     // MARK: - Table view data source
     
@@ -256,7 +256,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     @IBAction func mapButtonTapped(_ sender: Any) {
         dismiss(animated: false) {
+            defaults.set(self.typeTextField.text!, forKey:"type")
             self.parent?.viewWillAppear(true)
+            
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {
