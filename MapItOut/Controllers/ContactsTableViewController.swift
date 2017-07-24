@@ -70,8 +70,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: - Search bar delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.results.removeAll()
+        
         if searchBar.text == ""{
             self.results = self.contacts
+            self.tableView.reloadData()
         }
         else {
             var i = 0
@@ -85,6 +87,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
         }
     }
+    
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.results.removeAll()

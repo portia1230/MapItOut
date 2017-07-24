@@ -254,16 +254,16 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
-        ItemService.deleteEntry(key: self.keyOfItem)
         let items = CoreDataHelper.retrieveItems()
         for item in items{
             if item.key == self.keyOfItem{
                 CoreDataHelper.deleteItems(item: item)
-                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(String(describing: item.key)).jpg")
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(keyOfItem).jpg")
                 imageRef.delete(completion: nil)
-                break
+                
             }
         }
+        ItemService.deleteEntry(key: self.keyOfItem)
         
         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.removeFromSuperview()
@@ -310,8 +310,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 parent.updateValue(item: item)
                 CoreDataHelper.saveItem()
                 
-                
-                
                 let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedItem.key)!).jpg")
                 imageRef.delete(completion: nil)
                 let newImageRef = StorageReference.newContactImageReference(key: parent.selectedItem.key!)
@@ -357,7 +355,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    
                     let urlString = downloadURL.absoluteString
                     let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.addressDescription.text!)
                     ItemService.editEntry(entry: entry)

@@ -116,8 +116,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Update annotations
     
     func updateValue(item: Item){
-        
-        self.mapView.removeAnnotation(self.editedAnno)
         self.sortedItems = LocationService.rankDistance(items: CoreDataHelper.retrieveItems())
         filterResults(type: self.typeLabel.text!)
     }
