@@ -103,61 +103,64 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
                 self.viewWillAppear(true)
             })
+            
             alertController.addAction(cancel)
             self.present(alertController, animated: true, completion: nil)
-        }
-        
-        //set region/zoom in for map
-        if let name = self.name {
-            self.nameTextField.text = name
-        }
-        if let organization = self.organization {
-            self.organizationTextField.text = organization
-        }
-        if let email = self.email {
-            self.emailTextField.text = email
-        }
-        if let phone = self.phone {
-            self.phoneTextField.text = phone
-        }
-        if (self.image) != nil{
-            self.photoImageView.image = self.image
-        }
-        self.locationMapView.showsUserLocation = false
-        
-        if let _ = self.contactLocationDescription {
-            self.locationTextField.text = self.contactLocationDescription
-            getCoordinate(addressString: self.contactLocationDescription!, completionHandler: { (location, error) in
-                let dispatchGroup = DispatchGroup()
+            
+        } else {
+            
+            //set region/zoom in for map
+            if let name = self.name {
+                self.nameTextField.text = name
+            }
+            if let organization = self.organization {
+                self.organizationTextField.text = organization
+            }
+            if let email = self.email {
+                self.emailTextField.text = email
+            }
+            if let phone = self.phone {
+                self.phoneTextField.text = phone
+            }
+            if (self.image) != nil{
+                self.photoImageView.image = self.image
+            }
+            self.locationMapView.showsUserLocation = false
+            
+            if let _ = self.contactLocationDescription {
+                self.locationTextField.text = self.contactLocationDescription
+                getCoordinate(addressString: self.contactLocationDescription!, completionHandler: { (location, error) in
+                    let dispatchGroup = DispatchGroup()
+                    let anno = MKPointAnnotation()
+                    anno.coordinate = location
+                    self.longitude = anno.coordinate.longitude
+                    self.latitude = anno.coordinate.latitude
+                    let annotations = self.locationMapView.annotations
+                    self.locationMapView.removeAnnotations(annotations)
+                    self.locationMapView.addAnnotation(anno)
+                    self.location = location
+                    let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
+                    let span = MKCoordinateSpanMake(0.1, 0.1)
+                    let region = MKCoordinateRegionMake(coordinate, span)
+                    self.locationMapView.setRegion(region, animated: true)
+                    dispatchGroup.notify(queue: .main, execute: {
+                    })
+                })
+            }  else {
+                let coordinate = getLocation(manager: locationManager)
+                self.location = coordinate
+                reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let anno = MKPointAnnotation()
-                anno.coordinate = location
+                anno.coordinate = coordinate
                 self.longitude = anno.coordinate.longitude
                 self.latitude = anno.coordinate.latitude
                 let annotations = self.locationMapView.annotations
                 self.locationMapView.removeAnnotations(annotations)
                 self.locationMapView.addAnnotation(anno)
-                self.location = location
-                let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
                 let span = MKCoordinateSpanMake(0.1, 0.1)
                 let region = MKCoordinateRegionMake(coordinate, span)
-                self.locationMapView.setRegion(region, animated: true)
-                dispatchGroup.notify(queue: .main, execute: {
-                })
-            })
-        }  else {
-            let coordinate = getLocation(manager: locationManager)
-            self.location = coordinate
-            reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            let anno = MKPointAnnotation()
-            anno.coordinate = coordinate
-            self.longitude = anno.coordinate.longitude
-            self.latitude = anno.coordinate.latitude
-            let annotations = self.locationMapView.annotations
-            self.locationMapView.removeAnnotations(annotations)
-            self.locationMapView.addAnnotation(anno)
-            let span = MKCoordinateSpanMake(0.1, 0.1)
-            let region = MKCoordinateRegionMake(coordinate, span)
-            locationMapView.setRegion(region, animated: true)
+                locationMapView.setRegion(region, animated: true)
+            }
         }
     }
     
@@ -322,7 +325,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             
             items.append(item)
             CoreDataHelper.saveItem()
-            self.dismiss(animated: true, completion: { 
+            self.dismiss(animated: true, completion: {
             })
             
             
