@@ -32,16 +32,6 @@ struct ItemService{
         let entryRef = Database.database().reference().child("Items").child(currentUser.uid).child(entry.key)
         let dict = entry.dictValue
         entryRef.updateChildValues(dict)
-        
-//        var i = 0
-//        while i < User.currentUser.entries.count{
-//            if User.currentUser.entries[i].key == entry.key{
-//                User.currentUser.entries.remove(at: i)
-//                User.currentUser.entries.insert(entry, at: i)
-//                break
-//            }
-//            i += 1
-//        }
     }
     
 }

@@ -34,7 +34,6 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map It Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sz-o9-L0B">
                                         <rect key="frame" x="40" y="0.0" width="212" height="55"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="68" id="oXf-J2-vIi"/>
                                             <constraint firstAttribute="width" constant="212" id="sJg-Yl-MTz"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="25"/>

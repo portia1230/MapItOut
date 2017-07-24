@@ -281,6 +281,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         photoHelper.presentActionSheet(from: self)
         photoHelper.completionHandler = { image in
             self.photoImageView.image = image
+            self.uploadPhotoButton.setTitle("", for: .normal)
         }
     }
     
@@ -322,9 +323,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             let currentUser = User.currentUser
             let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
             
-            var items = CoreDataHelper.retrieveItems()
             let item = CoreDataHelper.newItem()
-            
             item.name = self.nameTextField.text
             item.organization = self.organizationTextField.text
             item.type = self.typeTextField.text
@@ -334,18 +333,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             item.longitude = self.longitude
             item.locationDescription = self.locationTextField.text
             item.key = entryRef.key
-            if self.photoImageView.image == nil{
-                item.image = #imageLiteral(resourceName: "defaultNoItemImage.png")
-            } else {
-                item.image = self.photoImageView.image!
-            }
-            
-            items.append(item)
+            item.image = self.photoImageView.image!
             CoreDataHelper.saveItem()
             self.dismiss(animated: true, completion: {
             })
-            
-            
             let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
             StorageService.uploadHighImage(item.image as! UIImage, at: imageRef) { (downloadURL) in
                 
@@ -361,7 +352,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
         } else {
             let alertController = UIAlertController(title: "", message:
-                "Did you put in a name, and type?", preferredStyle: UIAlertControllerStyle.alert)
+                "Did you put in a name and type?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }

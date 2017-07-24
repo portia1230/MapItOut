@@ -1091,9 +1091,22 @@
                                     <constraint firstAttribute="height" constant="65" id="Fsv-a0-YvJ"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="skf-eh-3vs">
+                                <rect key="frame" x="0.0" y="342" width="375" height="1"/>
+                                <color key="backgroundColor" red="0.81963789460000003" green="0.81962239739999998" blue="0.81963288779999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="eVv-IE-9f0"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultNoItemImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qdj-ZV-Nk3">
+                                <rect key="frame" x="18" y="85" width="140" height="140"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="dym-tL-Edk"/>
+                                    <constraint firstAttribute="height" constant="140" id="eWj-tq-End"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIq-Lk-LqR">
                                 <rect key="frame" x="18" y="85" width="140" height="140"/>
-                                <color key="backgroundColor" red="0.92158538103103638" green="0.92156803607940674" blue="0.92157983779907227" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="IIW-s9-J37"/>
                                     <constraint firstAttribute="height" constant="140" id="ROL-jQ-D1A"/>
@@ -1106,20 +1119,6 @@
                                     <action selector="uploadPhotoButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="ifV-W4-Aq7"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="skf-eh-3vs">
-                                <rect key="frame" x="0.0" y="342" width="375" height="1"/>
-                                <color key="backgroundColor" red="0.81963789460000003" green="0.81962239739999998" blue="0.81963288779999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="eVv-IE-9f0"/>
-                                </constraints>
-                            </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qdj-ZV-Nk3">
-                                <rect key="frame" x="18" y="85" width="140" height="140"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="dym-tL-Edk"/>
-                                    <constraint firstAttribute="height" constant="140" id="eWj-tq-End"/>
-                                </constraints>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahO-NE-g72">
                                 <rect key="frame" x="0.0" y="291" width="375" height="1"/>
                                 <color key="backgroundColor" red="0.81963789460000003" green="0.81962239739999998" blue="0.81963288779999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1527,6 +1526,7 @@
         <image name="List icon.png" width="520" height="520"/>
         <image name="Map Icon.png" width="520" height="520"/>
         <image name="arrowGreen.png" width="550" height="550"/>
+        <image name="defaultNoItemImage.png" width="500" height="500"/>
         <image name="findContact.png" width="250" height="250"/>
         <image name="plusButton200*200.png" width="200" height="200"/>
         <image name="plusImage.png" width="202" height="202"/>

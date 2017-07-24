@@ -32,6 +32,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     
+    var items = [Item]()
+    
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var greenColor = UIColor(red: 64/255, green: 196/255, blue: 128/255, alpha: 1)
@@ -79,7 +81,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let span = MKCoordinateSpanMake(100, 100)
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         self.mapView.setRegion(region, animated: true)
-        let items = CoreDataHelper.retrieveItems()
+        self.items = CoreDataHelper.retrieveItems()
         self.sortedItems = LocationService.rankDistance(items: items)
         filterResults(type: self.typeLabel.text!)
     }
@@ -201,9 +203,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
             self.selectedItem = filteredItems[0]
-            let items = CoreDataHelper.retrieveItems()
+            self.items = CoreDataHelper.retrieveItems()
             var n = 0
-            while n < items.count {
+            while n < self.items.count {
                 if items[n].key == self.selectedItem.key{
                     self.selectedIndex = n
                 }
@@ -284,9 +286,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
             self.selectedItem = filteredItems[0]
-            let items = CoreDataHelper.retrieveItems()
+            self.items = CoreDataHelper.retrieveItems()
             var n = 0
-            while n < items.count {
+            while n < self.items.count {
                 if items[n].key == self.selectedItem.key{
                     self.selectedIndex = n
                 }
@@ -321,7 +323,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if pickerUIView.isHidden == true {
             pickerOptions.removeAll()
             pickerOptions.append("All items")
-            let items = CoreDataHelper.retrieveItems()
+            self.items = CoreDataHelper.retrieveItems()
             for item in items {
                 if pickerOptions.contains(item.type!) == false{
                     self.pickerOptions.append(item.type!)
@@ -397,9 +399,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         } else {
             let coordinate = view.annotation?.coordinate
             self.editedAnno = view.annotation! as! CustomPointAnnotation
-            let items = CoreDataHelper.retrieveItems()
+            self.items = CoreDataHelper.retrieveItems()
             var i = 0
-            while i < items.count{
+            while i < self.items.count{
                 if (items[i].latitude == self.editedAnno.coordinate.latitude) && ( items[i].longitude == self.editedAnno.coordinate.longitude){
                     self.selectedItem = items[i]
                     self.selectedIndex = i
@@ -462,8 +464,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             do {
                 try Auth.auth().signOut()
                 defaults.set("false", forKey:"loadedItems")
-                let items = CoreDataHelper.retrieveItems()
-                for item in items {
+                self.items = CoreDataHelper.retrieveItems()
+                for item in self.items {
                     CoreDataHelper.deleteItems(item: item)
                 }
                 //CoreDataHelper.saveItem()

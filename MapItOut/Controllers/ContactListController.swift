@@ -28,6 +28,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     var keys : [String] = []
     var sortedItems : [Item] = []
+    var items = [Item]()
     var filteredItems : [Item] = []
     var locationDescription = ""
     var selectedIndex = 0
@@ -45,8 +46,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         if pickerUIView.isHidden == true {
             pickerOptions.removeAll()
             pickerOptions.append("All items")
-            let items = CoreDataHelper.retrieveItems()
-            for item in items {
+            self.items = CoreDataHelper.retrieveItems()
+            for item in self.items {
                 if pickerOptions.contains(item.type!) == false{
                     self.pickerOptions.append(item.type!)
                     self.pickerOptions.sort()
@@ -134,8 +135,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         self.pickerUIView.isHidden = true
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        let items = CoreDataHelper.retrieveItems()
-        self.sortedItems = LocationService.rankDistance(items: items)
+        self.items = CoreDataHelper.retrieveItems()
+        self.sortedItems = LocationService.rankDistance(items: self.items)
         filterItems(type: self.typeTextField.text!)
     }
     
@@ -191,9 +192,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
         var i = 0
-        var items = CoreDataHelper.retrieveItems()
+        self.items = CoreDataHelper.retrieveItems()
         while i < self.filteredItems.count {
-            if self.filteredItems[indexPath.row].key == items[i].key{
+            if self.filteredItems[indexPath.row].key == self.items[i].key{
                 self.selectedIndex = i
             }
             i += 1
@@ -246,8 +247,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             do {
                 try Auth.auth().signOut()
                 defaults.set("false", forKey:"loadedItems")
-                let items = CoreDataHelper.retrieveItems()
-                for item in items {
+                self.items = CoreDataHelper.retrieveItems()
+                for item in self.items {
                     CoreDataHelper.deleteItems(item: item)
                 }
             } catch let error as NSError {
