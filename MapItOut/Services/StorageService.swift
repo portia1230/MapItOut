@@ -12,7 +12,7 @@ import Foundation
 
 struct StorageService{
     static func uploadHighImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {
-        guard let imageData = UIImageJPEGRepresentation(image, 2) else {
+        guard let imageData = UIImageJPEGRepresentation(image, 1.0) else {
             return completion(nil)
         }
         reference.putData(imageData, metadata: nil, completion: { (metadata, error) in
