@@ -167,6 +167,18 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     //MARK: - Functions
     
+    @IBAction func addTypeButtonTapped(_ sender: Any) {
+        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as! AddTypePopUpViewController
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.addSubview(popOverVC.view)
+        }, completion: nil)
+        popOverVC.didMove(toParentViewController: self)
+    }
+    
+    
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         // Try to find next responder

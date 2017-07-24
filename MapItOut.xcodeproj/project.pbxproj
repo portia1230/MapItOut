@@ -53,6 +53,7 @@
 		83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB291F12EB5800EDDD91 /* Main.storyboard */; };
 		83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */; };
 		83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E4CB351F12EC2600EDDD91 /* Icon.png */; };
+		83E5002A1F269B5500E69872 /* AddTypePopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E500291F269B5500E69872 /* AddTypePopUpViewController.swift */; };
 		83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EB67661F22A12400BD9BD8 /* placeHolder.png */; };
 		83EB67691F22AA5B00BD9BD8 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB67681F22AA5B00BD9BD8 /* CustomProgressView.swift */; };
 		83EB676B1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB676A1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift */; };
@@ -107,6 +108,7 @@
 		83E4CB291F12EB5800EDDD91 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Storyboards/Main.storyboard; sourceTree = "<group>"; };
 		83E4CB2D1F12EB8100EDDD91 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
 		83E4CB351F12EC2600EDDD91 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Arts/Icon.png; sourceTree = "<group>"; };
+		83E500291F269B5500E69872 /* AddTypePopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddTypePopUpViewController.swift; path = Controllers/AddTypePopUpViewController.swift; sourceTree = "<group>"; };
 		83EB67661F22A12400BD9BD8 /* placeHolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeHolder.png; path = Arts/placeHolder.png; sourceTree = "<group>"; };
 		83EB67681F22AA5B00BD9BD8 /* CustomProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomProgressView.swift; path = CustomClasses/CustomProgressView.swift; sourceTree = "<group>"; };
 		83EB676A1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitalLoadingViewController.swift; path = Controllers/InitalLoadingViewController.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				83777A791F2009730023C51C /* SignInPopUpViewController.swift */,
 				83EB676A1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift */,
 				832C7A3C1F2664630094766A /* ResetEmailViewController.swift */,
+				83E500291F269B5500E69872 /* AddTypePopUpViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				83DDC23A1F1693F90072BCFB /* ContactListController.swift in Sources */,
 				8362EE821F19E1C40055BF6C /* CustomPointAnnotation.swift in Sources */,
 				83533A761F134706002EEE74 /* CustomTableCell.swift in Sources */,
+				83E5002A1F269B5500E69872 /* AddTypePopUpViewController.swift in Sources */,
 				83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */,
 				83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
