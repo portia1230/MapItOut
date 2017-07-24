@@ -22,7 +22,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    //MARK: - Funtions
+    
+    
+    //MARK: - Functions
+    
+    
+    @IBAction func resetButtonTapped(_ sender: Any) {
+        let popOverVC = UIStoryboard(name: "Login", bundle:nil).instantiateViewController(withIdentifier: "ResetEmailViewController") as! ResetEmailViewController
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.addSubview(popOverVC.view)
+        }, completion: nil)
+        popOverVC.didMove(toParentViewController: self)
+    }
     
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
         
@@ -82,17 +95,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return false
-    }
-    
-    @IBAction func resetButtonTapped(_ sender: Any) {
-//        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-        
-//        self.addChildViewController(popOverVC)
-//        popOverVC.view.frame = self.view.frame
-//        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-//            self.view.addSubview(popOverVC.view)
-//        }, completion: nil)
-//        popOverVC.didMove(toParentViewController: self)
     }
     
     //MARK: - Lifecycles

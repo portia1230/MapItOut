@@ -75,7 +75,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //fittng the photo
+        //fittng the photofann
         mapView.delegate = self
         itemImage.layer.cornerRadius = 35
         detailsButton.layer.cornerRadius = 15
@@ -166,6 +166,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let longitude = filteredItems[i].longitude
             let latitude = filteredItems[i].latitude
             let anno = CustomPointAnnotation()
+            
             anno.image = filteredItems[i].image as! UIImage
             anno.indexOfContact = i
             anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
@@ -366,14 +367,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
             annotationView?.canShowCallout = false
+
         } else {
             annotationView?.annotation = annotation
         }
+        
         let custom = annotation as! CustomPointAnnotation
         annotationView?.image = custom.image
         annotationView?.contentMode = UIViewContentMode.scaleAspectFill
         annotationView?.image = userImageForAnnotation(image: custom.image)
         annotationView?.centerOffset = CGPoint(x: 0, y: -43.4135)
+        
         return annotationView
     }
     
@@ -447,7 +451,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             do {
                 try Auth.auth().signOut()
                 defaults.set("false", forKey:"loadedItems")
-                var items = CoreDataHelper.retrieveItems()
+                let items = CoreDataHelper.retrieveItems()
                 for item in items {
                     CoreDataHelper.deleteItems(item: item)
                 }

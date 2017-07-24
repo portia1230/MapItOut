@@ -1387,21 +1387,21 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
-                                <rect key="frame" x="107" y="377" width="160" height="38"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading images, please do not close this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
+                                <rect key="frame" x="87" y="365" width="200" height="73"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="160" id="6KP-6I-PQ0"/>
-                                    <constraint firstAttribute="height" constant="38" id="fWW-1o-4r8"/>
+                                    <constraint firstAttribute="width" constant="200" id="6KP-6I-PQ0"/>
+                                    <constraint firstAttribute="height" constant="73" id="fWW-1o-4r8"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="30"/>
-                                <color key="textColor" red="0.40570312738418579" green="0.75298976898193359" blue="0.52552276849746704" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vqi-E5-Ccj" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="OQF-l7-Sfb"/>
-                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="10" id="UzT-8e-LAM"/>
+                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="-2" id="UzT-8e-LAM"/>
                             <constraint firstItem="LWL-uj-rtC" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="300" id="bcc-FI-Rb0"/>
                             <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="eZr-hH-LlM"/>
                         </constraints>
