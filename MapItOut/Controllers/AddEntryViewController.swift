@@ -286,8 +286,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     func getLocation(manager: CLLocationManager) -> CLLocationCoordinate2D {
-        guard let locValue:CLLocationCoordinate2D = manager.location!.coordinate else{
-            let locValue = CLLocationCoordinate2DMake(0.0, 0.0)
+        var locValue = CLLocationCoordinate2D()
+        if manager.location == nil {
+            locValue = CLLocationCoordinate2DMake(0.0, 0.0)
+        } else {
+            locValue = manager.location!.coordinate
         }
         return locValue
     }

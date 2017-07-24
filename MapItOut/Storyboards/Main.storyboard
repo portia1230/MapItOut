@@ -390,8 +390,8 @@
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APm-fK-a3O">
                                 <rect key="frame" x="15" y="30" width="73" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="Yn4-h3-R80"/>
-                                    <constraint firstAttribute="width" constant="73" id="xp8-se-KR3"/>
+                                    <constraint firstAttribute="width" constant="73" id="8Gx-Eb-EaG"/>
+                                    <constraint firstAttribute="height" constant="24" id="9TJ-MR-s3p"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                 <state key="normal" title="Cancel">
@@ -406,13 +406,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="OMD-xb-Drs" firstAttribute="top" secondItem="IbE-9A-UlL" secondAttribute="bottom" id="8DB-fc-7Wh"/>
+                            <constraint firstItem="APm-fK-a3O" firstAttribute="top" secondItem="Nbw-KQ-iLJ" secondAttribute="bottom" constant="10" id="8mS-rB-cR9"/>
                             <constraint firstItem="IbE-9A-UlL" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="LCR-Sk-0gS"/>
                             <constraint firstItem="SUU-7X-VLL" firstAttribute="top" secondItem="eVe-So-qd9" secondAttribute="top" id="LZW-5b-X3G"/>
-                            <constraint firstItem="APm-fK-a3O" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" constant="15" id="SLV-5f-Jw7"/>
-                            <constraint firstItem="APm-fK-a3O" firstAttribute="top" secondItem="eVe-So-qd9" secondAttribute="top" constant="30" id="Y88-TZ-xRp"/>
                             <constraint firstAttribute="trailing" secondItem="SUU-7X-VLL" secondAttribute="trailing" id="cdp-xW-lf7"/>
+                            <constraint firstItem="IbE-9A-UlL" firstAttribute="top" secondItem="SUU-7X-VLL" secondAttribute="bottom" constant="43" id="cza-Vb-bZq"/>
                             <constraint firstAttribute="trailing" secondItem="IbE-9A-UlL" secondAttribute="trailing" id="fxi-py-haV"/>
-                            <constraint firstItem="IbE-9A-UlL" firstAttribute="top" secondItem="APm-fK-a3O" secondAttribute="bottom" constant="54" id="o7i-Pz-P8o"/>
+                            <constraint firstItem="APm-fK-a3O" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" constant="15" id="tfU-dg-L0C"/>
                             <constraint firstItem="SUU-7X-VLL" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="x8B-Xj-CCk"/>
                         </constraints>
                     </view>
