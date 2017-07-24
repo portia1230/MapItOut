@@ -19,6 +19,7 @@ import FirebaseStorage
 class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate {
     
     //MARK: - Properties
+    @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var typeTextField: UILabel!
@@ -138,11 +139,16 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     func filterItems(type : String){
         self.sortedItems = LocationService.rankDistance(items: CoreDataHelper.retrieveItems())
         self.filteredItems.removeAll()
-        for item in self.sortedItems{
-            if item.type == type{
-                self.filteredItems.append(item)
+        if type == "All items"{
+            self.filteredItems = self.sortedItems
+        } else {
+            for item in self.sortedItems{
+                if item.type == type{
+                    self.filteredItems.append(item)
+                }
             }
         }
+        self.numberCountLabel.text = String( self.filteredItems.count)
         self.tableView.reloadData()
     }
     

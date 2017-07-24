@@ -97,6 +97,15 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mzj-wH-jWw">
+                                        <rect key="frame" x="90" y="32" width="58" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="AUm-tm-8oc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -107,6 +116,9 @@
                                     <constraint firstItem="w3S-ND-UvS" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="top" constant="32" id="InO-Zm-Fr1"/>
                                     <constraint firstAttribute="trailing" secondItem="cAt-mG-5ko" secondAttribute="trailing" constant="15" id="Png-Ob-xG3"/>
                                     <constraint firstItem="184-br-Nvt" firstAttribute="leading" secondItem="Il2-bD-Edi" secondAttribute="trailing" constant="20" id="Q2t-99-qsN"/>
+                                    <constraint firstItem="2Wx-FP-xSg" firstAttribute="leading" secondItem="Mzj-wH-jWw" secondAttribute="trailing" constant="7" id="SrU-Aj-t2a"/>
+                                    <constraint firstItem="Mzj-wH-jWw" firstAttribute="top" secondItem="aSz-Hc-R3b" secondAttribute="top" constant="32" id="V2t-Rf-FJc"/>
+                                    <constraint firstItem="Mzj-wH-jWw" firstAttribute="leading" secondItem="w3S-ND-UvS" secondAttribute="trailing" constant="5" id="WML-Dk-dln"/>
                                     <constraint firstItem="2Wx-FP-xSg" firstAttribute="leading" secondItem="Il2-bD-Edi" secondAttribute="trailing" constant="64" id="ZMu-EZ-Aii"/>
                                     <constraint firstItem="ail-dN-9Ge" firstAttribute="leading" secondItem="aSz-Hc-R3b" secondAttribute="leading" constant="17" id="cQe-sT-ddi"/>
                                     <constraint firstItem="Il2-bD-Edi" firstAttribute="leading" secondItem="Zd9-LZ-kYG" secondAttribute="trailing" constant="-2" id="dDX-CI-XdB"/>
@@ -298,6 +310,7 @@
                         <outlet property="itemTypeLabel" destination="EWo-dO-CNT" id="wxJ-6j-Q2d"/>
                         <outlet property="locationImage" destination="c5z-Sq-t6j" id="TLn-2s-rev"/>
                         <outlet property="mapView" destination="gZu-wW-qCT" id="5KU-Qc-gNO"/>
+                        <outlet property="numberCountLabel" destination="Mzj-wH-jWw" id="1yL-g4-hOg"/>
                         <outlet property="pickerUIView" destination="JRB-lZ-ICl" id="47o-47-ecH"/>
                         <outlet property="pickerView" destination="6Sd-yB-deR" id="BrU-Zq-dyd"/>
                         <outlet property="typeLabel" destination="2Wx-FP-xSg" id="4RQ-2S-kII"/>
@@ -308,7 +321,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xoh-YE-JaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="670" y="-385"/>
+            <point key="canvasLocation" x="669.60000000000002" y="-385.45727136431788"/>
         </scene>
         <!--Contacts View Controller-->
         <scene sceneID="foj-Qk-OZ0">
@@ -949,6 +962,15 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBf-32-iAG">
+                                        <rect key="frame" x="90" y="32" width="58" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="XAj-zC-9A6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -956,10 +978,12 @@
                                     <constraint firstItem="l8a-mg-7TL" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="20" id="0ku-1B-FbS"/>
                                     <constraint firstItem="p5N-DO-Qeg" firstAttribute="leading" secondItem="iGs-l4-Jqo" secondAttribute="leading" constant="17" id="0og-eG-Su2"/>
                                     <constraint firstItem="rvb-eG-YDV" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="32" id="14B-AP-S0f"/>
+                                    <constraint firstItem="Ufm-Dl-cws" firstAttribute="leading" secondItem="aBf-32-iAG" secondAttribute="trailing" constant="7" id="8MH-yr-6wy"/>
                                     <constraint firstItem="CIp-Dc-93Z" firstAttribute="leading" secondItem="iGs-l4-Jqo" secondAttribute="leading" constant="60" id="8pJ-5d-tlT"/>
                                     <constraint firstItem="4gu-QI-yXo" firstAttribute="leading" secondItem="l8a-mg-7TL" secondAttribute="trailing" constant="2" id="9cg-w3-Tsd"/>
                                     <constraint firstItem="l8a-mg-7TL" firstAttribute="leading" secondItem="iGs-l4-Jqo" secondAttribute="leading" constant="5" id="H6u-wE-1gz"/>
                                     <constraint firstItem="4gu-QI-yXo" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="20" id="P8f-Pq-zVA"/>
+                                    <constraint firstItem="aBf-32-iAG" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="32" id="Pjq-R4-wgx"/>
                                     <constraint firstItem="Ufm-Dl-cws" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="31" id="R0b-fV-gz9"/>
                                     <constraint firstAttribute="trailing" secondItem="ti0-Dn-HJv" secondAttribute="trailing" constant="5" id="XeS-LW-nlq"/>
                                     <constraint firstItem="p5N-DO-Qeg" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="32" id="a7C-Hp-FHi"/>
@@ -968,6 +992,7 @@
                                     <constraint firstItem="CIp-Dc-93Z" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="32" id="fqi-PC-b2O"/>
                                     <constraint firstItem="wDB-EJ-p14" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="23" id="g9k-ro-9yo"/>
                                     <constraint firstItem="ti0-Dn-HJv" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="top" constant="25" id="gKD-HI-07d"/>
+                                    <constraint firstItem="aBf-32-iAG" firstAttribute="leading" secondItem="CIp-Dc-93Z" secondAttribute="trailing" constant="5" id="iNN-lP-cbV"/>
                                     <constraint firstAttribute="trailing" secondItem="rvb-eG-YDV" secondAttribute="trailing" constant="15" id="ipf-zE-F3t"/>
                                     <constraint firstItem="ti0-Dn-HJv" firstAttribute="leading" secondItem="wDB-EJ-p14" secondAttribute="trailing" constant="15" id="lUS-Wh-i79"/>
                                     <constraint firstItem="Ufm-Dl-cws" firstAttribute="leading" secondItem="4gu-QI-yXo" secondAttribute="trailing" constant="60" id="ucH-Ph-krK"/>
@@ -1009,6 +1034,7 @@
                     </view>
                     <connections>
                         <outlet property="filterButton" destination="wDB-EJ-p14" id="hz0-ju-zjf"/>
+                        <outlet property="numberCountLabel" destination="aBf-32-iAG" id="BtR-Qn-Yhk"/>
                         <outlet property="pickerUIView" destination="J9U-kz-RLa" id="83M-vi-NSs"/>
                         <outlet property="pickerView" destination="PiW-QX-JjJ" id="0rA-T1-m13"/>
                         <outlet property="tableView" destination="c0R-kg-YAL" id="sXB-Wd-BDx"/>
@@ -1445,8 +1471,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h3e-dj-j96"/>
-        <segue reference="sz0-VJ-i1G"/>
+        <segue reference="9ej-53-kgX"/>
+        <segue reference="e1G-mV-pNx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

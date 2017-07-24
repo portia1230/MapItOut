@@ -22,13 +22,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="PSx-ME-uyD">
-                                <rect key="frame" x="23" y="498" width="150" height="150"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="ZxD-gB-lyv"/>
-                                    <constraint firstAttribute="width" constant="150" id="amY-8i-hkP"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map It Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sz-o9-L0B">
                                 <rect key="frame" x="137" y="539" width="212" height="68"/>
                                 <constraints>
@@ -39,16 +32,25 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePin.png" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThO-K8-4vn">
+                                <rect key="frame" x="56" y="517" width="80" height="110"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="77S-Sh-FlU"/>
+                                    <constraint firstAttribute="width" constant="80" id="rZy-QL-vsF"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.86669296026229858" green="0.3698144257068634" blue="0.34123608469963074" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="PSx-ME-uyD" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="7" id="8cj-Ot-HT9"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="PSx-ME-uyD" secondAttribute="bottom" constant="19" id="MXY-Wi-LQA"/>
+                            <constraint firstItem="ThO-K8-4vn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="40" id="4Gp-eQ-jLd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7Sz-o9-L0B" secondAttribute="trailing" constant="10" id="Tfs-gs-CNv"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="7Sz-o9-L0B" secondAttribute="bottom" constant="60" id="b5n-QX-as2"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="ThO-K8-4vn" secondAttribute="bottom" constant="40" id="xwW-k3-MUg"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -56,6 +58,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="redIcon.png" width="391" height="390"/>
+        <image name="whitePin.png" width="200" height="275"/>
     </resources>
 </document>

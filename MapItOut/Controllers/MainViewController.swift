@@ -19,6 +19,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Properties
     
+    
+    @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var pickerUIView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var locationImage: UIImageView!
@@ -242,7 +244,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 }
             }
         }
-        
+        self.numberCountLabel.text = String( self.filteredItems.count)
         self.mapView.removeAnnotations(self.mapView.annotations)
         
         var i = 0
