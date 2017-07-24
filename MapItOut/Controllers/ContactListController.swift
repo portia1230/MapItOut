@@ -85,6 +85,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 }
             }
         }
+        self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
         self.tableView.reloadData()
         self.pickerUIView.isHidden = true
     }
@@ -148,7 +149,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 }
             }
         }
-        self.numberCountLabel.text = String( self.filteredItems.count)
+        self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
         self.tableView.reloadData()
     }
     
