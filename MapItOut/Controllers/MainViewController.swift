@@ -499,8 +499,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.locationImage.image = #imageLiteral(resourceName: "findContact.png")
             self.locationManager.stopUpdatingHeading()
             self.mapView.isRotateEnabled = false
-            self.isUpdatingHeading = false
-            usleep(500000) //sleep for 0.1 second
+            isUpdatingHeading = false
+            self.mapView.camera.heading = 0.0
             let span = MKCoordinateSpanMake(100, 100)
             let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
             self.mapView.setRegion(region, animated: true)
