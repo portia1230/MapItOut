@@ -554,7 +554,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-IY-Rap">
-                                        <rect key="frame" x="10" y="10" width="140" height="140"/>
+                                        <rect key="frame" x="13" y="10" width="140" height="140"/>
                                         <color key="backgroundColor" red="0.91374325752258301" green="0.9137260913848877" blue="0.91373777389526367" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="Drg-F1-pox"/>
@@ -711,7 +711,7 @@
                                     <constraint firstItem="uLu-Wt-jmp" firstAttribute="top" secondItem="Ehb-qa-Ms6" secondAttribute="bottom" constant="10" id="qSc-Ig-Jib"/>
                                     <constraint firstItem="jXS-Cq-p06" firstAttribute="top" secondItem="cvz-uI-0tL" secondAttribute="bottom" constant="10" id="rSY-VW-Zzt"/>
                                     <constraint firstItem="dA3-VB-E9q" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="top" constant="217" id="raP-j1-Ey5"/>
-                                    <constraint firstItem="ryj-IY-Rap" firstAttribute="leading" secondItem="Cmk-SS-nsi" secondAttribute="leading" constant="10" id="rxU-0n-o2i"/>
+                                    <constraint firstItem="ryj-IY-Rap" firstAttribute="leading" secondItem="Cmk-SS-nsi" secondAttribute="leading" constant="13" id="rxU-0n-o2i"/>
                                     <constraint firstItem="yI8-jM-mNj" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="top" constant="10" id="tcg-py-xm5"/>
                                     <constraint firstAttribute="trailing" secondItem="4qv-xk-dbw" secondAttribute="trailing" constant="15" id="v1g-mq-bF9"/>
                                     <constraint firstAttribute="trailing" secondItem="0wi-mG-uzg" secondAttribute="trailing" constant="25" id="vTM-Im-bUu"/>

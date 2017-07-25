@@ -337,26 +337,23 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             newItem.key = entryRef.key
             
             if self.photoImageView.image == nil{
-                newItem.image = UIImage(named: "noContactImage.png")
-                CoreDataHelper.saveItem()
+                newItem.image = #imageLiteral(resourceName: "noContactImage.png")
             } else {
                 newItem.image = self.photoImageView.image!
-                CoreDataHelper.saveItem()
             }
+            
+            CoreDataHelper.saveItem()
+            
             self.dismiss(animated: true, completion: {
-                
                 let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
                 StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
                     
                     guard let downloadURL = downloadURL else {
                         return
                     }
-                    
                     let urlString = downloadURL.absoluteString
                     let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
-                    
                     ItemService.addEntry(entry: entry)
-                    
                 }
             })
         } else {
