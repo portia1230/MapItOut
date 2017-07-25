@@ -264,6 +264,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     func filterResults( type: String){
         self.filteredItems.removeAll()
+        self.sortedItems = LocationService.rankDistance(items: CoreDataHelper.retrieveItems())
         if type == "All items"{
             self.filteredItems = self.sortedItems
         } else {

@@ -555,13 +555,12 @@
                                     </label>
                                     <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryj-IY-Rap">
                                         <rect key="frame" x="13" y="10" width="140" height="140"/>
-                                        <color key="backgroundColor" red="0.91374325752258301" green="0.9137260913848877" blue="0.91373777389526367" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="Drg-F1-pox"/>
                                             <constraint firstAttribute="height" constant="140" id="Z4A-Z0-xrQ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
-                                        <state key="normal" title="Change image">
+                                        <state key="normal">
                                             <color key="titleColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
