@@ -19,7 +19,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Properties
     
-    
     @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var pickerUIView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -68,7 +67,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             alertController.addAction(cancel)
             self.present(alertController, animated: true, completion: nil)
         }
-
+        
         self.typeLabel.text = defaults.string(forKey: "type")
         self.pickerUIView.isHidden = true
         self.pickerView.delegate = self
@@ -91,32 +90,43 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     override func viewDidLoad() {
         super.viewDidLoad()
         //fittng the photofann
-        mapView.delegate = self
-        itemImage.layer.cornerRadius = 35
-        detailsButton.layer.cornerRadius = 15
-        itemImage.clipsToBounds = true
-        locationManager.delegate = self
-        let loadedItems = defaults.string(forKey: "loadedItems")
-        defaults.set("All items", forKey: "type")
-        
-        if loadedItems == "false" {
-        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
-        
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
-        UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(popOverVC.view)
-        }, completion: nil)
-        popOverVC.didMove(toParentViewController: self)
-        defaults.set("true", forKey:"loadedItems")
-        }
-        authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
-            guard user == nil else { return }
+        if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+            let alertController = UIAlertController(title: nil, message:
+                "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+            let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                self.viewDidLoad()
+            })
+            alertController.addAction(cancel)
+            self.present(alertController, animated: true, completion: nil)
+        } else {
             
-            let loginViewController = UIStoryboard.initialViewController(for: .login)
-            self.view.window?.rootViewController = loginViewController
-            self.view.window?.makeKeyAndVisible()
-            defaults.set("false", forKey:"loadedItems")
+            mapView.delegate = self
+            itemImage.layer.cornerRadius = 35
+            detailsButton.layer.cornerRadius = 15
+            itemImage.clipsToBounds = true
+            locationManager.delegate = self
+            let loadedItems = defaults.string(forKey: "loadedItems")
+            defaults.set("All items", forKey: "type")
+            
+            if loadedItems == "false" {
+                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+                
+                self.addChildViewController(popOverVC)
+                popOverVC.view.frame = self.view.frame
+                UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.addSubview(popOverVC.view)
+                }, completion: nil)
+                popOverVC.didMove(toParentViewController: self)
+                defaults.set("true", forKey:"loadedItems")
+            }
+            authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+                guard user == nil else { return }
+                
+                let loginViewController = UIStoryboard.initialViewController(for: .login)
+                self.view.window?.rootViewController = loginViewController
+                self.view.window?.makeKeyAndVisible()
+                defaults.set("false", forKey:"loadedItems")
+            }
         }
     }
     
@@ -142,7 +152,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     
-    //MARK: - Picker view delegate functions 
+    //MARK: - Picker view delegate functions
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.pickerOptions.count
@@ -231,7 +241,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.detailsButton.isEnabled = true
             self.detailsButton.backgroundColor = greenColor
         }
-
+        
         self.pickerUIView.isHidden = true
     }
     
@@ -316,7 +326,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         
         self.pickerUIView.isHidden = true
-
+        
     }
     
     @IBAction func filterButtonTapped(_ sender: Any) {
@@ -380,7 +390,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
             annotationView?.canShowCallout = false
-
+            
         } else {
             annotationView?.annotation = annotation
         }

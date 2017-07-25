@@ -13,14 +13,13 @@ class InitalLoadingViewController: UIViewController {
     
     //MARK: - Properties
     
-    @IBOutlet weak var progressView: UIProgressView!
-
+    @IBOutlet weak var progressLabel: UILabel!
+    
     
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.progressView.layer.cornerRadius = 15
         // Do any additional setup after loading the view.
     }
     
@@ -28,13 +27,19 @@ class InitalLoadingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         
-        progressView.setProgress(0.0, animated: true)
-        //circularProgress.progress = 10
-        
         UserService.items(for: User.currentUser, completion: { (entries) in
-            var i = 0
+            
+            var i = 0 {
+                didSet {
+                    DispatchQueue.main.async {
+                        self.progressLabel.text = "\(i)/\(entries.count)"
+                    }
+                }
+            }
+            
+            self.progressLabel.text = "0/\(entries.count)"
             if entries.count != 0{
-                let increaseAngle = Float( 1 / (entries.count) )
+                let increaseAngle = Float( 1.0/(Double(entries.count)) )
                 while i < entries.count{
                     let imageView = UIImageView()
                     let url = URL(string: entries[i].imageURL)
@@ -53,7 +58,7 @@ class InitalLoadingViewController: UIViewController {
                     item.key = entries[i].key
                     item.image = imageView.image
                     CoreDataHelper.saveItem()
-                    self.progressView.setProgress(self.progressView.progress + increaseAngle, animated: true)
+                    
                     
                     if i == entries.count - 1{
                         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
@@ -61,15 +66,15 @@ class InitalLoadingViewController: UIViewController {
                             self.view.removeFromSuperview()
                         })
                     }
-                    
                     i += 1
-
                 }
             } else{
                 self.parent?.viewWillAppear(true)
                 self.view.removeFromSuperview()
             }
         })
+        
+        
     }
     
     override func didReceiveMemoryWarning() {

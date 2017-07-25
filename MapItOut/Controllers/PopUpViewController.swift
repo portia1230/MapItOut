@@ -304,12 +304,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     item.type = self.typeTextField.text
                     item.phone = self.phoneTextField.text
                     
+                    CoreDataHelper.saveItem()
+                    parent.updateValue(item: item)
+                    
                     UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                         self.view.removeFromSuperview()
                     }, completion: nil)
-                    
-                    parent.updateValue(item: item)
-                    CoreDataHelper.saveItem()
                     
                     let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedItem.key)!).jpg")
                     imageRef.delete(completion: nil)
@@ -344,13 +344,13 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     CoreDataHelper.saveItem()
                     parent.updateValue(item: item)
                     
-                    let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
-                    imageRef.delete(completion: nil)
-                    let newImageRef = StorageReference.newContactImageReference(key: item.key!)
-                    
                     UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                         self.view.removeFromSuperview()
                     }, completion: nil)
+                    
+                    let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
+                    imageRef.delete(completion: nil)
+                    let newImageRef = StorageReference.newContactImageReference(key: item.key!)
                     
                     StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
                         guard let downloadURL = downloadURL else {

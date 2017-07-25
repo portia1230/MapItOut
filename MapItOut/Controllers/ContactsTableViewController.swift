@@ -20,8 +20,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     var contacts = [CNContact]()
     var results = [CNContact]()
     var contactStore = CNContactStore()
-    var sectionName = [String]()
-    
     @IBOutlet weak var tableView: UITableView!
     var geocoder = CLGeocoder()
     @IBOutlet weak var searchBar: UISearchBar!

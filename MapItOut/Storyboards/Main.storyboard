@@ -1397,7 +1397,7 @@
                                         <rect key="frame" x="15" y="5" width="303" height="35"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1438,18 +1438,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="61O-rz-YSV">
-                                <rect key="frame" x="76" y="320" width="222" height="10"/>
-                                <color key="backgroundColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <color key="tintColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="222" id="AuD-gS-H5A"/>
-                                    <constraint firstAttribute="height" constant="10" id="Jep-yE-BP0"/>
-                                </constraints>
-                                <color key="trackTintColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                            </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading images, do not close this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
-                                <rect key="frame" x="76" y="320" width="222" height="73"/>
+                                <rect key="frame" x="76" y="305" width="222" height="73"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="73" id="ofm-j3-OeO"/>
                                     <constraint firstAttribute="width" constant="222" id="ohZ-HN-TjI"/>
@@ -1458,17 +1448,27 @@
                                 <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6c-x1-rVZ">
+                                <rect key="frame" x="26" y="220" width="323" height="104"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="104" id="v0s-Dp-tNl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="85"/>
+                                <color key="textColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="300" id="CRd-GU-zKU"/>
-                            <constraint firstItem="61O-rz-YSV" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="300" id="ISx-6b-CG3"/>
-                            <constraint firstItem="61O-rz-YSV" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="NV5-CO-rmY"/>
+                            <constraint firstItem="I6c-x1-rVZ" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="200" id="Abw-va-RsN"/>
+                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="285" id="CRd-GU-zKU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="I6c-x1-rVZ" secondAttribute="trailing" constant="10" id="GdV-Xi-oXi"/>
                             <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="QkZ-45-2mJ"/>
+                            <constraint firstItem="I6c-x1-rVZ" firstAttribute="leading" secondItem="r17-wD-LoA" secondAttribute="leadingMargin" constant="10" id="aaJ-9C-KDY"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="progressView" destination="61O-rz-YSV" id="JDw-4F-R3y"/>
+                        <outlet property="progressLabel" destination="I6c-x1-rVZ" id="CjE-6b-pfD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9RL-hJ-m8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
