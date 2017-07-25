@@ -67,7 +67,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             alertController.addAction(cancel)
             self.present(alertController, animated: true, completion: nil)
         }
-        
+        if defaults.string(forKey: "type") == nil{
+            defaults.set("All items", forKey: "type")
+        }
         self.typeLabel.text = defaults.string(forKey: "type")
         self.pickerUIView.isHidden = true
         self.pickerView.delegate = self
@@ -81,6 +83,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
         self.mapView.setRegion(region, animated: true)
         self.items = CoreDataHelper.retrieveItems()
+        
         self.sortedItems = LocationService.rankDistance(items: items)
         filterResults(type: self.typeLabel.text!)
     }
@@ -89,6 +92,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        itemImage.layer.cornerRadius = 35
+        detailsButton.layer.cornerRadius = 15
+        itemImage.clipsToBounds = true
+
         //fittng the photofann
         if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
             let alertController = UIAlertController(title: nil, message:
@@ -99,34 +107,34 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             alertController.addAction(cancel)
             self.present(alertController, animated: true, completion: nil)
         } else {
+        
+        mapView.delegate = self
+        itemImage.layer.cornerRadius = 35
+        detailsButton.layer.cornerRadius = 15
+        itemImage.clipsToBounds = true
+        locationManager.delegate = self
+        let loadedItems = defaults.string(forKey: "loadedItems")
+        defaults.set("All items", forKey: "type")
+        
+        if loadedItems == "false" {
+        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+        
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
+            self.view.addSubview(popOverVC.view)
+        }, completion: nil)
+        popOverVC.didMove(toParentViewController: self)
+        defaults.set("true", forKey:"loadedItems")
+        }
+        authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+            guard user == nil else { return }
             
-            mapView.delegate = self
-            itemImage.layer.cornerRadius = 35
-            detailsButton.layer.cornerRadius = 15
-            itemImage.clipsToBounds = true
-            locationManager.delegate = self
-            let loadedItems = defaults.string(forKey: "loadedItems")
-            defaults.set("All items", forKey: "type")
-            
-            if loadedItems == "false" {
-                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
-                
-                self.addChildViewController(popOverVC)
-                popOverVC.view.frame = self.view.frame
-                UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
-                    self.view.addSubview(popOverVC.view)
-                }, completion: nil)
-                popOverVC.didMove(toParentViewController: self)
-                defaults.set("true", forKey:"loadedItems")
-            }
-            authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
-                guard user == nil else { return }
-                
-                let loginViewController = UIStoryboard.initialViewController(for: .login)
-                self.view.window?.rootViewController = loginViewController
-                self.view.window?.makeKeyAndVisible()
-                defaults.set("false", forKey:"loadedItems")
-            }
+            let loginViewController = UIStoryboard.initialViewController(for: .login)
+            self.view.window?.rootViewController = loginViewController
+            self.view.window?.makeKeyAndVisible()
+            defaults.set("false", forKey:"loadedItems")
+        }
         }
     }
     
@@ -152,7 +160,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     
-    //MARK: - Picker view delegate functions
+    //MARK: - Picker view delegate functions 
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.pickerOptions.count
@@ -241,7 +249,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.detailsButton.isEnabled = true
             self.detailsButton.backgroundColor = greenColor
         }
-        
+
         self.pickerUIView.isHidden = true
     }
     
@@ -326,7 +334,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         
         self.pickerUIView.isHidden = true
-        
+
     }
     
     @IBAction func filterButtonTapped(_ sender: Any) {
@@ -390,7 +398,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
             annotationView?.canShowCallout = false
-            
+
         } else {
             annotationView?.annotation = annotation
         }

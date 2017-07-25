@@ -39,6 +39,7 @@
 		83A00C791F14B6A90033E821 /* Rory.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C781F14B6A90033E821 /* Rory.jpg */; };
 		83A43C461F1D75E3000F4324 /* findContact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A43C441F1D75E3000F4324 /* findContact.png */; };
 		83A43C471F1D75E3000F4324 /* selectedFindcontact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A43C451F1D75E3000F4324 /* selectedFindcontact.png */; };
+		83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AEF55D1F27DD68005AE7D3 /* noContactImage.png */; };
 		83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */; };
 		83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */; };
 		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
@@ -91,6 +92,7 @@
 		83A00C781F14B6A90033E821 /* Rory.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Rory.jpg; sourceTree = "<group>"; };
 		83A43C441F1D75E3000F4324 /* findContact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = findContact.png; path = Arts/findContact.png; sourceTree = "<group>"; };
 		83A43C451F1D75E3000F4324 /* selectedFindcontact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selectedFindcontact.png; path = Arts/selectedFindcontact.png; sourceTree = "<group>"; };
+		83AEF55D1F27DD68005AE7D3 /* noContactImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noContactImage.png; path = Arts/noContactImage.png; sourceTree = "<group>"; };
 		83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelper.swift; path = Helpers/CoreDataHelper.swift; sourceTree = "<group>"; };
 		83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopUpViewController.swift; path = Controllers/PopUpViewController.swift; sourceTree = "<group>"; };
 		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
+				83AEF55D1F27DD68005AE7D3 /* noContactImage.png */,
 				832C7A3E1F266F6E0094766A /* whitePin.png */,
 				8391492A1F240FA100D1E959 /* filter.png */,
 				839149261F23195300D1E959 /* defaultNoItemImage.png */,
@@ -371,6 +374,7 @@
 				83A00C771F14B40B0033E821 /* Map Icon.png in Resources */,
 				839149271F23195300D1E959 /* defaultNoItemImage.png in Resources */,
 				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
+				83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
 				832E167C1F1BF2BE005FCE55 /* whiteGearImage.png in Resources */,
 				83A00C761F14B40B0033E821 /* List icon.png in Resources */,

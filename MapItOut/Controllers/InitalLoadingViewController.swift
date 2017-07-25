@@ -15,7 +15,6 @@ class InitalLoadingViewController: UIViewController {
     
     @IBOutlet weak var progressLabel: UILabel!
     
-    
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
@@ -28,17 +27,11 @@ class InitalLoadingViewController: UIViewController {
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         
         UserService.items(for: User.currentUser, completion: { (entries) in
-            
-            var i = 0 {
-                didSet {
-                    DispatchQueue.main.async {
-                        self.progressLabel.text = "\(i)/\(entries.count)"
-                    }
-                }
-            }
-            
+    
             self.progressLabel.text = "0/\(entries.count)"
+            
             if entries.count != 0{
+                var i = 0
                 while i < entries.count{
                     let imageView = UIImageView()
                     let url = URL(string: entries[i].imageURL)
@@ -58,7 +51,8 @@ class InitalLoadingViewController: UIViewController {
                     item.image = imageView.image
                     CoreDataHelper.saveItem()
                     
-                    
+                    self.progressLabel.text = "\(i)/\(entries.count)"
+                    print(i)
                     if i == entries.count - 1{
                         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                             self.parent?.viewWillAppear(true)
@@ -72,6 +66,8 @@ class InitalLoadingViewController: UIViewController {
                 self.view.removeFromSuperview()
             }
         })
+        
+        
         
         
     }
