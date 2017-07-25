@@ -321,7 +321,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBAction func addContactButtonTapped(_ sender: Any) {
         
         if self.nameTextField.text != "",
-            self.typeTextField.text != "Select type"{
+            self.typeTextField.text != "Select type",
+            self.photoImageView.image != nil{
             
             let currentUser = User.currentUser
             let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
@@ -355,7 +356,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
         } else {
             let alertController = UIAlertController(title: "", message:
-                "Did you put in a name and type?", preferredStyle: UIAlertControllerStyle.alert)
+                "Did you put in a name, image and type?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }

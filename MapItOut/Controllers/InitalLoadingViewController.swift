@@ -39,7 +39,6 @@ class InitalLoadingViewController: UIViewController {
             
             self.progressLabel.text = "0/\(entries.count)"
             if entries.count != 0{
-                let increaseAngle = Float( 1.0/(Double(entries.count)) )
                 while i < entries.count{
                     let imageView = UIImageView()
                     let url = URL(string: entries[i].imageURL)
