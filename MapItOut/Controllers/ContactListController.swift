@@ -236,6 +236,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             imageRef.delete(completion: nil)
             
             ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
+            self.filteredItems.remove(at: indexPath.row)
             CoreDataHelper.deleteItems(item: self.sortedItems[selectedIndex])
             self.tableView.reloadData()
         }
