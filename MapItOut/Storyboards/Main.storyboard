@@ -1438,46 +1438,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqi-E5-Ccj" customClass="CustomCircularProgress" customModule="MapItOut" customModuleProvider="target">
-                                <rect key="frame" x="87" y="167" width="200" height="200"/>
-                                <color key="backgroundColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="61O-rz-YSV">
+                                <rect key="frame" x="76" y="320" width="222" height="10"/>
+                                <color key="backgroundColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="gih-Ez-Fsc"/>
-                                    <constraint firstAttribute="width" constant="200" id="wEN-2D-45k"/>
+                                    <constraint firstAttribute="width" constant="222" id="AuD-gS-H5A"/>
+                                    <constraint firstAttribute="height" constant="10" id="Jep-yE-BP0"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="angle">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="startAngle">
-                                        <real key="value" value="-90"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clockwise" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="trackColor">
-                                        <color key="value" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="trackThickness">
-                                        <real key="value" value="0.59999999999999998"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="progressThickness">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="glowAmount">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="IBColor1">
-                                        <color key="value" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="IBColor3">
-                                        <color key="value" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading images, please do not close this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
-                                <rect key="frame" x="87" y="365" width="200" height="73"/>
+                                <color key="trackTintColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading images, do not close this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
+                                <rect key="frame" x="76" y="320" width="222" height="73"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="6KP-6I-PQ0"/>
-                                    <constraint firstAttribute="height" constant="73" id="fWW-1o-4r8"/>
+                                    <constraint firstAttribute="height" constant="73" id="ofm-j3-OeO"/>
+                                    <constraint firstAttribute="width" constant="222" id="ohZ-HN-TjI"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1486,14 +1461,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vqi-E5-Ccj" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="OQF-l7-Sfb"/>
-                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="-2" id="UzT-8e-LAM"/>
-                            <constraint firstItem="LWL-uj-rtC" firstAttribute="top" secondItem="vqi-E5-Ccj" secondAttribute="bottom" constant="300" id="bcc-FI-Rb0"/>
-                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="eZr-hH-LlM"/>
+                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="300" id="CRd-GU-zKU"/>
+                            <constraint firstItem="61O-rz-YSV" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="300" id="ISx-6b-CG3"/>
+                            <constraint firstItem="61O-rz-YSV" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="NV5-CO-rmY"/>
+                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="QkZ-45-2mJ"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="circularProgress" destination="vqi-E5-Ccj" id="NrK-qS-hKt"/>
+                        <outlet property="progressView" destination="61O-rz-YSV" id="JDw-4F-R3y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9RL-hJ-m8F" userLabel="First Responder" sceneMemberID="firstResponder"/>
