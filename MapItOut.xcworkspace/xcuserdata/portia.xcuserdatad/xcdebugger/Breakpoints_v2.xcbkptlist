@@ -42,7 +42,7 @@
                   moduleName = "MapItOut"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/portia/Desktop/makeschool%20files/MapItOut/MapItOut/Controllers/SignInPopUpViewController.swift"
-                  timestampString = "522713727.164744"
+                  timestampString = "522717004.907646"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
@@ -57,7 +57,7 @@
                   moduleName = "MapItOut"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/portia/Desktop/makeschool%20files/MapItOut/MapItOut/Controllers/SignInPopUpViewController.swift"
-                  timestampString = "522713727.169003"
+                  timestampString = "522717004.916354"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
@@ -209,54 +209,6 @@
             endingLineNumber = "53"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "522713726.017493"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
-            landmarkName = "addContactButtonTapped(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MapItOut.AddEntryViewController.addContactButtonTapped (Any) -&gt; ()"
-                  moduleName = "MapItOut"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/portia/Desktop/makeschool%20files/MapItOut/MapItOut/Controllers/AddEntryViewController.swift"
-                  timestampString = "522713727.174871"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "347"
-                  endingLineNumber = "347"
-                  offsetFromSymbolStart = "5628">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MapItOut.AddEntryViewController.(addContactButtonTapped (Any) -&gt; ()).(closure #1)"
-                  moduleName = "MapItOut"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/portia/Desktop/makeschool%20files/MapItOut/MapItOut/Controllers/AddEntryViewController.swift"
-                  timestampString = "522713727.176102"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "349"
-                  endingLineNumber = "349"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

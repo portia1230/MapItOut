@@ -343,7 +343,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 newItem.image = self.photoImageView.image!
                 CoreDataHelper.saveItem()
             }
-            
             self.dismiss(animated: true, completion: {
                 
                 let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
