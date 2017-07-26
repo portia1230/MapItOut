@@ -65,6 +65,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var photoHelper = MGPhotoHelper()
     var keyOfItem = ""
     
+    var markerText = ""
     
     var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
@@ -372,6 +373,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     //MARK: - Text field delegate functions
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        self.markerText = textField.text!
         self.undoButton.isEnabled = true
         self.backgroundView.layer.backgroundColor = greenColor.cgColor
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
@@ -384,52 +386,56 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.undoButton.isEnabled = true
-        self.backgroundView.layer.backgroundColor = greenColor.cgColor
-        self.undoButton.setTitleColor(UIColor.white, for: .normal)
         
-        if self.phoneTextField.text! != ""{
-            self.phoneButton.isHidden = false
-            self.phoneImageView.isHidden = false
-        } else {
-            self.phoneButton.isHidden = true
-            self.phoneImageView.isHidden = true
-        }
-        
-        if self.emailTextField.text! != ""{
-            self.emailButton.isHidden = false
-            self.emailImageView.isHidden = false
-        } else {
-            self.emailButton.isHidden = true
-            self.emailImageView.isHidden = true
-        }
-        
-        if self.addressDescription.text == ""{
-            self.addressDescription.text = self.originalLocation
-        } else {
-            let geocoder = CLGeocoder()
-            geocoder.geocodeAddressString(addressDescription.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
-                if error == nil{
-                    let placemark = placemarks?.first
-                    let anno = MKPointAnnotation()
-                    anno.coordinate = (placemark?.location?.coordinate)!
-                    let annotations = self.contactMapView.annotations
-                    //centering and clearing other annotations
-                    let span = MKCoordinateSpanMake(0.1, 0.1)
-                    self.location = anno.coordinate
-                    let region = MKCoordinateRegion(center: anno.coordinate, span: span)
-                    self.contactMapView.setRegion(region, animated: true)
-                    self.contactMapView.removeAnnotations(annotations)
-                    self.contactMapView.addAnnotation(anno)
-                    self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
-                    self.longitude = anno.coordinate.longitude
-                    self.latitude = anno.coordinate.latitude
-                    
-                } else {
-                    print(error?.localizedDescription ?? "error" )
-                }
+        if self.markerText != textField.text!{
+            
+            self.undoButton.isEnabled = true
+            self.backgroundView.layer.backgroundColor = greenColor.cgColor
+            self.undoButton.setTitleColor(UIColor.white, for: .normal)
+            
+            if self.phoneTextField.text! != ""{
+                self.phoneButton.isHidden = false
+                self.phoneImageView.isHidden = false
+            } else {
+                self.phoneButton.isHidden = true
+                self.phoneImageView.isHidden = true
             }
             
+            if self.emailTextField.text! != ""{
+                self.emailButton.isHidden = false
+                self.emailImageView.isHidden = false
+            } else {
+                self.emailButton.isHidden = true
+                self.emailImageView.isHidden = true
+            }
+            
+            if self.addressDescription.text == ""{
+                self.addressDescription.text = self.originalLocation
+            } else {
+                let geocoder = CLGeocoder()
+                geocoder.geocodeAddressString(addressDescription.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+                    if error == nil{
+                        let placemark = placemarks?.first
+                        let anno = MKPointAnnotation()
+                        anno.coordinate = (placemark?.location?.coordinate)!
+                        let annotations = self.contactMapView.annotations
+                        //centering and clearing other annotations
+                        let span = MKCoordinateSpanMake(0.1, 0.1)
+                        self.location = anno.coordinate
+                        let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                        self.contactMapView.setRegion(region, animated: true)
+                        self.contactMapView.removeAnnotations(annotations)
+                        self.contactMapView.addAnnotation(anno)
+                        self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+                        self.longitude = anno.coordinate.longitude
+                        self.latitude = anno.coordinate.latitude
+                        
+                    } else {
+                        print(error?.localizedDescription ?? "error" )
+                    }
+                }
+                
+            }
         }
     }
     

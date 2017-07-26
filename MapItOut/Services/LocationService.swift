@@ -35,4 +35,26 @@ struct LocationService{
         }
         return locValue
     }
+    
+    static func getSpan(myLocation : CLLocation, items: [Item]) -> MKCoordinateSpan{
+        var span = MKCoordinateSpan()
+        if items.count == 0{
+            span.latitudeDelta = 100
+            span.longitudeDelta = 100
+        } else {
+            if items.count <= 3 {
+                let location = CLLocation(latitude: items[items.count - 1].latitude, longitude: items[items.count - 1].longitude )
+                span.latitudeDelta = myLocation.distance(from: location) / 55500
+                span.longitudeDelta = myLocation.distance(from: location) / 55500
+            } else {
+                let location = CLLocation(latitude: items[3].latitude, longitude: items[3].longitude)
+                span.latitudeDelta = myLocation.distance(from: location) / 55500
+                span.longitudeDelta = myLocation.distance(from: location) / 55500
+                
+                
+            }
+        }
+        
+        return span
+    }
 }

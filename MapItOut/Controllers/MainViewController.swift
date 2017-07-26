@@ -79,13 +79,20 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.detailsButton.isEnabled = false
         let annotations = self.mapView.annotations
         self.mapView.removeAnnotations(annotations)
-        let span = MKCoordinateSpanMake(100, 100)
-        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-        self.mapView.setRegion(region, animated: true)
+        
         self.items = CoreDataHelper.retrieveItems()
         
         self.sortedItems = LocationService.rankDistance(items: items)
         filterResults(type: self.typeLabel.text!)
+        
+        let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
+        let span = LocationService.getSpan(myLocation: location, items: self.filteredItems)
+        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+        
+        self.mapView.setRegion(region, animated: true)
+        
+        
+        
     }
     //self.images = allImages
     
@@ -234,6 +241,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.itemNameLabel.backgroundColor = UIColor.clear
             self.itemTypeLabel.backgroundColor = UIColor.clear
             
+            
             if distance > 1000.0
             {
                 self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
@@ -317,6 +325,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.itemDistanceLabel.backgroundColor = UIColor.clear
             self.itemNameLabel.backgroundColor = UIColor.clear
             self.itemTypeLabel.backgroundColor = UIColor.clear
+            
             
             if distance > 1000.0
             {
@@ -520,8 +529,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.mapView.isRotateEnabled = false
             isUpdatingHeading = false
             self.mapView.camera.heading = 0.0
-            let span = MKCoordinateSpanMake(100, 100)
+            
+            let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
+            let span = LocationService.getSpan(myLocation: location, items: self.filteredItems)
             let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+            
             self.mapView.setRegion(region, animated: true)
         }
         

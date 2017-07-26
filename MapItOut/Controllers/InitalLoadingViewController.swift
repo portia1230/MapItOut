@@ -22,7 +22,6 @@ class InitalLoadingViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         
@@ -53,6 +52,13 @@ class InitalLoadingViewController: UIViewController {
                     
                     self.progressLabel.text = "\(i)/\(entries.count)"
                     print(i)
+                    
+                    OperationQueue.main.addOperation {
+                        self.progressLabel.text = "\(i)/\(entries.count)"
+                        print(i)
+                    }
+                    
+                    
                     if i == entries.count - 1{
                         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                             self.parent?.viewWillAppear(true)
