@@ -257,8 +257,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.detailsButton.isEnabled = true
             self.detailsButton.backgroundColor = greenColor
         }
-
         self.pickerUIView.isHidden = true
+        
+        let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
+        let span = LocationService.getSpan(myLocation: location, items: self.filteredItems)
+        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+        
+        self.mapView.setRegion(region, animated: true)
+        
     }
     
     

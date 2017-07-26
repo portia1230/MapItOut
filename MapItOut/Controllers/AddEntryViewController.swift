@@ -343,19 +343,20 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             
             CoreDataHelper.saveItem()
-            
-            self.dismiss(animated: true, completion: {
-                let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
-                StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
-                    
-                    guard let downloadURL = downloadURL else {
-                        return
-                    }
-                    let urlString = downloadURL.absoluteString
-                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
-                    ItemService.addEntry(entry: entry)
+
+            let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
+            StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
+                guard let downloadURL = downloadURL else {
+                    return
                 }
-            })
+                let urlString = downloadURL.absoluteString
+                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
+                ItemService.addEntry(entry: entry)
+                self.dismiss(animated: true, completion: {
+                })
+            }
+
+           
         } else {
             let alertController = UIAlertController(title: "", message:
                 "Did you put in a name and type?", preferredStyle: UIAlertControllerStyle.alert)

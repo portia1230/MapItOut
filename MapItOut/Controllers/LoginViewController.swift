@@ -58,6 +58,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         } else {
             Auth.auth().signIn(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user, error) in
                 if error != nil{
+                    print(error.debugDescription)
                     let alert = UIAlertController(title: "Incorrect email or password!", message: nil , preferredStyle: .alert)
                     let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
                     alert.addAction(cancel)
@@ -99,6 +100,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Lifecycles
     
+    override func viewWillAppear(_ animated: Bool) {
+        var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         passwordTextField.delegate = self
@@ -118,6 +123,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func startTimer(){
+        if InternetConnectionHelper.connectedToNetwork() == false{
+            let alertController = UIAlertController(title: "No internet connection", message: nil, preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Retry", style: .default, handler: { (alert) in
+                if InternetConnectionHelper.connectedToNetwork() == true{
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+            alertController.addAction(cancel)
+            present(alertController, animated: true, completion: nil)
+        }
+    }
     
 }
 
