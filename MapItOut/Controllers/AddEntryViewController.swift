@@ -81,10 +81,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         locationTextField.delegate = self
         nameTextField.tag = 0
         organizationTextField.tag = 1
-        typeTextField.tag = 2
-        phoneTextField.tag = 3
-        emailTextField.tag = 4
-        locationTextField.tag = 5
+        //typeTextField.tag = 2
+        phoneTextField.tag = 2
+        emailTextField.tag = 3
+        locationTextField.tag = 4
         
         //dismiss keyboard
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))

@@ -56,12 +56,6 @@ class InitalLoadingViewController: UIViewController {
                     self.progressLabel.text = "\(i)/\(entries.count)"
                     print(i)
                     
-                    OperationQueue.main.addOperation {
-                        self.progressLabel.text = "\(i)/\(entries.count)"
-                        print(i)
-                    }
-                    
-                    
                     if i == entries.count - 1{
                         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                             self.parent?.viewWillAppear(true)

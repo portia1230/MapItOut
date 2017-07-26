@@ -19,7 +19,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     //MARK: - Properties
     
     var item: Item!
-    
+
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
@@ -92,10 +92,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         nameTextField.tag = 0
         organizationTextField.tag = 1
-        typeTextField.tag = 2
-        phoneTextField.tag = 3
-        emailTextField.tag = 4
-        addressDescription.tag = 5
+        //typeTextField.tag = 2
+        phoneTextField.tag = 2
+        emailTextField.tag = 3
+        addressDescription.tag = 4
         
         phoneTextField.isUserInteractionEnabled = true
         nameTextField.isUserInteractionEnabled = true
@@ -163,7 +163,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         let span = MKCoordinateSpanMake(0.1, 0.1)
         let region = MKCoordinateRegionMake(location, span)
-        self.contactMapView.setRegion(region, animated: true)
+        self.contactMapView.setRegion(region, animated: false)
         
         self.originalLocation = self.addressDescription.text!
         
@@ -289,9 +289,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     func dismissView(){
         if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
+            self.view.endEditing(true)
         } else {
             if self.undoButton.isEnabled == true{
+                
                 if self.parent is MainViewController{
+                    
                     let parent = self.parent as! MainViewController
                     CoreDataHelper.deleteItems(item: self.item)
                     
@@ -328,6 +331,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     }
                     
                 } else {
+                    
                     let parent = self.parent as! ContactListController
                     CoreDataHelper.deleteItems(item: self.item)
                     
