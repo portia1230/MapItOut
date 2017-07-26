@@ -14,11 +14,15 @@ import FirebaseStorage
 import FirebaseDatabase
 import MessageUI
 
-class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate{
+class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, MKLocalSearchCompleterDelegate, UITableViewDelegate, UISearchBarDelegate, UITableViewDataSource{
     
     //MARK: - Properties
     
     var item: Item!
+    
+    @IBOutlet weak var resultTableView: UITableView!
+    var searchCompleter = MKLocalSearchCompleter()
+    var searchResults = [MKLocalSearchCompletion]()
 
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var undoButton: UIButton!
@@ -28,13 +32,13 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var typeTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var addressDescription: UITextField!
     @IBOutlet weak var contactMapView: MKMapView!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var phoneButton: UIButton!
     @IBOutlet weak var emailButton: UIButton!
     
+    @IBOutlet weak var searhBar: UISearchBar!
     @IBOutlet weak var phoneImageView: UIImageView!
     @IBOutlet weak var emailImageView: UIImageView!
     
@@ -72,13 +76,115 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var darkTextColor = UIColor(red: 90/255, green: 92/255, blue: 92/255, alpha: 1)
     var pickOption = ["Close Friend", "Co-worker", "Family", "Food", "Friend"]
     
+    //MARK: - Local delegate location
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text != ""{
+            self.resultTableView.isHidden = false
+            searchCompleter.queryFragment = searchText
+        } else {
+            self.resultTableView.isHidden = true
+            self.searhBar.text = self.originalLocation
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.resultTableView.isHidden = true
+        searchBar.text = self.originalLocation
+        self.dismissKeyboard()
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.originalLocation = searchBar.text!
+        self.searhBar.text = ""
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.text == ""{
+            self.resultTableView.isHidden = true
+            searchBar.text = self.originalLocation
+        }
+        self.dismissKeyboard()
+    }
+    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+        resultTableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        //error
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if searchResults.count == 0 {
+            tableView.isHidden = true
+        }
+        tableView.isHidden = false
+        let searchResult = searchResults[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LocationTableViewCell
+        cell.locationLabel.text = searchResult.title
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.undoButton.isEnabled = true
+        self.searhBar.resignFirstResponder()
+        self.dismissKeyboard()
+        let cell = tableView.cellForRow(at: indexPath) as! LocationTableViewCell
+        self.searhBar.text = cell.locationLabel.text!
+        
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(searhBar.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+            if error == nil{
+                let placemark = placemarks?.first
+                let anno = MKPointAnnotation()
+                anno.coordinate = (placemark?.location?.coordinate)!
+                
+                let annotations = self.contactMapView.annotations
+                
+                //centering and clearing other annotations
+                let span = MKCoordinateSpanMake(0.1, 0.1)
+                self.location = anno.coordinate
+                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                self.contactMapView.setRegion(region, animated: true)
+                self.contactMapView.removeAnnotations(annotations)
+                self.contactMapView.addAnnotation(anno)
+                
+                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+                self.longitude = anno.coordinate.longitude
+                self.latitude = anno.coordinate.latitude
+                self.originalLocation = self.searhBar.text!
+                
+            } else {
+                print(error?.localizedDescription ?? "error" )
+            }
+        }
+        tableView.isHidden = true
+        
+    }
+    
+    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
+        resultTableView.delegate = self
+        
         let pickerView = UIPickerView()
         pickerView.delegate = self
+        searhBar.delegate = self
+        searchCompleter.delegate = self
         
         contactMapView.delegate = self
         nameTextField.delegate = self
@@ -86,33 +192,27 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         typeTextField.delegate = self
         phoneTextField.delegate = self
         emailTextField.delegate = self
-        addressDescription.delegate = self
         
         typeTextField.inputView = pickerView
         
         nameTextField.tag = 0
         organizationTextField.tag = 1
-        //typeTextField.tag = 2
         phoneTextField.tag = 2
         emailTextField.tag = 3
-        addressDescription.tag = 4
         
         phoneTextField.isUserInteractionEnabled = true
         nameTextField.isUserInteractionEnabled = true
         typeTextField.isUserInteractionEnabled = true
         organizationTextField.isUserInteractionEnabled = true
         emailTextField.isUserInteractionEnabled = true
-        addressDescription.isUserInteractionEnabled = true
         changeImageButton.isEnabled = true
         
         
         //dismiss keyboard gesture recognizer
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissKeyboard))
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissView))
         //let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissView))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         //swipeUp.direction = UISwipeGestureRecognizerDirection.up
-        view.addGestureRecognizer(tap)
         view.addGestureRecognizer(swipeDown)
         //view.addGestureRecognizer(swipeUp)
         
@@ -140,7 +240,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.typeTextField.text = type
         self.phoneTextField.text = phone
         self.emailTextField.text = email
-        self.addressDescription.text = address
+        self.searhBar.text = address
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         self.location = location
         let annos = contactMapView.annotations
@@ -165,7 +265,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let region = MKCoordinateRegionMake(location, span)
         self.contactMapView.setRegion(region, animated: false)
         
-        self.originalLocation = self.addressDescription.text!
+        self.originalLocation = self.searhBar.text!
         
         self.OName = self.name
         self.OOrganization = self.organization
@@ -192,10 +292,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.typeTextField.text = self.OType
         self.emailTextField.text = self.OEmail
         self.phoneTextField.text = self.OPhone
-        self.addressDescription.text = self.OOriginalLocation
+        self.searhBar.text = self.OOriginalLocation
         let annotations = self.contactMapView.annotations
         self.contactMapView.removeAnnotations(annotations)
-        self.addressDescription.text = self.OOriginalLocation
+        self.searhBar.text = self.OOriginalLocation
         let anno = MKPointAnnotation()
         anno.coordinate = CLLocationCoordinate2D(latitude: self.OLatitude, longitude: self.OLongitude)
         self.contactMapView.addAnnotation(anno)
@@ -305,7 +405,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     item.latitude = self.latitude
                     item.longitude = self.longitude
                     item.name = self.nameTextField.text
-                    item.locationDescription = self.addressDescription.text
+                    item.locationDescription = self.searhBar.text
                     item.organization = self.organizationTextField.text
                     item.type = self.typeTextField.text
                     item.phone = self.phoneTextField.text
@@ -326,7 +426,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             return
                         }
                         let urlString = downloadURL.absoluteString
-                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.addressDescription.text!)
+                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searhBar.text!)
                         ItemService.editEntry(entry: entry)
                     }
                     
@@ -343,7 +443,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     item.latitude = self.latitude
                     item.longitude = self.longitude
                     item.name = self.nameTextField.text
-                    item.locationDescription = self.addressDescription.text
+                    item.locationDescription = self.searhBar.text
                     item.organization = self.organizationTextField.text
                     item.type = self.typeTextField.text
                     item.phone = self.phoneTextField.text
@@ -364,7 +464,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             return
                         }
                         let urlString = downloadURL.absoluteString
-                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.addressDescription.text!)
+                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searhBar.text!)
                         ItemService.editEntry(entry: entry)
                     }
                 }
@@ -383,11 +483,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.undoButton.isEnabled = true
         self.backgroundView.layer.backgroundColor = greenColor.cgColor
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
-        if textField == addressDescription{
-            self.originalLocation = addressDescription.text!
-            self.addressDescription.text = ""
-            return true
-        }
         return true
     }
     
@@ -413,34 +508,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             } else {
                 self.emailButton.isHidden = true
                 self.emailImageView.isHidden = true
-            }
-            
-            if self.addressDescription.text == ""{
-                self.addressDescription.text = self.originalLocation
-            } else {
-                let geocoder = CLGeocoder()
-                geocoder.geocodeAddressString(addressDescription.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
-                    if error == nil{
-                        let placemark = placemarks?.first
-                        let anno = MKPointAnnotation()
-                        anno.coordinate = (placemark?.location?.coordinate)!
-                        let annotations = self.contactMapView.annotations
-                        //centering and clearing other annotations
-                        let span = MKCoordinateSpanMake(0.1, 0.1)
-                        self.location = anno.coordinate
-                        let region = MKCoordinateRegion(center: anno.coordinate, span: span)
-                        self.contactMapView.setRegion(region, animated: true)
-                        self.contactMapView.removeAnnotations(annotations)
-                        self.contactMapView.addAnnotation(anno)
-                        self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
-                        self.longitude = anno.coordinate.longitude
-                        self.latitude = anno.coordinate.latitude
-                        
-                    } else {
-                        print(error?.localizedDescription ?? "error" )
-                    }
-                }
-                
             }
         }
     }
@@ -511,7 +578,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 let addressLine = pm?["FormattedAddressLines"] as? [String]
                 address = (addressLine?.joined(separator: ", "))!
             }
-            self.addressDescription.text = address
+            self.searhBar.text = address
         }
     }
     
