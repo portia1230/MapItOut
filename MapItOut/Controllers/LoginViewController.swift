@@ -101,7 +101,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
-        var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
     }
     
     override func viewDidLoad() {
@@ -123,6 +123,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //MARK: - Timer
     func startTimer(){
         if InternetConnectionHelper.connectedToNetwork() == false{
             let alertController = UIAlertController(title: "No internet connection", message: nil, preferredStyle: .alert)

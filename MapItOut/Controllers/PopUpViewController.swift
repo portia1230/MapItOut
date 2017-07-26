@@ -121,8 +121,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+    
         super.viewWillAppear(animated)
+        
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
         
         self.backgroundView.layer.backgroundColor = greyColor.cgColor
         self.undoButton.setTitleColor(darkTextColor, for: .normal)
@@ -509,6 +511,19 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         }
     }
     
+    //MARK: - Timer
+    func startTimer(){
+        if InternetConnectionHelper.connectedToNetwork() == false{
+            let alertController = UIAlertController(title: "No internet connection", message: nil, preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Retry", style: .default, handler: { (alert) in
+                if InternetConnectionHelper.connectedToNetwork() == true{
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+            alertController.addAction(cancel)
+            present(alertController, animated: true, completion: nil)
+        }
+    }
     
 }
 

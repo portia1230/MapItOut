@@ -97,6 +97,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     override func viewWillAppear(_ animated: Bool) {
         
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+        
         if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
             let alertController = UIAlertController(title: nil, message:
                 "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
@@ -416,5 +418,19 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
+    }
+    
+    //MARK: - Timer
+    func startTimer(){
+        if InternetConnectionHelper.connectedToNetwork() == false{
+            let alertController = UIAlertController(title: "No internet connection", message: nil, preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Retry", style: .default, handler: { (alert) in
+                if InternetConnectionHelper.connectedToNetwork() == true{
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+            alertController.addAction(cancel)
+            present(alertController, animated: true, completion: nil)
+        }
     }
 }

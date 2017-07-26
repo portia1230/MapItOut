@@ -29,6 +29,10 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
     
     //MARK: - Lifecycles
     
+    override func viewWillAppear(_ animated: Bool) {
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -141,6 +145,20 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
                     }
                 }
 
+    }
+    
+    //MARK: - Timer
+    func startTimer(){
+        if InternetConnectionHelper.connectedToNetwork() == false{
+            let alertController = UIAlertController(title: "No internet connection", message: nil, preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Retry", style: .default, handler: { (alert) in
+                if InternetConnectionHelper.connectedToNetwork() == true{
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+            alertController.addAction(cancel)
+            present(alertController, animated: true, completion: nil)
+        }
     }
     
 }
