@@ -17,11 +17,14 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     //MARK: - Properties
     
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var locationMapView: MKMapView!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var addContactButton: UIButton!
     @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var cancelButton: UIButton!
     
     var originalLocation : String!
     var name : String!
@@ -134,6 +137,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.photoImageView.image = self.image
             }
             self.locationMapView.showsUserLocation = false
+            self.loadingView.isHidden = true
+            self.activityView.isHidden = true
             
             if let _ = self.contactLocationDescription {
                 self.locationTextField.text = self.contactLocationDescription
@@ -323,7 +328,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         
         if self.nameTextField.text != "",
             self.typeTextField.text != "Select type"{
-            
+            self.dismissKeyboard()
+            self.loadingView.isHidden = false
+            self.addContactButton.isHidden = true
+            self.cancelButton.isHidden = true
+            self.activityView.isHidden = false
+            self.activityView.startAnimating()
             let currentUser = User.currentUser
             let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
             
@@ -345,18 +355,19 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             
             CoreDataHelper.saveItem()
-
-            let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
-            StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
-                guard let downloadURL = downloadURL else {
-                    return
+            
+            self.dismiss(animated: true, completion: {
+                let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
+                StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
+                    
+                    guard let downloadURL = downloadURL else {
+                        return
+                    }
+                    let urlString = downloadURL.absoluteString
+                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
+                    ItemService.addEntry(entry: entry)
                 }
-                let urlString = downloadURL.absoluteString
-                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
-                ItemService.addEntry(entry: entry)
-                self.dismiss(animated: true, completion: {
-                })
-            }
+            })
 
            
         } else {

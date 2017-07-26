@@ -18,13 +18,13 @@ class AddTypePopUpViewController: UIViewController, UITextFieldDelegate{
     //MARK: - Lifecycles
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         typeTextField.delegate = self
         self.popUpView.layer.cornerRadius = 22.5
         self.popUpView.clipsToBounds = true
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         self.typeTextField.becomeFirstResponder()
-        
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddTypePopUpViewController.dismissView))
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(AddTypePopUpViewController.dismissView))
