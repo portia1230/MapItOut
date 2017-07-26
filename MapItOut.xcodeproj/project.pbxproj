@@ -43,6 +43,7 @@
 		83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */; };
 		83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */; };
 		83C8FDA41F290BD000795965 /* InternetConnectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8FDA31F290BD000795965 /* InternetConnectionHelper.swift */; };
+		83C8FDAA1F29379500795965 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8FDA91F29379500795965 /* LocationTableViewCell.swift */; };
 		83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D529731F12F03A00ED4EEE /* Login.storyboard */; };
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
@@ -97,6 +98,7 @@
 		83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelper.swift; path = Helpers/CoreDataHelper.swift; sourceTree = "<group>"; };
 		83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopUpViewController.swift; path = Controllers/PopUpViewController.swift; sourceTree = "<group>"; };
 		83C8FDA31F290BD000795965 /* InternetConnectionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InternetConnectionHelper.swift; path = Helpers/InternetConnectionHelper.swift; sourceTree = "<group>"; };
+		83C8FDA91F29379500795965 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationTableViewCell.swift; path = CustomClasses/LocationTableViewCell.swift; sourceTree = "<group>"; };
 		83D529731F12F03A00ED4EEE /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Controllers/Login.storyboard; sourceTree = "<group>"; };
 		83D529761F12F38800ED4EEE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		83D529791F12FCAD00ED4EEE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
@@ -145,8 +147,8 @@
 		8312E0011F13316600AD0054 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				832C70771F15350A00E213F4 /* StorageReference.swift */,
 				8312E0021F13318A00AD0054 /* Storyboard+Utility.swift */,
+				832C70771F15350A00E213F4 /* StorageReference.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -157,6 +159,7 @@
 				8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */,
 				83533A751F134706002EEE74 /* CustomTableCell.swift */,
 				8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */,
+				83C8FDA91F29379500795965 /* LocationTableViewCell.swift */,
 			);
 			name = "Custom Classes";
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				83761FC01F16BC1E00CE33D7 /* LocationService.swift in Sources */,
 				832C70781F15350A00E213F4 /* StorageReference.swift in Sources */,
 				837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */,
+				83C8FDAA1F29379500795965 /* LocationTableViewCell.swift in Sources */,
 				83533A7D1F135272002EEE74 /* StorageService.swift in Sources */,
 				837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */,
 				83777A7A1F2009730023C51C /* SignInPopUpViewController.swift in Sources */,

@@ -13,7 +13,7 @@ import FirebaseStorage
 import FirebaseDatabase
 import Contacts
 
-class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate{
+class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, MKLocalSearchCompleterDelegate, UITableViewDelegate, UISearchBarDelegate, UITableViewDataSource{
     
     //MARK: - Properties
     
@@ -23,9 +23,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var uploadPhotoButton: UIButton!
     @IBOutlet weak var addContactButton: UIButton!
-    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var locationTextField: UISearchBar!
     @IBOutlet weak var cancelButton: UIButton!
     
+    @IBOutlet weak var searchTableView: UITableView!
+    
+    var selectedLocation = ""
     var originalLocation : String!
     var name : String!
     var organization : String!
@@ -48,6 +51,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     var pickOption = ["Close Friend", "Co-worker", "Family", "Food", "Friend"]
+    var searchCompleter = MKLocalSearchCompleter()
+    var searchResults = [MKLocalSearchCompletion]()
     
     //MARK: - IBoutlets for text fields
     @IBOutlet weak var nameTextField: UITextField!
@@ -56,6 +61,87 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
+    //MARK: - Local delegate location
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text != ""{
+        self.searchTableView.isHidden = false
+        searchCompleter.queryFragment = searchText
+        } else {
+            self.searchTableView.isHidden = true
+            self.locationTextField.text = self.originalLocation
+        }
+    }
+    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+        searchTableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        //error
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if searchResults.count == 0 {
+            tableView.isHidden = true
+        }
+        tableView.isHidden = false
+        let searchResult = searchResults[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LocationTableViewCell
+        cell.locationLabel.text = searchResult.title
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.locationTextField.resignFirstResponder()
+        self.dismissKeyboard()
+        let cell = tableView.cellForRow(at: indexPath) as! LocationTableViewCell
+        self.locationTextField.text = cell.locationLabel.text!
+        
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(locationTextField.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+            if error == nil{
+                let placemark = placemarks?.first
+                let anno = MKPointAnnotation()
+                anno.coordinate = (placemark?.location?.coordinate)!
+                
+                let annotations = self.locationMapView.annotations
+                
+                //centering and clearing other annotations
+                let span = MKCoordinateSpanMake(0.1, 0.1)
+                self.location = anno.coordinate
+                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                self.locationMapView.setRegion(region, animated: true)
+                self.locationMapView.removeAnnotations(annotations)
+                self.locationMapView.addAnnotation(anno)
+                
+                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
+                self.longitude = anno.coordinate.longitude
+                self.latitude = anno.coordinate.latitude
+                self.originalLocation = self.locationTextField.text!
+                self.contactLocationDescription = self.originalLocation
+                
+                
+                
+            } else {
+                print(error?.localizedDescription ?? "error" )
+            }
+        }
+        tableView.isHidden = true
+        
+    }
     
     //MARK: - Lifecycles
     
@@ -63,6 +149,13 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         super.viewDidLoad()
         let pickerView = UIPickerView()
         pickerView.delegate = self
+        locationTextField.delegate = self
+        searchTableView.delegate = self
+        searchCompleter.delegate = self
+        searchTableView.delegate = self
+        searchCompleter.queryFragment = locationTextField.text!
+        
+        
         typeTextField.tintColor = UIColor.clear
         typeTextField.inputView = pickerView
         locationMapView.delegate = self
@@ -84,22 +177,19 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         //typeTextField.tag = 2
         phoneTextField.tag = 2
         emailTextField.tag = 3
-        locationTextField.tag = 4
+        //locationTextField.tag = 4
         
         //dismiss keyboard
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
-        view.addGestureRecognizer(tap)
         view.addGestureRecognizer(swipeDown)
         view.addGestureRecognizer(swipeUp)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
         
         if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
@@ -190,14 +280,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         popOverVC.didMove(toParentViewController: self)
     }
     
-    
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
         // Try to find next responder
         if let nextTextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
             nextTextField.becomeFirstResponder()
-            if nextTextField.tag == 5 {
+            if nextTextField.tag == 4 {
                 self.originalLocation = nextTextField.text!
                 nextTextField.text = ""
             }
@@ -230,50 +318,25 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         view.endEditing(true)
     }
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == locationTextField{
-            self.originalLocation = locationTextField.text
-            self.locationTextField.text = ""
-            return true
-        }
-        return true
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchTableView.isHidden = true
+        searchBar.text = self.originalLocation
+        self.dismissKeyboard()
     }
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == self.locationTextField{
-            if self.locationTextField.text == ""{
-                self.locationTextField.text = self.originalLocation
-            } else {
-                let geocoder = CLGeocoder()
-                geocoder.geocodeAddressString(locationTextField.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
-                    if error == nil{
-                        let placemark = placemarks?.first
-                        let anno = MKPointAnnotation()
-                        anno.coordinate = (placemark?.location?.coordinate)!
-                        
-                        let annotations = self.locationMapView.annotations
-                        
-                        //centering and clearing other annotations
-                        let span = MKCoordinateSpanMake(0.1, 0.1)
-                        self.location = anno.coordinate
-                        let region = MKCoordinateRegion(center: anno.coordinate, span: span)
-                        self.locationMapView.setRegion(region, animated: true)
-                        self.locationMapView.removeAnnotations(annotations)
-                        self.locationMapView.addAnnotation(anno)
-                        
-                        self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
-                        self.longitude = anno.coordinate.longitude
-                        self.latitude = anno.coordinate.latitude
-                        self.originalLocation = self.locationTextField.text!
-                        self.contactLocationDescription = self.originalLocation
-                        
-                        
-                        
-                    } else {
-                        print(error?.localizedDescription ?? "error" )
-                    }
-                }
-            }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.originalLocation = locationTextField.text
+        self.locationTextField.text = ""
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.text == ""{
+            self.searchTableView.isHidden = true
+            searchBar.text = self.originalLocation
         }
+        self.dismissKeyboard()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
         self.name = self.nameTextField.text!
         self.organization = self.organizationTextField.text!
         self.type = self.typeTextField.text!
@@ -368,8 +431,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     ItemService.addEntry(entry: entry)
                 }
             })
-
-           
+            
+            
         } else {
             let alertController = UIAlertController(title: "", message:
                 "Did you put in a name and type?", preferredStyle: UIAlertControllerStyle.alert)
