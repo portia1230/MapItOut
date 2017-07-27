@@ -14,8 +14,9 @@ class InitalLoadingViewController: UIViewController {
     //MARK: - Properties
     
     @IBOutlet weak var progressLabel: UILabel!
-    
     //MARK: - Lifecycles
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,52 +26,63 @@ class InitalLoadingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
-
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         UserService.items(for: User.currentUser, completion: { (entries) in
-    
+            
             self.progressLabel.text = "0/\(entries.count)"
             
-            if entries.count != 0{
-                var i = 0
-                while i < entries.count{
-                    let imageView = UIImageView()
-                    let url = URL(string: entries[i].imageURL)
-                    let imageData:NSData = NSData(contentsOf: url!)!
-                    imageView.image = UIImage(data: imageData as Data)
-                    
-                    let item = CoreDataHelper.newItem()
-                    item.email = entries[i].email
-                    item.name = entries[i].name
-                    item.type = entries[i].type
-                    item.phone = entries[i].phone
-                    item.organization = entries[i].organization
-                    item.latitude = entries[i].latitude
-                    item.longitude = entries[i].longitude
-                    item.locationDescription = entries[i].locationDescription
-                    item.key = entries[i].key
-                    item.image = imageView.image
-                    CoreDataHelper.saveItem()
-                    
-                    self.progressLabel.text = "\(i)/\(entries.count)"
-                    print(i)
-                    
-                    if i == entries.count - 1{
-                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                            self.parent?.viewWillAppear(true)
-                            self.view.removeFromSuperview()
-                        })
+            
+            UserService.items(for: User.currentUser, completion: { (entries) in
+                
+                if entries.count != 0{
+                    var i = 0
+                    while i < entries.count{
+                        let imageView = UIImageView()
+                        let url = URL(string: entries[i].imageURL)
+                        let imageData:NSData = NSData(contentsOf: url!)!
+                        imageView.image = UIImage(data: imageData as Data)
+                        
+                        let item = CoreDataHelper.newItem()
+                        item.email = entries[i].email
+                        item.name = entries[i].name
+                        item.type = entries[i].type
+                        item.phone = entries[i].phone
+                        item.organization = entries[i].organization
+                        item.latitude = entries[i].latitude
+                        item.longitude = entries[i].longitude
+                        item.locationDescription = entries[i].locationDescription
+                        item.key = entries[i].key
+                        item.image = imageView.image
+                        CoreDataHelper.saveItem()
+                        DispatchQueue.main.async {
+                            self.progressLabel.text = "\(i)/\(entries.count)"
+                        }
+                        DispatchQueue.global().async {
+                            self.progressLabel.text = "\(i)/\(entries.count)"
+                        }
+                        
+                        DispatchQueue.main.sync {
+                            self.progressLabel.text = "\(i)/\(entries.count)"
+                        }
+                        
+                        self.progressLabel.text = "\(i)/\(entries.count)"
+                        print(i)
+                        
+                        if i == entries.count - 1{
+                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                self.parent?.viewWillAppear(true)
+                                self.view.removeFromSuperview()
+                            })
+                        }
+                        i += 1
                     }
-                    i += 1
+                } else{
+                    self.parent?.viewWillAppear(true)
                 }
-            } else{
-                self.parent?.viewWillAppear(true)
-                self.view.removeFromSuperview()
-            }
+            })
+            
         })
-        
-        
         
         
     }
@@ -79,7 +91,7 @@ class InitalLoadingViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     //MARK: - Timer
     func startTimer(){
         if InternetConnectionHelper.connectedToNetwork() == false{
