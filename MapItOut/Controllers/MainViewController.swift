@@ -125,17 +125,42 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let loadedItems = defaults.string(forKey: "loadedItems")
         defaults.set("All items", forKey: "type")
         
+            
+            
+            
+            
         if loadedItems == "false" {
-        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
-        
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
-        UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(popOverVC.view)
-        }, completion: nil)
-        popOverVC.didMove(toParentViewController: self)
-        defaults.set("true", forKey:"loadedItems")
+            UserService.items(for: User.currentUser, completion: { (entries) in
+                
+                if CoreDataHelper.retrieveItems().count == entries.count{
+                    
+                    let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+                    popOverVC.progressText = "\(CoreDataHelper.retrieveItems().count)/\(entries.count)"
+                    self.addChildViewController(popOverVC)
+                    popOverVC.view.frame = self.view.frame
+                    UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
+                        self.view.addSubview(popOverVC.view)
+                    }, completion: nil)
+                    popOverVC.didMove(toParentViewController: self)
+                    defaults.set("true", forKey:"loadedItems")
+                    
+                } else {
+                    
+                    let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+                    popOverVC.progressText = "\(CoreDataHelper.retrieveItems().count)/\(entries.count)"
+                    
+                    self.addChildViewController(popOverVC)
+                    popOverVC.view.frame = self.view.frame
+                    self.view.addSubview(popOverVC.view)
+                    popOverVC.didMove(toParentViewController: self)
+                    self.viewDidLoad()
+                    
+                }
+            })
         }
+        
+            
+            
         authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
             guard user == nil else { return }
             
