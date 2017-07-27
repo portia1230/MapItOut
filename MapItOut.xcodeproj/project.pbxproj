@@ -344,7 +344,7 @@
 				TargetAttributes = {
 					83E4CB0F1F12EA5D00EDDD91 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 4B8UB67XF4;
+						DevelopmentTeam = VSE8C9SFW3;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
@@ -594,7 +594,7 @@
 			baseConfigurationReference = A3FBD0AC450289A1FC033061 /* Pods-MapItOut.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4B8UB67XF4;
+				DEVELOPMENT_TEAM = VSE8C9SFW3;
 				INFOPLIST_FILE = "$(SRCROOT)/MapItOut/Supports/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "p-wang.MapItOut";
@@ -608,7 +608,7 @@
 			baseConfigurationReference = F29DB4B985B7F3B640591B87 /* Pods-MapItOut.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4B8UB67XF4;
+				DEVELOPMENT_TEAM = VSE8C9SFW3;
 				INFOPLIST_FILE = "$(SRCROOT)/MapItOut/Supports/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "p-wang.MapItOut";

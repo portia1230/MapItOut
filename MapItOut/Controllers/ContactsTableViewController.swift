@@ -143,7 +143,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 displayTaskViewController.name = contact.givenName
             }
             if contact.familyName.isEmpty == false {
-                displayTaskViewController.name.append(" " + contact.familyName)
+                if displayTaskViewController.name == nil{
+                    displayTaskViewController.name = contact.familyName
+                } else {
+                    displayTaskViewController.name.append(" " + contact.familyName)
+                }
             }
             if contact.emailAddresses.isEmpty == false {
                 displayTaskViewController.email = contact.emailAddresses[0].value as String
