@@ -125,15 +125,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let loadedItems = defaults.string(forKey: "loadedItems")
         defaults.set("All items", forKey: "type")
         
-            
-            
-            
-            
         if loadedItems == "false" {
             UserService.items(for: User.currentUser, completion: { (entries) in
                 
                 if CoreDataHelper.retrieveItems().count == entries.count{
                     
+                    defaults.set("true", forKey:"loadedItems")
                     let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
                     popOverVC.progressText = "\(CoreDataHelper.retrieveItems().count)/\(entries.count)"
                     self.addChildViewController(popOverVC)
@@ -142,7 +139,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                         self.view.addSubview(popOverVC.view)
                     }, completion: nil)
                     popOverVC.didMove(toParentViewController: self)
-                    defaults.set("true", forKey:"loadedItems")
                     
                 } else {
                     
@@ -158,8 +154,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 }
             })
         }
-        
-            
             
         authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
             guard user == nil else { return }
