@@ -58,6 +58,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        let loadedItems = defaults.string(forKey: "loadedItems")
+        
+        if loadedItems == "true" {
+        
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
         
         if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
@@ -93,7 +97,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         self.mapView.setRegion(region, animated: true)
         
-        
+        }
         
     }
     //self.images = allImages

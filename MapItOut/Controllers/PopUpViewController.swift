@@ -38,7 +38,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var phoneButton: UIButton!
     @IBOutlet weak var emailButton: UIButton!
     
-    @IBOutlet weak var searhBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var phoneImageView: UIImageView!
     @IBOutlet weak var emailImageView: UIImageView!
     
@@ -53,6 +53,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var OContactPhoto = UIImage()
     var OOriginalLocation = ""
     var OLocation = CLLocationCoordinate2D()
+    var isPhotoUpdated = false
     
     var name = ""
     var organization = ""
@@ -84,7 +85,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             searchCompleter.queryFragment = searchText
         } else {
             self.resultTableView.isHidden = true
-            self.searhBar.text = self.originalLocation
         }
     }
     
@@ -95,10 +95,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.originalLocation = searchBar.text!
-        self.searhBar.text = ""
+        self.searchBar.showsCancelButton = true
+        self.searchBar.text = ""
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = false
         if searchBar.text == ""{
             self.resultTableView.isHidden = true
             searchBar.text = self.originalLocation
@@ -137,14 +139,17 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.searchBar.showsCancelButton = false
         self.undoButton.isEnabled = true
-        self.searhBar.resignFirstResponder()
+        self.backgroundView.layer.backgroundColor = greenColor.cgColor
+        self.undoButton.setTitleColor(UIColor.white, for: .normal)
+        self.searchBar.resignFirstResponder()
         self.dismissKeyboard()
         let cell = tableView.cellForRow(at: indexPath) as! LocationTableViewCell
-        self.searhBar.text = cell.locationLabel.text!
+        self.searchBar.text = cell.locationLabel.text!
         
         let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(searhBar.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+        geocoder.geocodeAddressString(searchBar.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
             if error == nil{
                 let placemark = placemarks?.first
                 let anno = MKPointAnnotation()
@@ -163,7 +168,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
                 self.longitude = anno.coordinate.longitude
                 self.latitude = anno.coordinate.latitude
-                self.originalLocation = self.searhBar.text!
+                self.originalLocation = self.searchBar.text!
                 
             } else {
                 print(error?.localizedDescription ?? "error" )
@@ -183,7 +188,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         let pickerView = UIPickerView()
         pickerView.delegate = self
-        searhBar.delegate = self
+        searchBar.delegate = self
         searchCompleter.delegate = self
         
         contactMapView.delegate = self
@@ -210,11 +215,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         //dismiss keyboard gesture recognizer
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissView))
-        //let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(PopUpViewController.dismissView))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
-        //swipeUp.direction = UISwipeGestureRecognizerDirection.up
         view.addGestureRecognizer(swipeDown)
-        //view.addGestureRecognizer(swipeUp)
         
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         deleteButton.layer.cornerRadius = 15
@@ -240,12 +242,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.typeTextField.text = type
         self.phoneTextField.text = phone
         self.emailTextField.text = email
-        self.searhBar.text = address
+        self.searchBar.text = address
         let location = CLLocationCoordinate2DMake(latitude, longitude)
         self.location = location
         let annos = contactMapView.annotations
         let anno = MKPointAnnotation()
         self.itemImage.image = self.contactPhoto
+        
+        
         anno.coordinate = location
         
         if self.phoneTextField.text! == ""{
@@ -265,7 +269,15 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let region = MKCoordinateRegionMake(location, span)
         self.contactMapView.setRegion(region, animated: false)
         
-        self.originalLocation = self.searhBar.text!
+        self.originalLocation = self.searchBar.text!
+        
+        if isPhotoUpdated{
+            self.undoButton.isEnabled = true
+            self.backgroundView.layer.backgroundColor = self.greenColor.cgColor
+            self.undoButton.setTitleColor(UIColor.white, for: .normal)
+        } else {
+            self.OContactPhoto = self.contactPhoto
+        }
         
         self.OName = self.name
         self.OOrganization = self.organization
@@ -277,7 +289,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.OLongitude = self.longitude
         self.OLocation = self.location
         self.OOriginalLocation = self.originalLocation
-        self.OContactPhoto = self.contactPhoto
         
     }
     
@@ -292,16 +303,22 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.typeTextField.text = self.OType
         self.emailTextField.text = self.OEmail
         self.phoneTextField.text = self.OPhone
-        self.searhBar.text = self.OOriginalLocation
+        self.itemImage.image = self.OContactPhoto
+        self.searchBar.text = self.OOriginalLocation
         let annotations = self.contactMapView.annotations
         self.contactMapView.removeAnnotations(annotations)
-        self.searhBar.text = self.OOriginalLocation
+        self.searchBar.text = self.OOriginalLocation
         let anno = MKPointAnnotation()
         anno.coordinate = CLLocationCoordinate2D(latitude: self.OLatitude, longitude: self.OLongitude)
+        let span = MKCoordinateSpanMake(0.1, 0.1)
+        self.location = anno.coordinate
+        let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+        self.contactMapView.setRegion(region, animated: true)
         self.contactMapView.addAnnotation(anno)
         self.backgroundView.layer.backgroundColor = greyColor.cgColor
         self.undoButton.setTitleColor(darkTextColor, for: .normal)
         self.undoButton.isEnabled = false
+        self.isPhotoUpdated = false
     }
     
     @IBAction func mapButtonTapped(_ sender: Any) {
@@ -378,6 +395,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         photoHelper.presentActionSheet(from: self)
         photoHelper.completionHandler = { image in
             self.itemImage.image = image
+            self.isPhotoUpdated = true
             self.contactPhoto = image
         }
     }
@@ -390,6 +408,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
             self.view.endEditing(true)
+            if self.searchBar.text == ""{
+                self.searchBar.text = OOriginalLocation
+            }
         } else {
             if self.undoButton.isEnabled == true{
                 
@@ -405,7 +426,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     item.latitude = self.latitude
                     item.longitude = self.longitude
                     item.name = self.nameTextField.text
-                    item.locationDescription = self.searhBar.text
+                    item.locationDescription = self.searchBar.text
                     item.organization = self.organizationTextField.text
                     item.type = self.typeTextField.text
                     item.phone = self.phoneTextField.text
@@ -426,7 +447,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             return
                         }
                         let urlString = downloadURL.absoluteString
-                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searhBar.text!)
+                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
                         ItemService.editEntry(entry: entry)
                     }
                     
@@ -443,7 +464,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     item.latitude = self.latitude
                     item.longitude = self.longitude
                     item.name = self.nameTextField.text
-                    item.locationDescription = self.searhBar.text
+                    item.locationDescription = self.searchBar.text
                     item.organization = self.organizationTextField.text
                     item.type = self.typeTextField.text
                     item.phone = self.phoneTextField.text
@@ -464,7 +485,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             return
                         }
                         let urlString = downloadURL.absoluteString
-                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searhBar.text!)
+                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
                         ItemService.editEntry(entry: entry)
                     }
                 }
@@ -578,7 +599,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 let addressLine = pm?["FormattedAddressLines"] as? [String]
                 address = (addressLine?.joined(separator: ", "))!
             }
-            self.searhBar.text = address
+            self.searchBar.text = address
         }
     }
     

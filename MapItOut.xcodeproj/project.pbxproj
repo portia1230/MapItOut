@@ -17,6 +17,7 @@
 		833BE1851F2A5445009B229A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833BE1841F2A5445009B229A /* Assets.xcassets */; };
 		8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */; };
 		8341D2371F17D78100242BC8 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */; };
+		8343CC221F2A83C100DCDB99 /* greenPlus.png in Resources */ = {isa = PBXBuildFile; fileRef = 8343CC211F2A83C100DCDB99 /* greenPlus.png */; };
 		83533A701F133F64002EEE74 /* plusImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83533A6F1F133F64002EEE74 /* plusImage.png */; };
 		83533A721F1340C7002EEE74 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A711F1340C7002EEE74 /* MainViewController.swift */; };
 		83533A741F134317002EEE74 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83533A731F134317002EEE74 /* MapKit.framework */; };
@@ -73,6 +74,7 @@
 		833BE1841F2A5445009B229A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsTableViewCell.swift; path = CustomClasses/ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsTableViewController.swift; path = Controllers/ContactsTableViewController.swift; sourceTree = "<group>"; };
+		8343CC211F2A83C100DCDB99 /* greenPlus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greenPlus.png; path = Arts/greenPlus.png; sourceTree = "<group>"; };
 		83533A6F1F133F64002EEE74 /* plusImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plusImage.png; path = Arts/plusImage.png; sourceTree = "<group>"; };
 		83533A711F1340C7002EEE74 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Controllers/MainViewController.swift; sourceTree = "<group>"; };
 		83533A731F134317002EEE74 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -160,6 +162,7 @@
 			children = (
 				835ADA491F2969E80045F205 /* detailsButton.png */,
 				83AEF55D1F27DD68005AE7D3 /* noContactImage.png */,
+				8343CC211F2A83C100DCDB99 /* greenPlus.png */,
 				832C7A3E1F266F6E0094766A /* whitePin.png */,
 				8391492A1F240FA100D1E959 /* filter.png */,
 				839149261F23195300D1E959 /* defaultNoItemImage.png */,
@@ -395,6 +398,7 @@
 				83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
 				832E167C1F1BF2BE005FCE55 /* whiteGearImage.png in Resources */,
+				8343CC221F2A83C100DCDB99 /* greenPlus.png in Resources */,
 				83A00C761F14B40B0033E821 /* List icon.png in Resources */,
 				83E4CB2A1F12EB5800EDDD91 /* LaunchScreen.storyboard in Resources */,
 				83D5297D1F12FCFD00ED4EEE /* GoogleService-Info.plist in Resources */,
