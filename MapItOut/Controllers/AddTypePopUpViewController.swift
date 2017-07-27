@@ -46,13 +46,10 @@ class AddTypePopUpViewController: UIViewController, UITextFieldDelegate{
     //MARK: - Functions
     
     func dismissView(){
-        if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
-        } else {
             UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                 self.view.removeFromSuperview()
             }, completion: nil)
-        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

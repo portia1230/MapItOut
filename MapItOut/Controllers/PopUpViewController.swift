@@ -530,6 +530,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 self.emailButton.isHidden = true
                 self.emailImageView.isHidden = true
             }
+        } else {
+            if (textField.text == OPhone) || (textField.text == OEmail) || (textField.text == OName) || (textField.text == OType){
+                self.undoButton.isEnabled = false
+                self.backgroundView.layer.backgroundColor = greyColor.cgColor
+                self.undoButton.setTitleColor(UIColor.white, for: .normal)
+            }
         }
     }
     
