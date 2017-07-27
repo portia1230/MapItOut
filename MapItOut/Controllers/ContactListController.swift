@@ -158,6 +158,10 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             self.filteredItems = self.sortedItems
         } else {
             for item in self.sortedItems{
+                if item.image == nil{
+                    item.image = #imageLiteral(resourceName: "noContactImage.png")
+                    CoreDataHelper.saveItem()
+                }
                 if item.type == type{
                     self.filteredItems.append(item)
                 }

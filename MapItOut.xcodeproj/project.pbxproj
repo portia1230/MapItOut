@@ -23,6 +23,7 @@
 		83533A7B1F134CC5002EEE74 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7A1F134CC5002EEE74 /* Entry.swift */; };
 		83533A7D1F135272002EEE74 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7C1F135272002EEE74 /* StorageService.swift */; };
 		83533A7F1F1359A4002EEE74 /* ItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A7E1F1359A4002EEE74 /* ItemService.swift */; };
+		835ADA4A1F2969E80045F205 /* detailsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 835ADA491F2969E80045F205 /* detailsButton.png */; };
 		8362EE821F19E1C40055BF6C /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */; };
 		83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B601F149F2B003A14CC /* plusButton200*200.png */; };
 		83680B631F14A83D003A14CC /* arrowGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B621F14A83D003A14CC /* arrowGreen.png */; };
@@ -78,6 +79,7 @@
 		83533A7A1F134CC5002EEE74 /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entry.swift; path = Models/Entry.swift; sourceTree = "<group>"; };
 		83533A7C1F135272002EEE74 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = Services/StorageService.swift; sourceTree = "<group>"; };
 		83533A7E1F1359A4002EEE74 /* ItemService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemService.swift; path = Services/ItemService.swift; sourceTree = "<group>"; };
+		835ADA491F2969E80045F205 /* detailsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = detailsButton.png; path = Arts/detailsButton.png; sourceTree = "<group>"; };
 		8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPointAnnotation.swift; path = CustomClasses/CustomPointAnnotation.swift; sourceTree = "<group>"; };
 		83680B601F149F2B003A14CC /* plusButton200*200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plusButton200*200.png"; path = "Arts/plusButton200*200.png"; sourceTree = "<group>"; };
 		83680B621F14A83D003A14CC /* arrowGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrowGreen.png; path = Arts/arrowGreen.png; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 		83E4CB121F12EA5D00EDDD91 /* MapItOut */ = {
 			isa = PBXGroup;
 			children = (
+				835ADA491F2969E80045F205 /* detailsButton.png */,
 				83AEF55D1F27DD68005AE7D3 /* noContactImage.png */,
 				832C7A3E1F266F6E0094766A /* whitePin.png */,
 				8391492A1F240FA100D1E959 /* filter.png */,
@@ -378,6 +381,7 @@
 				83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */,
 				832E167A1F1BF1D1005FCE55 /* Refresh.png in Resources */,
 				83A00C771F14B40B0033E821 /* Map Icon.png in Resources */,
+				835ADA4A1F2969E80045F205 /* detailsButton.png in Resources */,
 				839149271F23195300D1E959 /* defaultNoItemImage.png in Resources */,
 				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
 				83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */,

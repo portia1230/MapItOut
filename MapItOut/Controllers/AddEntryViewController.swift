@@ -225,6 +225,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             if (self.image) != nil{
                 self.photoImageView.image = self.image
+                
             }
             self.locationMapView.showsUserLocation = false
             self.loadingView.isHidden = true
@@ -388,10 +389,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
-        
         if self.nameTextField.text != "",
             self.typeTextField.text != "Select type"{
             self.dismissKeyboard()
+            self.searchTableView.isHidden = true
             self.loadingView.isHidden = false
             self.addContactButton.isHidden = true
             self.cancelButton.isHidden = true
@@ -416,7 +417,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             } else {
                 newItem.image = self.photoImageView.image!
             }
-            
             CoreDataHelper.saveItem()
             
             self.dismiss(animated: true, completion: {

@@ -298,6 +298,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let longitude = filteredItems[i].longitude
             let latitude = filteredItems[i].latitude
             let anno = CustomPointAnnotation()
+            
+            if self.filteredItems[i].image == nil{
+                self.filteredItems[i].image = #imageLiteral(resourceName: "noContactImage.png")
+                CoreDataHelper.saveItem()
+            }
             anno.image = filteredItems[i].image as! UIImage
             anno.indexOfContact = i
             anno.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
