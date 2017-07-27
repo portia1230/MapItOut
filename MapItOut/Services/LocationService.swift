@@ -44,12 +44,12 @@ struct LocationService{
         } else {
             if items.count <= 3 {
                 let location = CLLocation(latitude: items[items.count - 1].latitude, longitude: items[items.count - 1].longitude )
-                span.latitudeDelta = myLocation.distance(from: location) / 55500
-                span.longitudeDelta = myLocation.distance(from: location) / 55500
+                span.latitudeDelta = (myLocation.distance(from: location) / 55500) + 0.1
+                span.longitudeDelta = (myLocation.distance(from: location) / 55500) + 0.1
             } else {
                 let location = CLLocation(latitude: items[3].latitude, longitude: items[3].longitude)
-                span.latitudeDelta = myLocation.distance(from: location) / 55500
-                span.longitudeDelta = myLocation.distance(from: location) / 55500
+                span.latitudeDelta = (myLocation.distance(from: location) / 55500) + 0.1
+                span.longitudeDelta = (myLocation.distance(from: location) / 55500) + 0.1
                 
                 
             }
