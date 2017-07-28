@@ -19,12 +19,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     //MARK: - Properties
     
     var item: Item!
-    
     @IBOutlet weak var resultTableView: UITableView!
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
 
-    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
@@ -141,7 +140,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         tableView.deselectRow(at: indexPath, animated: true)
         self.searchBar.showsCancelButton = false
         self.undoButton.isEnabled = true
-        self.backgroundView.layer.backgroundColor = greenColor.cgColor
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
         self.searchBar.resignFirstResponder()
         self.dismissKeyboard()
@@ -228,9 +226,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
         
-        self.backgroundView.layer.backgroundColor = greyColor.cgColor
-        self.undoButton.setTitleColor(darkTextColor, for: .normal)
-        self.backgroundView.layer.cornerRadius = 30
+        self.undoButton.setTitleColor(UIColor.clear, for: .normal)
         self.undoButton.isEnabled = false
         self.undoButton.layer.cornerRadius = 30
         self.itemImage.layer.cornerRadius = 70
@@ -273,7 +269,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         if isPhotoUpdated{
             self.undoButton.isEnabled = true
-            self.backgroundView.layer.backgroundColor = self.greenColor.cgColor
             self.undoButton.setTitleColor(UIColor.white, for: .normal)
         } else {
             self.OContactPhoto = self.contactPhoto
@@ -297,6 +292,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     //MARK: - VC Functions
     
+    @IBAction func dimissButtonTapped(_ sender: Any) {
+        self.dismissButton.isEnabled = false
+        self.view.isUserInteractionEnabled = false
+        dismissView()
+    }
     @IBAction func undoButtonTapped(_ sender: Any) {
         self.nameTextField.text = self.OName
         self.organizationTextField.text = self.OOrganization
@@ -315,8 +315,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let region = MKCoordinateRegion(center: anno.coordinate, span: span)
         self.contactMapView.setRegion(region, animated: true)
         self.contactMapView.addAnnotation(anno)
-        self.backgroundView.layer.backgroundColor = greyColor.cgColor
-        self.undoButton.setTitleColor(darkTextColor, for: .normal)
+        self.undoButton.setTitleColor(UIColor.clear, for: .normal)
         self.undoButton.isEnabled = false
         self.isPhotoUpdated = false
     }
@@ -502,7 +501,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         self.markerText = textField.text!
         self.undoButton.isEnabled = true
-        self.backgroundView.layer.backgroundColor = greenColor.cgColor
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
         return true
     }
@@ -512,7 +510,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         if self.markerText != textField.text!{
             
             self.undoButton.isEnabled = true
-            self.backgroundView.layer.backgroundColor = greenColor.cgColor
             self.undoButton.setTitleColor(UIColor.white, for: .normal)
             
             if self.phoneTextField.text! != ""{
@@ -533,8 +530,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             if (textField.text == OPhone) || (textField.text == OEmail) || (textField.text == OName) || (textField.text == OType){
                 self.undoButton.isEnabled = false
-                self.backgroundView.layer.backgroundColor = greyColor.cgColor
-                self.undoButton.setTitleColor(UIColor.white, for: .normal)
+                self.undoButton.setTitleColor(UIColor.clear, for: .normal)
             }
         }
     }

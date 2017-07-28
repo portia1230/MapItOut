@@ -17,7 +17,8 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
     
     //MARK: - Properties
     
-
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var rePasswordTextField: UITextField!
@@ -26,6 +27,8 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
+    var grayColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
     
     //MARK: - Lifecycles
     
@@ -35,12 +38,14 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.greenColor = buttonView.backgroundColor!
+        self.buttonView.layer.cornerRadius = 15
+        self.buttonView.clipsToBounds = true
+        self.buttonView.isHidden = true
         emailTextField.delegate = self
         passwordTextField.delegate = self
         rePasswordTextField.delegate = self
         passwordWarningLabel.isHidden = true
-        createButton.layer.cornerRadius = 15
         emailTextField.tag = 0
         passwordTextField.tag = 1
         rePasswordTextField.tag = 2
@@ -68,11 +73,23 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
     
     @IBAction func createButtonTapped(_ sender: Any) {
         
+        self.buttonView.backgroundColor = grayColor
+        self.view.isUserInteractionEnabled = false
+        self.activityView.isHidden = false
+        self.activityView.startAnimating()
+        self.createButton.setTitle("", for: .normal)
+        
         let auth = FUIAuth(uiWith: Auth.auth())
         auth?.delegate = self
         
         auth?.auth?.createUser(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user, error) in
             if error != nil{
+                
+                self.buttonView.backgroundColor = self.greenColor
+                self.view.isUserInteractionEnabled = true
+                self.activityView.isHidden = true
+                self.createButton.setTitle("Create!", for: .normal)
+                
                 print(error.debugDescription)
                 let alertController = UIAlertController(title: nil, message: error?.localizedDescription, preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
@@ -109,15 +126,15 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
             if passwordTextField.text != textField.text{
                 passwordWarningLabel.isHidden = false
                 passwordWarningLabel.text = "Passwords do not match!"
-                self.createButton.isHidden = true
+                self.buttonView.isHidden = true
             } else {
                 if (rePasswordTextField.text?.characters.count)! < 6{
                     passwordWarningLabel.isHidden = false
                     passwordWarningLabel.text = "Password does not exceed 6 characters!"
-                    self.createButton.isHidden = true
+                    self.buttonView.isHidden = true
                 } else {
                     passwordWarningLabel.isHidden = true
-                    self.createButton.isHidden = false
+                    self.buttonView.isHidden = false
                 }
             }
         }

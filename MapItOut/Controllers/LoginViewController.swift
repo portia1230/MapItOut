@@ -18,14 +18,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var loginButton: UIButton!
-    
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    
-    
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
+    var grayColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
     //MARK: - Functions
-    
     
     @IBAction func resetButtonTapped(_ sender: Any) {
         let popOverVC = UIStoryboard(name: "Login", bundle:nil).instantiateViewController(withIdentifier: "ResetEmailViewController") as! ResetEmailViewController
@@ -50,20 +50,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         print("login button tapped")
+        
+        self.buttonView.backgroundColor = grayColor
+        self.view.isUserInteractionEnabled = false
+        self.activityView.isHidden = false
+        self.activityView.startAnimating()
+        self.loginButton.setTitle("", for: .normal)
+        
         if (emailTextField.text == "" )||(passwordTextField.text == ""){
+            
+            self.loginButton.isSelected = false
+            self.activityView.isHidden = true
+            self.buttonView.backgroundColor = self.greenColor
+            self.view.isUserInteractionEnabled = true
+            self.loginButton.setTitle("Log in", for: .normal)
+            
             let alert = UIAlertController(title: "Did you enter in an email and password?", message: nil , preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "No?", style: .cancel, handler: nil)
+            let cancel = UIAlertAction(title: "No?", style: .cancel, handler: { (action) in
+                
+            })
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
         } else {
             Auth.auth().signIn(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user, error) in
                 if error != nil{
                     print(error.debugDescription)
+                    self.loginButton.isSelected = false
+                    self.activityView.isHidden = true
+                    self.buttonView.backgroundColor = self.greenColor
+                    self.view.isUserInteractionEnabled = true
+                    self.loginButton.setTitle("Log in", for: .normal)
                     let alert = UIAlertController(title: "Incorrect email or password!", message: nil , preferredStyle: .alert)
                     let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
                     alert.addAction(cancel)
                     self.present(alert, animated: true, completion: nil)
                 } else {
+                    
                     guard let user = user
                         else { return }
                     //redirect
@@ -102,10 +124,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+        self.loginButton.isSelected = false
+        self.activityView.isHidden = true
+        self.buttonView.backgroundColor = greenColor
+        self.view.isUserInteractionEnabled = true
+        self.loginButton.setTitle("Log in", for: .normal)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.greenColor = buttonView.backgroundColor!
+        self.buttonView.clipsToBounds = true
+        self.buttonView.layer.cornerRadius = 15
         passwordTextField.delegate = self
         emailTextField.delegate = self
         emailTextField.tag = 0
