@@ -118,8 +118,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
-        
-        performSegue(withIdentifier: "contactSelected", sender: self)
+        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.removeFromSuperview()
+            self.performSegue(withIdentifier: "contactSelected", sender: self)
+        }, completion: nil)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
