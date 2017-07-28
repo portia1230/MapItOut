@@ -65,11 +65,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text != ""{
-        self.searchTableView.isHidden = false
-        searchCompleter.queryFragment = searchText
+            self.searchTableView.isHidden = false
+            searchCompleter.queryFragment = searchText
         } else {
             self.searchTableView.isHidden = true
-            self.locationTextField.text = self.originalLocation
         }
     }
     
@@ -366,6 +365,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        defaults.set("true", forKey: "isCanceledAction")
         self.dismiss(animated: true) {
         }
     }

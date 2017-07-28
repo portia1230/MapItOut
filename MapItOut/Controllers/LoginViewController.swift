@@ -40,7 +40,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func getStartedButtonTapped(_ sender: UIButton) {
         
         guard let authUI = FUIAuth.defaultAuthUI()
-            else { return }        
+            else { return }
         authUI.delegate = self
         
         let authViewController = authUI.authViewController()

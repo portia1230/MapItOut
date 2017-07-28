@@ -43,7 +43,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var editedAnno = MKPointAnnotation()
     var selectedIndex = 0
     var isUpdated = false
-    
+    var isCanceledAction = ""
     var contactStore = CNContactStore()
     var locationManager = CLLocationManager()
     var authHandle: AuthStateDidChangeListenerHandle?
@@ -57,46 +57,56 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        if let isCanceledAction = defaults.string(forKey: "isCanceledAction"){
+            self.isCanceledAction = isCanceledAction
+        } else {
+            defaults.set("false", forKey: "isCanceledAction")
+        }
         let loadedItems = defaults.string(forKey: "loadedItems")
         
-        if loadedItems == "true" {
-        
-        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
-        
-        if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
-            let alertController = UIAlertController(title: nil, message:
-                "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
-            let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
-                self.viewWillAppear(true)
-            })
-            alertController.addAction(cancel)
-            self.present(alertController, animated: true, completion: nil)
-        }
-        if defaults.string(forKey: "type") == nil{
-            defaults.set("All items", forKey: "type")
-        }
-        self.typeLabel.text = defaults.string(forKey: "type")
-        self.pickerUIView.isHidden = true
-        self.pickerView.delegate = self
-        self.mapView.userLocation.subtitle = ""
-        self.mapView.userLocation.title = ""
-        
-        self.detailsButton.isEnabled = false
-        let annotations = self.mapView.annotations
-        self.mapView.removeAnnotations(annotations)
-        
-        self.items = CoreDataHelper.retrieveItems()
-        
-        self.sortedItems = LocationService.rankDistance(items: items)
-        filterResults(type: self.typeLabel.text!)
-        
-        let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
-        let span = LocationService.getSpan(myLocation: location, items: self.filteredItems)
-        let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-        
-        self.mapView.setRegion(region, animated: true)
-        
+        if self.isCanceledAction == "false"{
+            
+            if loadedItems == "true" {
+                
+                _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+                
+                if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+                    let alertController = UIAlertController(title: nil, message:
+                        "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                    let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                        self.viewWillAppear(true)
+                    })
+                    alertController.addAction(cancel)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                if defaults.string(forKey: "type") == nil{
+                    defaults.set("All items", forKey: "type")
+                }
+                self.typeLabel.text = defaults.string(forKey: "type")
+                self.pickerUIView.isHidden = true
+                self.pickerView.delegate = self
+                self.mapView.userLocation.subtitle = ""
+                self.mapView.userLocation.title = ""
+                
+                self.detailsButton.isEnabled = false
+                let annotations = self.mapView.annotations
+                self.mapView.removeAnnotations(annotations)
+                
+                self.items = CoreDataHelper.retrieveItems()
+                
+                self.sortedItems = LocationService.rankDistance(items: items)
+                filterResults(type: self.typeLabel.text!)
+                
+                let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
+                let span = LocationService.getSpan(myLocation: location, items: self.filteredItems)
+                let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+                
+                self.mapView.setRegion(region, animated: true)
+                
+            }
+        } else {
+            defaults.set("false", forKey: "isCanceledAction")
+            self.isCanceledAction = "false"
         }
         
     }
@@ -140,7 +150,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         itemImage.layer.cornerRadius = 35
         detailsButton.layer.cornerRadius = 15
         itemImage.clipsToBounds = true
-
+        
         //fittng the photofann
         if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
             let alertController = UIAlertController(title: nil, message:
@@ -151,22 +161,22 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             alertController.addAction(cancel)
             self.present(alertController, animated: true, completion: nil)
         } else {
-        
-        mapView.delegate = self
-        itemImage.layer.cornerRadius = 35
-        detailsButton.layer.cornerRadius = 15
-        itemImage.clipsToBounds = true
-        locationManager.delegate = self
-        defaults.set("All items", forKey: "type")
             
-        authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
-            guard user == nil else { return }
+            mapView.delegate = self
+            itemImage.layer.cornerRadius = 35
+            detailsButton.layer.cornerRadius = 15
+            itemImage.clipsToBounds = true
+            locationManager.delegate = self
+            defaults.set("All items", forKey: "type")
             
-            let loginViewController = UIStoryboard.initialViewController(for: .login)
-            self.view.window?.rootViewController = loginViewController
-            self.view.window?.makeKeyAndVisible()
-            defaults.set("false", forKey:"loadedItems")
-        }
+            authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+                guard user == nil else { return }
+                
+                let loginViewController = UIStoryboard.initialViewController(for: .login)
+                self.view.window?.rootViewController = loginViewController
+                self.view.window?.makeKeyAndVisible()
+                defaults.set("false", forKey:"loadedItems")
+            }
         }
     }
     
@@ -192,7 +202,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     
-    //MARK: - Picker view delegate functions 
+    //MARK: - Picker view delegate functions
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.pickerOptions.count
@@ -382,7 +392,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         
         self.pickerUIView.isHidden = true
-
+        
     }
     
     @IBAction func filterButtonTapped(_ sender: Any) {
@@ -415,7 +425,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pinIdentifier")
             annotationView?.canShowCallout = false
-
+            
         } else {
             annotationView?.annotation = annotation
         }
@@ -536,7 +546,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 alertController.addAction(UIAlertAction(title: "Okay!", style: .cancel,handler: nil ))
                 self.present(alertController, animated: true, completion: nil)
             }
-
+            
         }
         
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in

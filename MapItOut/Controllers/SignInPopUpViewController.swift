@@ -140,28 +140,28 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
         }
         
     }
-
+    
     func authUI(_ authUI: FUIAuth, didSignInWith user: FIRUser?, error: Error?) {
         UserService.create(user!, email: (user?.email!
-                    )!) { (user) in
-                }
-                if let error = error {
-                    assertionFailure("Error signing in: \(error.localizedDescription)")
-                }
-                // check to see whether user had been authorized
-                guard let user = user
-                    else { return }
-                //redirect
-                UserService.show(forUID: user.uid) { (user) in
-                    if let user = user {
-                        // handle existing user
-                        User.setCurrent(user, writeToUserDefaults:  true)
-                        let initialViewController = UIStoryboard.initialViewController(for: .main)
-                        self.view.window?.rootViewController = initialViewController
-                        self.view.window?.makeKeyAndVisible()
-                    }
-                }
-
+            )!) { (user) in
+        }
+        if let error = error {
+            assertionFailure("Error signing in: \(error.localizedDescription)")
+        }
+        // check to see whether user had been authorized
+        guard let user = user
+            else { return }
+        //redirect
+        UserService.show(forUID: user.uid) { (user) in
+            if let user = user {
+                // handle existing user
+                User.setCurrent(user, writeToUserDefaults:  true)
+                let initialViewController = UIStoryboard.initialViewController(for: .main)
+                self.view.window?.rootViewController = initialViewController
+                self.view.window?.makeKeyAndVisible()
+            }
+        }
+        
     }
     
     //MARK: - Timer

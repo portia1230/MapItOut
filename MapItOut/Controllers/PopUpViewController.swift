@@ -22,7 +22,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var resultTableView: UITableView!
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
-
+    
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
@@ -221,7 +221,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
-    
+        
         super.viewWillAppear(animated)
         
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)

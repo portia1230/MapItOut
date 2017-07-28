@@ -44,7 +44,7 @@ class InitalLoadingViewController: UIViewController {
                 })
                 
             } else {
-            if entries.count != 0{
+                if entries.count != 0{
                     let imageView = UIImageView()
                     let url = URL(string: entries[i].imageURL)
                     let imageData:NSData = NSData(contentsOf: url!)!
@@ -65,22 +65,22 @@ class InitalLoadingViewController: UIViewController {
                     
                     //self.progressLabel.text = "\(i)/\(entries.count)"
                     print(i)
-                dispatchGroup.leave()
-                dispatchGroup.notify(queue: .main) {
-                    if i == entries.count - 1{
-                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    dispatchGroup.leave()
+                    dispatchGroup.notify(queue: .main) {
+                        if i == entries.count - 1{
+                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                self.parent?.viewWillAppear(true)
+                                self.view.removeFromSuperview()
+                            })
+                        } else {
                             self.parent?.viewWillAppear(true)
                             self.view.removeFromSuperview()
-                        })
-                    } else {
-                        self.parent?.viewWillAppear(true)
-                        self.view.removeFromSuperview()
+                        }
                     }
+                } else {
+                    self.view.removeFromSuperview()
+                    self.parent?.viewWillAppear(true)
                 }
-            } else {
-                self.view.removeFromSuperview()
-                self.parent?.viewWillAppear(true)
-            }
             }
         })
         

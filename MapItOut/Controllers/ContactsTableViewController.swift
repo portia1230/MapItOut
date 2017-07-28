@@ -45,7 +45,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
-    
+        
         tableView.delegate = self
         tableView.dataSource = self
         self.contacts.removeAll()
@@ -85,7 +85,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 i += 1
             }
-        self.tableView.reloadData()
+            self.tableView.reloadData()
         }
     }
     

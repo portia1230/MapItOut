@@ -1093,17 +1093,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGh-8d-Hdd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykw-Z0-eR7">
-                                        <rect key="frame" x="15" y="30" width="73" height="24"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                        <state key="normal" title="Cancel">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="cancelButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="sFG-cV-XAB"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsB-ZT-4z8">
                                         <rect key="frame" x="262" y="30" width="105" height="24"/>
                                         <constraints>
@@ -1125,13 +1114,29 @@
                                             <constraint firstAttribute="width" constant="20" id="ifX-gM-mlp"/>
                                         </constraints>
                                     </activityIndicatorView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykw-Z0-eR7">
+                                        <rect key="frame" x="0.0" y="25" width="100" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="74m-OO-P7V"/>
+                                            <constraint firstAttribute="width" constant="100" id="fEw-lm-r7k"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="sFG-cV-XAB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Zdf-nO-4Xl" secondAttribute="trailing" constant="18" id="9hR-p4-1Gt"/>
                                     <constraint firstItem="zsB-ZT-4z8" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="30" id="E1P-6k-6vD"/>
+                                    <constraint firstItem="Ykw-Z0-eR7" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="25" id="FDU-Xq-t6v"/>
                                     <constraint firstAttribute="height" constant="65" id="Fsv-a0-YvJ"/>
+                                    <constraint firstItem="Ykw-Z0-eR7" firstAttribute="leading" secondItem="YGh-8d-Hdd" secondAttribute="leading" id="Hih-9k-1pW"/>
                                     <constraint firstAttribute="trailing" secondItem="zsB-ZT-4z8" secondAttribute="trailing" constant="8" id="I9z-3z-Lzy"/>
                                     <constraint firstItem="Zdf-nO-4Xl" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="34" id="quB-be-fBK"/>
                                 </constraints>

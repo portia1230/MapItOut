@@ -46,10 +46,10 @@ class AddTypePopUpViewController: UIViewController, UITextFieldDelegate{
     //MARK: - Functions
     
     func dismissView(){
-            self.view.endEditing(true)
-            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                self.view.removeFromSuperview()
-            }, completion: nil)
+        self.view.endEditing(true)
+        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.removeFromSuperview()
+        }, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
