@@ -19,7 +19,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Properties
     
-    @IBOutlet weak var contactsButton: UIButton!
     @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var pickerUIView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -296,6 +295,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Functions
     
+    @IBAction func contactsButtonTapped(_ sender: Any) {
+    }
     
     @IBAction func listButtonTapped(_ sender: Any) {
         self.performSegue(withIdentifier: "showListSegue", sender: self)
@@ -403,38 +404,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "How would you like to create a new item", preferredStyle: .alert)
-        
-        //Import from Contacts segue
-        alert.addAction(UIAlertAction(title: "Import from Contacts", style: .default, handler:  { action in
-            let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
-            switch authorizationStatus {
-            case .authorized:
-                print("Authorized")
-                self.performSegue(withIdentifier: "contactsSegue", sender: self)
-            case .notDetermined: // needs to ask for authorization
-                self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
-                    
-                    if error != nil{
-                        let alertController = UIAlertController(title: nil, message:
-                            "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
-                        alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
-                        self.present(alertController, animated: true, completion: nil)
-                    } else {
-                        self.performSegue(withIdentifier: "contactsSegue", sender: self)
-                    }
-                })
-            default:
-                let alertController = UIAlertController(title: nil, message:
-                    "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "Okay!", style: .cancel,handler: nil ))
-                self.present(alertController, animated: true, completion: nil)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Create new item", style: .default, handler:  { action in self.performSegue(withIdentifier: "addContactSegue", sender: self) }))
-        alert.addAction(UIAlertAction(title: "Back", style: .cancel , handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "addContactSegue", sender: self)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -525,6 +495,34 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     @IBAction func settingButtonTapped(_ sender: Any) {
         let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
+        
+        let viewContactsAction = UIAlertAction(title: "Import from Contacts", style: .default) { (alert) in
+            let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
+            switch authorizationStatus {
+            case .authorized:
+                print("Authorized")
+                self.performSegue(withIdentifier: "contactsSegue", sender: self)
+            case .notDetermined: // needs to ask for authorization
+                self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
+                    
+                    if error != nil{
+                        let alertController = UIAlertController(title: nil, message:
+                            "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                        alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
+                        self.present(alertController, animated: true, completion: nil)
+                    } else {
+                        self.performSegue(withIdentifier: "contactsSegue", sender: self)
+                    }
+                })
+            default:
+                let alertController = UIAlertController(title: nil, message:
+                    "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Okay!", style: .cancel,handler: nil ))
+                self.present(alertController, animated: true, completion: nil)
+            }
+
+        }
+        
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
             do {
                 try Auth.auth().signOut()
@@ -550,6 +548,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
+        alertController.addAction(viewContactsAction)
         alertController.addAction(signOutAction)
         alertController.addAction(resetPasswordAction)
         self.present(alertController, animated: true)
