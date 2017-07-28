@@ -1093,27 +1093,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGh-8d-Hdd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsB-ZT-4z8">
-                                        <rect key="frame" x="262" y="30" width="105" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="T0S-7i-W3U"/>
-                                            <constraint firstAttribute="width" constant="105" id="t2y-v5-XNr"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Add Item">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addContactButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="2vV-ER-41r"/>
-                                        </connections>
-                                    </button>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Zdf-nO-4Xl">
-                                        <rect key="frame" x="337" y="34" width="20" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="AZf-py-iKf"/>
-                                            <constraint firstAttribute="width" constant="20" id="ifX-gM-mlp"/>
-                                        </constraints>
-                                    </activityIndicatorView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykw-Z0-eR7">
                                         <rect key="frame" x="0.0" y="25" width="100" height="40"/>
                                         <constraints>
@@ -1128,16 +1107,37 @@
                                             <action selector="cancelButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="sFG-cV-XAB"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Zdf-nO-4Xl">
+                                        <rect key="frame" x="337" y="34" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="AZf-py-iKf"/>
+                                            <constraint firstAttribute="width" constant="20" id="ifX-gM-mlp"/>
+                                        </constraints>
+                                    </activityIndicatorView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsB-ZT-4z8">
+                                        <rect key="frame" x="258" y="32" width="117" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="T0S-7i-W3U"/>
+                                            <constraint firstAttribute="width" constant="117" id="t2y-v5-XNr"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Add Item">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addContactButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="2vV-ER-41r"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Zdf-nO-4Xl" secondAttribute="trailing" constant="18" id="9hR-p4-1Gt"/>
-                                    <constraint firstItem="zsB-ZT-4z8" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="30" id="E1P-6k-6vD"/>
+                                    <constraint firstItem="zsB-ZT-4z8" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="32" id="E1P-6k-6vD"/>
                                     <constraint firstItem="Ykw-Z0-eR7" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="25" id="FDU-Xq-t6v"/>
                                     <constraint firstAttribute="height" constant="65" id="Fsv-a0-YvJ"/>
                                     <constraint firstItem="Ykw-Z0-eR7" firstAttribute="leading" secondItem="YGh-8d-Hdd" secondAttribute="leading" id="Hih-9k-1pW"/>
-                                    <constraint firstAttribute="trailing" secondItem="zsB-ZT-4z8" secondAttribute="trailing" constant="8" id="I9z-3z-Lzy"/>
+                                    <constraint firstAttribute="trailing" secondItem="zsB-ZT-4z8" secondAttribute="trailing" id="I9z-3z-Lzy"/>
                                     <constraint firstItem="Zdf-nO-4Xl" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="34" id="quB-be-fBK"/>
                                 </constraints>
                             </view>
