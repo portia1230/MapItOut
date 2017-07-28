@@ -19,6 +19,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Properties
     
+    @IBOutlet weak var contactsButton: UIButton!
     @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var pickerUIView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
