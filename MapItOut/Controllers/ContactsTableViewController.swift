@@ -27,8 +27,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: - Functions
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        self.dismiss(animated: true) {
-        }
+        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.removeFromSuperview()
+        }, completion: nil)
     }
     
     func dismissKeyboard(){
@@ -40,9 +41,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+    
         tableView.delegate = self
         tableView.dataSource = self
         self.contacts.removeAll()

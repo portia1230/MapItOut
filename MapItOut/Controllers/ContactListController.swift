@@ -255,8 +255,15 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
             switch authorizationStatus {
             case .authorized:
+                
                 print("Authorized")
-                self.performSegue(withIdentifier: "contactsSegue", sender: self)
+                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
+                self.addChildViewController(popOverVC)
+                popOverVC.view.frame = self.view.frame
+                UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.addSubview(popOverVC.view)
+                }, completion: nil)
+                
             case .notDetermined: // needs to ask for authorization
                 self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
                     
@@ -266,7 +273,16 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                         alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
                         self.present(alertController, animated: true, completion: nil)
                     } else {
-                        self.performSegue(withIdentifier: "contactsSegue", sender: self)
+                        
+                        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
+                        self.addChildViewController(popOverVC)
+                        popOverVC.view.frame = self.view.frame
+                        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                            self.view.addSubview(popOverVC.view)
+                        }, completion: nil)
+                        
+                        
+                        //self.performSegue(withIdentifier: "contactsSegue", sender: self)
                     }
                 })
             default:
@@ -302,9 +318,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
+        alertController.addAction(viewContactsAction)
         alertController.addAction(signOutAction)
         alertController.addAction(resetPasswordAction)
-        alertController.addAction(viewContactsAction)
         self.present(alertController, animated: true)
         
     }
