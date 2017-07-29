@@ -57,53 +57,50 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.viewDidLoad()
         if let isCanceledAction = defaults.string(forKey: "isCanceledAction"){
             self.isCanceledAction = isCanceledAction
         } else {
             defaults.set("false", forKey: "isCanceledAction")
         }
-        let loadedItems = defaults.string(forKey: "loadedItems")
         
         if self.isCanceledAction == "false"{
             
-            if loadedItems == "true" {
-                
-                _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
-                
-                if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
-                    let alertController = UIAlertController(title: nil, message:
-                        "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
-                    let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
-                        self.viewWillAppear(true)
-                    })
-                    alertController.addAction(cancel)
-                    self.present(alertController, animated: true, completion: nil)
-                }
-                if defaults.string(forKey: "type") == nil{
-                    defaults.set("All items", forKey: "type")
-                }
-                self.typeLabel.text = defaults.string(forKey: "type")
-                self.pickerUIView.isHidden = true
-                self.pickerView.delegate = self
-                self.mapView.userLocation.subtitle = ""
-                self.mapView.userLocation.title = ""
-                
-                self.detailsButton.isEnabled = false
-                let annotations = self.mapView.annotations
-                self.mapView.removeAnnotations(annotations)
-                
-                self.items = CoreDataHelper.retrieveItems()
-                
-                self.sortedItems = LocationService.rankDistance(items: items)
-                filterResults(type: self.typeLabel.text!)
-                
-                let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
-                let span = LocationService.getSpan(myLocation: location, items: self.filteredItems)
-                let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
-                
-                self.mapView.setRegion(region, animated: true)
-                
+            _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+            
+            if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+                let alertController = UIAlertController(title: nil, message:
+                    "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                    self.viewWillAppear(true)
+                })
+                alertController.addAction(cancel)
+                self.present(alertController, animated: true, completion: nil)
             }
+            if defaults.string(forKey: "type") == nil{
+                defaults.set("All items", forKey: "type")
+            }
+            self.typeLabel.text = defaults.string(forKey: "type")
+            self.pickerUIView.isHidden = true
+            self.pickerView.delegate = self
+            self.mapView.userLocation.subtitle = ""
+            self.mapView.userLocation.title = ""
+            
+            self.detailsButton.isEnabled = false
+            let annotations = self.mapView.annotations
+            self.mapView.removeAnnotations(annotations)
+            
+            self.items = CoreDataHelper.retrieveItems()
+            
+            self.sortedItems = LocationService.rankDistance(items: items)
+            filterResults(type: self.typeLabel.text!)
+            
+            let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
+            let span = LocationService.getSpan(myLocation: location, items: self.filteredItems)
+            let region = MKCoordinateRegionMake(LocationService.getLocation(manager: locationManager), span)
+            
+            self.mapView.setRegion(region, animated: true)
+            
         } else {
             defaults.set("false", forKey: "isCanceledAction")
             self.isCanceledAction = "false"
@@ -116,35 +113,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let loadedItems = defaults.string(forKey: "loadedItems")
-        
-        if loadedItems == "false" {
-            UserService.items(for: User.currentUser, completion: { (entries) in
-                
-                if CoreDataHelper.retrieveItems().count == entries.count{
-                    
-                    defaults.set("true", forKey:"loadedItems")
-                    let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
-                    popOverVC.progressText = "\(CoreDataHelper.retrieveItems().count)/\(entries.count)"
-                    self.addChildViewController(popOverVC)
-                    popOverVC.view.frame = self.view.frame
-                    UIView.transition(with: self.view, duration: 0.0, options: .transitionCrossDissolve, animations: { _ in
-                        self.view.addSubview(popOverVC.view)
-                    }, completion: nil)
-                    popOverVC.didMove(toParentViewController: self)
-                    
-                } else {
-                    let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
-                    popOverVC.progressText = "\(CoreDataHelper.retrieveItems().count)/\(entries.count)"
-                    
-                    self.addChildViewController(popOverVC)
-                    popOverVC.view.frame = self.view.frame
-                    self.view.addSubview(popOverVC.view)
-                    popOverVC.didMove(toParentViewController: self)
-                    self.viewDidLoad()
-                    
-                }
-            })
+        if defaults.string(forKey: "loadedItems") == "false"{
+            let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+            self.addChildViewController(popOverVC)
+            popOverVC.view.frame = self.view.frame
+            self.view.addSubview(popOverVC.view)
+            popOverVC.didMove(toParentViewController: self)
+            defaults.set("true", forKey:"loadedItems")
+            
         }
         
         itemImage.layer.cornerRadius = 35

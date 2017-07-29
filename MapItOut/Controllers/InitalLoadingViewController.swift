@@ -13,8 +13,7 @@ class InitalLoadingViewController: UIViewController {
     
     //MARK: - Properties
     
-    @IBOutlet weak var progressLabel: UILabel!
-    var progressText = ""
+    @IBOutlet weak var label: UILabel!
     //MARK: - Lifecycles
     
     
@@ -24,27 +23,22 @@ class InitalLoadingViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        progressLabel.text = progressText
+        
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
         
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         
         let dispatchGroup = DispatchGroup()
-        let i = CoreDataHelper.retrieveItems().count
-        
         
         dispatchGroup.enter()
+        
         UserService.items(for: User.currentUser, completion: { (entries) in
-            self.progressLabel.text = "\(CoreDataHelper.retrieveItems().count)/\(entries.count)"
-            if i == entries.count{
-                
-                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                    self.parent?.viewWillAppear(true)
-                    self.view.removeFromSuperview()
-                })
-                
-            } else {
-                if entries.count != 0{
+            
+            self.label.text = "Loading \(entries.count) images, do not close this app"
+            
+            UserService.items(for: User.currentUser, completion: { (entries) in
+                var i = 0
+                while i < entries.count{
                     let imageView = UIImageView()
                     let url = URL(string: entries[i].imageURL)
                     let imageData:NSData = NSData(contentsOf: url!)!
@@ -62,29 +56,16 @@ class InitalLoadingViewController: UIViewController {
                     item.key = entries[i].key
                     item.image = imageView.image
                     CoreDataHelper.saveItem()
-                    
-                    //self.progressLabel.text = "\(i)/\(entries.count)"
-                    print(i)
-                    dispatchGroup.leave()
-                    dispatchGroup.notify(queue: .main) {
-                        if i == entries.count - 1{
-                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                self.parent?.viewWillAppear(true)
-                                self.view.removeFromSuperview()
-                            })
-                        } else {
-                            self.parent?.viewWillAppear(true)
-                            self.view.removeFromSuperview()
-                        }
-                    }
-                } else {
-                    self.view.removeFromSuperview()
-                    self.parent?.viewWillAppear(true)
+                    i += 1
                 }
-            }
+                
+                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.parent?.viewWillAppear(true)
+                    self.view.removeFromSuperview()
+                })
+            })
+            
         })
-        
-        
         
         
     }

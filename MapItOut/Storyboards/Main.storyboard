@@ -571,7 +571,7 @@
                                             <constraint firstAttribute="width" constant="140" id="K0s-Ab-PoV"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Type" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AdL-st-Ap9">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Relationship" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AdL-st-Ap9">
                                         <rect key="frame" x="170" y="114" width="175" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="DdZ-Lx-s7b"/>
@@ -1093,6 +1093,27 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YGh-8d-Hdd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsB-ZT-4z8">
+                                        <rect key="frame" x="262" y="33" width="105" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="T0S-7i-W3U"/>
+                                            <constraint firstAttribute="width" constant="105" id="t2y-v5-XNr"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Add Item">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addContactButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="2vV-ER-41r"/>
+                                        </connections>
+                                    </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Zdf-nO-4Xl">
+                                        <rect key="frame" x="337" y="34" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="AZf-py-iKf"/>
+                                            <constraint firstAttribute="width" constant="20" id="ifX-gM-mlp"/>
+                                        </constraints>
+                                    </activityIndicatorView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ykw-Z0-eR7">
                                         <rect key="frame" x="0.0" y="25" width="100" height="40"/>
                                         <constraints>
@@ -1107,37 +1128,16 @@
                                             <action selector="cancelButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="sFG-cV-XAB"/>
                                         </connections>
                                     </button>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Zdf-nO-4Xl">
-                                        <rect key="frame" x="337" y="34" width="20" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="AZf-py-iKf"/>
-                                            <constraint firstAttribute="width" constant="20" id="ifX-gM-mlp"/>
-                                        </constraints>
-                                    </activityIndicatorView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsB-ZT-4z8">
-                                        <rect key="frame" x="258" y="32" width="117" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="T0S-7i-W3U"/>
-                                            <constraint firstAttribute="width" constant="117" id="t2y-v5-XNr"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Add Item">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addContactButtonTapped:" destination="Y6f-BZ-apC" eventType="touchUpInside" id="2vV-ER-41r"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Zdf-nO-4Xl" secondAttribute="trailing" constant="18" id="9hR-p4-1Gt"/>
-                                    <constraint firstItem="zsB-ZT-4z8" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="32" id="E1P-6k-6vD"/>
+                                    <constraint firstItem="zsB-ZT-4z8" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="33" id="E1P-6k-6vD"/>
                                     <constraint firstItem="Ykw-Z0-eR7" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="25" id="FDU-Xq-t6v"/>
                                     <constraint firstAttribute="height" constant="65" id="Fsv-a0-YvJ"/>
                                     <constraint firstItem="Ykw-Z0-eR7" firstAttribute="leading" secondItem="YGh-8d-Hdd" secondAttribute="leading" id="Hih-9k-1pW"/>
-                                    <constraint firstAttribute="trailing" secondItem="zsB-ZT-4z8" secondAttribute="trailing" id="I9z-3z-Lzy"/>
+                                    <constraint firstAttribute="trailing" secondItem="zsB-ZT-4z8" secondAttribute="trailing" constant="8" id="I9z-3z-Lzy"/>
                                     <constraint firstItem="Zdf-nO-4Xl" firstAttribute="top" secondItem="YGh-8d-Hdd" secondAttribute="top" constant="34" id="quB-be-fBK"/>
                                 </constraints>
                             </view>
@@ -1272,7 +1272,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JiW-Di-Jum">
                                 <rect key="frame" x="0.0" y="394" width="375" height="273"/>
                             </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Select type" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aKB-qw-nmK">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Relationship" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aKB-qw-nmK">
                                 <rect key="frame" x="175" y="189" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="PpX-oK-clt"/>
@@ -1499,37 +1499,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading images, do not close this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
-                                <rect key="frame" x="76" y="305" width="222" height="73"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="73" id="ofm-j3-OeO"/>
-                                    <constraint firstAttribute="width" constant="222" id="ohZ-HN-TjI"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6c-x1-rVZ">
-                                <rect key="frame" x="26" y="220" width="323" height="104"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="104" id="v0s-Dp-tNl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="85"/>
-                                <color key="textColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rUe-Fn-P90">
+                                <rect key="frame" x="50" y="297" width="275" height="73"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading images, do not close this app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhZ-Nk-2Eg">
+                                        <rect key="frame" x="0.0" y="0.0" width="222" height="73"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="73" id="ofm-j3-OeO"/>
+                                            <constraint firstAttribute="width" constant="222" id="ohZ-HN-TjI"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="J12-hl-XoR">
+                                        <rect key="frame" x="222" y="18" width="53" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="I6c-x1-rVZ" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="200" id="Abw-va-RsN"/>
-                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="top" secondItem="jZB-nA-Akt" secondAttribute="bottom" constant="285" id="CRd-GU-zKU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="I6c-x1-rVZ" secondAttribute="trailing" constant="10" id="GdV-Xi-oXi"/>
-                            <constraint firstItem="rhZ-Nk-2Eg" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="QkZ-45-2mJ"/>
-                            <constraint firstItem="I6c-x1-rVZ" firstAttribute="leading" secondItem="r17-wD-LoA" secondAttribute="leadingMargin" constant="10" id="aaJ-9C-KDY"/>
+                            <constraint firstAttribute="trailing" secondItem="rUe-Fn-P90" secondAttribute="trailing" constant="50" id="hl4-g8-TVn"/>
+                            <constraint firstItem="rUe-Fn-P90" firstAttribute="leading" secondItem="r17-wD-LoA" secondAttribute="leading" constant="50" id="shB-eR-cN8"/>
+                            <constraint firstItem="rUe-Fn-P90" firstAttribute="centerX" secondItem="r17-wD-LoA" secondAttribute="centerX" id="tCh-Lh-ztq"/>
+                            <constraint firstItem="rUe-Fn-P90" firstAttribute="centerY" secondItem="r17-wD-LoA" secondAttribute="centerY" id="uQC-SS-7bw"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="progressLabel" destination="I6c-x1-rVZ" id="CjE-6b-pfD"/>
+                        <outlet property="label" destination="rhZ-Nk-2Eg" id="pA9-Hl-cGM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9RL-hJ-m8F" userLabel="First Responder" sceneMemberID="firstResponder"/>

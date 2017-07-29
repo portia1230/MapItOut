@@ -26,12 +26,14 @@ class ResetEmailViewController: UIViewController, UITextFieldDelegate {
         
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ResetEmailViewController.dismissView))
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ResetEmailViewController.dismissView))
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ResetEmailViewController.dismissView))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         swipeUp.direction = UISwipeGestureRecognizerDirection.up
         view.addGestureRecognizer(swipeDown)
         view.addGestureRecognizer(swipeUp)
+        view.addGestureRecognizer(tap)
     }
     
     
@@ -74,6 +76,9 @@ class ResetEmailViewController: UIViewController, UITextFieldDelegate {
     func dismissView(){
         if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
         } else {
             UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                 self.view.removeFromSuperview()

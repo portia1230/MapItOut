@@ -112,7 +112,7 @@
                                     <constraint firstAttribute="height" constant="37" id="Uj8-5g-aO3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
-                                <state key="normal" title=") Create account (">
+                                <state key="normal" title="Create account">
                                     <color key="titleColor" red="0.26173061130000003" green="0.31526783110000001" blue="0.68635404109999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
@@ -252,7 +252,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Q4H-Tb-tjV" firstAttribute="top" secondItem="MrL-ZW-JuQ" secondAttribute="top" constant="20" id="3XH-bR-jWP"/>
                                     <constraint firstAttribute="trailing" secondItem="Q4H-Tb-tjV" secondAttribute="trailing" constant="60" id="Hje-gx-jUB"/>
