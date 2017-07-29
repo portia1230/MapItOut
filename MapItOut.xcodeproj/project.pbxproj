@@ -46,6 +46,7 @@
 		83B17EFD1F2B9FEF0050DEAF /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B17EFC1F2B9FEF0050DEAF /* grayArrow.png */; };
 		83B17F011F2BA0BB0050DEAF /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B17F001F2BA0BB0050DEAF /* whiteArrow.png */; };
 		83B17F031F2BB70D0050DEAF /* ContactsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B17F021F2BB70D0050DEAF /* ContactsIcon.png */; };
+		83B17F051F2C45200050DEAF /* greenPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B17F041F2C45200050DEAF /* greenPin.png */; };
 		83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */; };
 		83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */; };
 		83C8FDA41F290BD000795965 /* InternetConnectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8FDA31F290BD000795965 /* InternetConnectionHelper.swift */; };
@@ -106,6 +107,7 @@
 		83B17EFC1F2B9FEF0050DEAF /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayArrow.png; path = Arts/grayArrow.png; sourceTree = "<group>"; };
 		83B17F001F2BA0BB0050DEAF /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = Arts/whiteArrow.png; sourceTree = "<group>"; };
 		83B17F021F2BB70D0050DEAF /* ContactsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ContactsIcon.png; path = Arts/ContactsIcon.png; sourceTree = "<group>"; };
+		83B17F041F2C45200050DEAF /* greenPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greenPin.png; path = Arts/greenPin.png; sourceTree = "<group>"; };
 		83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelper.swift; path = Helpers/CoreDataHelper.swift; sourceTree = "<group>"; };
 		83B5D0001F1C430B003AB9CD /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopUpViewController.swift; path = Controllers/PopUpViewController.swift; sourceTree = "<group>"; };
 		83C8FDA31F290BD000795965 /* InternetConnectionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InternetConnectionHelper.swift; path = Helpers/InternetConnectionHelper.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		833BE1831F2A52EC009B229A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				83B17F041F2C45200050DEAF /* greenPin.png */,
 				83B17F021F2BB70D0050DEAF /* ContactsIcon.png */,
 				83B17F001F2BA0BB0050DEAF /* whiteArrow.png */,
 				83B17EFC1F2B9FEF0050DEAF /* grayArrow.png */,
@@ -407,6 +410,7 @@
 				839149271F23195300D1E959 /* defaultNoItemImage.png in Resources */,
 				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
 				83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */,
+				83B17F051F2C45200050DEAF /* greenPin.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
 				83B17F031F2BB70D0050DEAF /* ContactsIcon.png in Resources */,
 				832E167C1F1BF2BE005FCE55 /* whiteGearImage.png in Resources */,

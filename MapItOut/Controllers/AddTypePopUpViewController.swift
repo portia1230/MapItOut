@@ -45,6 +45,17 @@ class AddTypePopUpViewController: UIViewController, UITextFieldDelegate{
     
     //MARK: - Functions
     
+    @IBAction func addButtonTapped(_ sender: Any) {
+        if typeTextField.text != ""{
+        let parent = self.parent as! AddEntryViewController
+        parent.pickOption.append(typeTextField.text!)
+        parent.typeTextField.text = typeTextField.text!
+        }
+        self.view.endEditing(true)
+        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.removeFromSuperview()
+        }, completion: nil)
+    }
     func dismissView(){
         self.view.endEditing(true)
         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
