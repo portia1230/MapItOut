@@ -28,6 +28,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     @IBOutlet weak var searchTableView: UITableView!
     
+    let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as! AddTypePopUpViewController
+    
     var selectedLocation = ""
     var originalLocation : String!
     var name : String!
@@ -285,11 +287,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     
     func addType() {
-        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as! AddTypePopUpViewController
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(popOverVC.view)
+            self.view.addSubview(self.popOverVC.view)
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)
     }
@@ -380,8 +381,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         defaults.set("true", forKey: "isCanceledAction")
-        self.dismiss(animated: true) {
-        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?{
@@ -455,14 +455,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: newItem.key!, locationDescription: self.locationTextField.text!)
                     ItemService.addEntry(entry: entry)
                     
-                    self.dismiss(animated: true, completion: {
-                        
-                    })
+                    self.dismiss(animated: true, completion: nil)
                 }
             } else {
-                self.dismiss(animated: true, completion: {
-                    
-                })
+                self.dismiss(animated: true, completion: nil)
             }
             
             

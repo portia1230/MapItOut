@@ -23,6 +23,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
     
+    weak var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as? AddTypePopUpViewController
+    
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var changeImageButton: UIButton!
@@ -236,13 +238,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     func addtype(){
-        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as! AddTypePopUpViewController
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
+        self.addChildViewController(popOverVC!)
+        popOverVC?.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(popOverVC.view)
+            self.view.addSubview((self.popOverVC?.view)!)
         }, completion: nil)
-        popOverVC.didMove(toParentViewController: self)
+        popOverVC?.didMove(toParentViewController: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
