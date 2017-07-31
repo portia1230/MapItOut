@@ -87,12 +87,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             return contact1.givenName.compare(contact2.givenName) == ComparisonResult.orderedAscending
         })
         self.results = self.contacts
-        UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: { _ in
+        if self.results.count == 0 {
             self.view.isUserInteractionEnabled = true
-            self.loadingView.isHidden = true
-            self.backButton.isHidden = false
-            self.tableView.reloadData()
-        }, completion: nil)
+        } else {
+            UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: { _ in
+                self.view.isUserInteractionEnabled = true
+                self.loadingView.isHidden = true
+                self.backButton.isHidden = false
+                self.tableView.reloadData()
+            }, completion: nil)
+        }
     }
     
     

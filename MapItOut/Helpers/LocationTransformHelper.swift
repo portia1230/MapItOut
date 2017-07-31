@@ -64,7 +64,7 @@ struct LocationTransformHelper {
     /**
      *  wgs2gcj convert WGS-84 coordinate(wgsLat, wgsLng) to GCJ-02 coordinate(gcjLat, gcjLng).
      */
-    public static func wgs2gcj(wgsLat: Double, wgsLng: Double) -> (gcjLat: Double, gcjLng: Double) {
+    public static func calibrate(wgsLat: Double, wgsLng: Double) -> (gcjLat: Double, gcjLng: Double) {
         if isOutOfChina(lat: wgsLat, lng: wgsLng) {
             return (wgsLat, wgsLng)
         }
@@ -76,7 +76,7 @@ struct LocationTransformHelper {
      *  gcj2wgs convert GCJ-02 coordinate(gcjLat, gcjLng) to WGS-84 coordinate(wgsLat, wgsLng).
      *  The output WGS-84 coordinate's accuracy is 1m to 2m. If you want more exactly result, use gcj2wgs_exact.
      */
-    public static func calibrate(gcjLat: Double, gcjLng: Double) -> (wgsLat: Double, wgsLng: Double) {
+    public static func gcj2wgs(gcjLat: Double, gcjLng: Double) -> (wgsLat: Double, wgsLng: Double) {
         if isOutOfChina(lat: gcjLat, lng: gcjLng) {
             return (gcjLat, gcjLng)
         }
