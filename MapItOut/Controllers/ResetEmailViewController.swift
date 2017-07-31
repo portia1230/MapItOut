@@ -59,10 +59,18 @@ class ResetEmailViewController: UIViewController, UITextFieldDelegate {
                 self.view.removeFromSuperview()
             }, completion: nil)
             Auth.auth().sendPasswordReset(withEmail: (self.emailTextField.text!)) { error in
-                let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((self.emailTextField.text!))", preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
-                alertController.addAction(cancelAction)
-                self.present(alertController, animated: true)
+                if error != nil{
+                    let alertController = UIAlertController(title: nil, message: "Error: \(error.debugDescription)", preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.present(alertController, animated: true)
+                } else {
+                    
+                    let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((self.emailTextField.text!))", preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.present(alertController, animated: true)
+                }
             }
             
         }

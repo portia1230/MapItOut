@@ -25,7 +25,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1o-SJ-wdc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app allows you to record and map the people you know" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s24-IC-apP">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app allows you to record and map out events/ people" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s24-IC-apP">
                                         <rect key="frame" x="40" y="142" width="295" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="Rz2-FT-ZSr"/>
@@ -107,7 +107,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9RC-TI-Yj4">
-                                <rect key="frame" x="86" y="519" width="203" height="37"/>
+                                <rect key="frame" x="86" y="509" width="203" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="Uj8-5g-aO3"/>
                                 </constraints>
@@ -181,25 +181,68 @@
                                     <constraint firstAttribute="height" constant="20" id="aa7-T7-297"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="gGG-kP-wLD">
+                                <rect key="frame" x="26" y="567" width="323" height="65"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In a region where Google is not accessible?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCz-t4-Q9E">
+                                        <rect key="frame" x="25.5" y="0.0" width="272" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="oOA-pU-YkS"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
+                                        <color key="textColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GfF-st-MM6">
+                                        <rect key="frame" x="79.5" y="28" width="164" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="37" id="uM9-AX-rAk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
+                                        <state key="normal" title="Use without account">
+                                            <color key="titleColor" red="0.26173061130000003" green="0.31526783110000001" blue="0.68635404109999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="withoutAccountButtonTapped:" destination="CVX-rH-MK6" eventType="touchUpInside" id="b94-3A-OS8"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="YW0-DG-nfJ"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyU-Bh-jIu">
+                                <rect key="frame" x="21" y="556" width="333" height="1"/>
+                                <color key="backgroundColor" red="0.81963789460000003" green="0.81962239739999998" blue="0.81963288779999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="zlF-QS-E9X"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="NJg-uA-T6P" secondAttribute="trailing" constant="5" id="12m-tC-Pp5"/>
-                            <constraint firstItem="9RC-TI-Yj4" firstAttribute="top" secondItem="aEh-h8-Ah1" secondAttribute="bottom" id="2SI-MC-R03"/>
+                            <constraint firstItem="9RC-TI-Yj4" firstAttribute="top" secondItem="aEh-h8-Ah1" secondAttribute="bottom" constant="-10" id="2SI-MC-R03"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fyU-Bh-jIu" secondAttribute="trailing" constant="5" id="492-C4-yYD"/>
                             <constraint firstItem="b1o-SJ-wdc" firstAttribute="top" secondItem="vtZ-XF-ANd" secondAttribute="top" id="4zn-9q-Ihr"/>
                             <constraint firstItem="iW0-on-ySN" firstAttribute="top" secondItem="b1o-SJ-wdc" secondAttribute="bottom" constant="150" id="7tB-Cw-ugG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9RC-TI-Yj4" secondAttribute="trailing" constant="70" id="9e4-Yx-RxD"/>
                             <constraint firstItem="9RC-TI-Yj4" firstAttribute="leading" secondItem="vtZ-XF-ANd" secondAttribute="leadingMargin" constant="70" id="DYs-Lx-Ry3"/>
                             <constraint firstItem="NJg-uA-T6P" firstAttribute="top" secondItem="NzK-x0-5yW" secondAttribute="bottom" constant="18" id="EdB-hh-zcz"/>
+                            <constraint firstItem="fyU-Bh-jIu" firstAttribute="top" secondItem="9RC-TI-Yj4" secondAttribute="bottom" constant="10" id="J0q-Be-uPY"/>
                             <constraint firstItem="aEh-h8-Ah1" firstAttribute="top" secondItem="NJg-uA-T6P" secondAttribute="bottom" constant="8" id="MQd-d5-EHI"/>
                             <constraint firstItem="NJg-uA-T6P" firstAttribute="leading" secondItem="vtZ-XF-ANd" secondAttribute="leadingMargin" constant="5" id="Pvc-Dk-khJ"/>
                             <constraint firstItem="b1o-SJ-wdc" firstAttribute="leading" secondItem="vtZ-XF-ANd" secondAttribute="leading" id="Qrm-l4-cpl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aEh-h8-Ah1" secondAttribute="trailing" constant="120" id="VJn-zk-BCm"/>
                             <constraint firstItem="8U6-zm-Mgk" firstAttribute="leading" secondItem="vtZ-XF-ANd" secondAttribute="leading" id="W9X-TT-FbA"/>
                             <constraint firstAttribute="trailing" secondItem="b1o-SJ-wdc" secondAttribute="trailing" id="WaD-3C-CKH"/>
+                            <constraint firstItem="gGG-kP-wLD" firstAttribute="top" secondItem="fyU-Bh-jIu" secondAttribute="bottom" constant="10" id="Wdc-fa-H3e"/>
                             <constraint firstItem="iW0-on-ySN" firstAttribute="centerX" secondItem="vtZ-XF-ANd" secondAttribute="centerX" id="Y4r-EJ-4Dz"/>
                             <constraint firstItem="NzK-x0-5yW" firstAttribute="top" secondItem="b1o-SJ-wdc" secondAttribute="bottom" constant="30" id="ZiQ-yc-GQl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gGG-kP-wLD" secondAttribute="trailing" constant="10" id="bOg-Lr-pJK"/>
                             <constraint firstItem="8U6-zm-Mgk" firstAttribute="top" secondItem="NJg-uA-T6P" secondAttribute="bottom" constant="33" id="c8R-8W-ax6"/>
+                            <constraint firstItem="gGG-kP-wLD" firstAttribute="leading" secondItem="vtZ-XF-ANd" secondAttribute="leadingMargin" constant="10" id="hHz-ao-EtB"/>
+                            <constraint firstItem="fyU-Bh-jIu" firstAttribute="leading" secondItem="vtZ-XF-ANd" secondAttribute="leadingMargin" constant="5" id="hqx-Nd-VGj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NzK-x0-5yW" secondAttribute="trailing" constant="30" id="ica-Ha-iot"/>
                             <constraint firstItem="edx-9U-6HC" firstAttribute="top" secondItem="NJg-uA-T6P" secondAttribute="bottom" constant="33" id="lUa-dT-sbX"/>
                             <constraint firstAttribute="trailing" secondItem="edx-9U-6HC" secondAttribute="trailing" id="meD-ud-s4u"/>
@@ -328,7 +371,7 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passwords do not match!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qts-Mk-cQ1">
-                                <rect key="frame" x="166" y="415" width="194" height="21"/>
+                                <rect key="frame" x="166.5" y="415" width="193.5" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Jsz-RL-J5b"/>
                                 </constraints>
@@ -339,8 +382,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PAj-AU-jGc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app allows you to record and map the people you know" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRD-xb-9b7">
-                                        <rect key="frame" x="40" y="142" width="295" height="66"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app allows you to record and map out events/ people" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRD-xb-9b7">
+                                        <rect key="frame" x="40.5" y="142" width="295" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="jjb-yc-Tjo"/>
                                             <constraint firstAttribute="width" constant="295" id="mjB-ix-eOz"/>

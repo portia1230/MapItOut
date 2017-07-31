@@ -112,15 +112,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if defaults.string(forKey: "loadedItems") == "false"{
-            let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
-            self.addChildViewController(popOverVC)
-            popOverVC.view.frame = self.view.frame
-            self.view.addSubview(popOverVC.view)
-            popOverVC.didMove(toParentViewController: self)
-            defaults.set("true", forKey:"loadedItems")
-            
+        if defaults.string(forKey: "isLoggedIn") == "true"{
+            if defaults.string(forKey: "loadedItems") == "false"{
+                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+                self.addChildViewController(popOverVC)
+                popOverVC.view.frame = self.view.frame
+                self.view.addSubview(popOverVC.view)
+                popOverVC.didMove(toParentViewController: self)
+                defaults.set("true", forKey:"loadedItems")
+                
+            }
         }
         
         itemImage.layer.cornerRadius = 35
@@ -145,6 +146,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             locationManager.delegate = self
             defaults.set("All items", forKey: "type")
             
+            if defaults.string(forKey: "isLoggedIn") == "true"{
+            
             authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
                 guard user == nil else { return }
                 
@@ -152,6 +155,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.view.window?.rootViewController = loginViewController
                 self.view.window?.makeKeyAndVisible()
                 defaults.set("false", forKey:"loadedItems")
+            }
             }
         }
     }
@@ -524,11 +528,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             }
             
         }
-        
+        if defaults.string(forKey: "isLoggedIn") == "true"{
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
             do {
                 try Auth.auth().signOut()
                 defaults.set("false", forKey:"loadedItems")
+                defaults.set("notSet", forKey: "isLoggedIn")
                 self.items = CoreDataHelper.retrieveItems()
                 for item in self.items {
                     CoreDataHelper.deleteItems(item: item)
@@ -541,18 +546,51 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let resetPasswordAction = UIAlertAction(title: "Reset password", style: .default) { _ in
             do {
                 Auth.auth().sendPasswordReset(withEmail: (Auth.auth().currentUser?.email)!) { error in
-                    let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
-                    alertController.addAction(cancelAction)
-                    self.present(alertController, animated: true)
+                    if error != nil{
+                        let alertController = UIAlertController(title: nil, message: "Error: \(error.debugDescription)", preferredStyle: .alert)
+                        let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                        alertController.addAction(cancelAction)
+                        self.present(alertController, animated: true)
+                    } else {
+                        
+                        let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
+                        let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                        alertController.addAction(cancelAction)
+                        self.present(alertController, animated: true)
+                    }
                 }
             }
+        }
+            alertController.addAction(signOutAction)
+            alertController.addAction(resetPasswordAction)
+        } else {
+            let addAccount = UIAlertAction(title: "Create account", style: .default, handler: { (alert) in
+                let confirmAlert = UIAlertController(title: "Warning!", message: "NO ITEMS YOU ENTERED WILL BE SAVED", preferredStyle: .alert)
+                let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { (alert) in
+                    for item in CoreDataHelper.retrieveItems(){
+                        CoreDataHelper.deleteItems(item: item)
+                        CoreDataHelper.saveItem()
+                    }
+                    let loginViewController = UIStoryboard.initialViewController(for: .login)
+                    self.view.window?.rootViewController = loginViewController
+                    self.view.window?.makeKeyAndVisible()
+                    defaults.set("false", forKey:"loadedItems")
+                    defaults.set("notSet", forKey: "isLoggedIn")
+                })
+                let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert) in
+                    self.dismiss(animated: true, completion: {
+                    })
+                })
+                confirmAlert.addAction(confirm)
+                confirmAlert.addAction(cancel)
+                self.present(confirmAlert, animated: true, completion: {
+                })
+            })
+            alertController.addAction(addAccount)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         alertController.addAction(viewContactsAction)
-        alertController.addAction(signOutAction)
-        alertController.addAction(resetPasswordAction)
         self.present(alertController, animated: true)
     }
     

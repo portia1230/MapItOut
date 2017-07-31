@@ -111,7 +111,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         self.locationTextField.text = cell.locationLabel.text! + " " + cell.subLabel.text!
         self.contactLocationDescription = cell.locationLabel.text! + " " + cell.subLabel.text!
         //self.searchResults[indexPath.row].
- 
+        
         let searchRequest = MKLocalSearchRequest(completion: self.searchResults[indexPath.row])
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
@@ -124,7 +124,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)
             self.locationMapView.setRegion(region, animated: true)
             self.locationMapView.addAnnotation(anno)
-
+            
             self.longitude = anno.coordinate.longitude
             self.latitude = anno.coordinate.latitude
         }
@@ -413,8 +413,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.cancelButton.isHidden = true
             self.activityView.isHidden = false
             self.activityView.startAnimating()
-            let currentUser = User.currentUser
-            let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
             
             let newItem = CoreDataHelper.newItem()
             newItem.name = self.nameTextField.text
@@ -425,7 +423,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             newItem.latitude = self.latitude
             newItem.longitude = self.longitude
             newItem.locationDescription = self.locationTextField.text
-            newItem.key = entryRef.key
+            newItem.key = ""
             
             if self.photoImageView.image == nil{
                 newItem.image = #imageLiteral(resourceName: "noContactImage.png")
@@ -434,21 +432,32 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             CoreDataHelper.saveItem()
             
-            let imageRef = StorageReference.newContactImageReference(key: entryRef.key)
-            StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
+            
+            if defaults.string(forKey: "isLoggedIn") == "true"{
                 
-                guard let downloadURL = downloadURL else {
-                    return
+                let currentUser = User.currentUser
+                let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
+                newItem.key = entryRef.key
+                
+                let imageRef = StorageReference.newContactImageReference(key: newItem.key!)
+                StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
+                    
+                    guard let downloadURL = downloadURL else {
+                        return
+                    }
+                    let urlString = downloadURL.absoluteString
+                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: newItem.key!, locationDescription: self.locationTextField.text!)
+                    ItemService.addEntry(entry: entry)
+                    
+                    self.dismiss(animated: true, completion: {
+                        
+                    })
                 }
-                let urlString = downloadURL.absoluteString
-                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: entryRef.key, locationDescription: self.locationTextField.text!)
-                ItemService.addEntry(entry: entry)
-                
+            } else {
                 self.dismiss(animated: true, completion: {
                     
                 })
             }
-            
             
             
             

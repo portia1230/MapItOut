@@ -65,6 +65,13 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         catch {
             print("unable to fetch contacts")
+            self.dismiss(animated: true, completion: { 
+                let alert = UIAlertController(title: "Unable to fetch contacts", message: nil, preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                alert.addAction(cancel)
+                self.present(alert, animated: true, completion: nil)
+            })
+            
         }
     }
     

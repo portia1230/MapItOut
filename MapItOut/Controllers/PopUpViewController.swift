@@ -194,7 +194,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
-
+        
         pickerView.delegate = self
         searchBar.delegate = self
         searchCompleter.delegate = self
@@ -388,12 +388,13 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         for item in items{
             if item.key == self.keyOfItem{
                 CoreDataHelper.deleteItems(item: item)
-                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(keyOfItem).jpg")
-                imageRef.delete(completion: nil)
-                
+                if defaults.string(forKey: "isLoggedIn") == "true" {
+                    let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(keyOfItem).jpg")
+                    imageRef.delete(completion: nil)
+                    ItemService.deleteEntry(key: self.keyOfItem)
+                }
             }
         }
-        ItemService.deleteEntry(key: self.keyOfItem)
         
         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.removeFromSuperview()
@@ -448,19 +449,22 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         self.view.removeFromSuperview()
                     }, completion: nil)
                     
-                    let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedItem.key)!).jpg")
-                    imageRef.delete(completion: nil)
-                    let newImageRef = StorageReference.newContactImageReference(key: parent.selectedItem.key!)
-                    
-                    StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
-                        guard let downloadURL = downloadURL else {
-                            return
+                    if defaults.string(forKey: "isLoggedIn") == "true"{
+                        
+                        let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedItem.key)!).jpg")
+                        imageRef.delete(completion: nil)
+                        let newImageRef = StorageReference.newContactImageReference(key: parent.selectedItem.key!)
+                        
+                        StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
+                            guard let downloadURL = downloadURL else {
+                                return
+                            }
+                            let urlString = downloadURL.absoluteString
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                            ItemService.editEntry(entry: entry)
                         }
-                        let urlString = downloadURL.absoluteString
-                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
-                        ItemService.editEntry(entry: entry)
+                        
                     }
-                    
                 } else {
                     
                     let parent = self.parent as! ContactListController
@@ -486,17 +490,20 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         self.view.removeFromSuperview()
                     }, completion: nil)
                     
-                    let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
-                    imageRef.delete(completion: nil)
-                    let newImageRef = StorageReference.newContactImageReference(key: item.key!)
-                    
-                    StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
-                        guard let downloadURL = downloadURL else {
-                            return
+                    if defaults.string(forKey: "isLoggedIn") == "true"{
+                        
+                        let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
+                        imageRef.delete(completion: nil)
+                        let newImageRef = StorageReference.newContactImageReference(key: item.key!)
+                        
+                        StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
+                            guard let downloadURL = downloadURL else {
+                                return
+                            }
+                            let urlString = downloadURL.absoluteString
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                            ItemService.editEntry(entry: entry)
                         }
-                        let urlString = downloadURL.absoluteString
-                        let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
-                        ItemService.editEntry(entry: entry)
                     }
                 }
             } else {

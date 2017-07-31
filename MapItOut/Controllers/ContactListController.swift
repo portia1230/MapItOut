@@ -98,15 +98,16 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         super.viewDidLoad()
         pickerView.delegate = self
         
-        authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
-            guard user == nil else { return }
-            
-            let loginViewController = UIStoryboard.initialViewController(for: .login)
-            self.view.window?.rootViewController = loginViewController
-            self.view.window?.makeKeyAndVisible()
-            defaults.set("false", forKey:"loadedItems")
+        if defaults.string(forKey: "isLoggedIn") == "true"{
+            authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+                guard user == nil else { return }
+                
+                let loginViewController = UIStoryboard.initialViewController(for: .login)
+                self.view.window?.rootViewController = loginViewController
+                self.view.window?.makeKeyAndVisible()
+                defaults.set("false", forKey:"loadedItems")
+            }
         }
-        
         
         
     }
@@ -243,10 +244,12 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
         
         if editingStyle == .delete{
-            let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
-            imageRef.delete(completion: nil)
-            
-            ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
+            if defaults.string(forKey: "isLoggedIn") == "true"{
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
+                imageRef.delete(completion: nil)
+                
+                ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
+            }
             self.filteredItems.remove(at: indexPath.row)
             CoreDataHelper.deleteItems(item: self.sortedItems[selectedIndex])
             self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
@@ -300,36 +303,70 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             }
             
         }
-        
-        let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
-            do {
-                try Auth.auth().signOut()
-                defaults.set("false", forKey:"loadedItems")
-                self.items = CoreDataHelper.retrieveItems()
-                for item in self.items {
-                    CoreDataHelper.deleteItems(item: item)
-                }
-            } catch let error as NSError {
-                assertionFailure("Error signing out: \(error.localizedDescription)")
-            }
-        }
-        let resetPasswordAction = UIAlertAction(title: "Reset password", style: .default) { _ in
-            do {
-                Auth.auth().sendPasswordReset(withEmail: (Auth.auth().currentUser?.email)!) { error in
-                    let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
-                    let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
-                    alertController.addAction(cancelAction)
-                    self.present(alertController, animated: true)
+        if defaults.string(forKey: "isLoggedIn") == "true"{
+            let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
+                do {
+                    try Auth.auth().signOut()
+                    defaults.set("false", forKey:"loadedItems")
+                    defaults.set("notSet", forKey: "isLoggedIn")
+                    self.items = CoreDataHelper.retrieveItems()
+                    for item in self.items {
+                        CoreDataHelper.deleteItems(item: item)
+                    }
+                    //CoreDataHelper.saveItem()
+                } catch let error as NSError {
+                    assertionFailure("Error signing out: \(error.localizedDescription)")
                 }
             }
+            let resetPasswordAction = UIAlertAction(title: "Reset password", style: .default) { _ in
+                do {
+                    Auth.auth().sendPasswordReset(withEmail: (Auth.auth().currentUser?.email)!) { error in
+                        if error != nil{
+                            let alertController = UIAlertController(title: nil, message: "Error: \(error.debugDescription)", preferredStyle: .alert)
+                            let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                            alertController.addAction(cancelAction)
+                            self.present(alertController, animated: true)
+                        } else {
+                            
+                            let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
+                            let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                            alertController.addAction(cancelAction)
+                            self.present(alertController, animated: true)
+                        }
+                    }
+                }
+            }
+            alertController.addAction(signOutAction)
+            alertController.addAction(resetPasswordAction)
+        } else {
+            let addAccount = UIAlertAction(title: "Create account", style: .default, handler: { (alert) in
+                let confirmAlert = UIAlertController(title: "Warning!", message: "NO ITEMS YOU ENTERED WILL BE SAVED", preferredStyle: .alert)
+                let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { (alert) in
+                    for item in CoreDataHelper.retrieveItems(){
+                        CoreDataHelper.deleteItems(item: item)
+                        CoreDataHelper.saveItem()
+                    }
+                    let loginViewController = UIStoryboard.initialViewController(for: .login)
+                    self.view.window?.rootViewController = loginViewController
+                    self.view.window?.makeKeyAndVisible()
+                    defaults.set("notSet", forKey: "isLoggedIn")
+                    defaults.set("false", forKey:"loadedItems")
+                })
+                let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert) in
+                    self.dismiss(animated: true, completion: {
+                    })
+                })
+                confirmAlert.addAction(confirm)
+                confirmAlert.addAction(cancel)
+                self.present(confirmAlert, animated: true, completion: {
+                })
+            })
+            alertController.addAction(addAccount)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         alertController.addAction(viewContactsAction)
-        alertController.addAction(signOutAction)
-        alertController.addAction(resetPasswordAction)
         self.present(alertController, animated: true)
-        
     }
     
     @IBAction func mapButtonTapped(_ sender: Any) {

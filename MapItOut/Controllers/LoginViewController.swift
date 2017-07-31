@@ -47,6 +47,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         present(authViewController, animated: true)
         
     }
+    @IBAction func withoutAccountButtonTapped(_ sender: Any) {
+        defaults.set("true", forKey:"loadedItems")
+        defaults.set("false", forKey: "isLoggedIn")
+        
+        let initialViewController = UIStoryboard.initialViewController(for: .main)
+        self.view.window?.rootViewController = initialViewController
+        self.view.window?.makeKeyAndVisible()
+    }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         print("login button tapped")
@@ -90,6 +98,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         else { return }
                     //redirect
                     defaults.set("false", forKey:"loadedItems")
+                    defaults.set("true", forKey: "isLoggedIn")
                     
                     UserService.show(forUID: user.uid) { (user) in
                         if let user = user {
