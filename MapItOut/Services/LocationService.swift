@@ -51,8 +51,13 @@ struct LocationService{
                 span.latitudeDelta = (myLocation.distance(from: location) / 55500) + 0.1
                 span.longitudeDelta = (myLocation.distance(from: location) / 55500) + 0.1
                 
-                
             }
+        }
+        if myLocation.coordinate.latitude + span.latitudeDelta >= 106.56152248744726{
+            span.latitudeDelta = 106.56152248744726
+        }
+        if myLocation.coordinate.longitude + span.longitudeDelta >= 126.21093924859055{
+            span.longitudeDelta = 126.21093924859055
         }
         
         return span

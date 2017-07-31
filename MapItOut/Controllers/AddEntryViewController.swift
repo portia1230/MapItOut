@@ -412,14 +412,16 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.activityView.isHidden = false
             self.activityView.startAnimating()
             
+            let coordinate = LocationTransformHelper.calibrate(gcjLat: self.latitude, gcjLng: self.longitude)
+            
             let newItem = CoreDataHelper.newItem()
             newItem.name = self.nameTextField.text
             newItem.organization = self.organizationTextField.text
             newItem.type = self.typeTextField.text
             newItem.phone = self.phoneTextField.text
             newItem.email = self.emailTextField.text
-            newItem.latitude = self.latitude
-            newItem.longitude = self.longitude
+            newItem.latitude = coordinate.wgsLat
+            newItem.longitude = coordinate.wgsLng
             newItem.locationDescription = self.locationTextField.text
             newItem.key = ""
             

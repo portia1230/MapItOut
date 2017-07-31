@@ -161,9 +161,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)
             self.contactMapView.setRegion(region, animated: true)
             self.contactMapView.addAnnotation(anno)
-            
-            self.longitude = anno.coordinate.longitude
-            self.latitude = anno.coordinate.latitude
+            let calibratedCoordinate = LocationTransformHelper.calibrate(gcjLat: anno.coordinate.latitude, gcjLng: anno.coordinate.longitude)
+            self.longitude = calibratedCoordinate.wgsLng
+            self.latitude = calibratedCoordinate.wgsLat
         }
         tableView.isHidden = true
         

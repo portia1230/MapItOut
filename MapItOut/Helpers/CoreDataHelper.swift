@@ -1,6 +1,6 @@
 //
 //  CoreDataHelper.swift
-//  EventTracker
+//  MapItOut
 //
 //  Created by Portia Wang on 7/2/17.
 //  Copyright © 2017 Portia Wang. All rights reserved.

@@ -33,6 +33,7 @@
 		83777A7A1F2009730023C51C /* SignInPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83777A791F2009730023C51C /* SignInPopUpViewController.swift */; };
 		837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938931F136CE1003B4B34 /* AddEntryViewController.swift */; };
 		837938961F137213003B4B34 /* MGPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938951F137213003B4B34 /* MGPhotoHelper.swift */; };
+		8380B8281F2FA42A00C2D7C7 /* LocationTransformHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8380B8271F2FA42A00C2D7C7 /* LocationTransformHelper.swift */; };
 		838AC93D1F16EB8300D0EDCA /* 500*20Shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */; };
 		839149271F23195300D1E959 /* defaultNoItemImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 839149261F23195300D1E959 /* defaultNoItemImage.png */; };
 		8391492B1F240FA100D1E959 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8391492A1F240FA100D1E959 /* filter.png */; };
@@ -94,6 +95,7 @@
 		83777A791F2009730023C51C /* SignInPopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInPopUpViewController.swift; path = Controllers/SignInPopUpViewController.swift; sourceTree = "<group>"; };
 		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; };
 		837938951F137213003B4B34 /* MGPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGPhotoHelper.swift; path = Helpers/MGPhotoHelper.swift; sourceTree = "<group>"; };
+		8380B8271F2FA42A00C2D7C7 /* LocationTransformHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationTransformHelper.swift; path = Helpers/LocationTransformHelper.swift; sourceTree = "<group>"; };
 		838AC93C1F16EB8300D0EDCA /* 500*20Shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "500*20Shadow.png"; path = "Arts/500*20Shadow.png"; sourceTree = "<group>"; };
 		839149261F23195300D1E959 /* defaultNoItemImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = defaultNoItemImage.png; path = Arts/defaultNoItemImage.png; sourceTree = "<group>"; };
 		8391492A1F240FA100D1E959 /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = filter.png; path = Arts/filter.png; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		837938971F137216003B4B34 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8380B8271F2FA42A00C2D7C7 /* LocationTransformHelper.swift */,
 				83B49FD41F21C0EF00EFF184 /* CoreDataHelper.swift */,
 				837938951F137213003B4B34 /* MGPhotoHelper.swift */,
 				83C8FDA31F290BD000795965 /* InternetConnectionHelper.swift */,
@@ -494,6 +497,7 @@
 				83533A7F1F1359A4002EEE74 /* ItemService.swift in Sources */,
 				83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */,
 				8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */,
+				8380B8281F2FA42A00C2D7C7 /* LocationTransformHelper.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
 				83761FC01F16BC1E00CE33D7 /* LocationService.swift in Sources */,
 				832C70781F15350A00E213F4 /* StorageReference.swift in Sources */,
