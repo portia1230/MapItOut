@@ -62,6 +62,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.isCanceledAction = isCanceledAction
         } else {
             defaults.set("false", forKey: "isCanceledAction")
+            self.isCanceledAction = "false"
         }
         
         if self.isCanceledAction == "false"{
@@ -528,6 +529,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             }
             
         }
+        alertController.addAction(viewContactsAction)
         if defaults.string(forKey: "isLoggedIn") == "true"{
         let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
             do {
@@ -590,7 +592,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
-        alertController.addAction(viewContactsAction)
         self.present(alertController, animated: true)
     }
     

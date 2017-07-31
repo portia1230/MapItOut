@@ -303,6 +303,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             }
             
         }
+        alertController.addAction(viewContactsAction)
         if defaults.string(forKey: "isLoggedIn") == "true"{
             let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
                 do {
@@ -365,7 +366,6 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
-        alertController.addAction(viewContactsAction)
         self.present(alertController, animated: true)
     }
     

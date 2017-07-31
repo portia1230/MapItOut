@@ -17,6 +17,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     var contacts = [CNContact]()
     var results = [CNContact]()
     var contactStore = CNContactStore()
@@ -44,36 +48,52 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
-        
+        UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: { _ in
+            self.loadingView.isHidden = false
+            self.activityView.startAnimating()
+            self.backButton.isHidden = true
+        })
         tableView.delegate = self
         tableView.dataSource = self
         self.contacts.removeAll()
         self.results.removeAll()
+        
         let keys = [CNContactIdentifierKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName)] as [Any]
         let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
         
         do {
             try self.contactStore.enumerateContacts(with: request) {
                 (contact, stop) in
-                self.contacts.append(contact)
-                self.contacts = self.contacts.sorted(by: { (contact1, contact2) -> Bool in
-                    return contact1.givenName.compare(contact2.givenName) == ComparisonResult.orderedAscending
-                })
+                if contact.postalAddresses.isEmpty == false{
+                    self.contacts.append(contact)
+                }
+                self.loadingLabel.text = "Found \(self.contacts.count) Contacts with addresses"
             }
-            self.results = self.contacts
         }
         catch {
             print("unable to fetch contacts")
-            self.dismiss(animated: true, completion: { 
-                let alert = UIAlertController(title: "Unable to fetch contacts", message: nil, preferredStyle: .alert)
-                let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
-                alert.addAction(cancel)
-                self.present(alert, animated: true, completion: nil)
-            })
             
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        loadContacts()
+    }
+    
+    func loadContacts(){
+        self.contacts = self.contacts.sorted(by: { (contact1, contact2) -> Bool in
+            return contact1.givenName.compare(contact2.givenName) == ComparisonResult.orderedAscending
+        })
+        self.results = self.contacts
+        UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: { _ in
+            self.loadingView.isHidden = true
+            self.backButton.isHidden = false
+            self.tableView.reloadData()
+        }, completion: nil)
+    }
+    
     
     //MARK: - Search bar delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -143,6 +163,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactsTableViewCell
         cell.nameLabel.text = results[indexPath.row].givenName + " " + results[indexPath.row].familyName
+        let value = results[indexPath.row].postalAddresses[0].value
+        cell.addressLabel.text = value.street + " " + value.city + " " + value.state + " " + value.country + " " + value.postalCode
         return cell
     }
     
