@@ -54,12 +54,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             self.loadingView.isHidden = false
             self.activityView.startAnimating()
             self.backButton.isHidden = true
+            self.view.isUserInteractionEnabled = false
         })
         tableView.delegate = self
         tableView.dataSource = self
         self.contacts.removeAll()
         self.results.removeAll()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         let keys = [CNContactIdentifierKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName)] as [Any]
         let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
         
@@ -74,11 +78,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         catch {
             print("unable to fetch contacts")
-            
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         loadContacts()
     }
     
@@ -88,6 +88,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         })
         self.results = self.contacts
         UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: { _ in
+            self.view.isUserInteractionEnabled = true
             self.loadingView.isHidden = true
             self.backButton.isHidden = false
             self.tableView.reloadData()

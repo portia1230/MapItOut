@@ -380,6 +380,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         defaults.set("true", forKey: "isCanceledAction")
+        self.removeFromParentViewController()
         self.dismiss(animated: true) {
         }
     }

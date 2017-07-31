@@ -60,13 +60,34 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        self.mapView.showsUserLocation = false
+        self.pickerUIView.isHidden = true
+        self.view.isUserInteractionEnabled = false
+        self.detailsButton.isEnabled = false
+        if defaults.string(forKey: "isCanceledAction") == "false"{
+            let annotations = self.mapView.annotations
+            self.mapView.removeAnnotations(annotations)
+        }
+        if defaults.string(forKey: "type") == nil{
+            defaults.set("All items", forKey: "type")
+            self.typeLabel.text = defaults.string(forKey: "type")
+            self.numberCountLabel.text = "-"
+        } else {
+            self.typeLabel.text = defaults.string(forKey: "type")
+            self.numberCountLabel.text = "-"
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         self.viewDidLoad()
+        
+        self.mapView.showsUserLocation = true
+        
         if let isCanceledAction = defaults.string(forKey: "isCanceledAction"){
             self.isCanceledAction = isCanceledAction
         } else {
             defaults.set("false", forKey: "isCanceledAction")
-            self.isCanceledAction = "false"
         }
         
         if self.isCanceledAction == "false"{
@@ -77,23 +98,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 let alertController = UIAlertController(title: nil, message:
                     "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
                 let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
-                    self.viewWillAppear(true)
+                    self.viewDidAppear(true)
                 })
                 alertController.addAction(cancel)
                 self.present(alertController, animated: true, completion: nil)
             }
-            if defaults.string(forKey: "type") == nil{
-                defaults.set("All items", forKey: "type")
-            }
             self.typeLabel.text = defaults.string(forKey: "type")
+            
             self.pickerUIView.isHidden = true
             self.pickerView.delegate = self
             self.mapView.userLocation.subtitle = ""
             self.mapView.userLocation.title = ""
-            
-            self.detailsButton.isEnabled = false
-            let annotations = self.mapView.annotations
-            self.mapView.removeAnnotations(annotations)
             
             self.items = CoreDataHelper.retrieveItems()
             
@@ -110,7 +125,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             defaults.set("false", forKey: "isCanceledAction")
             self.isCanceledAction = "false"
         }
-        
+        self.view.isUserInteractionEnabled = true
     }
     //self.images = allImages
     
@@ -149,18 +164,20 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             detailsButton.layer.cornerRadius = 15
             itemImage.clipsToBounds = true
             locationManager.delegate = self
-            defaults.set("All items", forKey: "type")
+            if defaults.string(forKey: "type") == nil{
+                defaults.set("All items", forKey: "type")
+            }
             
             if defaults.string(forKey: "isLoggedIn") == "true"{
-            
-            authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
-                guard user == nil else { return }
                 
-                let loginViewController = UIStoryboard.initialViewController(for: .login)
-                self.view.window?.rootViewController = loginViewController
-                self.view.window?.makeKeyAndVisible()
-                defaults.set("false", forKey:"loadedItems")
-            }
+                authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+                    guard user == nil else { return }
+                    
+                    let loginViewController = UIStoryboard.initialViewController(for: .login)
+                    self.view.window?.rootViewController = loginViewController
+                    self.view.window?.makeKeyAndVisible()
+                    defaults.set("false", forKey:"loadedItems")
+                }
             }
         }
     }
@@ -290,13 +307,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Functions
     
-    @IBAction func contactsButtonTapped(_ sender: Any) {
-    }
-    
     @IBAction func listButtonTapped(_ sender: Any) {
         self.performSegue(withIdentifier: "showListSegue", sender: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showListSegue"{
+            let destination = segue.destination as! ContactListController
+            destination.filteredItems = self.filteredItems
+        }
+    }
     
     func filterResults( type: String){
         self.filteredItems.removeAll()
@@ -317,7 +337,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         while i < self.filteredItems.count {
             let longitude = filteredItems[i].longitude
             let latitude = filteredItems[i].latitude
-            let anno = CustomPointAnnotation()
+            var anno = CustomPointAnnotation()
             
             if self.filteredItems[i].image == nil{
                 self.filteredItems[i].image = #imageLiteral(resourceName: "noContactImage.png")
@@ -535,38 +555,38 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         alertController.addAction(viewContactsAction)
         if defaults.string(forKey: "isLoggedIn") == "true"{
-        let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
-            do {
-                try Auth.auth().signOut()
-                defaults.set("false", forKey:"loadedItems")
-                defaults.set("notSet", forKey: "isLoggedIn")
-                self.items = CoreDataHelper.retrieveItems()
-                for item in self.items {
-                    CoreDataHelper.deleteItems(item: item)
+            let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
+                do {
+                    try Auth.auth().signOut()
+                    defaults.set("false", forKey:"loadedItems")
+                    defaults.set("notSet", forKey: "isLoggedIn")
+                    self.items = CoreDataHelper.retrieveItems()
+                    for item in self.items {
+                        CoreDataHelper.deleteItems(item: item)
+                    }
+                    //CoreDataHelper.saveItem()
+                } catch let error as NSError {
+                    assertionFailure("Error signing out: \(error.localizedDescription)")
                 }
-                //CoreDataHelper.saveItem()
-            } catch let error as NSError {
-                assertionFailure("Error signing out: \(error.localizedDescription)")
             }
-        }
-        let resetPasswordAction = UIAlertAction(title: "Reset password", style: .default) { _ in
-            do {
-                Auth.auth().sendPasswordReset(withEmail: (Auth.auth().currentUser?.email)!) { error in
-                    if error != nil{
-                        let alertController = UIAlertController(title: nil, message: "Error: \(error.debugDescription)", preferredStyle: .alert)
-                        let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
-                        alertController.addAction(cancelAction)
-                        self.present(alertController, animated: true)
-                    } else {
-                        
-                        let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
-                        let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
-                        alertController.addAction(cancelAction)
-                        self.present(alertController, animated: true)
+            let resetPasswordAction = UIAlertAction(title: "Reset password", style: .default) { _ in
+                do {
+                    Auth.auth().sendPasswordReset(withEmail: (Auth.auth().currentUser?.email)!) { error in
+                        if error != nil{
+                            let alertController = UIAlertController(title: nil, message: "Error: \(error.debugDescription)", preferredStyle: .alert)
+                            let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                            alertController.addAction(cancelAction)
+                            self.present(alertController, animated: true)
+                        } else {
+                            
+                            let alertController = UIAlertController(title: nil, message: "An reset password email has been sent to \((Auth.auth().currentUser?.email)!)", preferredStyle: .alert)
+                            let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+                            alertController.addAction(cancelAction)
+                            self.present(alertController, animated: true)
+                        }
                     }
                 }
             }
-        }
             alertController.addAction(signOutAction)
             alertController.addAction(resetPasswordAction)
         } else {
