@@ -646,42 +646,53 @@
                                         <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
-                                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="j2b-Bt-nhJ">
-                                        <rect key="frame" x="0.0" y="211" width="375" height="99"/>
+                                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7ur-kf-LSb">
+                                        <rect key="frame" x="0.0" y="211" width="375" height="160"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="99" id="F2s-fz-q5r"/>
+                                            <constraint firstAttribute="height" constant="160" id="KiA-hU-qLX"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="50" id="ut8-1i-T3Z" customClass="LocationTableViewCell" customModule="MapItOut" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="1" width="375" height="50"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="70" id="PRl-ya-cOr" customClass="LocationTableViewCell" customModule="MapItOut" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="1" width="375" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ut8-1i-T3Z" id="pnB-Sg-cxd">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PRl-ya-cOr" id="74D-0r-xYR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beijing, China" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEg-dR-Sbu">
-                                                            <rect key="frame" x="18" y="10" width="339" height="31"/>
-                                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5rz-tP-Xbm">
+                                                            <rect key="frame" x="15" y="8.5" width="345" height="54"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beijing, China" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQD-s4-40M">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="23.5"/>
+                                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                                    <color key="textColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beijing, China" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byP-6o-kAb">
+                                                                    <rect key="frame" x="0.0" y="33.5" width="345" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="wEg-dR-Sbu" firstAttribute="leading" secondItem="pnB-Sg-cxd" secondAttribute="leadingMargin" constant="10" id="9Fc-zs-ug7"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="wEg-dR-Sbu" secondAttribute="bottom" constant="0.5" id="BUp-q2-e5u"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="wEg-dR-Sbu" secondAttribute="trailing" constant="10" id="Hic-e9-vpg"/>
-                                                        <constraint firstItem="wEg-dR-Sbu" firstAttribute="top" secondItem="pnB-Sg-cxd" secondAttribute="topMargin" constant="2" id="rxV-Pm-ZhO"/>
+                                                        <constraint firstAttribute="trailing" secondItem="5rz-tP-Xbm" secondAttribute="trailing" constant="15" id="47U-0W-fKf"/>
+                                                        <constraint firstItem="5rz-tP-Xbm" firstAttribute="centerY" secondItem="74D-0r-xYR" secondAttribute="centerY" id="VNS-ar-dqq"/>
+                                                        <constraint firstItem="5rz-tP-Xbm" firstAttribute="leading" secondItem="74D-0r-xYR" secondAttribute="leading" constant="15" id="lCe-EW-hEy"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <outlet property="locationLabel" destination="wEg-dR-Sbu" id="XxJ-kG-TCk"/>
+                                                    <outlet property="locationLabel" destination="oQD-s4-40M" id="VOn-Mi-Jcr"/>
+                                                    <outlet property="subLabel" destination="byP-6o-kAb" id="KPE-Jr-DcL"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
-                                            <outlet property="dataSource" destination="dmp-N2-oVo" id="VZa-i8-RMR"/>
-                                            <outlet property="delegate" destination="dmp-N2-oVo" id="WiI-oq-2PF"/>
+                                            <outlet property="dataSource" destination="dmp-N2-oVo" id="rwi-F6-cK1"/>
+                                            <outlet property="delegate" destination="dmp-N2-oVo" id="ryx-AT-CBq"/>
                                         </connections>
                                     </tableView>
                                 </subviews>
@@ -699,11 +710,12 @@
                                     <constraint firstItem="uzR-Cb-8q3" firstAttribute="leading" secondItem="ZGG-uD-FtZ" secondAttribute="trailing" constant="10" id="CXl-sU-ES9"/>
                                     <constraint firstItem="4qv-xk-dbw" firstAttribute="top" secondItem="FuR-iH-dcG" secondAttribute="bottom" constant="5" id="Cap-p0-tUc"/>
                                     <constraint firstItem="IpU-78-yhJ" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="top" constant="10" id="E06-9e-Yf3"/>
+                                    <constraint firstAttribute="trailing" secondItem="7ur-kf-LSb" secondAttribute="trailing" id="EoO-fh-y4V"/>
                                     <constraint firstItem="AdL-st-Ap9" firstAttribute="leading" secondItem="IpU-78-yhJ" secondAttribute="trailing" constant="17" id="FAU-mZ-odl"/>
                                     <constraint firstItem="YIV-eT-zDZ" firstAttribute="top" secondItem="Cmk-SS-nsi" secondAttribute="top" constant="268" id="FrU-Ak-uoN"/>
                                     <constraint firstItem="cvz-uI-0tL" firstAttribute="top" secondItem="ERb-lS-yVG" secondAttribute="bottom" constant="10" id="GnA-s8-dTe"/>
+                                    <constraint firstItem="7ur-kf-LSb" firstAttribute="top" secondItem="FuR-iH-dcG" secondAttribute="bottom" id="HQ3-3p-bLL"/>
                                     <constraint firstAttribute="trailing" secondItem="fCb-sS-adp" secondAttribute="trailing" constant="20" id="Hk4-G3-TRd"/>
-                                    <constraint firstItem="j2b-Bt-nhJ" firstAttribute="leading" secondItem="Cmk-SS-nsi" secondAttribute="leading" id="Ic2-38-QXY"/>
                                     <constraint firstItem="4qv-xk-dbw" firstAttribute="leading" secondItem="ERb-lS-yVG" secondAttribute="trailing" constant="10" id="JS1-0B-aE7"/>
                                     <constraint firstAttribute="trailing" secondItem="FuR-iH-dcG" secondAttribute="trailing" id="K9G-jN-lkg"/>
                                     <constraint firstItem="jXS-Cq-p06" firstAttribute="leading" secondItem="dA3-VB-E9q" secondAttribute="trailing" constant="15" id="KFU-Rn-L5P"/>
@@ -715,7 +727,7 @@
                                     <constraint firstAttribute="bottom" secondItem="uLu-Wt-jmp" secondAttribute="bottom" id="Sgu-Q6-A1L"/>
                                     <constraint firstItem="YIV-eT-zDZ" firstAttribute="leading" secondItem="laK-qd-3mp" secondAttribute="trailing" constant="15" id="TgU-TL-7M7"/>
                                     <constraint firstAttribute="trailing" secondItem="0wi-mG-uzg" secondAttribute="trailing" constant="25" id="TwX-db-aye"/>
-                                    <constraint firstAttribute="trailing" secondItem="j2b-Bt-nhJ" secondAttribute="trailing" id="UEG-4j-2Sn"/>
+                                    <constraint firstItem="7ur-kf-LSb" firstAttribute="leading" secondItem="Cmk-SS-nsi" secondAttribute="leading" id="Us9-5b-Y8Z"/>
                                     <constraint firstItem="fCb-sS-adp" firstAttribute="top" secondItem="yI8-jM-mNj" secondAttribute="bottom" constant="20" id="XLz-Wt-fSk"/>
                                     <constraint firstItem="IpU-78-yhJ" firstAttribute="leading" secondItem="Cmk-SS-nsi" secondAttribute="leading" constant="13" id="ZU5-dy-u6P"/>
                                     <constraint firstAttribute="trailing" secondItem="W3g-HC-g3C" secondAttribute="trailing" constant="15" id="ZVS-IR-4Je"/>
@@ -731,7 +743,6 @@
                                     <constraint firstAttribute="trailing" secondItem="uLu-Wt-jmp" secondAttribute="trailing" id="fy9-ka-nbC"/>
                                     <constraint firstItem="W3g-HC-g3C" firstAttribute="leading" secondItem="jXS-Cq-p06" secondAttribute="trailing" constant="10" id="i0n-6X-UqA"/>
                                     <constraint firstItem="laK-qd-3mp" firstAttribute="top" secondItem="cvz-uI-0tL" secondAttribute="bottom" constant="15" id="i2E-8B-UGI"/>
-                                    <constraint firstItem="j2b-Bt-nhJ" firstAttribute="top" secondItem="FuR-iH-dcG" secondAttribute="bottom" id="jwL-FG-wnB"/>
                                     <constraint firstItem="AdL-st-Ap9" firstAttribute="top" secondItem="fCb-sS-adp" secondAttribute="bottom" constant="10" id="mBb-Fw-EYe"/>
                                     <constraint firstItem="0wi-mG-uzg" firstAttribute="top" secondItem="ZMU-nt-eZt" secondAttribute="bottom" constant="12" id="mvU-l3-kcD"/>
                                     <constraint firstAttribute="trailing" secondItem="ZMU-nt-eZt" secondAttribute="trailing" id="n68-3c-0gC"/>
@@ -817,7 +828,7 @@
                         <outlet property="phoneButton" destination="4qv-xk-dbw" id="3gq-d8-0Qv"/>
                         <outlet property="phoneImageView" destination="6EF-oF-0KN" id="qdj-zY-N33"/>
                         <outlet property="phoneTextField" destination="ERb-lS-yVG" id="3RG-8c-82C"/>
-                        <outlet property="resultTableView" destination="j2b-Bt-nhJ" id="mhQ-86-6Bj"/>
+                        <outlet property="resultTableView" destination="7ur-kf-LSb" id="DEy-Lz-Zsn"/>
                         <outlet property="searchBar" destination="ZGG-uD-FtZ" id="a9d-pw-N7J"/>
                         <outlet property="typeTextField" destination="AdL-st-Ap9" id="Iw0-Wx-4N7"/>
                         <outlet property="undoButton" destination="BH5-KS-zal" id="oWw-Zw-eb3"/>
@@ -1304,36 +1315,47 @@
                                 <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                             </searchBar>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="C2J-SO-r71">
-                                <rect key="frame" x="0.0" y="294" width="375" height="99"/>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="C2J-SO-r71">
+                                <rect key="frame" x="0.0" y="294" width="375" height="160"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="99" id="vPU-Rv-uIB"/>
+                                    <constraint firstAttribute="height" constant="160" id="vPU-Rv-uIB"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="50" id="shZ-9Q-TzQ" customClass="LocationTableViewCell" customModule="MapItOut" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="375" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="70" id="shZ-9Q-TzQ" customClass="LocationTableViewCell" customModule="MapItOut" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="1" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="shZ-9Q-TzQ" id="gRi-0q-Zdt">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beijing, China" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ku4-Dz-iJK">
-                                                    <rect key="frame" x="18" y="10" width="339" height="31"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wgx-z2-ZT3">
+                                                    <rect key="frame" x="15" y="8.5" width="345" height="54"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beijing, China" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ku4-Dz-iJK">
+                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="23.5"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                            <color key="textColor" red="0.29185739159584045" green="0.34405413269996643" blue="0.69811654090881348" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beijing, China" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EmQ-Bh-bcH">
+                                                            <rect key="frame" x="0.0" y="33.5" width="345" height="20.5"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ku4-Dz-iJK" firstAttribute="leading" secondItem="gRi-0q-Zdt" secondAttribute="leadingMargin" constant="10" id="3Ht-Ls-yG8"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ku4-Dz-iJK" secondAttribute="bottom" constant="0.5" id="TBD-x5-DfD"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="ku4-Dz-iJK" secondAttribute="trailing" constant="10" id="akn-rd-Uoo"/>
-                                                <constraint firstItem="ku4-Dz-iJK" firstAttribute="top" secondItem="gRi-0q-Zdt" secondAttribute="topMargin" constant="2" id="oDt-Ip-HbP"/>
+                                                <constraint firstItem="wgx-z2-ZT3" firstAttribute="leading" secondItem="gRi-0q-Zdt" secondAttribute="leading" constant="15" id="GbW-NG-DaP"/>
+                                                <constraint firstAttribute="trailing" secondItem="wgx-z2-ZT3" secondAttribute="trailing" constant="15" id="S6T-TD-JFQ"/>
+                                                <constraint firstItem="wgx-z2-ZT3" firstAttribute="centerY" secondItem="gRi-0q-Zdt" secondAttribute="centerY" id="SQ6-XH-1MT"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="locationLabel" destination="ku4-Dz-iJK" id="G4Z-g9-p8B"/>
+                                            <outlet property="subLabel" destination="EmQ-Bh-bcH" id="ApQ-Q9-0yt"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1552,7 +1574,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="SCj-Jc-Yda" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="tmm-Kg-MFE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tmm-Kg-MFE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.2617306113243103" green="0.31526783108711243" blue="0.68635404109954834" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

@@ -90,6 +90,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let searchResult = searchResults[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LocationTableViewCell
         cell.locationLabel.text = searchResult.title
+        cell.subLabel.text = searchResult.subtitle
         return cell
     }
     
@@ -107,40 +108,28 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         self.locationTextField.resignFirstResponder()
         self.dismissKeyboard()
         let cell = tableView.cellForRow(at: indexPath) as! LocationTableViewCell
-        self.locationTextField.text = cell.locationLabel.text!
+        self.locationTextField.text = cell.locationLabel.text! + " " + cell.subLabel.text!
+        self.contactLocationDescription = cell.locationLabel.text! + " " + cell.subLabel.text!
         //self.searchResults[indexPath.row].
-        
-        
-        
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(locationTextField.text! + " " + self.searchResults[indexPath.row].subtitle) { (placemarks:[CLPlacemark]?, error: Error?) in
-            if error == nil{
-                let placemark = placemarks?.first
-                let anno = MKPointAnnotation()
-                anno.coordinate = (placemark?.location?.coordinate)!
-                
-                let annotations = self.locationMapView.annotations
-                
-                //centering and clearing other annotations
-                let span = MKCoordinateSpanMake(0.1, 0.1)
-                self.location = anno.coordinate
-                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
-                self.locationMapView.setRegion(region, animated: true)
-                self.locationMapView.removeAnnotations(annotations)
-                self.locationMapView.addAnnotation(anno)
-                
-                self.reverseGeocoding(latitude: anno.coordinate.latitude, longitude: anno.coordinate.longitude)
-                self.longitude = anno.coordinate.longitude
-                self.latitude = anno.coordinate.latitude
-                self.originalLocation = self.locationTextField.text!
-                self.contactLocationDescription = self.originalLocation
-                
-                
-                
-            } else {
-                print(error?.localizedDescription ?? "error" )
-            }
+ 
+        let searchRequest = MKLocalSearchRequest(completion: self.searchResults[indexPath.row])
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { (response, error) in
+            let coordinate = response?.mapItems[0].placemark.coordinate
+            self.locationMapView.removeAnnotations(self.locationMapView.annotations)
+            let anno = MKPointAnnotation()
+            anno.coordinate = coordinate!
+            let span = MKCoordinateSpanMake(0.1, 0.1)
+            self.location = coordinate
+            let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+            self.locationMapView.setRegion(region, animated: true)
+            self.locationMapView.addAnnotation(anno)
+
+            self.longitude = anno.coordinate.longitude
+            self.latitude = anno.coordinate.latitude
         }
+        
+        
         tableView.isHidden = true
         
     }
