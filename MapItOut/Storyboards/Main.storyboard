@@ -890,7 +890,7 @@
         <!--Contact List Controller-->
         <scene sceneID="qOC-wK-11n">
             <objects>
-                <viewController id="M4Q-aG-t6d" customClass="ContactListController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactListController" id="M4Q-aG-t6d" customClass="ContactListController" customModule="MapItOut" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="D8j-uK-q38"/>
                         <viewControllerLayoutGuide type="bottom" id="ZLz-XZ-O7G"/>
@@ -1630,8 +1630,8 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h3e-dj-j96"/>
-        <segue reference="Xjx-vg-KDV"/>
+        <segue reference="9ej-53-kgX"/>
+        <segue reference="e1G-mV-pNx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

@@ -33,9 +33,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     var items = [Item]()
     
-    
     var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-    
     
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
@@ -148,6 +146,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         detailsButton.layer.cornerRadius = 15
         itemImage.clipsToBounds = true
         
+        
         //fittng the photofann
         if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
             let alertController = UIAlertController(title: nil, message:
@@ -166,6 +165,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             locationManager.delegate = self
             if defaults.string(forKey: "type") == nil{
                 defaults.set("All items", forKey: "type")
+                self.numberCountLabel.text = "(0)"
+                self.detailsButton.isEnabled = false
+                self.detailsButton.setTitle("", for: .normal)
+                self.detailsButton.backgroundColor = greyColor
             }
             
             if defaults.string(forKey: "isLoggedIn") == "true"{

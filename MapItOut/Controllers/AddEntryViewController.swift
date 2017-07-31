@@ -375,6 +375,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         } else {
             locValue = manager.location!.coordinate
         }
+        let value = LocationTransformHelper.calibrate(gcjLat: locValue.latitude, gcjLng: locValue.longitude)
+        locValue.latitude = value.wgsLat
+        locValue.longitude = value.wgsLng
         return locValue
     }
     
