@@ -25,14 +25,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
     var grayColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
-    let popOverVC = UIStoryboard(name: "Login", bundle:nil).instantiateViewController(withIdentifier: "ResetEmailViewController") as! ResetEmailViewController
     //MARK: - Functions
     
     @IBAction func resetButtonTapped(_ sender: Any) {
+        let popOverVC = UIStoryboard(name: "Login", bundle:nil).instantiateViewController(withIdentifier: "ResetEmailViewController") as! ResetEmailViewController
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(self.popOverVC.view)
+            self.view.addSubview(popOverVC.view)
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)
     }

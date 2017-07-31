@@ -33,14 +33,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     var items = [Item]()
     
-    weak var addVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddEntryViewController") as? AddEntryViewController
-    weak var listVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactListController") as? ContactListController
     
-    weak var clearListVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactListController") as? ContactListController
+    var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
     
-    weak var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
-    weak var popOverContactsVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as?  ContactsViewController
-    weak var popOverLoadingVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as? InitalLoadingViewController
     
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
@@ -124,10 +119,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         super.viewDidLoad()
         if defaults.string(forKey: "isLoggedIn") == "true"{
             if defaults.string(forKey: "loadedItems") == "false"{
-                self.addChildViewController(popOverLoadingVC!)
-                popOverLoadingVC?.view.frame = self.view.frame
-                self.view.addSubview((popOverLoadingVC?.view)!)
-                popOverLoadingVC?.didMove(toParentViewController: self)
+                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+                self.addChildViewController(popOverVC)
+                popOverVC.view.frame = self.view.frame
+                self.view.addSubview(popOverVC.view)
+                popOverVC.didMove(toParentViewController: self)
                 defaults.set("true", forKey:"loadedItems")
                 
             }
@@ -294,11 +290,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Functions
     
+    @IBAction func contactsButtonTapped(_ sender: Any) {
+    }
+    
     @IBAction func listButtonTapped(_ sender: Any) {
-        
-        self.listVC = clearListVC!
-        self.present(self.listVC!, animated: false, completion: nil)
-        
+        self.performSegue(withIdentifier: "showListSegue", sender: self)
     }
     
     
@@ -403,8 +399,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        self.addVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddEntryViewController") as? AddEntryViewController
-        self.present(self.addVC!, animated: false, completion: nil)
+        self.performSegue(withIdentifier: "addContactSegue", sender: self)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -502,10 +497,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             case .authorized:
                 
                 print("Authorized")
-                self.addChildViewController(self.popOverContactsVC!)
-                self.popOverVC?.view.frame = self.view.frame
+                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
+                self.addChildViewController(popOverVC)
+                popOverVC.view.frame = self.view.frame
                 UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                    self.view.addSubview((self.popOverContactsVC?.view)!)
+                    self.view.addSubview(popOverVC.view)
                 }, completion: nil)
                 
             case .notDetermined: // needs to ask for authorization
@@ -517,12 +513,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                         alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
                         self.present(alertController, animated: true, completion: nil)
                     } else {
-                        self.addChildViewController(self.popOverContactsVC!)
-                        self.popOverContactsVC?.view.frame = self.view.frame
+                        
+                        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
+                        self.addChildViewController(popOverVC)
+                        popOverVC.view.frame = self.view.frame
                         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                            self.view.addSubview((self.popOverContactsVC?.view)!)
+                            self.view.addSubview(popOverVC.view)
                         }, completion: nil)
                         
+                        
+                        //self.performSegue(withIdentifier: "contactsSegue", sender: self)
                     }
                 })
             default:
@@ -622,24 +622,24 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     @IBAction func detailsButtonTapped(_ sender: Any) {
         
-        popOverVC?.item = selectedItem
-        popOverVC?.name = selectedItem.name!
-        popOverVC?.organization = selectedItem.organization!
-        popOverVC?.address = selectedItem.locationDescription!
-        popOverVC?.type = selectedItem.type!
-        popOverVC?.contactPhoto = (selectedItem.image as? UIImage)!
-        popOverVC?.email = selectedItem.email!
-        popOverVC?.phone = selectedItem.phone!
-        popOverVC?.latitude = selectedItem.latitude
-        popOverVC?.longitude = selectedItem.longitude
-        popOverVC?.keyOfItem = selectedItem.key!
+        popOverVC.item = selectedItem
+        popOverVC.name = selectedItem.name!
+        popOverVC.organization = selectedItem.organization!
+        popOverVC.address = selectedItem.locationDescription!
+        popOverVC.type = selectedItem.type!
+        popOverVC.contactPhoto = (selectedItem.image as? UIImage)!
+        popOverVC.email = selectedItem.email!
+        popOverVC.phone = selectedItem.phone!
+        popOverVC.latitude = selectedItem.latitude
+        popOverVC.longitude = selectedItem.longitude
+        popOverVC.keyOfItem = selectedItem.key!
         
-        self.addChildViewController(popOverVC!)
-        popOverVC?.view.frame = self.view.frame
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview((self.popOverVC?.view)!)
+            self.view.addSubview(self.popOverVC.view)
         }, completion: nil)
-        popOverVC?.didMove(toParentViewController: self)
+        popOverVC.didMove(toParentViewController: self)
     }
     
     //MARK: - Timer

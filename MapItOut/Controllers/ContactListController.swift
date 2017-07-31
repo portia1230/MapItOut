@@ -26,11 +26,6 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerUIView: UIView!
     
-    weak var addVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddEntryViewController") as? AddEntryViewController
-    
-    weak var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
-    weak var popOverContactsVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as?  ContactsViewController
-    
     var keys : [String] = []
     var sortedItems : [Item] = []
     var items = [Item]()
@@ -113,8 +108,6 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 defaults.set("false", forKey:"loadedItems")
             }
         }
-        
-        
     }
     
     deinit {
@@ -217,28 +210,28 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             i += 1
         }
         
-        
+        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         let selectedItem = self.filteredItems[indexPath.row]
         
-        popOverVC?.item = selectedItem
-        popOverVC?.name = selectedItem.name!
-        popOverVC?.organization = selectedItem.organization!
-        popOverVC?.address = selectedItem.locationDescription!
-        popOverVC?.type = selectedItem.type!
-        popOverVC?.contactPhoto = (selectedItem.image as? UIImage)!
-        popOverVC?.email = selectedItem.email!
-        popOverVC?.phone = selectedItem.phone!
+        popOverVC.item = selectedItem
+        popOverVC.name = selectedItem.name!
+        popOverVC.organization = selectedItem.organization!
+        popOverVC.address = selectedItem.locationDescription!
+        popOverVC.type = selectedItem.type!
+        popOverVC.contactPhoto = (selectedItem.image as? UIImage)!
+        popOverVC.email = selectedItem.email!
+        popOverVC.phone = selectedItem.phone!
         
-        popOverVC?.latitude = selectedItem.latitude
-        popOverVC?.longitude = selectedItem.longitude
-        popOverVC?.keyOfItem = selectedItem.key!
+        popOverVC.latitude = selectedItem.latitude
+        popOverVC.longitude = selectedItem.longitude
+        popOverVC.keyOfItem = selectedItem.key!
         
-        self.addChildViewController(popOverVC!)
-        popOverVC?.view.frame = self.view.frame
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview((self.popOverVC?.view)!)
+            self.view.addSubview(popOverVC.view)
         }, completion: nil)
-        popOverVC?.didMove(toParentViewController: self)
+        popOverVC.didMove(toParentViewController: self)
     }
     
     
@@ -272,10 +265,11 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             case .authorized:
                 
                 print("Authorized")
-                self.addChildViewController(self.popOverContactsVC!)
-                self.popOverContactsVC?.view.frame = self.view.frame
+                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
+                self.addChildViewController(popOverVC)
+                popOverVC.view.frame = self.view.frame
                 UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                    self.view.addSubview((self.popOverContactsVC?.view)!)
+                    self.view.addSubview(popOverVC.view)
                 }, completion: nil)
                 
             case .notDetermined: // needs to ask for authorization
@@ -287,10 +281,12 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                         alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
                         self.present(alertController, animated: true, completion: nil)
                     } else {
-                        self.addChildViewController(self.popOverContactsVC!)
-                        self.popOverContactsVC?.view.frame = self.view.frame
+                        
+                        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
+                        self.addChildViewController(popOverVC)
+                        popOverVC.view.frame = self.view.frame
                         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                            self.view.addSubview((self.popOverContactsVC?.view)!)
+                            self.view.addSubview(popOverVC.view)
                         }, completion: nil)
                         
                         
@@ -379,8 +375,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {
-        self.addVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddEntryViewController") as? AddEntryViewController
-        self.present(self.addVC!, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "addContactSegue", sender: self)
     }
     
     //MARK: - Timer
