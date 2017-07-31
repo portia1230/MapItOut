@@ -50,7 +50,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         return .lightContent
     }
     
-    var pickOption = ["Family", "Food", "Friend"]
+    var pickOption = ["", "Family", "Food", "Friend"]
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
     
@@ -106,6 +106,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         self.locationTextField.resignFirstResponder()
+        self.searchTableView.isHidden = true
         self.dismissKeyboard()
         let cell = tableView.cellForRow(at: indexPath) as! LocationTableViewCell
         self.locationTextField.text = cell.locationLabel.text! + " " + cell.subLabel.text!
@@ -411,6 +412,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.cancelButton.isHidden = true
             self.activityView.isHidden = false
             self.activityView.startAnimating()
+            
+            if (self.locationTextField.text == "") || (self.searchTableView.isHidden == false){
+                self.locationTextField.text = self.originalLocation
+                self.searchTableView.isHidden = true
+            }
             
             let coordinate = LocationTransformHelper.calibrate(gcjLat: self.latitude, gcjLng: self.longitude)
             

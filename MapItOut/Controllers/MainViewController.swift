@@ -33,6 +33,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     var items = [Item]()
     
+    
+    var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+    
+    
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var greenColor = UIColor(red: 64/255, green: 196/255, blue: 128/255, alpha: 1)
@@ -313,7 +317,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         while i < self.filteredItems.count {
             let longitude = filteredItems[i].longitude
             let latitude = filteredItems[i].latitude
-            let anno = CustomPointAnnotation()
+            var anno = CustomPointAnnotation()
             
             if self.filteredItems[i].image == nil{
                 self.filteredItems[i].image = #imageLiteral(resourceName: "noContactImage.png")
@@ -618,7 +622,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     @IBAction func detailsButtonTapped(_ sender: Any) {
         
-        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
         popOverVC.item = selectedItem
         popOverVC.name = selectedItem.name!
         popOverVC.organization = selectedItem.organization!
@@ -634,7 +637,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(popOverVC.view)
+            self.view.addSubview(self.popOverVC.view)
         }, completion: nil)
         popOverVC.didMove(toParentViewController: self)
     }

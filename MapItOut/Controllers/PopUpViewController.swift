@@ -139,6 +139,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.resultTableView.isHidden = true
         self.searchBar.showsCancelButton = false
         self.undoButton.isEnabled = true
         self.undoButton.setTitleColor(UIColor.white, for: .normal)
@@ -432,8 +433,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         if UIApplication.shared.isKeyboardPresented{
             self.view.endEditing(true)
             self.view.endEditing(true)
-            if self.searchBar.text == ""{
+            if (self.searchBar.text == "") || (self.resultTableView.isHidden == false){
                 self.searchBar.text = OOriginalLocation
+                self.resultTableView.isHidden = true
             }
         } else {
             if self.undoButton.isEnabled == true{

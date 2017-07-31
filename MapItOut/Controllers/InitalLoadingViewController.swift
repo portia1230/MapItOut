@@ -41,7 +41,7 @@ class InitalLoadingViewController: UIViewController {
                 while i < entries.count{
                     let imageView = UIImageView()
                     let url = URL(string: entries[i].imageURL)
-                    let imageData:NSData = NSData(contentsOf: url!)!
+                    let imageData:NSData = NSData(contentsOf: url!) ?? NSData()
                     imageView.image = UIImage(data: imageData as Data)
                     
                     let item = CoreDataHelper.newItem()
