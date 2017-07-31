@@ -151,9 +151,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        //let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
+        let addTypeButton = UIBarButtonItem(title: "Add type", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.addType))
         
-        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.setItems([addTypeButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         
         pickerView.delegate = self
@@ -285,7 +285,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     
-    @IBAction func addTypeButtonTapped(_ sender: Any) {
+    func addType() {
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as! AddTypePopUpViewController
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame

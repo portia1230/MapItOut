@@ -46,15 +46,27 @@ class AddTypePopUpViewController: UIViewController, UITextFieldDelegate{
     //MARK: - Functions
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        if typeTextField.text != ""{
-        let parent = self.parent as! AddEntryViewController
-        parent.pickOption.append(typeTextField.text!)
-        parent.typeTextField.text = typeTextField.text!
+        if self.parent is AddEntryViewController{
+            if typeTextField.text != ""{
+                let parent = self.parent as! AddEntryViewController
+                parent.pickOption.append(typeTextField.text!)
+                parent.typeTextField.text = typeTextField.text!
+            }
+            self.view.endEditing(true)
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
+        } else {
+            if typeTextField.text != ""{
+                let parent = self.parent as! PopUpViewController
+                parent.pickOption.append(typeTextField.text!)
+                parent.typeTextField.text = typeTextField.text!
+            }
+            self.view.endEditing(true)
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
         }
-        self.view.endEditing(true)
-        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.removeFromSuperview()
-        }, completion: nil)
     }
     func dismissView(){
         self.view.endEditing(true)
@@ -64,13 +76,24 @@ class AddTypePopUpViewController: UIViewController, UITextFieldDelegate{
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let parent = self.parent as! AddEntryViewController
-        parent.pickOption.append(typeTextField.text!)
-        parent.typeTextField.text = typeTextField.text!
-        self.view.endEditing(true)
-        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.removeFromSuperview()
-        }, completion: nil)
-        return true
+        if self.parent is AddEntryViewController{
+            let parent = self.parent as! AddEntryViewController
+            parent.pickOption.append(typeTextField.text!)
+            parent.typeTextField.text = typeTextField.text!
+            self.view.endEditing(true)
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
+            return true
+        } else {
+            let parent = self.parent as! PopUpViewController
+            parent.pickOption.append(typeTextField.text!)
+            parent.typeTextField.text = typeTextField.text!
+            self.view.endEditing(true)
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
+            return true
+        }
     }
 }

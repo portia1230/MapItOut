@@ -188,11 +188,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PopUpViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        //let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
+        let addTypeButton = UIBarButtonItem(title: "Add type", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PopUpViewController.addtype))
         
-        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.setItems([addTypeButton,spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         
         pickerView.delegate = self
@@ -229,6 +229,20 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         deleteButton.layer.cornerRadius = 15
+    }
+    
+    func donePicker(){
+        self.typeTextField.resignFirstResponder()
+    }
+    
+    func addtype(){
+        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as! AddTypePopUpViewController
+        self.addChildViewController(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.addSubview(popOverVC.view)
+        }, completion: nil)
+        popOverVC.didMove(toParentViewController: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
