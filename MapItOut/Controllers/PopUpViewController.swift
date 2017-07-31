@@ -184,7 +184,24 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         resultTableView.delegate = self
         
-        let pickerView = UIPickerView()
+        var pickerView = UIPickerView()
+        pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 165))
+        //pickerView.backgroundColor = .white
+        //pickerView.showsSelectionIndicator = true
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        //let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
+        
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+
         pickerView.delegate = self
         searchBar.delegate = self
         searchCompleter.delegate = self
@@ -197,6 +214,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         emailTextField.delegate = self
         
         typeTextField.inputView = pickerView
+        typeTextField.inputAccessoryView = toolBar
         
         nameTextField.tag = 0
         organizationTextField.tag = 1

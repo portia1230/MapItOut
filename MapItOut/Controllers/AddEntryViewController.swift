@@ -108,9 +108,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         self.dismissKeyboard()
         let cell = tableView.cellForRow(at: indexPath) as! LocationTableViewCell
         self.locationTextField.text = cell.locationLabel.text!
+        //self.searchResults[indexPath.row].
+        
+        
         
         let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(locationTextField.text!) { (placemarks:[CLPlacemark]?, error: Error?) in
+        geocoder.geocodeAddressString(locationTextField.text! + " " + self.searchResults[indexPath.row].subtitle) { (placemarks:[CLPlacemark]?, error: Error?) in
             if error == nil{
                 let placemark = placemarks?.first
                 let anno = MKPointAnnotation()
@@ -146,7 +149,24 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let pickerView = UIPickerView()
+        var pickerView = UIPickerView()
+        pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 165))
+        //pickerView.backgroundColor = .white
+        //pickerView.showsSelectionIndicator = true
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        //let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddEntryViewController.donePicker))
+        
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        
         pickerView.delegate = self
         locationTextField.delegate = self
         searchTableView.delegate = self
@@ -157,6 +177,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         
         typeTextField.tintColor = UIColor.clear
         typeTextField.inputView = pickerView
+        typeTextField.inputAccessoryView = toolBar
         locationMapView.delegate = self
         locationMapView.isUserInteractionEnabled = true
         locationMapView.tintColor = blueColor
@@ -269,6 +290,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     
     //MARK: - Functions
+    
+    func donePicker(){
+        self.typeTextField.resignFirstResponder()
+    }
+    
     
     @IBAction func addTypeButtonTapped(_ sender: Any) {
         let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "AddTypePopUpViewController" ) as! AddTypePopUpViewController
