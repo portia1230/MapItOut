@@ -139,7 +139,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         var pickerView = UIPickerView()
-        pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 165))
+        pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 214))
         //pickerView.backgroundColor = .white
         //pickerView.showsSelectionIndicator = true
         
@@ -183,10 +183,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         locationTextField.delegate = self
         nameTextField.tag = 0
         organizationTextField.tag = 1
-        //typeTextField.tag = 2
         phoneTextField.tag = 2
         emailTextField.tag = 3
-        //locationTextField.tag = 4
         
         //dismiss keyboard
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(AddEntryViewController.dismissKeyboard))

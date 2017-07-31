@@ -178,10 +178,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         resultTableView.delegate = self
         
         var pickerView = UIPickerView()
-        pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 165))
+        pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 214))
         //pickerView.backgroundColor = .white
         //pickerView.showsSelectionIndicator = true
-        
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
