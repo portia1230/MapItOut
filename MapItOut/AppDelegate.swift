@@ -116,6 +116,9 @@ extension AppDelegate {
             } else {
                 if defaults.string(forKey: "isLoggedIn") == "notSet" {
                     initialViewController = UIStoryboard.initialViewController(for: .login)
+                } else {
+                    defaults.set("notSet", forKey: "isLoggedIn")
+                    initialViewController = UIStoryboard.initialViewController(for: .login)
                 }
             }
         }
