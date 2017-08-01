@@ -340,7 +340,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         self.dismissKeyboard()
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.originalLocation = locationTextField.text!
+        //self.originalLocation = locationTextField.text!
         self.locationTextField.text = ""
     }
     
@@ -409,7 +409,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
         if self.nameTextField.text != "",
-            self.typeTextField.text != ""{
+            self.typeTextField.text != "", self.searchTableView.isHidden == true{
             self.dismissKeyboard()
             self.searchTableView.isHidden = true
             self.loadingView.isHidden = false
@@ -473,8 +473,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             
         } else {
             let alertController = UIAlertController(title: "", message:
-                "Did you put in a name and type?", preferredStyle: UIAlertControllerStyle.alert)
+                "Did you put in a name, location and type?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
+            self.dismissKeyboard()
             self.present(alertController, animated: true, completion: nil)
         }
         
