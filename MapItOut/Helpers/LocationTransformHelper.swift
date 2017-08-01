@@ -61,9 +61,6 @@ struct LocationTransformHelper {
         return (dLat, dLng)
     }
 
-    /**
-     *  wgs2gcj convert WGS-84 coordinate(wgsLat, wgsLng) to GCJ-02 coordinate(gcjLat, gcjLng).
-     */
     public static func calibrate(wgsLat: Double, wgsLng: Double) -> (gcjLat: Double, gcjLng: Double) {
         if isOutOfChina(lat: wgsLat, lng: wgsLng) {
             return (wgsLat, wgsLng)
@@ -88,33 +85,7 @@ struct LocationTransformHelper {
      *  gcj2wgs_exact convert GCJ-02 coordinate(gcjLat, gcjLng) to WGS-84 coordinate(wgsLat, wgsLng).
      *  The output WGS-84 coordinate's accuracy is less than 0.5m, but much slower than gcj2wgs.
      */
-    public static func gcj2wgs_exact(gcjLat: Double, gcjLng: Double) -> (wgsLat: Double, wgsLng: Double) {
-        let initDelta = 0.01, threshold = 0.000001
-        var (dLat, dLng) = (initDelta, initDelta)
-        var (mLat, mLng) = (gcjLat - dLat, gcjLng - dLng)
-        var (pLat, pLng) = (gcjLat + dLat, gcjLng + dLng)
-        var (wgsLat, wgsLng) = (gcjLat, gcjLng)
-        for _ in 0 ..< 30 {
-            (wgsLat, wgsLng) = ((mLat + pLat) / 2, (mLng + pLng) / 2)
-            let (tmpLat, tmpLng) = wgs2gcj(wgsLat: wgsLat, wgsLng: wgsLng)
-            (dLat, dLng) = (tmpLat - gcjLat, tmpLng - gcjLng)
-            if (fabs(dLat) < threshold) && (fabs(dLng) < threshold) {
-                return (wgsLat, wgsLng)
-            }
-            if dLat > 0 {
-                pLat = wgsLat
-            } else {
-                mLat = wgsLat
-            }
-            if dLng > 0 {
-                pLng = wgsLng
-            } else {
-                mLng = wgsLng
-            }
-        }
-        return (wgsLat, wgsLng)
-    }
-
+   
     /**
      *  Distance calculate the distance between point(latA, lngA) and point(latB, lngB), unit in meter.
      */
@@ -163,12 +134,9 @@ extension LocationTransformHelper {
     }
 
     public static func wgs2bd(wgsLat: Double, wgsLng: Double) -> (bdLat: Double, bdLng: Double) {
-        let (gcjLat, gcjLng) = wgs2gcj(wgsLat: wgsLat, wgsLng: wgsLng)
+        let (gcjLat, gcjLng) = calibrate(wgsLat: wgsLat, wgsLng: wgsLng)
         return gcj2bd(gcjLat: gcjLat, gcjLng: gcjLng)
     }
 
-    public static func bd2wgs(bdLat: Double, bdLng: Double) -> (wgsLat: Double, wgsLng: Double) {
-        let (gcjLat, gcjLng) = bd2gcj(bdLat: bdLat, bdLng: bdLng)
-        return calibrate(gcjLat: gcjLat, gcjLng: gcjLng)
-    }
+
 }

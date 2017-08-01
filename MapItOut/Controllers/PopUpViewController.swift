@@ -162,9 +162,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)
             self.contactMapView.setRegion(region, animated: true)
             self.contactMapView.addAnnotation(anno)
-            let calibratedCoordinate = LocationTransformHelper.calibrate(gcjLat: anno.coordinate.latitude, gcjLng: anno.coordinate.longitude)
-            self.longitude = calibratedCoordinate.wgsLng
-            self.latitude = calibratedCoordinate.wgsLat
+            let calibratedCoordinate = LocationTransformHelper.calibrate(wgsLat: anno.coordinate.latitude, wgsLng: anno.coordinate.longitude)
+            self.longitude = calibratedCoordinate.gcjLng
+            self.latitude = calibratedCoordinate.gcjLat
         }
         tableView.isHidden = true
         
@@ -312,7 +312,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
     
     //MARK: - VC Functions
@@ -600,6 +603,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let pinImage = UIImage(named: "200*274pin")
         
         annotationView!.image = UIImage(cgImage: (pinImage?.cgImage)!, scale: 200/30, orientation: .up)
+        annotationView?.centerOffset = CGPoint(x: 0, y: -10)
         return annotationView
         
     }

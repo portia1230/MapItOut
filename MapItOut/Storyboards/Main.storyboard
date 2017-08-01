@@ -808,7 +808,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JD9-TW-jdV">
                                 <rect key="frame" x="38" y="565" width="300" height="33"/>
-                                <color key="backgroundColor" red="0.86278051137924194" green="0.36988773941993713" blue="0.33731439709663391" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.86274509803921573" green="0.36862745098039218" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="fnG-vN-uuJ"/>
                                     <constraint firstAttribute="height" constant="33" id="oQZ-j8-qCV"/>

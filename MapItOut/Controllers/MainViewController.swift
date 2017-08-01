@@ -163,7 +163,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             detailsButton.layer.cornerRadius = 15
             itemImage.clipsToBounds = true
             locationManager.delegate = self
-            if defaults.string(forKey: "type") == nil{
+            if CoreDataHelper.retrieveItems().count == 0{
                 defaults.set("All items", forKey: "type")
                 self.numberCountLabel.text = "(0)"
                 self.detailsButton.isEnabled = false

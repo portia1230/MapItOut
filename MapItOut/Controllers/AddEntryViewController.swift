@@ -375,9 +375,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         } else {
             locValue = manager.location!.coordinate
         }
-        let value = LocationTransformHelper.calibrate(gcjLat: locValue.latitude, gcjLng: locValue.longitude)
-        locValue.latitude = value.wgsLat
-        locValue.longitude = value.wgsLng
+        let value = LocationTransformHelper.calibrate(wgsLat: locValue.latitude, wgsLng: locValue.longitude)
+        locValue.latitude = value.gcjLat
+        locValue.longitude = value.gcjLng
         return locValue
     }
     
@@ -402,6 +402,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let pinImage = UIImage(named: "200*274pin")
         
         annotationView!.image = UIImage(cgImage: (pinImage?.cgImage)!, scale: 200/30, orientation: .up)
+        annotationView?.centerOffset = CGPoint(x: 0, y: -10)
         return annotationView
         
     }
@@ -422,16 +423,14 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.searchTableView.isHidden = true
             }
             
-            let coordinate = LocationTransformHelper.calibrate(gcjLat: self.latitude, gcjLng: self.longitude)
-            
             let newItem = CoreDataHelper.newItem()
             newItem.name = self.nameTextField.text
             newItem.organization = self.organizationTextField.text
             newItem.type = self.typeTextField.text
             newItem.phone = self.phoneTextField.text
             newItem.email = self.emailTextField.text
-            newItem.latitude = coordinate.wgsLat
-            newItem.longitude = coordinate.wgsLng
+            newItem.latitude = self.latitude
+            newItem.longitude = self.longitude
             newItem.locationDescription = self.locationTextField.text
             newItem.key = ""
             
