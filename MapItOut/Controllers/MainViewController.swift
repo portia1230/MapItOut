@@ -62,14 +62,15 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
-        self.mapView.showsUserLocation = false
-        self.plusImageView.isHidden = true
+        self.mapView.showsUserLocation = true
         self.pickerUIView.isHidden = true
-        self.view.isUserInteractionEnabled = false
         self.detailsButton.isEnabled = false
         if defaults.string(forKey: "isCanceledAction") == "false"{
             let annotations = self.mapView.annotations
             self.mapView.removeAnnotations(annotations)
+            self.mapView.showsUserLocation = false
+            self.plusImageView.isHidden = true
+            self.view.isUserInteractionEnabled = false
         }
         if defaults.string(forKey: "type") == nil{
             defaults.set("All items", forKey: "type")

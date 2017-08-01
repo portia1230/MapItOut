@@ -25,6 +25,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     @IBOutlet weak var typeTextField: UILabel!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerUIView: UIView!
+    @IBOutlet weak var plusImageView: UIImageView!
     
     var reusableVC : AddEntryViewController?
     var keys : [String] = []
@@ -120,13 +121,16 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.plusImageView.isHidden = false
         self.pickerUIView.isHidden = true
-        self.view.isUserInteractionEnabled = false
+        self.view.isUserInteractionEnabled = true
         self.typeTextField.text = defaults.string(forKey: "type")
         if defaults.string(forKey: "isCanceledAction") == "false"{
             self.numberCountLabel.text = "-"
         }
         if defaults.string(forKey: "isCanceledAction") == "false"{
+            self.view.isUserInteractionEnabled = false
+            self.plusImageView.isHidden = true
             self.filteredItems.removeAll()
             self.items.removeAll()
             self.sortedItems.removeAll()
@@ -164,6 +168,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
         
         self.view.isUserInteractionEnabled = true
+        self.plusImageView.isHidden = false
     }
     
     func reloadView(){
