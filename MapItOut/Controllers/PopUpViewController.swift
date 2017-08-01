@@ -74,7 +74,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var greenColor = UIColor(red: 90/255, green: 196/255, blue: 128/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var darkTextColor = UIColor(red: 90/255, green: 92/255, blue: 92/255, alpha: 1)
-    var pickOption = ["Close Friend", "Co-worker", "Family", "Food", "Friend"]
+    var pickOption = ["Family", "Food", "Friend"]
     
     //MARK: - Local delegate location
     
@@ -162,14 +162,13 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)
             self.contactMapView.setRegion(region, animated: true)
             self.contactMapView.addAnnotation(anno)
-            let calibratedCoordinate = LocationTransformHelper.calibrate(wgsLat: anno.coordinate.latitude, wgsLng: anno.coordinate.longitude)
-            self.longitude = calibratedCoordinate.gcjLng
-            self.latitude = calibratedCoordinate.gcjLat
+            let calibratedCoordinate = LocationTransformHelper.calibrate(gcjLat: anno.coordinate.latitude, gcjLng: anno.coordinate.longitude)
+            self.longitude = calibratedCoordinate.wgsLng
+            self.latitude = calibratedCoordinate.wgsLat
         }
         tableView.isHidden = true
         
     }
-    
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -257,7 +256,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.itemImage.layer.cornerRadius = 70
         self.changeImageButton.layer.cornerRadius = 70
         self.itemImage.clipsToBounds = true
-        contactMapView.isUserInteractionEnabled = false
+        contactMapView.isUserInteractionEnabled = true
         self.nameTextField.text = name
         self.organizationTextField.text = organization
         self.typeTextField.text = type
@@ -269,7 +268,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let annos = contactMapView.annotations
         let anno = MKPointAnnotation()
         self.itemImage.image = self.contactPhoto
-        
+        self.view.isUserInteractionEnabled = true
+        self.dismissButton.isEnabled = true
         
         anno.coordinate = location
         
@@ -312,10 +312,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
+    
     
     
     //MARK: - VC Functions
@@ -401,22 +398,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
-        let items = CoreDataHelper.retrieveItems()
-        for item in items{
-            if item.key == self.keyOfItem{
-                CoreDataHelper.deleteItems(item: item)
-                if defaults.string(forKey: "isLoggedIn") == "true" {
-                    let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(keyOfItem).jpg")
-                    imageRef.delete(completion: nil)
-                    ItemService.deleteEntry(key: self.keyOfItem)
-                }
-            }
-        }
         
+       CoreDataHelper.deleteItems(item: self.item)
+        
+        self.parent?.viewWillAppear(true)
+        self.parent?.viewDidAppear(true)
         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.removeFromSuperview()
         }, completion: nil)
-        self.parent?.viewWillAppear(true)
     }
     
     @IBAction func changeImageButton(_ sender: Any) {
@@ -603,7 +592,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let pinImage = UIImage(named: "200*274pin")
         
         annotationView!.image = UIImage(cgImage: (pinImage?.cgImage)!, scale: 200/30, orientation: .up)
-        annotationView?.centerOffset = CGPoint(x: 0, y: -10)
         return annotationView
         
     }

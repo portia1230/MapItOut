@@ -31,9 +31,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     
+    var reusableVC : AddEntryViewController?
+    var reusableListVC: ContactListController?
+    
     var items = [Item]()
     
     var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+    
+    
     
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
@@ -70,9 +75,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             defaults.set("All items", forKey: "type")
             self.typeLabel.text = defaults.string(forKey: "type")
             self.numberCountLabel.text = "-"
-        } else {
-            self.typeLabel.text = defaults.string(forKey: "type")
-            self.numberCountLabel.text = "-"
         }
     }
     
@@ -86,6 +88,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.isCanceledAction = isCanceledAction
         } else {
             defaults.set("false", forKey: "isCanceledAction")
+            self.isCanceledAction = "false"
         }
         
         if self.isCanceledAction == "false"{
@@ -96,13 +99,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 let alertController = UIAlertController(title: nil, message:
                     "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
                 let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
-                    self.viewDidAppear(true)
+                    //self.viewDidAppear(true)
                 })
                 alertController.addAction(cancel)
                 self.present(alertController, animated: true, completion: nil)
             }
-            self.typeLabel.text = defaults.string(forKey: "type")
-            
+            //self.typeLabel.text = defaults.string(forKey: "type")
             self.pickerUIView.isHidden = true
             self.pickerView.delegate = self
             self.mapView.userLocation.subtitle = ""
@@ -146,13 +148,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         detailsButton.layer.cornerRadius = 15
         itemImage.clipsToBounds = true
         
-        
         //fittng the photofann
         if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
             let alertController = UIAlertController(title: nil, message:
                 "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
             let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
-                self.viewDidLoad()
+                self.reloadView()
             })
             alertController.addAction(cancel)
             self.present(alertController, animated: true, completion: nil)
@@ -163,13 +164,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             detailsButton.layer.cornerRadius = 15
             itemImage.clipsToBounds = true
             locationManager.delegate = self
-            if CoreDataHelper.retrieveItems().count == 0{
-                defaults.set("All items", forKey: "type")
-                self.numberCountLabel.text = "(0)"
-                self.detailsButton.isEnabled = false
-                self.detailsButton.setTitle("", for: .normal)
-                self.detailsButton.backgroundColor = greyColor
-            }
+            defaults.set("All items", forKey: "type")
             
             if defaults.string(forKey: "isLoggedIn") == "true"{
                 
@@ -190,6 +185,59 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             Auth.auth().removeStateDidChangeListener(authHandle)
         }
     }
+    
+    
+    
+    func reloadView(){
+        if defaults.string(forKey: "isLoggedIn") == "true"{
+            if defaults.string(forKey: "loadedItems") == "false"{
+                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+                self.addChildViewController(popOverVC)
+                popOverVC.view.frame = self.view.frame
+                self.view.addSubview(popOverVC.view)
+                popOverVC.didMove(toParentViewController: self)
+                defaults.set("true", forKey:"loadedItems")
+                
+            }
+        }
+        itemImage.layer.cornerRadius = 35
+        detailsButton.layer.cornerRadius = 15
+        itemImage.clipsToBounds = true
+        
+        //fittng the photofann
+        if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+            let alertController = UIAlertController(title: nil, message:
+                "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+            let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                self.viewDidLoad()
+            })
+            alertController.addAction(cancel)
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            
+            
+            self.mapView.delegate = self
+            self.itemImage.layer.cornerRadius = 35
+            detailsButton.layer.cornerRadius = 15
+            itemImage.clipsToBounds = true
+            locationManager.delegate = self
+            defaults.set("All items", forKey: "type")
+            
+            if defaults.string(forKey: "isLoggedIn") == "true"{
+                
+                authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+                    guard user == nil else { return }
+                    
+                    let loginViewController = UIStoryboard.initialViewController(for: .login)
+                    self.view.window?.rootViewController = loginViewController
+                    self.view.window?.makeKeyAndVisible()
+                    defaults.set("false", forKey:"loadedItems")
+                }
+            }
+        }
+    }
+    
+    
     
     //MARK: - Update annotations
     
@@ -311,15 +359,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Functions
     
     @IBAction func listButtonTapped(_ sender: Any) {
-        self.performSegue(withIdentifier: "showListSegue", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showListSegue"{
-            let destination = segue.destination as! ContactListController
-            destination.filteredItems = self.filteredItems
+        if reusableListVC == nil {
+            let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+            let addVC = storyboard.instantiateViewController(withIdentifier: "ContactListController")
+            reusableListVC = addVC as? ContactListController
+            reusableListVC?.modalTransitionStyle = .coverVertical
+            present(reusableListVC!, animated: false, completion: nil)
+        } else {
+            present(reusableListVC!, animated: false, completion: nil)
         }
     }
+    
     
     func filterResults( type: String){
         self.filteredItems.removeAll()
@@ -340,7 +390,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         while i < self.filteredItems.count {
             let longitude = filteredItems[i].longitude
             let latitude = filteredItems[i].latitude
-            var anno = CustomPointAnnotation()
+            let anno = CustomPointAnnotation()
             
             if self.filteredItems[i].image == nil{
                 self.filteredItems[i].image = #imageLiteral(resourceName: "noContactImage.png")
@@ -422,7 +472,24 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     @IBAction func addButtonTapped(_ sender: Any) {
-        self.performSegue(withIdentifier: "addContactSegue", sender: self)
+        if reusableVC == nil {
+            let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+            let addVC = storyboard.instantiateViewController(withIdentifier: "AddEntryViewController")
+            reusableVC = addVC as? AddEntryViewController
+            reusableVC?.modalTransitionStyle = .coverVertical
+            present(reusableVC!, animated: true, completion: nil)
+        } else {
+            reusableVC?.contactLocationDescription = ""
+            reusableVC?.name = ""
+            reusableVC?.organization = ""
+            reusableVC?.type = ""
+            reusableVC?.phone = ""
+            reusableVC?.email = ""
+            reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+            reusableVC?.photoImageView.alpha = 0
+            
+            present(reusableVC!, animated: true, completion: nil)
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -518,8 +585,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
             switch authorizationStatus {
             case .authorized:
-                
                 print("Authorized")
+                
                 let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
                 self.addChildViewController(popOverVC)
                 popOverVC.view.frame = self.view.frame
@@ -530,22 +597,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             case .notDetermined: // needs to ask for authorization
                 self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
                     
-                    if error != nil{
+                    if !accessGranted || (error != nil){
                         let alertController = UIAlertController(title: nil, message:
                             "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
                         alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
                         self.present(alertController, animated: true, completion: nil)
                     } else {
-                        
-                        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
-                        self.addChildViewController(popOverVC)
-                        popOverVC.view.frame = self.view.frame
-                        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                            self.view.addSubview(popOverVC.view)
-                        }, completion: nil)
-                        
-                        
-                        //self.performSegue(withIdentifier: "contactsSegue", sender: self)
                     }
                 })
             default:
@@ -556,6 +613,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             }
             
         }
+        
         alertController.addAction(viewContactsAction)
         if defaults.string(forKey: "isLoggedIn") == "true"{
             let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in

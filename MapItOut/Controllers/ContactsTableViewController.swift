@@ -87,16 +87,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             return contact1.givenName.compare(contact2.givenName) == ComparisonResult.orderedAscending
         })
         self.results = self.contacts
-        if self.results.count == 0 {
+        UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: { _ in
             self.view.isUserInteractionEnabled = true
-        } else {
-            UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: { _ in
-                self.view.isUserInteractionEnabled = true
-                self.loadingView.isHidden = true
-                self.backButton.isHidden = false
-                self.tableView.reloadData()
-            }, completion: nil)
-        }
+            self.loadingView.isHidden = true
+            self.backButton.isHidden = false
+            self.tableView.reloadData()
+        }, completion: nil)
     }
     
     
@@ -166,11 +162,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactsTableViewCell
-        cell.nameLabel.text = results[indexPath.row].givenName + " " + results[indexPath.row].familyName
+        weak var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ContactsTableViewCell
+        cell?.nameLabel.text = results[indexPath.row].givenName + " " + results[indexPath.row].familyName
         let value = results[indexPath.row].postalAddresses[0].value
-        cell.addressLabel.text = value.street + " " + value.city + " " + value.state + " " + value.country + " " + value.postalCode
-        return cell
+        cell?.addressLabel.text = value.street + " " + value.city + " " + value.state + " " + value.country + " " + value.postalCode
+        return cell!
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -182,7 +178,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 displayTaskViewController.name = contact.givenName
             }
             if contact.familyName.isEmpty == false {
-                if displayTaskViewController.name == nil{
+                if displayTaskViewController.name == ""{
                     displayTaskViewController.name = contact.familyName
                 } else {
                     displayTaskViewController.name.append(" " + contact.familyName)

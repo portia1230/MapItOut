@@ -61,6 +61,7 @@ class InitalLoadingViewController: UIViewController {
                 
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.parent?.viewWillAppear(true)
+                    self.parent?.viewDidAppear(true)
                     self.view.removeFromSuperview()
                 })
             })

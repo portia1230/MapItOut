@@ -25,27 +25,28 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var addContactButton: UIButton!
     @IBOutlet weak var locationTextField: UISearchBar!
     @IBOutlet weak var cancelButton: UIButton!
-    
     @IBOutlet weak var searchTableView: UITableView!
     
     var selectedLocation = ""
-    var originalLocation : String!
-    var name : String!
-    var organization : String!
-    var image : UIImage!
-    var email : String!
-    var phone : String!
-    var contactLocationDescription : String!
-    var type: String!
+    var originalLocation = ""
+    var name = ""
+    var organization = ""
+    var image = #imageLiteral(resourceName: "noContactImage.png")
+    var email = ""
+    var phone = ""
+    var contactLocationDescription = ""
+    var type = ""
     var latitude = 0.0
     var longitude = 0.0
     var location : CLLocationCoordinate2D!
+    
+    var reuseVC : AddEntryViewController?
     
     let locationManager = CLLocationManager()
     //let blueColor = UIColor(red: 74/255, green: 88/255, blue: 178/255, alpha: 1)
     let greenColor = UIColor(red: 173/255, green: 189/255, blue: 240/255, alpha: 0.2)
     let blueColor = UIColor(red: 76, green: 109, blue: 255, alpha: 1)
-    var photoHelper = MGPhotoHelper()
+    let photoHelper = MGPhotoHelper()
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -117,9 +118,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
             let coordinate = response?.mapItems[0].placemark.coordinate
+            let converted = LocationTransformHelper.calibrate(gcjLat: (coordinate?.latitude)!, gcjLng: (coordinate?.longitude)!)
             self.locationMapView.removeAnnotations(self.locationMapView.annotations)
             let anno = MKPointAnnotation()
-            anno.coordinate = coordinate!
+            anno.coordinate = CLLocationCoordinate2DMake(converted.wgsLat, converted.wgsLng)
             let span = MKCoordinateSpanMake(0.1, 0.1)
             self.location = coordinate
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)
@@ -130,7 +132,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.latitude = anno.coordinate.latitude
         }
         
-        
         tableView.isHidden = true
         
     }
@@ -139,6 +140,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         var pickerView = UIPickerView()
         pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 214))
         //pickerView.backgroundColor = .white
@@ -163,7 +167,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         searchCompleter.delegate = self
         searchTableView.delegate = self
         searchCompleter.queryFragment = locationTextField.text!
-        
         
         typeTextField.tintColor = UIColor.clear
         typeTextField.inputView = pickerView
@@ -204,7 +207,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             let alertController = UIAlertController(title: nil, message:
                 "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
             let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
-                self.viewWillAppear(true)
             })
             
             alertController.addAction(cancel)
@@ -219,38 +221,31 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             
             //set region/zoom in for map
-            if let name = self.name {
-                self.nameTextField.text = name
-            }
-            if let organization = self.organization {
-                self.organizationTextField.text = organization
-            }
-            if let email = self.email {
-                self.emailTextField.text = email
-            }
-            if let phone = self.phone {
-                self.phoneTextField.text = phone
-            }
-            if (self.image) != nil{
+            self.nameTextField.text = self.name
+            self.organizationTextField.text = organization
+            self.emailTextField.text = email
+            self.phoneTextField.text = phone
+            self.typeTextField.text = ""
+            if (self.image) != #imageLiteral(resourceName: "noContactImage.png"){
                 self.photoImageView.image = self.image
-                
             }
             self.locationMapView.showsUserLocation = false
             self.loadingView.isHidden = true
             self.activityView.isHidden = true
             
-            if let _ = self.contactLocationDescription {
+            if self.contactLocationDescription != ""{
                 self.locationTextField.text = self.contactLocationDescription
-                getCoordinate(addressString: self.contactLocationDescription!, completionHandler: { (location, error) in
+                getCoordinate(addressString: self.contactLocationDescription, completionHandler: { (location, error) in
                     let dispatchGroup = DispatchGroup()
                     let anno = MKPointAnnotation()
-                    anno.coordinate = location
+                    let converted = LocationTransformHelper.calibrate(gcjLat: location.latitude, gcjLng: location.longitude)
+                    anno.coordinate.latitude = converted.wgsLat
+                    anno.coordinate.longitude = converted.wgsLng
                     self.longitude = anno.coordinate.longitude
                     self.latitude = anno.coordinate.latitude
                     let annotations = self.locationMapView.annotations
                     self.locationMapView.removeAnnotations(annotations)
                     self.locationMapView.addAnnotation(anno)
-                    self.location = location
                     let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
                     let span = MKCoordinateSpanMake(0.1, 0.1)
                     let region = MKCoordinateRegionMake(coordinate, span)
@@ -263,7 +258,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.location = coordinate
                 reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let anno = MKPointAnnotation()
-                anno.coordinate = coordinate
+                let converted = LocationTransformHelper.calibrate(gcjLat: location.latitude, gcjLng: location.longitude)
+                anno.coordinate.latitude = converted.wgsLat
+                anno.coordinate.longitude = converted.wgsLng
                 self.longitude = anno.coordinate.longitude
                 self.latitude = anno.coordinate.latitude
                 let annotations = self.locationMapView.annotations
@@ -338,7 +335,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         self.dismissKeyboard()
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.originalLocation = locationTextField.text
+        self.originalLocation = locationTextField.text!
         self.locationTextField.text = ""
     }
     
@@ -365,6 +362,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         photoHelper.presentActionSheet(from: self)
         photoHelper.completionHandler = { image in
             self.photoImageView.image = image
+            self.photoImageView.alpha = 1
         }
     }
     
@@ -375,16 +373,14 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         } else {
             locValue = manager.location!.coordinate
         }
-        let value = LocationTransformHelper.calibrate(wgsLat: locValue.latitude, wgsLng: locValue.longitude)
-        locValue.latitude = value.gcjLat
-        locValue.longitude = value.gcjLng
         return locValue
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         defaults.set("true", forKey: "isCanceledAction")
-        self.removeFromParentViewController()
         self.dismiss(animated: true) {
+            self.view.removeFromSuperview()
+            self.removeFromParentViewController()
         }
     }
     
@@ -402,7 +398,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let pinImage = UIImage(named: "200*274pin")
         
         annotationView!.image = UIImage(cgImage: (pinImage?.cgImage)!, scale: 200/30, orientation: .up)
-        annotationView?.centerOffset = CGPoint(x: 0, y: -10)
         return annotationView
         
     }
@@ -423,14 +418,16 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.searchTableView.isHidden = true
             }
             
+            let coordinate = LocationTransformHelper.calibrate(gcjLat: self.latitude, gcjLng: self.longitude)
+            
             let newItem = CoreDataHelper.newItem()
             newItem.name = self.nameTextField.text
             newItem.organization = self.organizationTextField.text
             newItem.type = self.typeTextField.text
             newItem.phone = self.phoneTextField.text
             newItem.email = self.emailTextField.text
-            newItem.latitude = self.latitude
-            newItem.longitude = self.longitude
+            newItem.latitude = coordinate.wgsLat
+            newItem.longitude = coordinate.wgsLng
             newItem.locationDescription = self.locationTextField.text
             newItem.key = ""
             
@@ -440,7 +437,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 newItem.image = self.photoImageView.image!
             }
             CoreDataHelper.saveItem()
-            
             
             if defaults.string(forKey: "isLoggedIn") == "true"{
                 

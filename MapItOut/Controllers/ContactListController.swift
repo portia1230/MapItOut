@@ -121,14 +121,41 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         self.pickerUIView.isHidden = true
         self.view.isUserInteractionEnabled = false
         self.typeTextField.text = defaults.string(forKey: "type")
-        self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
-        
+        if defaults.string(forKey: "isCanceledAction") == "false"{
+            self.numberCountLabel.text = "-"
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         if defaults.string(forKey: "isCanceledAction") == "false"{
             super.viewDidAppear(animated)
+            _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
+            
+            if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+                let alertController = UIAlertController(title: nil, message:
+                    "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                    self.reloadView()
+                })
+                alertController.addAction(cancel)
+                self.present(alertController, animated: true, completion: nil)
+            }
+            self.pickerUIView.isHidden = true
+            self.tableView.delegate = self
+            self.tableView.dataSource = self
+            self.items = CoreDataHelper.retrieveItems()
+            self.sortedItems = LocationService.rankDistance(items: self.items)
+            filterItems(type: self.typeTextField.text!)
+        } else {
+            defaults.set("false", forKey: "isCanceledAction")
+        }
+        
+        self.view.isUserInteractionEnabled = true
+    }
+    
+    func reloadView(){
+        if defaults.string(forKey: "isCanceledAction") == "false"{
             _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
             
             if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
@@ -151,6 +178,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
         
         self.view.isUserInteractionEnabled = true
+
     }
     
     func updateValue(item: Item){
@@ -376,6 +404,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     @IBAction func mapButtonTapped(_ sender: Any) {
         dismiss(animated: false) {
+            defaults.set(self.typeTextField.text!, forKey:"type")
+            self.parent?.viewWillAppear(true)
+            
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {

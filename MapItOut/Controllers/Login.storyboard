@@ -25,8 +25,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1o-SJ-wdc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app record and map out your friends, foods, and everything you like" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s24-IC-apP">
-                                        <rect key="frame" x="40" y="142" width="295" height="66"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app record and map out your friends, foods, and everything else you like" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s24-IC-apP">
+                                        <rect key="frame" x="25" y="142" width="325" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="Rz2-FT-ZSr"/>
                                         </constraints>
@@ -46,10 +46,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.26173061130000003" green="0.31526783110000001" blue="0.68635404109999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="s24-IC-apP" secondAttribute="trailing" constant="40" id="5tU-QH-3lc"/>
+                                    <constraint firstAttribute="trailing" secondItem="s24-IC-apP" secondAttribute="trailing" constant="25" id="5tU-QH-3lc"/>
                                     <constraint firstItem="c65-j3-ROR" firstAttribute="leading" secondItem="b1o-SJ-wdc" secondAttribute="leading" constant="50" id="KfQ-OK-i8X"/>
                                     <constraint firstItem="c65-j3-ROR" firstAttribute="top" secondItem="b1o-SJ-wdc" secondAttribute="top" constant="92" id="UzU-7q-0qF"/>
-                                    <constraint firstItem="s24-IC-apP" firstAttribute="leading" secondItem="b1o-SJ-wdc" secondAttribute="leading" constant="40" id="fhD-s4-dPO"/>
+                                    <constraint firstItem="s24-IC-apP" firstAttribute="leading" secondItem="b1o-SJ-wdc" secondAttribute="leading" constant="25" id="fhD-s4-dPO"/>
                                     <constraint firstAttribute="trailing" secondItem="c65-j3-ROR" secondAttribute="trailing" constant="50" id="fk4-xq-3eg"/>
                                     <constraint firstItem="s24-IC-apP" firstAttribute="top" secondItem="b1o-SJ-wdc" secondAttribute="top" constant="142" id="kS7-wG-LWN"/>
                                     <constraint firstAttribute="height" constant="230" id="yJt-WX-ejC"/>
@@ -382,11 +382,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PAj-AU-jGc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app record and map out your friends, foods, and everything you like" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRD-xb-9b7">
-                                        <rect key="frame" x="40.5" y="142" width="295" height="66"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app record and map out your friends, foods, and everything else you like" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRD-xb-9b7">
+                                        <rect key="frame" x="25" y="142" width="325" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="jjb-yc-Tjo"/>
-                                            <constraint firstAttribute="width" constant="295" id="mjB-ix-eOz"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -424,10 +423,12 @@
                                     <constraint firstItem="tKs-ZP-lic" firstAttribute="leading" secondItem="PAj-AU-jGc" secondAttribute="leading" constant="8" id="3QL-tg-ock"/>
                                     <constraint firstItem="tKs-ZP-lic" firstAttribute="top" secondItem="PAj-AU-jGc" secondAttribute="top" constant="25" id="Izk-Ya-Hls"/>
                                     <constraint firstItem="zRD-xb-9b7" firstAttribute="centerX" secondItem="PAj-AU-jGc" secondAttribute="centerX" id="VZj-Hq-Yt8"/>
+                                    <constraint firstItem="zRD-xb-9b7" firstAttribute="leading" secondItem="PAj-AU-jGc" secondAttribute="leading" constant="25" id="WsR-yM-yOj"/>
                                     <constraint firstItem="zRD-xb-9b7" firstAttribute="top" secondItem="tKs-ZP-lic" secondAttribute="bottom" constant="77" id="Z7m-iM-BJ0"/>
                                     <constraint firstAttribute="height" constant="230" id="aPE-DV-qHd"/>
                                     <constraint firstItem="5ne-A3-MXw" firstAttribute="centerX" secondItem="PAj-AU-jGc" secondAttribute="centerX" id="cBC-Fk-gzH"/>
                                     <constraint firstItem="5ne-A3-MXw" firstAttribute="top" secondItem="PAj-AU-jGc" secondAttribute="top" constant="90" id="pMq-gq-Qx9"/>
+                                    <constraint firstAttribute="trailing" secondItem="zRD-xb-9b7" secondAttribute="trailing" constant="25" id="sNO-Q9-cmw"/>
                                 </constraints>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="hUg-kC-ga3">

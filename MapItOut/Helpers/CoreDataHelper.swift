@@ -18,8 +18,8 @@ class CoreDataHelper {
     
     //new activity
     static func newItem() -> Item {
-        let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
-        return item
+        weak var item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as? Item
+        return item!
     }
     
     //save activity
