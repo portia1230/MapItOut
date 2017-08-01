@@ -77,6 +77,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.typeLabel.text = defaults.string(forKey: "type")
             self.numberCountLabel.text = "-"
         }
+        let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
+        if authorizationStatus == .notDetermined {
+            self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
+            })
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -599,17 +604,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                     self.view.addSubview(popOverVC.view)
                 }, completion: nil)
                 
-            case .notDetermined: // needs to ask for authorization
-                self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
-                    
-                    if !accessGranted || (error != nil){
-                        let alertController = UIAlertController(title: nil, message:
-                            "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
-                        alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
-                        self.present(alertController, animated: true, completion: nil)
-                    } else {
-                    }
-                })
+            case .denied, .restricted: // needs to ask for authorization
+                let alertController = UIAlertController(title: nil, message:
+                    "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
+                self.present(alertController, animated: true, completion: nil)
             default:
                 let alertController = UIAlertController(title: nil, message:
                     "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
