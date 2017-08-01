@@ -94,8 +94,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.originalLocation = searchBar.text!
-        self.searchBar.showsCancelButton = true
         self.searchBar.text = ""
+        self.searchBar.showsCancelButton = true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -424,7 +424,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     func dismissView(){
-        if UIApplication.shared.isKeyboardPresented{
+        if (UIApplication.shared.isKeyboardPresented)||(self.resultTableView.isHidden == false){
             self.view.endEditing(true)
             self.view.endEditing(true)
             if (self.searchBar.text == "") || (self.resultTableView.isHidden == false){
@@ -533,7 +533,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+        self.view.isUserInteractionEnabled = true
         if self.markerText != textField.text!{
             
             self.undoButton.isEnabled = true

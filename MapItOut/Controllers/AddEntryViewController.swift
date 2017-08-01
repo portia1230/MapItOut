@@ -251,6 +251,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let span = MKCoordinateSpanMake(0.1, 0.1)
                     let region = MKCoordinateRegionMake(coordinate, span)
                     self.locationMapView.setRegion(region, animated: true)
+                    self.location = coordinate
                     dispatchGroup.notify(queue: .main, execute: {
                     })
                 })
@@ -336,10 +337,12 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchTableView.isHidden = true
         searchBar.text = self.originalLocation
+        
         self.dismissKeyboard()
     }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        //self.originalLocation = locationTextField.text!
+        self.originalLocation = self.locationTextField.text!
         self.locationTextField.text = ""
     }
     

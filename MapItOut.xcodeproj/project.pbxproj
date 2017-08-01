@@ -16,7 +16,7 @@
 		832E167C1F1BF2BE005FCE55 /* whiteGearImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 832E167B1F1BF2BE005FCE55 /* whiteGearImage.png */; };
 		833BE1851F2A5445009B229A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833BE1841F2A5445009B229A /* Assets.xcassets */; };
 		8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */; };
-		8341D2371F17D78100242BC8 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */; };
+		8341D2371F17D78100242BC8 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D2361F17D78100242BC8 /* ContactsViewController.swift */; };
 		8343CC221F2A83C100DCDB99 /* greenPlus.png in Resources */ = {isa = PBXBuildFile; fileRef = 8343CC211F2A83C100DCDB99 /* greenPlus.png */; };
 		83533A701F133F64002EEE74 /* plusImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83533A6F1F133F64002EEE74 /* plusImage.png */; };
 		83533A721F1340C7002EEE74 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83533A711F1340C7002EEE74 /* MainViewController.swift */; };
@@ -40,7 +40,6 @@
 		839DF3B81F147E250029D556 /* redPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DF3B71F147E250029D556 /* redPin.png */; };
 		83A00C761F14B40B0033E821 /* List icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C741F14B40B0033E821 /* List icon.png */; };
 		83A00C771F14B40B0033E821 /* Map Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C751F14B40B0033E821 /* Map Icon.png */; };
-		83A00C791F14B6A90033E821 /* Rory.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83A00C781F14B6A90033E821 /* Rory.jpg */; };
 		83A43C461F1D75E3000F4324 /* findContact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A43C441F1D75E3000F4324 /* findContact.png */; };
 		83A43C471F1D75E3000F4324 /* selectedFindcontact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A43C451F1D75E3000F4324 /* selectedFindcontact.png */; };
 		83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AEF55D1F27DD68005AE7D3 /* noContactImage.png */; };
@@ -56,6 +55,10 @@
 		83D529771F12F38800ED4EEE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529761F12F38800ED4EEE /* User.swift */; };
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
 		83D5297D1F12FCFD00ED4EEE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */; };
+		83D8D0EF1F31379F00736D48 /* TutorialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D8D0EE1F31379F00736D48 /* TutorialService.swift */; };
+		83D8D0F11F3137FC00736D48 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */; };
+		83D8D0F31F3139C100736D48 /* mapViewTutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D8D0F21F3139C100736D48 /* mapViewTutorial.png */; };
+		83D8D0F51F313A7D00736D48 /* Rory.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D8D0F41F313A7D00736D48 /* Rory.png */; };
 		83DDC23A1F1693F90072BCFB /* ContactListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DDC2391F1693F90072BCFB /* ContactListController.swift */; };
 		83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */; };
 		83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */; };
@@ -78,7 +81,7 @@
 		832E167B1F1BF2BE005FCE55 /* whiteGearImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteGearImage.png; path = Arts/whiteGearImage.png; sourceTree = "<group>"; };
 		833BE1841F2A5445009B229A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8341D2341F17D76B00242BC8 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsTableViewCell.swift; path = CustomClasses/ContactsTableViewCell.swift; sourceTree = "<group>"; };
-		8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsTableViewController.swift; path = Controllers/ContactsTableViewController.swift; sourceTree = "<group>"; };
+		8341D2361F17D78100242BC8 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = Controllers/ContactsViewController.swift; sourceTree = "<group>"; };
 		8343CC211F2A83C100DCDB99 /* greenPlus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greenPlus.png; path = Arts/greenPlus.png; sourceTree = "<group>"; };
 		83533A6F1F133F64002EEE74 /* plusImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plusImage.png; path = Arts/plusImage.png; sourceTree = "<group>"; };
 		83533A711F1340C7002EEE74 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Controllers/MainViewController.swift; sourceTree = "<group>"; };
@@ -102,7 +105,6 @@
 		839DF3B71F147E250029D556 /* redPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redPin.png; path = Arts/redPin.png; sourceTree = "<group>"; };
 		83A00C741F14B40B0033E821 /* List icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "List icon.png"; path = "Arts/List icon.png"; sourceTree = "<group>"; };
 		83A00C751F14B40B0033E821 /* Map Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Map Icon.png"; path = "Arts/Map Icon.png"; sourceTree = "<group>"; };
-		83A00C781F14B6A90033E821 /* Rory.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Rory.jpg; sourceTree = "<group>"; };
 		83A43C441F1D75E3000F4324 /* findContact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = findContact.png; path = Arts/findContact.png; sourceTree = "<group>"; };
 		83A43C451F1D75E3000F4324 /* selectedFindcontact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selectedFindcontact.png; path = Arts/selectedFindcontact.png; sourceTree = "<group>"; };
 		83AEF55D1F27DD68005AE7D3 /* noContactImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noContactImage.png; path = Arts/noContactImage.png; sourceTree = "<group>"; };
@@ -119,6 +121,10 @@
 		83D529791F12FCAD00ED4EEE /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserService.swift; path = Services/UserService.swift; sourceTree = "<group>"; };
 		83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Supports/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		83D5297C1F12FCFD00ED4EEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Supports/Info.plist; sourceTree = "<group>"; };
+		83D8D0EE1F31379F00736D48 /* TutorialService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialService.swift; path = Services/TutorialService.swift; sourceTree = "<group>"; };
+		83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tutorial.storyboard; path = Storyboards/Tutorial.storyboard; sourceTree = "<group>"; };
+		83D8D0F21F3139C100736D48 /* mapViewTutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapViewTutorial.png; path = Arts/mapViewTutorial.png; sourceTree = "<group>"; };
+		83D8D0F41F313A7D00736D48 /* Rory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Rory.png; path = Arts/Rory.png; sourceTree = "<group>"; };
 		83DDC2391F1693F90072BCFB /* ContactListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactListController.swift; path = Controllers/ContactListController.swift; sourceTree = "<group>"; };
 		83E4CB101F12EA5D00EDDD91 /* MapItOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapItOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +176,8 @@
 		833BE1831F2A52EC009B229A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				83D8D0F41F313A7D00736D48 /* Rory.png */,
+				83D8D0F21F3139C100736D48 /* mapViewTutorial.png */,
 				83B17F041F2C45200050DEAF /* greenPin.png */,
 				83B17F021F2BB70D0050DEAF /* ContactsIcon.png */,
 				83B17F001F2BA0BB0050DEAF /* whiteArrow.png */,
@@ -194,7 +202,6 @@
 				839DF3B71F147E250029D556 /* redPin.png */,
 				83A00C741F14B40B0033E821 /* List icon.png */,
 				83A00C751F14B40B0033E821 /* Map Icon.png */,
-				83A00C781F14B6A90033E821 /* Rory.jpg */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -238,6 +245,7 @@
 				83533A7C1F135272002EEE74 /* StorageService.swift */,
 				83533A7E1F1359A4002EEE74 /* ItemService.swift */,
 				83761FBF1F16BC1E00CE33D7 /* LocationService.swift */,
+				83D8D0EE1F31379F00736D48 /* TutorialService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -285,6 +293,7 @@
 				83E4CB281F12EB5800EDDD91 /* LaunchScreen.storyboard */,
 				83E4CB291F12EB5800EDDD91 /* Main.storyboard */,
 				83D529731F12F03A00ED4EEE /* Login.storyboard */,
+				83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -292,7 +301,7 @@
 		83E4CB2F1F12EB8300EDDD91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8341D2361F17D78100242BC8 /* ContactsTableViewController.swift */,
+				8341D2361F17D78100242BC8 /* ContactsViewController.swift */,
 				83DDC2391F1693F90072BCFB /* ContactListController.swift */,
 				83533A711F1340C7002EEE74 /* MainViewController.swift */,
 				837938931F136CE1003B4B34 /* AddEntryViewController.swift */,
@@ -399,19 +408,21 @@
 				838AC93D1F16EB8300D0EDCA /* 500*20Shadow.png in Resources */,
 				83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */,
 				83EC9DCD1F148BAD00AAC07B /* 200*274pin.png in Resources */,
+				83D8D0F51F313A7D00736D48 /* Rory.png in Resources */,
 				83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */,
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83A43C461F1D75E3000F4324 /* findContact.png in Resources */,
-				83A00C791F14B6A90033E821 /* Rory.jpg in Resources */,
 				832C7A3F1F266F6E0094766A /* whitePin.png in Resources */,
 				83680B631F14A83D003A14CC /* arrowGreen.png in Resources */,
 				83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */,
+				83D8D0F11F3137FC00736D48 /* Tutorial.storyboard in Resources */,
 				832E167A1F1BF1D1005FCE55 /* Refresh.png in Resources */,
 				83A00C771F14B40B0033E821 /* Map Icon.png in Resources */,
 				835ADA4A1F2969E80045F205 /* detailsButton.png in Resources */,
 				83B17F011F2BA0BB0050DEAF /* whiteArrow.png in Resources */,
 				839149271F23195300D1E959 /* defaultNoItemImage.png in Resources */,
 				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
+				83D8D0F31F3139C100736D48 /* mapViewTutorial.png in Resources */,
 				83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */,
 				83B17F051F2C45200050DEAF /* greenPin.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
@@ -492,8 +503,9 @@
 				83E5002A1F269B5500E69872 /* AddTypePopUpViewController.swift in Sources */,
 				83E4CB2E1F12EB8100EDDD91 /* LoginViewController.swift in Sources */,
 				83B49FD51F21C0EF00EFF184 /* CoreDataHelper.swift in Sources */,
+				83D8D0EF1F31379F00736D48 /* TutorialService.swift in Sources */,
 				8312E0031F13318A00AD0054 /* Storyboard+Utility.swift in Sources */,
-				8341D2371F17D78100242BC8 /* ContactsTableViewController.swift in Sources */,
+				8341D2371F17D78100242BC8 /* ContactsViewController.swift in Sources */,
 				83533A7F1F1359A4002EEE74 /* ItemService.swift in Sources */,
 				83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */,
 				8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */,

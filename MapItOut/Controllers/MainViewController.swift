@@ -34,6 +34,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     var reusableVC : AddEntryViewController?
     var reusableListVC: ContactListController?
+    var reusableContactsVC: ContactsViewController?
     
     var items = [Item]()
     
@@ -424,6 +425,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.detailsButton.setTitle("", for: .normal)
             self.detailsButton.backgroundColor = greyColor
         } else {
+            self.detailsButton.isEnabled = true
             let coordinate = LocationService.getLocation(manager: self.locationManager)
             let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
@@ -597,12 +599,20 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             case .authorized:
                 print("Authorized")
                 
-                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
-                self.addChildViewController(popOverVC)
-                popOverVC.view.frame = self.view.frame
-                UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                    self.view.addSubview(popOverVC.view)
-                }, completion: nil)
+                if self.reusableContactsVC == nil {
+                    let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+                    let addVC = storyboard.instantiateViewController(withIdentifier: "ContactsViewController")
+                    self.reusableContactsVC = addVC as? ContactsViewController
+                    self.reusableContactsVC?.modalTransitionStyle = .crossDissolve
+                    self.addChildViewController(self.reusableContactsVC!)
+                    UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                        self.view.addSubview((self.reusableContactsVC?.view)!)
+                    }, completion: nil)
+                } else {
+                    UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                        self.view.addSubview((self.reusableContactsVC?.view)!)
+                    }, completion: nil)
+                }
                 
             case .denied, .restricted: // needs to ask for authorization
                 let alertController = UIAlertController(title: nil, message:
