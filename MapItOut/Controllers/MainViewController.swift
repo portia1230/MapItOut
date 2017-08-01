@@ -30,6 +30,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var plusImageView: UIImageView!
     
     var reusableVC : AddEntryViewController?
     var reusableListVC: ContactListController?
@@ -37,8 +38,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var items = [Item]()
     
     var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
-    
-    
     
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
@@ -64,6 +63,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewWillAppear(_ animated: Bool) {
         self.mapView.showsUserLocation = false
+        self.plusImageView.isHidden = true
         self.pickerUIView.isHidden = true
         self.view.isUserInteractionEnabled = false
         self.detailsButton.isEnabled = false
@@ -126,6 +126,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.isCanceledAction = "false"
         }
         self.view.isUserInteractionEnabled = true
+        self.plusImageView.isHidden = false
     }
     //self.images = allImages
     
@@ -364,8 +365,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let addVC = storyboard.instantiateViewController(withIdentifier: "ContactListController")
             reusableListVC = addVC as? ContactListController
             reusableListVC?.modalTransitionStyle = .coverVertical
+            reusableListVC?.numberCount = self.numberCountLabel.text!
             present(reusableListVC!, animated: false, completion: nil)
         } else {
+            reusableListVC?.numberCount = self.numberCountLabel.text!
             present(reusableListVC!, animated: false, completion: nil)
         }
     }

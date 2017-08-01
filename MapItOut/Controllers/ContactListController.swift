@@ -39,6 +39,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     var contactStore = CNContactStore()
     var authHandle: AuthStateDidChangeListenerHandle?
     var pickerOptions = ["All items"]
+    var numberCount = ""
     
     
     //MARK: - Functions
@@ -127,6 +128,13 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
         if defaults.string(forKey: "isCanceledAction") == "false"{
             self.filteredItems.removeAll()
+            self.items.removeAll()
+            self.sortedItems.removeAll()
+            self.tableView.reloadData()
+            if numberCount != "0"{
+                self.numberCountLabel.text = numberCount
+                numberCount = "0"
+            }
         }
     }
     

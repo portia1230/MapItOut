@@ -313,6 +313,7 @@
                         <outlet property="numberCountLabel" destination="Mzj-wH-jWw" id="1yL-g4-hOg"/>
                         <outlet property="pickerUIView" destination="JRB-lZ-ICl" id="47o-47-ecH"/>
                         <outlet property="pickerView" destination="6Sd-yB-deR" id="BrU-Zq-dyd"/>
+                        <outlet property="plusImageView" destination="cAt-mG-5ko" id="8nU-zq-Iuy"/>
                         <outlet property="typeLabel" destination="2Wx-FP-xSg" id="4RQ-2S-kII"/>
                         <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" animates="NO" modalTransitionStyle="crossDissolve" id="h3e-dj-j96"/>
                     </connections>
