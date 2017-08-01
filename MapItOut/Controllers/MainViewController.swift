@@ -472,6 +472,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     @IBAction func addButtonTapped(_ sender: Any) {
+        
         if reusableVC == nil {
             let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
             let addVC = storyboard.instantiateViewController(withIdentifier: "AddEntryViewController")

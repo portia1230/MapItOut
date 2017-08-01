@@ -221,11 +221,11 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             
             //set region/zoom in for map
-            self.nameTextField.text = self.name
+            self.nameTextField.text = name
             self.organizationTextField.text = organization
             self.emailTextField.text = email
             self.phoneTextField.text = phone
-            self.typeTextField.text = ""
+            self.typeTextField.text = type
             if (self.image) != #imageLiteral(resourceName: "noContactImage.png"){
                 self.photoImageView.image = self.image
             }
@@ -321,12 +321,17 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 address = (addressLine?.joined(separator: ", "))!
             }
             self.locationTextField.text = address
+            self.contactLocationDescription = address
             self.originalLocation = address
         }
     }
     
     func dismissKeyboard() {
         view.endEditing(true)
+        if self.locationTextField.text == ""{
+            self.locationTextField.text = self.originalLocation
+            self.searchTableView.isHidden = true
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

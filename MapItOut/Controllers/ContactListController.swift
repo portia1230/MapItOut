@@ -26,6 +26,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerUIView: UIView!
     
+    var reusableVC : AddEntryViewController?
     var keys : [String] = []
     var sortedItems : [Item] = []
     var items = [Item]()
@@ -123,6 +124,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         self.typeTextField.text = defaults.string(forKey: "type")
         if defaults.string(forKey: "isCanceledAction") == "false"{
             self.numberCountLabel.text = "-"
+        }
+        if defaults.string(forKey: "isCanceledAction") == "false"{
+            self.filteredItems.removeAll()
         }
     }
     
@@ -231,6 +235,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         cell.photoImageView.image = item.image as? UIImage
         cell.photoImageView.layer.cornerRadius = 35
         cell.photoImageView.clipsToBounds = true
+        if cell.photoImageView.image == nil{
+            cell.photoImageView.image = #imageLiteral(resourceName: "noContactImage.png")
+        }
         return cell
     }
     
@@ -281,13 +288,15 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
                 imageRef.delete(completion: nil)
                 
-                ItemService.deleteEntry(key: sortedItems[selectedIndex].key!)
+                ItemService.deleteEntry(key: sortedItems[indexPath.row].key!)
             }
+            
+            CoreDataHelper.deleteItems(item: self.filteredItems[indexPath.row])
+            self.items = CoreDataHelper.retrieveItems()
+            self.sortedItems = LocationService.rankDistance(items: self.items)
             self.filteredItems.remove(at: indexPath.row)
-            CoreDataHelper.deleteItems(item: self.sortedItems[selectedIndex])
             self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
             self.tableView.reloadData()
-            
         }
     }
     
@@ -410,7 +419,24 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {
-        self.performSegue(withIdentifier: "addContactSegue", sender: self)
+        if reusableVC == nil {
+            let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+            let addVC = storyboard.instantiateViewController(withIdentifier: "AddEntryViewController")
+            reusableVC = addVC as? AddEntryViewController
+            reusableVC?.modalTransitionStyle = .coverVertical
+            present(reusableVC!, animated: true, completion: nil)
+        } else {
+            reusableVC?.contactLocationDescription = ""
+            reusableVC?.name = ""
+            reusableVC?.organization = ""
+            reusableVC?.type = ""
+            reusableVC?.phone = ""
+            reusableVC?.email = ""
+            reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+            reusableVC?.photoImageView.alpha = 0
+            
+            present(reusableVC!, animated: true, completion: nil)
+        }
     }
     
     //MARK: - Timer

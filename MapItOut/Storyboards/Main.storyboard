@@ -1128,7 +1128,6 @@
                         <outlet property="pickerView" destination="PiW-QX-JjJ" id="0rA-T1-m13"/>
                         <outlet property="tableView" destination="c0R-kg-YAL" id="sXB-Wd-BDx"/>
                         <outlet property="typeTextField" destination="Ufm-Dl-cws" id="l84-sv-YNd"/>
-                        <segue destination="Y6f-BZ-apC" kind="presentation" identifier="addContactSegue" id="e1G-mV-pNx"/>
                         <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" modalTransitionStyle="crossDissolve" id="9ej-53-kgX"/>
                     </connections>
                 </viewController>
@@ -1628,7 +1627,6 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e1G-mV-pNx"/>
         <segue reference="9ej-53-kgX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
