@@ -88,7 +88,7 @@
                                             <action selector="filterButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="p7y-zg-A6b"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(12)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mzj-wH-jWw">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mzj-wH-jWw">
                                         <rect key="frame" x="106" y="33" width="49" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="Mud-qG-Xq6"/>
@@ -1627,7 +1627,7 @@
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9ej-53-kgX"/>
+        <segue reference="h3e-dj-j96"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

@@ -76,7 +76,7 @@ struct LocationTransformHelper {
      *  gcj2wgs convert GCJ-02 coordinate(gcjLat, gcjLng) to WGS-84 coordinate(wgsLat, wgsLng).
      *  The output WGS-84 coordinate's accuracy is 1m to 2m. If you want more exactly result, use gcj2wgs_exact.
      */
-    public static func calibrate(gcjLat: Double, gcjLng: Double) -> (wgsLat: Double, wgsLng: Double) {
+    public static func gcj2wgs (gcjLat: Double, gcjLng: Double) -> (wgsLat: Double, wgsLng: Double) {
         if isOutOfChina(lat: gcjLat, lng: gcjLng) {
             return (gcjLat, gcjLng)
         }
@@ -133,42 +133,5 @@ struct LocationTransformHelper {
         let alpha = acos(s)
         let distance = alpha * EARTH_R
         return distance
-    }
-}
-
-extension LocationTransformHelper {
-
-    public static func gcj2bd(gcjLat: Double, gcjLng: Double) -> (bdLat: Double, bdLng: Double) {
-        if isOutOfChina(lat: gcjLat, lng: gcjLng) {
-            return (gcjLat, gcjLng)
-        }
-        let x = gcjLng, y = gcjLat
-        let z = sqrt(x * x + y * y) + 0.00002 * sin(y * Double.pi)
-        let theta = atan2(y, x) + 0.000003 * cos(x * Double.pi)
-        let bdLng = z * cos(theta) + 0.0065
-        let bdLat = z * sin(theta) + 0.006
-        return (bdLat, bdLng)
-    }
-
-    public static func bd2gcj(bdLat: Double, bdLng: Double) -> (gcjLat: Double, gcjLng: Double) {
-        if isOutOfChina(lat: bdLat, lng: bdLng) {
-            return (bdLat, bdLng)
-        }
-        let x = bdLng - 0.0065, y = bdLat - 0.006
-        let z = sqrt(x * x + y * y) - 0.00002 * sin(y * Double.pi)
-        let theta = atan2(y, x) - 0.000003 * cos(x * Double.pi)
-        let gcjLng = z * cos(theta)
-        let gcjLat = z * sin(theta)
-        return (gcjLat, gcjLng)
-    }
-
-    public static func wgs2bd(wgsLat: Double, wgsLng: Double) -> (bdLat: Double, bdLng: Double) {
-        let (gcjLat, gcjLng) = wgs2gcj(wgsLat: wgsLat, wgsLng: wgsLng)
-        return gcj2bd(gcjLat: gcjLat, gcjLng: gcjLng)
-    }
-
-    public static func bd2wgs(bdLat: Double, bdLng: Double) -> (wgsLat: Double, wgsLng: Double) {
-        let (gcjLat, gcjLng) = bd2gcj(bdLat: bdLat, bdLng: bdLng)
-        return calibrate(gcjLat: gcjLat, gcjLng: gcjLng)
     }
 }

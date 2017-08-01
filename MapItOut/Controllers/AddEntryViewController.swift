@@ -118,10 +118,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
             let coordinate = response?.mapItems[0].placemark.coordinate
-            let converted = LocationTransformHelper.calibrate(gcjLat: (coordinate?.latitude)!, gcjLng: (coordinate?.longitude)!)
+            let converted = LocationTransformHelper.wgs2gcj(wgsLat: (coordinate?.latitude)!, wgsLng: (coordinate?.longitude)!)
             self.locationMapView.removeAnnotations(self.locationMapView.annotations)
             let anno = MKPointAnnotation()
-            anno.coordinate = CLLocationCoordinate2DMake(converted.wgsLat, converted.wgsLng)
+            anno.coordinate = CLLocationCoordinate2DMake(converted.gcjLat, converted.gcjLng)
             let span = MKCoordinateSpanMake(0.1, 0.1)
             self.location = coordinate
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)
@@ -238,9 +238,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 getCoordinate(addressString: self.contactLocationDescription, completionHandler: { (location, error) in
                     let dispatchGroup = DispatchGroup()
                     let anno = MKPointAnnotation()
-                    let converted = LocationTransformHelper.calibrate(gcjLat: location.latitude, gcjLng: location.longitude)
-                    anno.coordinate.latitude = converted.wgsLat
-                    anno.coordinate.longitude = converted.wgsLng
+                    anno.coordinate.latitude = location.latitude
+                    anno.coordinate.longitude = location.longitude
                     self.longitude = anno.coordinate.longitude
                     self.latitude = anno.coordinate.latitude
                     let annotations = self.locationMapView.annotations
@@ -258,9 +257,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.location = coordinate
                 reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
                 let anno = MKPointAnnotation()
-                let converted = LocationTransformHelper.calibrate(gcjLat: location.latitude, gcjLng: location.longitude)
-                anno.coordinate.latitude = converted.wgsLat
-                anno.coordinate.longitude = converted.wgsLng
+                anno.coordinate = coordinate
                 self.longitude = anno.coordinate.longitude
                 self.latitude = anno.coordinate.latitude
                 let annotations = self.locationMapView.annotations
@@ -378,6 +375,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         } else {
             locValue = manager.location!.coordinate
         }
+        let converted = LocationTransformHelper.wgs2gcj(wgsLat: locValue.latitude, wgsLng: locValue.longitude)
+        locValue.latitude = converted.gcjLat
+        locValue.longitude = converted.gcjLng
         return locValue
     }
     
@@ -423,16 +423,14 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.searchTableView.isHidden = true
             }
             
-            let coordinate = LocationTransformHelper.calibrate(gcjLat: self.latitude, gcjLng: self.longitude)
-            
             let newItem = CoreDataHelper.newItem()
             newItem.name = self.nameTextField.text
             newItem.organization = self.organizationTextField.text
             newItem.type = self.typeTextField.text
             newItem.phone = self.phoneTextField.text
             newItem.email = self.emailTextField.text
-            newItem.latitude = coordinate.wgsLat
-            newItem.longitude = coordinate.wgsLng
+            newItem.latitude = self.latitude
+            newItem.longitude = self.longitude
             newItem.locationDescription = self.locationTextField.text
             newItem.key = ""
             
@@ -488,7 +486,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if error == nil {
                 if let placemark = placemarks?[0] {
                     let location = placemark.location!
-                    completionHandler(location.coordinate, nil)
+                    let converted = LocationTransformHelper.wgs2gcj(wgsLat: location.coordinate.latitude, wgsLng: location.coordinate.longitude)
+                    let coordinate = CLLocationCoordinate2D(latitude: converted.gcjLat, longitude: converted.gcjLng)
+                    completionHandler(coordinate, nil)
                     return
                 }
             }
