@@ -37,10 +37,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var reusableListVC: ContactListController?
     var reusableContactsVC: ContactsViewController?
     var reusableAboutVC: AboutViewController?
+    var popOverVC: PopUpViewController?
     
     var items = [Item]()
-    
-    var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
     
     var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
@@ -80,7 +79,20 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             defaults.set("All items", forKey: "type")
             self.typeLabel.text = defaults.string(forKey: "type")
             self.numberCountLabel.text = "-"
+            defaults.set("-", forKey: "count")
         }
+        
+        if defaults.string(forKey: "count") == nil{
+            defaults.set("-", forKey: "count")
+        }
+        self.typeLabel.text = defaults.string(forKey: "type")
+        self.numberCountLabel.text = defaults.string(forKey: "count")
+
+        if self.typeLabel.text == "All items"{
+            defaults.set("(" + String(CoreDataHelper.retrieveItems().count) + ")", forKey: "count")
+        }
+        self.numberCountLabel.text = defaults.string(forKey: "count")
+        
         let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
         if authorizationStatus == .notDetermined {
             self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
@@ -90,8 +102,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.viewDidLoad()
-        
         self.mapView.showsUserLocation = true
         
         if let isCanceledAction = defaults.string(forKey: "isCanceledAction"){
@@ -102,9 +112,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         
         if self.isCanceledAction == "false"{
-            
             _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
-            
             if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
                 let alertController = UIAlertController(title: nil, message:
                     "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
@@ -114,7 +122,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 alertController.addAction(cancel)
                 self.present(alertController, animated: true, completion: nil)
             }
-            //self.typeLabel.text = defaults.string(forKey: "type")
             self.pickerUIView.isHidden = true
             self.pickerView.delegate = self
             self.mapView.userLocation.subtitle = ""
@@ -284,6 +291,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         typeLabel.text = pickerOptions[row]
+        pickerView.selectRow(row, inComponent: component, animated: false)
         defaults.set(typeLabel.text, forKey: "type")
         self.filteredItems.removeAll()
         
@@ -388,7 +396,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     func filterResults( type: String){
         self.filteredItems.removeAll()
         self.sortedItems = LocationService.rankDistance(items: CoreDataHelper.retrieveItems())
-        if type == "All items"{
+        if defaults.string(forKey: "type") == "All items"{
             self.filteredItems = self.sortedItems
         } else {
             for item in self.sortedItems{
@@ -743,24 +751,28 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     @IBAction func detailsButtonTapped(_ sender: Any) {
         
-        popOverVC.item = selectedItem
-        popOverVC.name = selectedItem.name!
-        popOverVC.organization = selectedItem.organization!
-        popOverVC.address = selectedItem.locationDescription!
-        popOverVC.type = selectedItem.type!
-        popOverVC.contactPhoto = (selectedItem.image as? UIImage)!
-        popOverVC.email = selectedItem.email!
-        popOverVC.phone = selectedItem.phone!
-        popOverVC.latitude = selectedItem.latitude
-        popOverVC.longitude = selectedItem.longitude
-        popOverVC.keyOfItem = selectedItem.key!
+        if self.popOverVC == nil{
+            self.popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
+        }
         
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
+        popOverVC?.item = selectedItem
+        popOverVC?.name = selectedItem.name!
+        popOverVC?.organization = selectedItem.organization!
+        popOverVC?.address = selectedItem.locationDescription!
+        popOverVC?.type = selectedItem.type!
+        popOverVC?.contactPhoto = (selectedItem.image as? UIImage)!
+        popOverVC?.email = selectedItem.email!
+        popOverVC?.phone = selectedItem.phone!
+        popOverVC?.latitude = selectedItem.latitude
+        popOverVC?.longitude = selectedItem.longitude
+        popOverVC?.keyOfItem = selectedItem.key!
+        
+        self.addChildViewController((self.popOverVC)!)
+        popOverVC?.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(self.popOverVC.view)
+            self.view.addSubview((self.popOverVC?.view)!)
         }, completion: nil)
-        popOverVC.didMove(toParentViewController: self)
+        popOverVC?.didMove(toParentViewController: self)
     }
     
     //MARK: - Timer

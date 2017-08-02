@@ -73,7 +73,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 if contact.postalAddresses.isEmpty == false{
                     self.contacts.append(contact)
                 }
-                self.loadingLabel.text = "Found \(self.contacts.count) Contacts with addresses"
+                self.loadingLabel.text = "Finding Contacts with addresses"
             }
         }
         catch {

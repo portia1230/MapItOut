@@ -93,6 +93,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             }
         }
         self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
+        defaults.set(numberCountLabel.text, forKey: "count")
+        defaults.set(typeTextField.text, forKey: "type")
         self.tableView.reloadData()
         self.pickerUIView.isHidden = true
     }
@@ -443,10 +445,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     @IBAction func mapButtonTapped(_ sender: Any) {
+        defaults.set(self.typeTextField.text!, forKey:"type")
         dismiss(animated: false) {
-            defaults.set(self.typeTextField.text!, forKey:"type")
-            self.parent?.viewWillAppear(true)
-            
         }
     }
     @IBAction func addButtonTapped(_ sender: Any) {

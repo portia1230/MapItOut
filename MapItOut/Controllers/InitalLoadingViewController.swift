@@ -34,7 +34,7 @@ class InitalLoadingViewController: UIViewController {
         
         UserService.items(for: User.currentUser, completion: { (entries) in
             
-            self.label.text = "Loading \(entries.count) images, do not close this app"
+            self.label.text = "Loading \(entries.count) items, do not close this app"
             
             UserService.items(for: User.currentUser, completion: { (entries) in
                 var i = 0
