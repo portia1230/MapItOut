@@ -39,7 +39,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mapViewTutorial.png" translatesAutoresizingMaskIntoConstraints="NO" id="CTf-nj-HxP">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CTf-nj-HxP">
                                 <rect key="frame" x="0.0" y="65" width="375" height="484"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61g-Jk-muE">
@@ -154,7 +154,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Sw-lg-bHS">
                                 <rect key="frame" x="0.0" y="559" width="375" height="108"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rory.png" translatesAutoresizingMaskIntoConstraints="NO" id="VDX-Gd-zbK">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VDX-Gd-zbK">
                                         <rect key="frame" x="17" y="17" width="70" height="70"/>
                                         <color key="backgroundColor" red="0.92158538099999998" green="0.92156803610000004" blue="0.92157983779999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
@@ -313,9 +313,7 @@
     <resources>
         <image name="500*20Shadow.png" width="500" height="21"/>
         <image name="List icon.png" width="520" height="520"/>
-        <image name="Rory.png" width="640" height="360"/>
         <image name="findContact.png" width="250" height="250"/>
-        <image name="mapViewTutorial.png" width="750" height="940"/>
         <image name="plusImage.png" width="202" height="202"/>
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>

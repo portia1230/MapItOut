@@ -134,6 +134,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         self.view.isUserInteractionEnabled = true
         self.plusImageView.isHidden = false
+        if self.filteredItems.count != 0{
+            self.detailsButton.isEnabled = true
+        }
     }
     //self.images = allImages
     
@@ -193,8 +196,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             Auth.auth().removeStateDidChangeListener(authHandle)
         }
     }
-    
-    
     
     func reloadView(){
         if defaults.string(forKey: "isLoggedIn") == "true"{

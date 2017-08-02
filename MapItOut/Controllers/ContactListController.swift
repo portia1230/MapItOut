@@ -28,6 +28,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     @IBOutlet weak var plusImageView: UIImageView!
     
     var reusableVC : AddEntryViewController?
+    var reusableContactsVC: ContactsViewController?
     var keys : [String] = []
     var sortedItems : [Item] = []
     var items = [Item]()
@@ -320,36 +321,28 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
             switch authorizationStatus {
             case .authorized:
-                
                 print("Authorized")
-                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
-                self.addChildViewController(popOverVC)
-                popOverVC.view.frame = self.view.frame
-                UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                    self.view.addSubview(popOverVC.view)
-                }, completion: nil)
                 
-            case .notDetermined: // needs to ask for authorization
-                self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
-                    
-                    if error != nil{
-                        let alertController = UIAlertController(title: nil, message:
-                            "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
-                        alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
-                        self.present(alertController, animated: true, completion: nil)
-                    } else {
-                        
-                        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "ContactsViewController") as!  ContactsViewController
-                        self.addChildViewController(popOverVC)
-                        popOverVC.view.frame = self.view.frame
-                        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                            self.view.addSubview(popOverVC.view)
-                        }, completion: nil)
-                        
-                        
-                        //self.performSegue(withIdentifier: "contactsSegue", sender: self)
-                    }
-                })
+                if self.reusableContactsVC == nil {
+                    let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+                    let addVC = storyboard.instantiateViewController(withIdentifier: "ContactsViewController")
+                    self.reusableContactsVC = addVC as? ContactsViewController
+                    self.reusableContactsVC?.modalTransitionStyle = .crossDissolve
+                    self.addChildViewController(self.reusableContactsVC!)
+                    UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                        self.view.addSubview((self.reusableContactsVC?.view)!)
+                    }, completion: nil)
+                } else {
+                    UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                        self.view.addSubview((self.reusableContactsVC?.view)!)
+                    }, completion: nil)
+                }
+                
+            case .denied, .restricted: // needs to ask for authorization
+                let alertController = UIAlertController(title: nil, message:
+                    "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "Okay!", style: UIAlertActionStyle.cancel,handler: nil ))
+                self.present(alertController, animated: true, completion: nil)
             default:
                 let alertController = UIAlertController(title: nil, message:
                     "We do not have access to your Contacts, please go to Settings/ Privacy/ Contacts and give us permission", preferredStyle: UIAlertControllerStyle.alert)
@@ -358,6 +351,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             }
             
         }
+        
         alertController.addAction(viewContactsAction)
         if defaults.string(forKey: "isLoggedIn") == "true"{
             let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
@@ -405,8 +399,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                     let loginViewController = UIStoryboard.initialViewController(for: .login)
                     self.view.window?.rootViewController = loginViewController
                     self.view.window?.makeKeyAndVisible()
-                    defaults.set("notSet", forKey: "isLoggedIn")
                     defaults.set("false", forKey:"loadedItems")
+                    defaults.set("notSet", forKey: "isLoggedIn")
                 })
                 let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert) in
                     self.dismiss(animated: true, completion: {

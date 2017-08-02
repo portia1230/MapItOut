@@ -315,7 +315,6 @@
                         <outlet property="pickerView" destination="6Sd-yB-deR" id="BrU-Zq-dyd"/>
                         <outlet property="plusImageView" destination="cAt-mG-5ko" id="8nU-zq-Iuy"/>
                         <outlet property="typeLabel" destination="2Wx-FP-xSg" id="4RQ-2S-kII"/>
-                        <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" animates="NO" modalTransitionStyle="crossDissolve" id="h3e-dj-j96"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xoh-YE-JaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1130,7 +1129,6 @@
                         <outlet property="plusImageView" destination="rvb-eG-YDV" id="EUy-U9-gh9"/>
                         <outlet property="tableView" destination="c0R-kg-YAL" id="sXB-Wd-BDx"/>
                         <outlet property="typeTextField" destination="Ufm-Dl-cws" id="l84-sv-YNd"/>
-                        <segue destination="vum-u9-FU0" kind="presentation" identifier="contactsSegue" modalTransitionStyle="crossDissolve" id="9ej-53-kgX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Adx-nZ-1rZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1628,8 +1626,5 @@
         <image name="whiteArrow.png" width="282" height="171"/>
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="h3e-dj-j96"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

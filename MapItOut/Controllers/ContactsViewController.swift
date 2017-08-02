@@ -148,8 +148,104 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.cellForRow(at: indexPath)?.isSelected = false
         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.removeFromSuperview()
-            self.performSegue(withIdentifier: "contactSelected", sender: self)
-        }, completion: nil)
+            if self.parent is MainViewController{
+                let parent = self.parent as! MainViewController
+                let contact = self.results[indexPath.row]
+                if parent.reusableVC == nil {
+                    let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+                    let addVC = storyboard.instantiateViewController(withIdentifier: "AddEntryViewController")
+                    parent.reusableVC = addVC as? AddEntryViewController
+                    parent.reusableVC?.modalTransitionStyle = .coverVertical
+                } else {
+                    
+                    parent.reusableVC?.contactLocationDescription = ""
+                    parent.reusableVC?.name = ""
+                    parent.reusableVC?.organization = ""
+                    parent.reusableVC?.type = ""
+                    parent.reusableVC?.phone = ""
+                    parent.reusableVC?.email = ""
+                    parent.reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+                    parent.reusableVC?.photoImageView.alpha = 0
+                }
+                if contact.givenName.isEmpty == false{
+                    parent.reusableVC?.name = contact.givenName
+                }
+                if contact.familyName.isEmpty == false {
+                    if parent.reusableVC?.name == ""{
+                        parent.reusableVC?.name = contact.familyName
+                    } else {
+                        parent.reusableVC?.name.append(" " + contact.familyName)
+                    }
+                }
+                if contact.emailAddresses.isEmpty == false {
+                    parent.reusableVC?.email = contact.emailAddresses[0].value as String
+                }
+                if contact.organizationName.isEmpty == false{
+                    parent.reusableVC?.organization = contact.organizationName
+                }
+                if contact.phoneNumbers.count != 0 {
+                    parent.reusableVC?.phone = contact.phoneNumbers[0].value.stringValue
+                }
+                if contact.imageData?.isEmpty == false {
+                    parent.reusableVC?.image = UIImage(data: contact.imageData!)!
+                }
+                
+                if contact.postalAddresses.count != 0 {
+                    let address = contact.postalAddresses[0].value
+                    let string = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.postalCode
+                    parent.reusableVC?.contactLocationDescription = string
+                }
+                parent.present(parent.reusableVC!, animated: true, completion: nil)
+            } else {
+                let contact = self.results[indexPath.row]
+                let parent = self.parent as! ContactListController
+                if parent.reusableVC == nil {
+                    let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+                    let addVC = storyboard.instantiateViewController(withIdentifier: "AddEntryViewController")
+                    parent.reusableVC = addVC as? AddEntryViewController
+                    parent.reusableVC?.modalTransitionStyle = .coverVertical
+                } else {
+                    
+                    parent.reusableVC?.contactLocationDescription = ""
+                    parent.reusableVC?.name = ""
+                    parent.reusableVC?.organization = ""
+                    parent.reusableVC?.type = ""
+                    parent.reusableVC?.phone = ""
+                    parent.reusableVC?.email = ""
+                    parent.reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+                    parent.reusableVC?.photoImageView.alpha = 0
+                }
+                if contact.givenName.isEmpty == false{
+                    parent.reusableVC?.name = contact.givenName
+                }
+                if contact.familyName.isEmpty == false {
+                    if parent.reusableVC?.name == ""{
+                        parent.reusableVC?.name = contact.familyName
+                    } else {
+                        parent.reusableVC?.name.append(" " + contact.familyName)
+                    }
+                }
+                if contact.emailAddresses.isEmpty == false {
+                    parent.reusableVC?.email = contact.emailAddresses[0].value as String
+                }
+                if contact.organizationName.isEmpty == false{
+                    parent.reusableVC?.organization = contact.organizationName
+                }
+                if contact.phoneNumbers.count != 0 {
+                    parent.reusableVC?.phone = contact.phoneNumbers[0].value.stringValue
+                }
+                if contact.imageData?.isEmpty == false {
+                    parent.reusableVC?.image = UIImage(data: contact.imageData!)!
+                }
+                
+                if contact.postalAddresses.count != 0 {
+                    let address = contact.postalAddresses[0].value
+                    let string = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.postalCode
+                    parent.reusableVC?.contactLocationDescription = string
+                }
+                parent.present(parent.reusableVC!, animated: true, completion: nil)
+            }
+        })
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

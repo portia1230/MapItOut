@@ -57,8 +57,6 @@
 		83D5297D1F12FCFD00ED4EEE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */; };
 		83D8D0EF1F31379F00736D48 /* TutorialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D8D0EE1F31379F00736D48 /* TutorialService.swift */; };
 		83D8D0F11F3137FC00736D48 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */; };
-		83D8D0F31F3139C100736D48 /* mapViewTutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D8D0F21F3139C100736D48 /* mapViewTutorial.png */; };
-		83D8D0F51F313A7D00736D48 /* Rory.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D8D0F41F313A7D00736D48 /* Rory.png */; };
 		83DDC23A1F1693F90072BCFB /* ContactListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DDC2391F1693F90072BCFB /* ContactListController.swift */; };
 		83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */; };
 		83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */; };
@@ -123,8 +121,6 @@
 		83D5297C1F12FCFD00ED4EEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Supports/Info.plist; sourceTree = "<group>"; };
 		83D8D0EE1F31379F00736D48 /* TutorialService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialService.swift; path = Services/TutorialService.swift; sourceTree = "<group>"; };
 		83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tutorial.storyboard; path = Storyboards/Tutorial.storyboard; sourceTree = "<group>"; };
-		83D8D0F21F3139C100736D48 /* mapViewTutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapViewTutorial.png; path = Arts/mapViewTutorial.png; sourceTree = "<group>"; };
-		83D8D0F41F313A7D00736D48 /* Rory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Rory.png; path = Arts/Rory.png; sourceTree = "<group>"; };
 		83DDC2391F1693F90072BCFB /* ContactListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactListController.swift; path = Controllers/ContactListController.swift; sourceTree = "<group>"; };
 		83E4CB101F12EA5D00EDDD91 /* MapItOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapItOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -176,8 +172,6 @@
 		833BE1831F2A52EC009B229A /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				83D8D0F41F313A7D00736D48 /* Rory.png */,
-				83D8D0F21F3139C100736D48 /* mapViewTutorial.png */,
 				83B17F041F2C45200050DEAF /* greenPin.png */,
 				83B17F021F2BB70D0050DEAF /* ContactsIcon.png */,
 				83B17F001F2BA0BB0050DEAF /* whiteArrow.png */,
@@ -408,7 +402,6 @@
 				838AC93D1F16EB8300D0EDCA /* 500*20Shadow.png in Resources */,
 				83E4CB361F12EC2600EDDD91 /* Icon.png in Resources */,
 				83EC9DCD1F148BAD00AAC07B /* 200*274pin.png in Resources */,
-				83D8D0F51F313A7D00736D48 /* Rory.png in Resources */,
 				83D529741F12F03A00ED4EEE /* Login.storyboard in Resources */,
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83A43C461F1D75E3000F4324 /* findContact.png in Resources */,
@@ -422,7 +415,6 @@
 				83B17F011F2BA0BB0050DEAF /* whiteArrow.png in Resources */,
 				839149271F23195300D1E959 /* defaultNoItemImage.png in Resources */,
 				83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */,
-				83D8D0F31F3139C100736D48 /* mapViewTutorial.png in Resources */,
 				83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */,
 				83B17F051F2C45200050DEAF /* greenPin.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
