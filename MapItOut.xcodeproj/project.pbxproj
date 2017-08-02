@@ -56,7 +56,7 @@
 		83D5297A1F12FCAD00ED4EEE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D529791F12FCAD00ED4EEE /* UserService.swift */; };
 		83D5297D1F12FCFD00ED4EEE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */; };
 		83D8D0EF1F31379F00736D48 /* TutorialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D8D0EE1F31379F00736D48 /* TutorialService.swift */; };
-		83D8D0F11F3137FC00736D48 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */; };
+		83D8D0F71F32421D00736D48 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D8D0F61F32421D00736D48 /* AboutViewController.swift */; };
 		83DDC23A1F1693F90072BCFB /* ContactListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DDC2391F1693F90072BCFB /* ContactListController.swift */; };
 		83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */; };
 		83E4CB1C1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83E4CB1A1F12EA5D00EDDD91 /* MapItOut.xcdatamodeld */; };
@@ -120,7 +120,7 @@
 		83D5297B1F12FCFD00ED4EEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Supports/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		83D5297C1F12FCFD00ED4EEE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Supports/Info.plist; sourceTree = "<group>"; };
 		83D8D0EE1F31379F00736D48 /* TutorialService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialService.swift; path = Services/TutorialService.swift; sourceTree = "<group>"; };
-		83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tutorial.storyboard; path = Storyboards/Tutorial.storyboard; sourceTree = "<group>"; };
+		83D8D0F61F32421D00736D48 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = Controllers/AboutViewController.swift; sourceTree = "<group>"; };
 		83DDC2391F1693F90072BCFB /* ContactListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactListController.swift; path = Controllers/ContactListController.swift; sourceTree = "<group>"; };
 		83E4CB101F12EA5D00EDDD91 /* MapItOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapItOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E4CB131F12EA5D00EDDD91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -287,7 +287,6 @@
 				83E4CB281F12EB5800EDDD91 /* LaunchScreen.storyboard */,
 				83E4CB291F12EB5800EDDD91 /* Main.storyboard */,
 				83D529731F12F03A00ED4EEE /* Login.storyboard */,
-				83D8D0F01F3137FC00736D48 /* Tutorial.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -305,6 +304,7 @@
 				83EB676A1F22AC5C00BD9BD8 /* InitalLoadingViewController.swift */,
 				832C7A3C1F2664630094766A /* ResetEmailViewController.swift */,
 				83E500291F269B5500E69872 /* AddTypePopUpViewController.swift */,
+				83D8D0F61F32421D00736D48 /* AboutViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -408,7 +408,6 @@
 				832C7A3F1F266F6E0094766A /* whitePin.png in Resources */,
 				83680B631F14A83D003A14CC /* arrowGreen.png in Resources */,
 				83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */,
-				83D8D0F11F3137FC00736D48 /* Tutorial.storyboard in Resources */,
 				832E167A1F1BF1D1005FCE55 /* Refresh.png in Resources */,
 				83A00C771F14B40B0033E821 /* Map Icon.png in Resources */,
 				835ADA4A1F2969E80045F205 /* detailsButton.png in Resources */,
@@ -501,6 +500,7 @@
 				83533A7F1F1359A4002EEE74 /* ItemService.swift in Sources */,
 				83B5D0011F1C430B003AB9CD /* PopUpViewController.swift in Sources */,
 				8341D2351F17D76B00242BC8 /* ContactsTableViewCell.swift in Sources */,
+				83D8D0F71F32421D00736D48 /* AboutViewController.swift in Sources */,
 				8380B8281F2FA42A00C2D7C7 /* LocationTransformHelper.swift in Sources */,
 				83E4CB141F12EA5D00EDDD91 /* AppDelegate.swift in Sources */,
 				83761FC01F16BC1E00CE33D7 /* LocationService.swift in Sources */,

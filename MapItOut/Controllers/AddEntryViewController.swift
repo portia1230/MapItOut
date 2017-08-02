@@ -491,8 +491,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if error == nil {
                 if let placemark = placemarks?[0] {
                     let location = placemark.location!
-                    let converted = LocationTransformHelper.wgs2gcj(wgsLat: location.coordinate.latitude, wgsLng: location.coordinate.longitude)
-                    let coordinate = CLLocationCoordinate2D(latitude: converted.gcjLat, longitude: converted.gcjLng)
+                    //let converted = LocationTransformHelper.wgs2gcj(wgsLat: location.coordinate.latitude, wgsLng: location.coordinate.longitude)
+                    //let coordinate = CLLocationCoordinate2D(latitude: converted.gcjLat, longitude: converted.gcjLng)
+                    let coordinate = location.coordinate
                     completionHandler(coordinate, nil)
                     return
                 }

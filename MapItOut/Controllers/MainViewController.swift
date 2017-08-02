@@ -19,6 +19,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     //MARK: - Properties
     
+    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var pickerUIView: UIView!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -35,6 +36,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var reusableVC : AddEntryViewController?
     var reusableListVC: ContactListController?
     var reusableContactsVC: ContactsViewController?
+    var reusableAboutVC: AboutViewController?
     
     var items = [Item]()
     
@@ -63,6 +65,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     //MARK: - Lifecycles
     
     override func viewWillAppear(_ animated: Bool) {
+        self.backgroundView.isHidden = true
         self.mapView.showsUserLocation = true
         self.pickerUIView.isHidden = true
         self.detailsButton.isEnabled = false
@@ -690,8 +693,30 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             })
             alertController.addAction(addAccount)
         }
+        let aboutButton = UIAlertAction(title: "About", style: .default) { (alert) in
+            if self.reusableAboutVC == nil {
+                let storyboard = UIStoryboard.init(name: "Main", bundle: .main)
+                let addVC = storyboard.instantiateViewController(withIdentifier: "AboutViewController")
+                self.reusableAboutVC = addVC as? AboutViewController
+                self.reusableAboutVC?.modalTransitionStyle = .crossDissolve
+                self.addChildViewController(self.reusableAboutVC!)
+                UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.backgroundView.isHidden = false
+                    self.view.addSubview((self.reusableAboutVC?.view)!)
+                }, completion: nil)
+            } else {
+                UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.backgroundView.isHidden = false
+                    self.view.addSubview((self.reusableAboutVC?.view)!)
+                }, completion: nil)
+            }
+            
+        }
+        
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
+        alertController.addAction(aboutButton)
         self.present(alertController, animated: true)
     }
     
