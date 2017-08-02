@@ -176,7 +176,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="158" height="17"/>
                                                 <color key="backgroundColor" red="0.92158538103103638" green="0.92156803607940674" blue="0.92157983779907227" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="12"/>
-                                                <color key="textColor" red="0.99544417860000001" green="0.36945092680000002" blue="0.36867949370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="textColor" red="0.86278051137924194" green="0.36988773941993713" blue="0.33731439709663391" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWo-dO-CNT">
@@ -261,8 +261,8 @@
                                     <action selector="refreshButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="XUd-6Z-XPb"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQt-AW-Lpt">
-                                <rect key="frame" x="0.0" y="-248" width="375" height="667"/>
+                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQt-AW-Lpt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
                         </subviews>
@@ -527,7 +527,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.92525357007980347" green="0.36141285300254822" blue="0.36476433277130127" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.86278051137924194" green="0.36988773941993713" blue="0.33731439709663391" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Kaz-kf-bO4" secondAttribute="trailing" constant="10" id="NBM-P1-GV5"/>
                                     <constraint firstItem="Kaz-kf-bO4" firstAttribute="centerX" secondItem="IL1-Mu-IBf" secondAttribute="centerX" id="g8R-zY-lBC"/>
@@ -622,7 +622,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.99544417858123779" green="0.36945092678070068" blue="0.36867949366569519" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.86278051140000001" green="0.36988773940000003" blue="0.3373143971" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="gPZ-eq-lvf" firstAttribute="leading" secondItem="JZv-Ul-CjB" secondAttribute="leading" constant="30" id="0p3-C2-TNh"/>
                                     <constraint firstAttribute="trailing" secondItem="aUR-wI-ZC9" secondAttribute="trailing" constant="35" id="1GQ-1f-y6k"/>
@@ -1019,7 +1019,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JD9-TW-jdV">
                                 <rect key="frame" x="38" y="565" width="300" height="33"/>
-                                <color key="backgroundColor" red="0.99544417858123779" green="0.36945092678070068" blue="0.36867949366569519" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.86278051137924194" green="0.36988773941993713" blue="0.33731439709663391" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="fnG-vN-uuJ"/>
                                     <constraint firstAttribute="height" constant="33" id="oQZ-j8-qCV"/>
@@ -1146,7 +1146,7 @@
                                                                 <constraint firstAttribute="height" constant="19.5" id="6TJ-ok-eyI"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
-                                                            <color key="textColor" red="0.99544417860000001" green="0.36945092680000002" blue="0.36867949370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <color key="textColor" red="0.86278051137924194" green="0.36988773941993713" blue="0.33731439709663391" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5r-ab-Lw2">

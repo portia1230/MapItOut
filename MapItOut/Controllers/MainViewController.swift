@@ -42,7 +42,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     var popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
     
-    var redColor = UIColor(red: 249/255, green: 92/255, blue: 92/255, alpha: 1)
+    var redColor = UIColor(red: 220/255, green: 94/255, blue: 86/255, alpha: 1)
     var greyColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
     var greenColor = UIColor(red: 64/255, green: 196/255, blue: 128/255, alpha: 1)
     var selectedItem : Item!
