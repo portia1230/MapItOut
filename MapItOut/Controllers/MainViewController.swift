@@ -304,6 +304,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 }
             }
         }
+        defaults.set("(" + String(self.filteredItems.count) + ")", forKey: "count")
         self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
         self.mapView.removeAnnotations(self.mapView.annotations)
         
