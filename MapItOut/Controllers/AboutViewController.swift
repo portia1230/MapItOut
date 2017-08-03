@@ -47,7 +47,7 @@ class AboutViewController: UIViewController {
     func swipedLeft(){
         if indexOfPage == 0{
             //Change to second page(instruction)
-            UIView.transition(with: self.view, duration: 0.25, options: .transitionFlipFromRight, animations: { _ in
+            UIView.transition(with: self.view, duration: 0.5, options: .transitionFlipFromRight, animations: { _ in
                 self.instructionView.isHidden = false
             }, completion: nil)
             indexOfPage = 1
@@ -58,7 +58,7 @@ class AboutViewController: UIViewController {
     func swipedRight(){
         if indexOfPage == 1{
             //Change to first page(main)
-            UIView.transition(with: self.view, duration: 0.25, options: .transitionFlipFromLeft, animations: { _ in
+            UIView.transition(with: self.view, duration: 0.5, options: .transitionFlipFromLeft, animations: { _ in
                 self.mainView.isHidden = false
                 self.instructionView.isHidden = true
             }, completion: nil)
