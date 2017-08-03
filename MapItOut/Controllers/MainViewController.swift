@@ -761,7 +761,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if self.popOverVC == nil{
             self.popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
         }
-        
         popOverVC?.item = selectedItem
         popOverVC?.name = selectedItem.name!
         popOverVC?.organization = selectedItem.organization!

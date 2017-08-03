@@ -56,20 +56,19 @@ extension MGPhotoHelper: UINavigationControllerDelegate, UIImagePickerController
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let imagePicked = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        let imageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 200, height: 200))
         imageView.image = imagePicked
         imageView.contentMode = UIViewContentMode.scaleAspectFill
         let layer: CALayer = imageView.layer
         layer.masksToBounds = true
-        layer.cornerRadius = 100
+        layer.cornerRadius = 95
+        layer.borderWidth = 0.0
         UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 0.0)
         layer.render(in: UIGraphicsGetCurrentContext()!)
         let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         roundedImage?.draw(in: imageView.bounds)
-        
         UIGraphicsEndImageContext()
-        
         completionHandler?(roundedImage!)
         picker.dismiss(animated: true)
     }

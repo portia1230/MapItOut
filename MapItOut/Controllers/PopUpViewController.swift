@@ -428,6 +428,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     @IBAction func changeImageButton(_ sender: Any) {
         photoHelper.presentActionSheet(from: self)
+        
         photoHelper.completionHandler = { image in
             self.itemImage.image = image
             self.item.image = image
@@ -435,7 +436,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             self.contactPhoto = image
             if defaults.string(forKey: "isLoggedIn") == "true"{
                 let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((self.item.key)!).jpg")
-                StorageService.uploadHighImage(self.itemImage.image!, at: imageRef) { (downloadURL) in
+                StorageService.uploadHighImage(image, at: imageRef) { (downloadURL) in
                     guard let downloadURL = downloadURL else {
                         return
                     }
@@ -496,10 +497,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
-                                
+                                if self.view.superview != nil{
                                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                     self.view.removeFromSuperview()
                                 }, completion: nil)
+                                }
                             }
                         } else {
                             let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
@@ -520,9 +522,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             CoreDataHelper.saveItem()
                             parent.updateValue(item: item)
                             
+                            if self.view.superview != nil{
                             UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                 self.view.removeFromSuperview()
                             }, completion: nil)
+                            }
                         }
                     }
                     
@@ -560,9 +564,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
                                 
+                                if self.view.superview != nil{
                                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                     self.view.removeFromSuperview()
                                 }, completion: nil)
+                                }
                                 
                             }
                         } else {
@@ -584,17 +590,21 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             CoreDataHelper.saveItem()
                             parent.updateValue(item: item)
                             
+                            if self.view.superview != nil{
                             UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                 self.view.removeFromSuperview()
                             }, completion: nil)
+                            }
                         }
                     }
                     
                 }
             } else {
+                self.item.url = OUrl
+                CoreDataHelper.saveItem()
+                self.dismissButton.isEnabled = true
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
-                    self.dismissButton.isEnabled = true
                 }, completion: nil)
             }
         }

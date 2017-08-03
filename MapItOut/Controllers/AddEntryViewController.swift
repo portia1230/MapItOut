@@ -465,7 +465,8 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     CoreDataHelper.saveItem()
                     let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: newItem.key!, locationDescription: self.locationTextField.text!)
                     ItemService.addEntry(entry: entry)
-                    
+                    newItem.url = entry.imageURL
+                    CoreDataHelper.saveItem()
                     self.dismiss(animated: true, completion: {
                         
                     })
@@ -521,24 +522,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         typeTextField.text = pickOption[row]
         
-    }
-    
-    //MARK: - Image rotating functions
-    
-    func imageRotatedByDegrees(oldImage: UIImage, deg degrees: CGFloat) -> UIImage {
-        let rotatedViewBox: UIView = UIView(frame: CGRect(x: 0, y: 0, width: oldImage.size.width, height: oldImage.size.height))
-        let t: CGAffineTransform = CGAffineTransform(rotationAngle: degrees * CGFloat.pi / 180)
-        rotatedViewBox.transform = t
-        let rotatedSize: CGSize = rotatedViewBox.frame.size
-        UIGraphicsBeginImageContext(rotatedSize)
-        let bitmap: CGContext = UIGraphicsGetCurrentContext()!
-        bitmap.translateBy(x: rotatedSize.width / 2, y: rotatedSize.height / 2)
-        bitmap.rotate(by: (degrees * CGFloat.pi / 180))
-        bitmap.scaleBy(x: 1.0, y: -1.0)
-        bitmap.draw(oldImage.cgImage!, in: CGRect(x: -oldImage.size.width / 2, y: -oldImage.size.height / 2, width: oldImage.size.width, height: oldImage.size.height))
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
     }
     
     //MARK: - Timer
