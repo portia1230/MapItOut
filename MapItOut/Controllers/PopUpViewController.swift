@@ -53,6 +53,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     var OOriginalLocation = ""
     var OLocation = CLLocationCoordinate2D()
     var isPhotoUpdated = false
+    var url = ""
+    var OUrl = ""
     
     var name = ""
     var organization = ""
@@ -312,6 +314,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.OLongitude = self.longitude
         self.OLocation = self.location
         self.OOriginalLocation = self.originalLocation
+        self.OUrl = self.url
         
     }
     
@@ -402,21 +405,43 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
         
-       CoreDataHelper.deleteItems(item: self.item)
+        CoreDataHelper.deleteItems(item: self.item)
         
         self.parent?.viewWillAppear(true)
         self.parent?.viewDidAppear(true)
-        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.removeFromSuperview()
-        }, completion: nil)
+        
+        if defaults.string(forKey: "isLoggedIn") == "true"{
+            let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(self.keyOfItem).jpg")
+            imageRef.delete(completion: { (error) in
+                ItemService.deleteEntry(key: self.keyOfItem)
+                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.removeFromSuperview()
+                }, completion: nil)
+            })
+        } else {
+            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.view.removeFromSuperview()
+            }, completion: nil)
+        }
+        
     }
     
     @IBAction func changeImageButton(_ sender: Any) {
         photoHelper.presentActionSheet(from: self)
         photoHelper.completionHandler = { image in
             self.itemImage.image = image
+            self.item.image = image
             self.isPhotoUpdated = true
             self.contactPhoto = image
+            if defaults.string(forKey: "isLoggedIn") == "true"{
+                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((self.item.key)!).jpg")
+                StorageService.uploadHighImage(self.itemImage.image!, at: imageRef) { (downloadURL) in
+                    guard let downloadURL = downloadURL else {
+                        return
+                    }
+                    self.item.url = downloadURL.absoluteString
+                }
+            }
         }
     }
     
@@ -432,6 +457,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 self.searchBar.text = OOriginalLocation
                 self.resultTableView.isHidden = true
             }
+
+            
         } else {
             if self.undoButton.isEnabled == true{
                 
@@ -440,85 +467,136 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     let parent = self.parent as! MainViewController
                     CoreDataHelper.deleteItems(item: self.item)
                     
-                    let item = CoreDataHelper.newItem()
-                    item.email = self.emailTextField.text
-                    item.image = self.itemImage.image
-                    item.key = self.keyOfItem
-                    item.latitude = self.latitude
-                    item.longitude = self.longitude
-                    item.name = self.nameTextField.text
-                    item.locationDescription = self.searchBar.text
-                    item.organization = self.organizationTextField.text
-                    item.type = self.typeTextField.text
-                    item.phone = self.phoneTextField.text
-                    
-                    CoreDataHelper.saveItem()
-                    parent.updateValue(item: item)
-                    
-                    UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                        self.view.removeFromSuperview()
-                    }, completion: nil)
-                    
                     if defaults.string(forKey: "isLoggedIn") == "true"{
-                        
-                        let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((parent.selectedItem.key)!).jpg")
-                        imageRef.delete(completion: nil)
-                        let newImageRef = StorageReference.newContactImageReference(key: parent.selectedItem.key!)
-                        
-                        StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
-                            guard let downloadURL = downloadURL else {
-                                return
+                        if self.OContactPhoto != self.itemImage.image{
+                            let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(self.keyOfItem).jpg")
+                            imageRef.delete(completion: nil)
+                            let newImageRef = StorageReference.newContactImageReference(key: self.keyOfItem)
+                            
+                            StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
+                                guard let downloadURL = downloadURL else {
+                                    return
+                                }
+                                let urlString = downloadURL.absoluteString
+                                self.url = downloadURL.absoluteString
+                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                                ItemService.editEntry(entry: entry)
+                                
+                                let item = CoreDataHelper.newItem()
+                                item.email = self.emailTextField.text
+                                item.image = self.itemImage.image
+                                item.key = self.keyOfItem
+                                item.latitude = self.latitude
+                                item.longitude = self.longitude
+                                item.name = self.nameTextField.text
+                                item.locationDescription = self.searchBar.text
+                                item.organization = self.organizationTextField.text
+                                item.type = self.typeTextField.text
+                                item.phone = self.phoneTextField.text
+                                
+                                CoreDataHelper.saveItem()
+                                parent.updateValue(item: item)
+                                
+                                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                    self.view.removeFromSuperview()
+                                }, completion: nil)
+                                
                             }
-                            let urlString = downloadURL.absoluteString
-                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                        } else {
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
                             ItemService.editEntry(entry: entry)
+                            
+                            let item = CoreDataHelper.newItem()
+                            item.email = self.emailTextField.text
+                            item.image = self.itemImage.image
+                            item.key = self.keyOfItem
+                            item.latitude = self.latitude
+                            item.longitude = self.longitude
+                            item.name = self.nameTextField.text
+                            item.locationDescription = self.searchBar.text
+                            item.organization = self.organizationTextField.text
+                            item.type = self.typeTextField.text
+                            item.phone = self.phoneTextField.text
+                            
+                            CoreDataHelper.saveItem()
+                            parent.updateValue(item: item)
+                            
+                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                self.view.removeFromSuperview()
+                            }, completion: nil)
                         }
-                        
                     }
+                    
                 } else {
                     
                     let parent = self.parent as! ContactListController
                     CoreDataHelper.deleteItems(item: self.item)
                     
-                    let item = CoreDataHelper.newItem()
-                    
-                    item.email = self.emailTextField.text
-                    item.image = self.itemImage.image
-                    item.key = self.keyOfItem
-                    item.latitude = self.latitude
-                    item.longitude = self.longitude
-                    item.name = self.nameTextField.text
-                    item.locationDescription = self.searchBar.text
-                    item.organization = self.organizationTextField.text
-                    item.type = self.typeTextField.text
-                    item.phone = self.phoneTextField.text
-                    
-                    CoreDataHelper.saveItem()
-                    parent.updateValue(item: item)
-                    
-                    UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                        self.view.removeFromSuperview()
-                    }, completion: nil)
-                    
                     if defaults.string(forKey: "isLoggedIn") == "true"{
-                        
-                        let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(item.key!).jpg")
-                        imageRef.delete(completion: nil)
-                        let newImageRef = StorageReference.newContactImageReference(key: item.key!)
-                        
-                        StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
-                            guard let downloadURL = downloadURL else {
-                                return
+                        if self.OContactPhoto != self.itemImage.image{
+                            let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(self.keyOfItem).jpg")
+                            imageRef.delete(completion: nil)
+                            let newImageRef = StorageReference.newContactImageReference(key: self.keyOfItem)
+                            
+                            StorageService.uploadHighImage(itemImage.image!, at: newImageRef) { (downloadURL) in
+                                guard let downloadURL = downloadURL else {
+                                    return
+                                }
+                                let urlString = downloadURL.absoluteString
+                                self.url = downloadURL.absoluteString
+                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                                ItemService.editEntry(entry: entry)
+                                
+                                let item = CoreDataHelper.newItem()
+                                item.email = self.emailTextField.text
+                                item.image = self.itemImage.image
+                                item.key = self.keyOfItem
+                                item.latitude = self.latitude
+                                item.longitude = self.longitude
+                                item.name = self.nameTextField.text
+                                item.locationDescription = self.searchBar.text
+                                item.organization = self.organizationTextField.text
+                                item.type = self.typeTextField.text
+                                item.phone = self.phoneTextField.text
+                                
+                                CoreDataHelper.saveItem()
+                                parent.updateValue(item: item)
+                                
+                                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                    self.view.removeFromSuperview()
+                                }, completion: nil)
+                                
                             }
-                            let urlString = downloadURL.absoluteString
-                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                        } else {
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
                             ItemService.editEntry(entry: entry)
+                            
+                            let item = CoreDataHelper.newItem()
+                            item.email = self.emailTextField.text
+                            item.image = self.itemImage.image
+                            item.key = self.keyOfItem
+                            item.latitude = self.latitude
+                            item.longitude = self.longitude
+                            item.name = self.nameTextField.text
+                            item.locationDescription = self.searchBar.text
+                            item.organization = self.organizationTextField.text
+                            item.type = self.typeTextField.text
+                            item.phone = self.phoneTextField.text
+                            
+                            CoreDataHelper.saveItem()
+                            parent.updateValue(item: item)
+                            
+                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                self.view.removeFromSuperview()
+                            }, completion: nil)
                         }
                     }
+                    
                 }
             } else {
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                     self.view.removeFromSuperview()
+                    self.dismissButton.isEnabled = true
                 }, completion: nil)
             }
         }

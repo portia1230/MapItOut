@@ -286,6 +286,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         popOverVC.latitude = selectedItem.latitude
         popOverVC.longitude = selectedItem.longitude
         popOverVC.keyOfItem = selectedItem.key!
+        popOverVC.url = selectedItem.url!
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame
@@ -306,7 +307,6 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             if defaults.string(forKey: "isLoggedIn") == "true"{
                 let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(sortedItems[selectedIndex].key!).jpg")
                 imageRef.delete(completion: nil)
-                
                 ItemService.deleteEntry(key: sortedItems[indexPath.row].key!)
             }
             

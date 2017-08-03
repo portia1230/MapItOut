@@ -453,14 +453,16 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 let currentUser = User.currentUser
                 let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
                 newItem.key = entryRef.key
+                CoreDataHelper.saveItem()
                 
                 let imageRef = StorageReference.newContactImageReference(key: newItem.key!)
                 StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
-                    
                     guard let downloadURL = downloadURL else {
                         return
                     }
                     let urlString = downloadURL.absoluteString
+                    newItem.url = urlString
+                    CoreDataHelper.saveItem()
                     let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: newItem.key!, locationDescription: self.locationTextField.text!)
                     ItemService.addEntry(entry: entry)
                     

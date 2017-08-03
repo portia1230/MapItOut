@@ -55,6 +55,7 @@ class InitalLoadingViewController: UIViewController {
                     item.locationDescription = entries[i].locationDescription
                     item.key = entries[i].key
                     item.image = imageView.image
+                    item.url = entries[i].imageURL
                     CoreDataHelper.saveItem()
                     i += 1
                 }

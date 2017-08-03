@@ -261,8 +261,8 @@
                                     <action selector="refreshButtonTapped:" destination="Rez-AD-afe" eventType="touchUpInside" id="XUd-6Z-XPb"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQt-AW-Lpt">
-                                <rect key="frame" x="0.0" y="-248" width="375" height="667"/>
+                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQt-AW-Lpt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
                         </subviews>
@@ -1327,8 +1327,8 @@
                                     <constraint firstItem="PiW-QX-JjJ" firstAttribute="leading" secondItem="J9U-kz-RLa" secondAttribute="leading" id="z3H-Ts-ddG"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mTi-Mq-U92">
-                                <rect key="frame" x="0.0" y="485" width="375" height="182"/>
+                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mTi-Mq-U92">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>

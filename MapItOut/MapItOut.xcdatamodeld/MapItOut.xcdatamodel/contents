@@ -11,8 +11,9 @@
         <attribute name="organization" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="210"/>
     </elements>
 </model>

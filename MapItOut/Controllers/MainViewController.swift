@@ -18,7 +18,7 @@ import FirebaseDatabase
 class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate{
     
     //MARK: - Properties
-    
+
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var pickerUIView: UIView!
@@ -648,6 +648,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         alertController.addAction(viewContactsAction)
         if defaults.string(forKey: "isLoggedIn") == "true"{
             let signOutAction = UIAlertAction(title: "Sign out", style: .default) { _ in
+                
                 do {
                     try Auth.auth().signOut()
                     defaults.set("false", forKey:"loadedItems")
@@ -771,6 +772,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         popOverVC?.latitude = selectedItem.latitude
         popOverVC?.longitude = selectedItem.longitude
         popOverVC?.keyOfItem = selectedItem.key!
+        popOverVC?.url = selectedItem.url!
         
         self.addChildViewController((self.popOverVC)!)
         popOverVC?.view.frame = self.view.frame
