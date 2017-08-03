@@ -11,6 +11,8 @@ import UIKit
 class MGPhotoHelper: NSObject {
     //MARK: - Properties
     
+    
+    
     var completionHandler :((UIImage) -> Void)?
     
     //MARK: - Helper Methods
@@ -50,11 +52,25 @@ class MGPhotoHelper: NSObject {
 }
 
 extension MGPhotoHelper: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            completionHandler?(selectedImage)
-        }
+        let imagePicked = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+        imageView.image = imagePicked
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        let layer: CALayer = imageView.layer
+        layer.masksToBounds = true
+        layer.cornerRadius = 100
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 0.0)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        roundedImage?.draw(in: imageView.bounds)
         
+        UIGraphicsEndImageContext()
+        
+        completionHandler?(roundedImage!)
         picker.dismiss(animated: true)
     }
     

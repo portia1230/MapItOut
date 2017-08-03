@@ -476,8 +476,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 })
             }
             
-            
-            
         } else {
             let alertController = UIAlertController(title: "", message:
                 "Did you put in a name, location and type?", preferredStyle: UIAlertControllerStyle.alert)
