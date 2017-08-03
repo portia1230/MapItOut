@@ -187,7 +187,20 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     parent.reusableVC?.phone = contact.phoneNumbers[0].value.stringValue
                 }
                 if contact.imageData?.isEmpty == false {
-                    parent.reusableVC?.image = UIImage(data: contact.imageData!)!
+                    
+                    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+                    imageView.image = UIImage(data: contact.imageData!)!
+                    imageView.contentMode = UIViewContentMode.scaleAspectFill
+                    let layer: CALayer = imageView.layer
+                    layer.masksToBounds = true
+                    layer.cornerRadius = 100
+                    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 0.0)
+                    layer.render(in: UIGraphicsGetCurrentContext()!)
+                    let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    roundedImage?.draw(in: imageView.bounds)
+                    UIGraphicsEndImageContext()
+                    parent.reusableVC?.image = roundedImage!
                    // parent.reusableVC?.photoImageView.image = UIImage(data: contact.imageData!)!
                 }
                 
