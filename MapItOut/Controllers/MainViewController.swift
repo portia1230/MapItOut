@@ -510,6 +510,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             reusableVC?.phone = ""
             reusableVC?.email = ""
             reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+            reusableVC?.photoImageView.image = #imageLiteral(resourceName: "noContactImage.png")
             reusableVC?.photoImageView.alpha = 0
             
             present(reusableVC!, animated: true, completion: nil)

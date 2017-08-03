@@ -118,10 +118,10 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
             let coordinate = response?.mapItems[0].placemark.coordinate
-            let converted = LocationTransformHelper.wgs2gcj(wgsLat: (coordinate?.latitude)!, wgsLng: (coordinate?.longitude)!)
+            //let converted = LocationTransformHelper.wgs2gcj(wgsLat: (coordinate?.latitude)!, wgsLng: (coordinate?.longitude)!)
             self.locationMapView.removeAnnotations(self.locationMapView.annotations)
             let anno = MKPointAnnotation()
-            anno.coordinate = CLLocationCoordinate2DMake(converted.gcjLat, converted.gcjLng)
+            anno.coordinate = CLLocationCoordinate2DMake((coordinate?.latitude)!, (coordinate?.longitude)!)
             let span = MKCoordinateSpanMake(0.1, 0.1)
             self.location = coordinate
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)

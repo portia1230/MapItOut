@@ -154,9 +154,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
             var coordinate = response?.mapItems[0].placemark.coordinate
-            let calibratedCoordinate = LocationTransformHelper.wgs2gcj(wgsLat: (coordinate?.latitude)!, wgsLng: (coordinate?.longitude)!)
-            coordinate?.longitude = calibratedCoordinate.gcjLng
-            coordinate?.latitude = calibratedCoordinate.gcjLat
+            //let calibratedCoordinate = LocationTransformHelper.wgs2gcj(wgsLat: (coordinate?.latitude)!, wgsLng: (coordinate?.longitude)!)
+            coordinate?.longitude = (coordinate?.longitude)!
+            coordinate?.latitude = (coordinate?.latitude)!
             self.contactMapView.removeAnnotations(self.contactMapView.annotations)
             let anno = MKPointAnnotation()
             anno.coordinate = coordinate!
@@ -165,8 +165,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             let region = MKCoordinateRegion(center: anno.coordinate, span: span)
             self.contactMapView.setRegion(region, animated: true)
             self.contactMapView.addAnnotation(anno)
-            self.longitude = calibratedCoordinate.gcjLng
-            self.latitude = calibratedCoordinate.gcjLat
+            self.longitude = (coordinate?.longitude)!
+            self.latitude = (coordinate?.latitude)!
+            
         }
         tableView.isHidden = true
         

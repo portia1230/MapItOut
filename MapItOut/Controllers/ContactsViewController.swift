@@ -165,6 +165,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     parent.reusableVC?.phone = ""
                     parent.reusableVC?.email = ""
                     parent.reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+                    parent.reusableVC?.photoImageView.image = #imageLiteral(resourceName: "noContactImage.png")
                     parent.reusableVC?.photoImageView.alpha = 0
                 }
                 if contact.givenName.isEmpty == false{
