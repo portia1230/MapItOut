@@ -462,11 +462,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             if self.undoButton.isEnabled == true{
                 
+                
                 if self.parent is MainViewController{
                     
                     let parent = self.parent as! MainViewController
                     CoreDataHelper.deleteItems(item: self.item)
-                    
                     if defaults.string(forKey: "isLoggedIn") == "true"{
                         if self.OContactPhoto != self.itemImage.image{
                             let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(self.keyOfItem).jpg")
@@ -500,7 +500,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                     self.view.removeFromSuperview()
                                 }, completion: nil)
-                                
                             }
                         } else {
                             let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
@@ -531,7 +530,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     
                     let parent = self.parent as! ContactListController
                     CoreDataHelper.deleteItems(item: self.item)
-                    
                     if defaults.string(forKey: "isLoggedIn") == "true"{
                         if self.OContactPhoto != self.itemImage.image{
                             let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(self.keyOfItem).jpg")
