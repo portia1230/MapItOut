@@ -64,7 +64,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let keys = [CNContactIdentifierKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactOrganizationNameKey,CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName)] as [Any]
+        let keys = [CNContactIdentifierKey, CNContactEmailAddressesKey, CNContactPostalAddressesKey, CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactOrganizationNameKey,CNContactImageDataKey, CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName)] as [Any]
         let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
         
         do {
@@ -157,7 +157,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     parent.reusableVC = addVC as? AddEntryViewController
                     parent.reusableVC?.modalTransitionStyle = .coverVertical
                 } else {
-                    
                     parent.reusableVC?.contactLocationDescription = ""
                     parent.reusableVC?.name = ""
                     parent.reusableVC?.organization = ""
@@ -189,6 +188,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 if contact.imageData?.isEmpty == false {
                     parent.reusableVC?.image = UIImage(data: contact.imageData!)!
+                   // parent.reusableVC?.photoImageView.image = UIImage(data: contact.imageData!)!
                 }
                 
                 if contact.postalAddresses.count != 0 {

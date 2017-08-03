@@ -230,6 +230,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.typeTextField.text = type
             if (self.image) != #imageLiteral(resourceName: "noContactImage.png"){
                 self.photoImageView.image = self.image
+                self.photoImageView.alpha = 1
             }
             self.locationMapView.showsUserLocation = false
             self.loadingView.isHidden = true
@@ -368,6 +369,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBAction func uploadPhotoButtonTapped(_ sender: UIButton) {
         photoHelper.presentActionSheet(from: self)
         photoHelper.completionHandler = { image in
+            self.image = image
             self.photoImageView.image = image
             self.photoImageView.alpha = 1
         }
