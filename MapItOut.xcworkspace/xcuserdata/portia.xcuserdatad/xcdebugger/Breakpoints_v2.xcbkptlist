@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523395462.155774"
+            timestampString = "523427996.613613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "448"
-            endingLineNumber = "448"
+            startingLineNumber = "453"
+            endingLineNumber = "453"
             landmarkName = "mapButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523395464.497296"
+            timestampString = "523427996.613613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "449"
-            endingLineNumber = "449"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
             landmarkName = "mapButtonTapped(_:)"
             landmarkType = "7">
             <Locations>
@@ -426,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523395588.429342"
+            timestampString = "523427996.613613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450"
+            startingLineNumber = "455"
+            endingLineNumber = "455"
             landmarkName = "mapButtonTapped(_:)"
             landmarkType = "7">
             <Locations>

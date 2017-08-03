@@ -605,6 +605,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     @IBAction func settingButtonTapped(_ sender: Any) {
         let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
+        let popOver = alertController.popoverPresentationController
+        popOver?.sourceView  = sender as? UIView
+        popOver?.sourceRect = (sender as! UIView).bounds
+        popOver?.permittedArrowDirections = UIPopoverArrowDirection.any
         
         let viewContactsAction = UIAlertAction(title: "Import from Contacts", style: .default) { (alert) in
             let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
