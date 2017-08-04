@@ -13,6 +13,7 @@ import AddressBookUI
 import FirebaseStorage
 import FirebaseDatabase
 import MessageUI
+import CoreTelephony
 
 class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, MKLocalSearchCompleterDelegate, UITableViewDelegate, UISearchBarDelegate, UITableViewDataSource{
     
@@ -40,6 +41,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var phoneImageView: UIImageView!
     @IBOutlet weak var emailImageView: UIImageView!
+    
+    var isChanged = false
     
     var OName = ""
     var OOrganization = ""
@@ -253,10 +256,25 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         super.viewWillAppear(animated)
         
+        if let phoneCallURL:URL = URL(string: "tel:111") {
+            let application:UIApplication = UIApplication.shared
+            if !(application.canOpenURL(phoneCallURL)) {
+            self.phoneButton.isHidden = true
+            self.phoneImageView.isHidden = true
+            }
+        }
+        
+        if let emailURL:URL = URL(string: "mailto:qingfeng1230@gmail.com") {
+            let application:UIApplication = UIApplication.shared
+            if !(application.canOpenURL(emailURL)) {
+                self.emailButton.isHidden = true
+                self.emailImageView.isHidden = true
+            }
+        }
+        
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
         
         self.undoButton.setTitleColor(UIColor.clear, for: .normal)
-        self.undoButton.isEnabled = false
         self.undoButton.layer.cornerRadius = 30
         self.itemImage.layer.cornerRadius = 70
         self.changeImageButton.layer.cornerRadius = 70
@@ -304,6 +322,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             self.OContactPhoto = self.contactPhoto
         }
         
+        if isChanged{
+            self.undoButton.isEnabled = true
+            self.undoButton.setTitleColor(UIColor.white, for: .normal)
+        } else {
         self.OName = self.name
         self.OOrganization = self.organization
         self.OType = self.type
@@ -315,7 +337,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.OLocation = self.location
         self.OOriginalLocation = self.originalLocation
         self.OUrl = self.url
-        
+        }
     }
     
     
@@ -329,6 +351,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         dismissView()
     }
     @IBAction func undoButtonTapped(_ sender: Any) {
+        self.isChanged = false
         self.nameTextField.text = self.OName
         self.organizationTextField.text = self.OOrganization
         self.typeTextField.text = self.OType
@@ -367,38 +390,30 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        controller.dismiss(animated: true, completion: nil)
+        controller.dismiss(animated: true) {
+        }
     }
     
     @IBAction func phoneButtonTapped(_ sender: Any) {
-        let composeVC = MFMessageComposeViewController()
-        let name = self.nameTextField.text!
-        composeVC.messageComposeDelegate = self
-        composeVC.recipients = [self.phoneTextField.text!]
-        composeVC.body = "Hey \(name), "
-        self.present(composeVC, animated: true,completion: nil)
+        if let phoneCallURL:URL = URL(string: "tel:\(phoneTextField.text!)") {
+            let application:UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                    application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
     }
-    
     
     @IBAction func emailButtonTapped(_ sender: Any) {
         let composeVC = MFMailComposeViewController()
         composeVC.mailComposeDelegate = self
-        
-        // Configure the fields of the interface.
         composeVC.setToRecipients([self.emailTextField.text!])
-        //composeVC.setSubject("")
         composeVC.setMessageBody("Hey \(self.nameTextField.text!)", isHTML: false)
-        
-        // Present the view controller modally.
         self.present(composeVC, animated: true, completion: nil)
         
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController,
                                didFinishWith result: MFMailComposeResult, error: Error?) {
-        // Check the result or perform other tasks.
-        
-        // Dismiss the mail compose view controller.
         controller.dismiss(animated: true, completion: nil)
     }
     
@@ -461,6 +476,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
 
             
         } else {
+            self.isChanged = false
             if self.undoButton.isEnabled == true{
                 
                 
@@ -688,6 +704,37 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 self.emailButton.isHidden = true
                 self.emailImageView.isHidden = true
             }
+            
+            self.name = self.nameTextField.text!
+            self.organization = self.organizationTextField.text!
+            self.type = self.typeTextField.text!
+            self.address = self.searchBar.text!
+            self.phone = self.phoneTextField.text!
+            self.email = self.emailTextField.text!
+            self.isChanged = true
+            
+            if let phoneCallURL:URL = URL(string: "tel:111") {
+                let application:UIApplication = UIApplication.shared
+                if !(application.canOpenURL(phoneCallURL)) {
+                    self.phoneButton.isHidden = true
+                    self.phoneImageView.isHidden = true
+                } else {
+                    self.phoneButton.isHidden = false
+                    self.phoneImageView.isHidden = false
+                }
+            }
+            
+            if let emailURL:URL = URL(string: "mailto:qingfeng1230@gmail.com") {
+                let application:UIApplication = UIApplication.shared
+                if !(application.canOpenURL(emailURL)) {
+                    self.emailButton.isHidden = true
+                    self.emailImageView.isHidden = true
+                } else {
+                    self.emailButton.isHidden = false
+                    self.emailImageView.isHidden = false
+                }
+            }
+            
         } else {
             if (textField.text == OPhone) || (textField.text == OEmail) || (textField.text == OName) || (textField.text == OType){
                 self.undoButton.isEnabled = false
