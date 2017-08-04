@@ -494,6 +494,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 item.organization = self.organizationTextField.text
                                 item.type = self.typeTextField.text
                                 item.phone = self.phoneTextField.text
+                                item.url = urlString
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
@@ -518,6 +519,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             item.organization = self.organizationTextField.text
                             item.type = self.typeTextField.text
                             item.phone = self.phoneTextField.text
+                            item.url = self.OUrl
                             
                             CoreDataHelper.saveItem()
                             parent.updateValue(item: item)
@@ -528,6 +530,29 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             }, completion: nil)
                             }
                         }
+                    } else {
+                        let item = CoreDataHelper.newItem()
+                        item.email = self.emailTextField.text
+                        item.image = self.itemImage.image
+                        item.key = self.keyOfItem
+                        item.latitude = self.latitude
+                        item.longitude = self.longitude
+                        item.name = self.nameTextField.text
+                        item.locationDescription = self.searchBar.text
+                        item.organization = self.organizationTextField.text
+                        item.type = self.typeTextField.text
+                        item.phone = self.phoneTextField.text
+                        item.url = ""
+                        
+                        CoreDataHelper.saveItem()
+                        parent.updateValue(item: item)
+                        
+                        if self.view.superview != nil{
+                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                self.view.removeFromSuperview()
+                            }, completion: nil)
+                        }
+
                     }
                     
                 } else {
@@ -560,16 +585,15 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 item.organization = self.organizationTextField.text
                                 item.type = self.typeTextField.text
                                 item.phone = self.phoneTextField.text
+                                item.url = urlString
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
-                                
                                 if self.view.superview != nil{
-                                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                    self.view.removeFromSuperview()
-                                }, completion: nil)
+                                    UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                        self.view.removeFromSuperview()
+                                    }, completion: nil)
                                 }
-                                
                             }
                         } else {
                             let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
@@ -586,18 +610,41 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             item.organization = self.organizationTextField.text
                             item.type = self.typeTextField.text
                             item.phone = self.phoneTextField.text
+                            item.url = OUrl
                             
                             CoreDataHelper.saveItem()
                             parent.updateValue(item: item)
                             
                             if self.view.superview != nil{
+                                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                    self.view.removeFromSuperview()
+                                }, completion: nil)
+                            }
+                        }
+                    } else {
+                        let item = CoreDataHelper.newItem()
+                        item.email = self.emailTextField.text
+                        item.image = self.itemImage.image
+                        item.key = self.keyOfItem
+                        item.latitude = self.latitude
+                        item.longitude = self.longitude
+                        item.name = self.nameTextField.text
+                        item.locationDescription = self.searchBar.text
+                        item.organization = self.organizationTextField.text
+                        item.type = self.typeTextField.text
+                        item.phone = self.phoneTextField.text
+                        item.url = ""
+                        
+                        CoreDataHelper.saveItem()
+                        parent.updateValue(item: item)
+                        
+                        if self.view.superview != nil{
                             UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                 self.view.removeFromSuperview()
                             }, completion: nil)
-                            }
                         }
+                        
                     }
-                    
                 }
             } else {
                 self.item.url = OUrl

@@ -440,6 +440,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             newItem.longitude = self.longitude
             newItem.locationDescription = self.locationTextField.text
             newItem.key = ""
+            newItem.url = ""
             
             if self.photoImageView.image == nil{
                 newItem.image = #imageLiteral(resourceName: "noContactImage.png")
