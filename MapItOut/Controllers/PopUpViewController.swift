@@ -234,7 +234,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         view.addGestureRecognizer(swipeDown)
         
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.0)
         deleteButton.layer.cornerRadius = 15
     }
     
@@ -477,6 +477,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( originalLocation != OOriginalLocation){
                 self.undoButton.isEnabled = true
                 self.undoButton.setTitleColor(UIColor.white, for: .normal)
+            } else {
+                self.undoButton.isEnabled = false
+                self.undoButton.setTitleColor(UIColor.clear, for: .normal)
             }
             
         } else {
@@ -517,10 +520,18 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
+                                
+                                
+                                
                                 if self.view.superview != nil{
-                                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                    self.view.removeFromSuperview()
-                                }, completion: nil)
+                                    parent.backgroundView.isHidden = true
+                                    parent.view.isUserInteractionEnabled = true
+                                    
+                                    UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+                                        self.view.frame.origin.y = self.view.frame.height
+                                    }, completion: { (bool) -> Void in
+                                        self.view.removeFromSuperview()
+                                    })
                                 }
                             }
                         } else {
@@ -544,9 +555,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             parent.updateValue(item: item)
                             
                             if self.view.superview != nil{
-                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                self.view.removeFromSuperview()
-                            }, completion: nil)
+                                parent.backgroundView.isHidden = true
+                                parent.view.isUserInteractionEnabled = true
+                                
+                                UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+                                    self.view.frame.origin.y = self.view.frame.height
+                                }, completion: { (bool) -> Void in
+                                    self.view.removeFromSuperview()
+                                })
                             }
                         }
                     } else {
@@ -567,15 +583,20 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         parent.updateValue(item: item)
                         
                         if self.view.superview != nil{
-                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                            parent.backgroundView.isHidden = true
+                            parent.view.isUserInteractionEnabled = true
+                            
+                            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+                                self.view.frame.origin.y = self.view.frame.height
+                            }, completion: { (bool) -> Void in
+                                parent.view.isUserInteractionEnabled = true
                                 self.view.removeFromSuperview()
-                            }, completion: nil)
+                            })
                         }
 
                     }
                     
                 } else {
-                    
                     let parent = self.parent as! ContactListController
                     CoreDataHelper.deleteItems(item: self.item)
                     if defaults.string(forKey: "isLoggedIn") == "true"{
@@ -608,6 +629,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
+                                parent.backgroundView.isHidden = true
                                 if self.view.superview != nil{
                                     UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                         self.view.removeFromSuperview()
@@ -633,7 +655,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             
                             CoreDataHelper.saveItem()
                             parent.updateValue(item: item)
-                            
+                            parent.backgroundView.isHidden = true
                             if self.view.superview != nil{
                                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                     self.view.removeFromSuperview()
@@ -657,26 +679,62 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         CoreDataHelper.saveItem()
                         parent.updateValue(item: item)
                         
-                        if self.view.superview != nil{
-                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                self.view.removeFromSuperview()
-                            }, completion: nil)
+                        if self.parent is MainViewController {
+                            self.dismissButton.isEnabled = true
+                            if self.view.superview != nil{
+                                UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+                                    self.view.frame.origin.y = self.view.frame.height
+                                }, completion: { (bool) -> Void in
+                                    self.view.removeFromSuperview()
+                                })
+                            }
+                        } else {
+                            self.dismissButton.isEnabled = true
+                            if self.view.superview != nil{
+                                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                    self.view.removeFromSuperview()
+                                }, completion: nil)
+                            }
                         }
                         
                     }
                 }
             } else {
+                if self.parent is MainViewController {
                 self.item.url = OUrl
                 CoreDataHelper.saveItem()
                 self.dismissButton.isEnabled = true
-                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                    self.view.removeFromSuperview()
-                }, completion: nil)
+                let parent = self.parent as! MainViewController
+                parent.view.isUserInteractionEnabled = true
+                parent.backgroundView.isHidden = true
+                if self.view.superview != nil{
+                    UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
+                        self.view.frame.origin.y = self.view.frame.height
+                    }, completion: { (bool) -> Void in
+                        self.view.removeFromSuperview()
+                    })
+                }
+                } else {
+                    self.item.url = OUrl
+                    CoreDataHelper.saveItem()
+                    self.dismissButton.isEnabled = true
+                    let parent = self.parent as! ContactListController
+                    parent.view.isUserInteractionEnabled = true
+                    parent.backgroundView.isHidden = true
+                    if self.view.superview != nil{
+                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                            self.view.removeFromSuperview()
+                        }, completion: nil)
+                    }
+                }
             }
         }
         if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( originalLocation != OOriginalLocation){
             self.undoButton.isEnabled = true
             self.undoButton.setTitleColor(UIColor.white, for: .normal)
+        } else {
+            self.undoButton.isEnabled = false
+            self.undoButton.setTitleColor(UIColor.clear, for: .normal)
         }
     }
     

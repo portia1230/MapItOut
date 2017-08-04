@@ -31,6 +31,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     var reusableVC : AddEntryViewController?
     var reusableContactsVC: ContactsViewController?
     var reusableAboutVC: AboutViewController?
+    var popOverVC: PopUpViewController?
     var keys : [String] = []
     var sortedItems : [Item] = []
     var items = [Item]()
@@ -271,30 +272,33 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             i += 1
         }
         
-        let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
+        if self.popOverVC == nil{
+            self.popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
+        }
         let selectedItem = self.filteredItems[indexPath.row]
+        popOverVC?.item = selectedItem
+        popOverVC?.name = selectedItem.name!
+        popOverVC?.organization = selectedItem.organization!
+        popOverVC?.address = selectedItem.locationDescription!
+        popOverVC?.type = selectedItem.type!
+        popOverVC?.contactPhoto = (selectedItem.image as? UIImage)!
+        popOverVC?.email = selectedItem.email!
+        popOverVC?.phone = selectedItem.phone!
         
-        popOverVC.item = selectedItem
-        popOverVC.name = selectedItem.name!
-        popOverVC.organization = selectedItem.organization!
-        popOverVC.address = selectedItem.locationDescription!
-        popOverVC.type = selectedItem.type!
-        popOverVC.contactPhoto = (selectedItem.image as? UIImage)!
-        popOverVC.email = selectedItem.email!
-        popOverVC.phone = selectedItem.phone!
+        popOverVC?.latitude = selectedItem.latitude
+        popOverVC?.longitude = selectedItem.longitude
+        popOverVC?.keyOfItem = selectedItem.key!
+        popOverVC?.url = selectedItem.url!
+        popOverVC?.view.endEditing(true)
         
-        popOverVC.latitude = selectedItem.latitude
-        popOverVC.longitude = selectedItem.longitude
-        popOverVC.keyOfItem = selectedItem.key!
-        popOverVC.url = selectedItem.url!
-        popOverVC.view.endEditing(true)
+        self.addChildViewController((self.popOverVC)!)
+        popOverVC?.view.frame = self.view.frame
+        self.backgroundView.isHidden = false
+        popOverVC?.didMove(toParentViewController: self)
         
-        self.addChildViewController(popOverVC)
-        popOverVC.view.frame = self.view.frame
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview(popOverVC.view)
+            self.view.addSubview((self.popOverVC?.view)!)
         }, completion: nil)
-        popOverVC.didMove(toParentViewController: self)
     }
     
     

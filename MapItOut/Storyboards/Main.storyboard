@@ -262,7 +262,7 @@
                                 </connections>
                             </button>
                             <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQt-AW-Lpt">
-                                <rect key="frame" x="0.0" y="228" width="375" height="439"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="453"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
                         </subviews>
@@ -313,6 +313,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="CQt-AW-Lpt" id="LVy-qm-IL2"/>
                         <outlet property="detailsButton" destination="3xa-qc-06L" id="OOa-ns-msg"/>
+                        <outlet property="detailsView" destination="eYu-6d-W7D" id="pyf-Q5-kcb"/>
                         <outlet property="itemDistanceLabel" destination="Ab6-xr-fWC" id="KOn-vi-cS5"/>
                         <outlet property="itemImage" destination="sHw-2M-bg3" id="dDF-06-q6u"/>
                         <outlet property="itemNameLabel" destination="BaJ-CN-Oi1" id="8Te-gG-kvC"/>

@@ -33,6 +33,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var plusImageView: UIImageView!
     
+    @IBOutlet weak var detailsView: UIView!
     var reusableVC : AddEntryViewController?
     var reusableListVC: ContactListController?
     var reusableContactsVC: ContactsViewController?
@@ -153,6 +154,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(MainViewController.showDetails))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.up
+        self.detailsView.addGestureRecognizer(swipeDown)
+        
         if defaults.string(forKey: "isLoggedIn") == "true"{
             if defaults.string(forKey: "loadedItems") == "false"{
                 let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
@@ -164,6 +170,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 
             }
         }
+        
+        
         
         itemImage.layer.cornerRadius = 35
         detailsButton.layer.cornerRadius = 15
@@ -204,6 +212,13 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     deinit {
         if let authHandle = authHandle {
             Auth.auth().removeStateDidChangeListener(authHandle)
+        }
+    }
+    
+    
+    func showDetails(){
+        if self.detailsButton.isEnabled{
+            detailsButtonTapped(self)
         }
     }
     
@@ -777,13 +792,16 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         self.addChildViewController((self.popOverVC)!)
         popOverVC?.view.frame = self.view.frame
-        UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.addSubview((self.popOverVC?.view)!)
-        }, completion: nil)
-        
-        
-        
         popOverVC?.didMove(toParentViewController: self)
+        self.backgroundView.isHidden = false
+        popOverVC?.view.frame.origin.y = self.view.frame.height
+        self.view.addSubview((popOverVC?.view)!)
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.popOverVC?.view.frame.origin.y = 0
+        }, completion: { (bool) -> Void in
+            
+        })
+        
     }
     
     //MARK: - Timer
