@@ -161,11 +161,11 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.detailsView.addGestureRecognizer(swipeDown)
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MainViewController.swipeLeft))
-        swipeDown.direction = UISwipeGestureRecognizerDirection.up
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.left
         self.detailsView.addGestureRecognizer(swipeLeft)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MainViewController.swipeRight))
-        swipeDown.direction = UISwipeGestureRecognizerDirection.up
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.detailsView.addGestureRecognizer(swipeRight)
         
         if defaults.string(forKey: "isLoggedIn") == "true"{
@@ -234,6 +234,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     func swipeRight(){
         if self.selectedIndex != 0{
             self.selectedIndex = selectedIndex - 1
+        } else {
+            self.selectedIndex = filteredItems.count - 1
+        }
             self.selectedItem = filteredItems[selectedIndex]
             self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
             self.itemNameLabel.text = filteredItems[selectedIndex].name
@@ -245,14 +248,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
             } else {
                 self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-            }
-            
         }
+        let region = MKCoordinateRegionMake(contactLocation.coordinate , mapView.region.span)
+        self.mapView.setRegion(region, animated: true)
     }
     
     func swipeLeft(){
         if self.selectedIndex != filteredItems.count - 1{
             self.selectedIndex = selectedIndex + 1
+        } else {
+            self.selectedIndex = 0
+        }
             self.selectedItem = filteredItems[selectedIndex]
             self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
             self.itemNameLabel.text = filteredItems[selectedIndex].name
@@ -264,9 +270,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
             } else {
                 self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-            }
-            
-        }    }
+        }
+        let region = MKCoordinateRegionMake(contactLocation.coordinate , mapView.region.span)
+        self.mapView.setRegion(region, animated: true)
+    }
     
     func reloadView(){
         if defaults.string(forKey: "isLoggedIn") == "true"{
