@@ -287,6 +287,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         popOverVC.longitude = selectedItem.longitude
         popOverVC.keyOfItem = selectedItem.key!
         popOverVC.url = selectedItem.url!
+        popOverVC.view.endEditing(true)
         
         self.addChildViewController(popOverVC)
         popOverVC.view.frame = self.view.frame

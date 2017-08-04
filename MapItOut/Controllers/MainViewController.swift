@@ -773,6 +773,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         popOverVC?.longitude = selectedItem.longitude
         popOverVC?.keyOfItem = selectedItem.key!
         popOverVC?.url = selectedItem.url!
+        popOverVC?.view.endEditing(true)
         
         self.addChildViewController((self.popOverVC)!)
         popOverVC?.view.frame = self.view.frame

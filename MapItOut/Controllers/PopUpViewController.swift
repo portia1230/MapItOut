@@ -338,6 +338,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.OOriginalLocation = self.originalLocation
         self.OUrl = self.url
         }
+        
+        self.view.endEditing(true)
     }
     
     
@@ -468,17 +470,18 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     func dismissView(){
         if (UIApplication.shared.isKeyboardPresented)||(self.resultTableView.isHidden == false){
             self.view.endEditing(true)
-            self.view.endEditing(true)
             if (self.searchBar.text == "") || (self.resultTableView.isHidden == false){
                 self.searchBar.text = OOriginalLocation
                 self.resultTableView.isHidden = true
             }
-
+            if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( originalLocation != OOriginalLocation){
+                self.undoButton.isEnabled = true
+                self.undoButton.setTitleColor(UIColor.white, for: .normal)
+            }
             
         } else {
             self.isChanged = false
             if self.undoButton.isEnabled == true{
-                
                 
                 if self.parent is MainViewController{
                     
@@ -671,6 +674,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 }, completion: nil)
             }
         }
+        if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( originalLocation != OOriginalLocation){
+            self.undoButton.isEnabled = true
+            self.undoButton.setTitleColor(UIColor.white, for: .normal)
+        }
     }
     
     //MARK: - Text field delegate functions
@@ -741,6 +748,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 self.undoButton.setTitleColor(UIColor.clear, for: .normal)
             }
         }
+        self.dismissButton.isEnabled = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
