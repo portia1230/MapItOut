@@ -780,6 +780,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         UIView.transition(with: self.view, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.addSubview((self.popOverVC?.view)!)
         }, completion: nil)
+        
+        
+        
         popOverVC?.didMove(toParentViewController: self)
     }
     
