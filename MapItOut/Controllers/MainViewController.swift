@@ -39,6 +39,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var reusableContactsVC: ContactsViewController?
     var reusableAboutVC: AboutViewController?
     var popOverVC: PopUpViewController?
+    var myLocation = CLLocation()
     
     var items = [Item]()
     
@@ -159,6 +160,14 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         swipeDown.direction = UISwipeGestureRecognizerDirection.up
         self.detailsView.addGestureRecognizer(swipeDown)
         
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MainViewController.swipeLeft))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.up
+        self.detailsView.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MainViewController.swipeRight))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.up
+        self.detailsView.addGestureRecognizer(swipeRight)
+        
         if defaults.string(forKey: "isLoggedIn") == "true"{
             if defaults.string(forKey: "loadedItems") == "false"{
                 let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
@@ -221,6 +230,43 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             detailsButtonTapped(self)
         }
     }
+    
+    func swipeRight(){
+        if self.selectedIndex != 0{
+            self.selectedIndex = selectedIndex - 1
+            self.selectedItem = filteredItems[selectedIndex]
+            self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
+            self.itemNameLabel.text = filteredItems[selectedIndex].name
+            self.itemTypeLabel.text = filteredItems[selectedIndex].type
+            let contactLocation = CLLocation(latitude: filteredItems[selectedIndex].latitude, longitude: filteredItems[selectedIndex].longitude)
+            let distance = self.myLocation.distance(from: contactLocation)
+            if distance > 1000.0
+            {
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
+            } else {
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            }
+            
+        }
+    }
+    
+    func swipeLeft(){
+        if self.selectedIndex != filteredItems.count - 1{
+            self.selectedIndex = selectedIndex + 1
+            self.selectedItem = filteredItems[selectedIndex]
+            self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
+            self.itemNameLabel.text = filteredItems[selectedIndex].name
+            self.itemTypeLabel.text = filteredItems[selectedIndex].type
+            let contactLocation = CLLocation(latitude: filteredItems[selectedIndex].latitude, longitude: filteredItems[selectedIndex].longitude)
+            let distance = self.myLocation.distance(from: contactLocation)
+            if distance > 1000.0
+            {
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
+            } else {
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            }
+            
+        }    }
     
     func reloadView(){
         if defaults.string(forKey: "isLoggedIn") == "true"{
@@ -336,6 +382,10 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             i += 1
         }
         
+        let coordinate = LocationService.getLocation(manager: self.locationManager)
+        self.myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        
+        
         if self.filteredItems.isEmpty{
             self.itemNameLabel.text = ""
             self.itemDistanceLabel.text = ""
@@ -348,19 +398,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.detailsButton.setTitle("", for: .normal)
             self.detailsButton.backgroundColor = greyColor
         } else {
-            let coordinate = LocationService.getLocation(manager: self.locationManager)
-            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
             self.selectedItem = filteredItems[0]
             self.items = CoreDataHelper.retrieveItems()
             var n = 0
-            while n < self.items.count {
-                if items[n].key == self.selectedItem.key{
-                    self.selectedIndex = n
-                }
-                n += 1
-            }
-            let distance = myLocation.distance(from: contactLocation)
+            self.selectedIndex = 0
+            let distance = self.myLocation.distance(from: contactLocation)
             self.itemDistanceLabel.backgroundColor = UIColor.clear
             self.itemNameLabel.backgroundColor = UIColor.clear
             self.itemTypeLabel.backgroundColor = UIColor.clear
@@ -440,6 +483,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.mapView.addAnnotation(anno)
             i += 1
         }
+        let coordinate = LocationService.getLocation(manager: self.locationManager)
+        self.myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         if self.filteredItems.isEmpty{
             self.itemNameLabel.text = ""
@@ -454,19 +499,12 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.detailsButton.backgroundColor = greyColor
         } else {
             self.detailsButton.isEnabled = true
-            let coordinate = LocationService.getLocation(manager: self.locationManager)
-            let myLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
             self.selectedItem = filteredItems[0]
             self.items = CoreDataHelper.retrieveItems()
             var n = 0
-            while n < self.items.count {
-                if items[n].key == self.selectedItem.key{
-                    self.selectedIndex = n
-                }
-                n += 1
-            }
-            let distance = myLocation.distance(from: contactLocation)
+            self.selectedIndex = 0
+            let distance = self.myLocation.distance(from: contactLocation)
             self.itemDistanceLabel.backgroundColor = UIColor.clear
             self.itemNameLabel.backgroundColor = UIColor.clear
             self.itemTypeLabel.backgroundColor = UIColor.clear
@@ -562,9 +600,9 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.editedAnno = view.annotation! as! CustomPointAnnotation
             self.items = CoreDataHelper.retrieveItems()
             var i = 0
-            while i < self.items.count{
-                if (items[i].latitude == self.editedAnno.coordinate.latitude) && ( items[i].longitude == self.editedAnno.coordinate.longitude){
-                    self.selectedItem = items[i]
+            while i < self.filteredItems.count{
+                if (filteredItems[i].latitude == self.editedAnno.coordinate.latitude) && ( filteredItems[i].longitude == self.editedAnno.coordinate.longitude){
+                    self.selectedItem = self.filteredItems[i]
                     self.selectedIndex = i
                     break
                 }
@@ -575,10 +613,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.itemTypeLabel.text = self.selectedItem.type
             self.itemImage.image = self.selectedItem.image as? UIImage
             
-            let location = LocationService.getLocation(manager: locationManager)
-            let myLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
             let contactLocation = CLLocation(latitude: (coordinate?.latitude)!, longitude: (coordinate?.longitude)!)
-            let distance = contactLocation.distance(from: myLocation)
+            let distance = contactLocation.distance(from: self.myLocation)
             if distance > 1000.0
             {
                 self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
