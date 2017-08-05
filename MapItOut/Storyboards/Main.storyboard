@@ -236,13 +236,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRB-lZ-ICl">
                                 <rect key="frame" x="0.0" y="65" width="375" height="110"/>
                                 <subviews>
-                                    <pickerView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Sd-yB-deR">
+                                    <pickerView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Sd-yB-deR">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </pickerView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="6Sd-yB-deR" firstAttribute="top" secondItem="JRB-lZ-ICl" secondAttribute="top" id="Ykd-zo-AjL"/>
                                     <constraint firstAttribute="height" constant="110" id="cYY-50-MOe"/>
@@ -1315,13 +1314,12 @@
                                 <subviews>
                                     <pickerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiW-QX-JjJ">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
-                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="110" id="YTS-9m-wb6"/>
                                         </constraints>
                                     </pickerView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="PiW-QX-JjJ" firstAttribute="top" secondItem="J9U-kz-RLa" secondAttribute="top" id="IKE-dD-Py0"/>
                                     <constraint firstAttribute="trailing" secondItem="PiW-QX-JjJ" secondAttribute="trailing" id="Wya-g1-2sC"/>
