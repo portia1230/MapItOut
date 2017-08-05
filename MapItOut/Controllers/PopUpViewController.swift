@@ -256,6 +256,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         super.viewWillAppear(animated)
         
+        if self.parent is ContactListController{
+            let parent = self.parent as! ContactListController
+            parent.backgroundView.isHidden = false
+        } else {
+            let parent = self.parent as! MainViewController
+            parent.backgroundView.isHidden = false
+        }
+        
         if let phoneCallURL:URL = URL(string: "tel:111") {
             let application:UIApplication = UIApplication.shared
             if !(application.canOpenURL(phoneCallURL)) {
@@ -374,6 +382,23 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.undoButton.setTitleColor(UIColor.clear, for: .normal)
         self.undoButton.isEnabled = false
         self.isPhotoUpdated = false
+        
+        if self.OPhone == ""{
+            self.phoneButton.isHidden = true
+            self.phoneImageView.isHidden = true
+        } else {
+            self.phoneButton.isHidden = false
+            self.phoneImageView.isHidden = false
+        }
+        if self.OEmail == ""{
+            self.emailButton.isHidden = true
+            self.emailImageView.isHidden = true
+        } else {
+            self.emailButton.isHidden = false
+            self.emailImageView.isHidden = false
+        }
+        
+        
     }
     
     @IBAction func mapButtonTapped(_ sender: Any) {
@@ -484,7 +509,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             
         } else {
             self.isChanged = false
-            if self.undoButton.isEnabled == true{
+            if self.undoButton.isEnabled == true {
                 
                 if self.parent is MainViewController{
                     
@@ -520,8 +545,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
-                                
-                                
                                 
                                 if self.view.superview != nil{
                                     parent.backgroundView.isHidden = true
@@ -678,7 +701,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         
                         CoreDataHelper.saveItem()
                         parent.updateValue(item: item)
-                        
+                        parent.backgroundView.isHidden = true
                         if self.parent is MainViewController {
                             self.dismissButton.isEnabled = true
                             if self.view.superview != nil{
@@ -723,9 +746,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     parent.backgroundView.isHidden = true
                     if self.view.superview != nil{
                         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                            parent.backgroundView.isHidden = true
                             self.view.removeFromSuperview()
                         }, completion: nil)
                     }
+                    
                 }
             }
         }
@@ -784,8 +809,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     self.phoneButton.isHidden = true
                     self.phoneImageView.isHidden = true
                 } else {
-                    self.phoneButton.isHidden = false
-                    self.phoneImageView.isHidden = false
+                    if self.phoneTextField.text != "" {
+                        self.phoneButton.isHidden = false
+                        self.phoneImageView.isHidden = false
+                    }
                 }
             }
             
@@ -795,8 +822,10 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                     self.emailButton.isHidden = true
                     self.emailImageView.isHidden = true
                 } else {
-                    self.emailButton.isHidden = false
-                    self.emailImageView.isHidden = false
+                    if self.emailTextField.text != "" {
+                        self.emailButton.isHidden = false
+                        self.emailImageView.isHidden = false
+                    }
                 }
             }
             

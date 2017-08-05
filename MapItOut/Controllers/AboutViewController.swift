@@ -9,6 +9,7 @@
 import UIKit
 
 class AboutViewController: UIViewController {
+    
     //MARK: - Properties
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var instructionView: UIView!
@@ -23,10 +24,13 @@ class AboutViewController: UIViewController {
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(AboutViewController.swipedLeft))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(AboutViewController.swipedRight))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(AboutViewController.backButtonTapped(_:)))
         swipeLeft.direction = UISwipeGestureRecognizerDirection.left
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
         view.addGestureRecognizer(swipeLeft)
         view.addGestureRecognizer(swipeRight)
+        view.addGestureRecognizer(swipeDown)
 
     }
 
@@ -66,8 +70,6 @@ class AboutViewController: UIViewController {
             self.pageControl.currentPage = 0
         }
     }
-    
-    
     
     //MARK: - Functions
     

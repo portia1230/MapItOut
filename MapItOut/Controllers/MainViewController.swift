@@ -18,7 +18,7 @@ import FirebaseDatabase
 class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate{
     
     //MARK: - Properties
-
+    
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var numberCountLabel: UILabel!
     @IBOutlet weak var pickerUIView: UIView!
@@ -89,7 +89,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
         self.typeLabel.text = defaults.string(forKey: "type")
         self.numberCountLabel.text = defaults.string(forKey: "count")
-
+        
         if self.typeLabel.text == "All items"{
             defaults.set("(" + String(CoreDataHelper.retrieveItems().count) + ")", forKey: "count")
         }
@@ -237,28 +237,29 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         } else {
             self.selectedIndex = filteredItems.count - 1
         }
-            self.selectedItem = filteredItems[selectedIndex]
-            self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
-            self.itemNameLabel.text = filteredItems[selectedIndex].name
-            self.itemTypeLabel.text = filteredItems[selectedIndex].type
-            let contactLocation = CLLocation(latitude: filteredItems[selectedIndex].latitude, longitude: filteredItems[selectedIndex].longitude)
-            let distance = self.myLocation.distance(from: contactLocation)
-            if distance > 1000.0
-            {
-                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
-            } else {
-                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+        self.selectedItem = filteredItems[selectedIndex]
+        self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
+        self.itemNameLabel.text = filteredItems[selectedIndex].name
+        self.itemTypeLabel.text = filteredItems[selectedIndex].type
+        let contactLocation = CLLocation(latitude: filteredItems[selectedIndex].latitude, longitude: filteredItems[selectedIndex].longitude)
+        let distance = self.myLocation.distance(from: contactLocation)
+        if distance > 1000.0
+        {
+            self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
+        } else {
+            self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
         }
         let region = MKCoordinateRegionMake(contactLocation.coordinate , mapView.region.span)
         self.mapView.setRegion(region, animated: true)
     }
     
     func swipeLeft(){
-        if self.selectedIndex != filteredItems.count - 1{
-            self.selectedIndex = selectedIndex + 1
-        } else {
-            self.selectedIndex = 0
-        }
+        if self.detailsButton.isEnabled{
+            if self.selectedIndex != filteredItems.count - 1{
+                self.selectedIndex = selectedIndex + 1
+            } else {
+                self.selectedIndex = 0
+            }
             self.selectedItem = filteredItems[selectedIndex]
             self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
             self.itemNameLabel.text = filteredItems[selectedIndex].name
@@ -270,55 +271,59 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
             } else {
                 self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            }
+            let region = MKCoordinateRegionMake(contactLocation.coordinate , mapView.region.span)
+            self.mapView.setRegion(region, animated: true)
         }
-        let region = MKCoordinateRegionMake(contactLocation.coordinate , mapView.region.span)
-        self.mapView.setRegion(region, animated: true)
     }
     
     func reloadView(){
-        if defaults.string(forKey: "isLoggedIn") == "true"{
-            if defaults.string(forKey: "loadedItems") == "false"{
-                let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
-                self.addChildViewController(popOverVC)
-                popOverVC.view.frame = self.view.frame
-                self.view.addSubview(popOverVC.view)
-                popOverVC.didMove(toParentViewController: self)
-                defaults.set("true", forKey:"loadedItems")
-                
-            }
-        }
-        itemImage.layer.cornerRadius = 35
-        detailsButton.layer.cornerRadius = 15
-        itemImage.clipsToBounds = true
         
-        //fittng the photofann
-        if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
-            let alertController = UIAlertController(title: nil, message:
-                "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
-            let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
-                self.viewDidLoad()
-            })
-            alertController.addAction(cancel)
-            self.present(alertController, animated: true, completion: nil)
-        } else {
-            
-            
-            self.mapView.delegate = self
-            self.itemImage.layer.cornerRadius = 35
+        if self.detailsButton.isEnabled{
+            if defaults.string(forKey: "isLoggedIn") == "true"{
+                if defaults.string(forKey: "loadedItems") == "false"{
+                    let popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "InitalLoadingViewController") as! InitalLoadingViewController
+                    self.addChildViewController(popOverVC)
+                    popOverVC.view.frame = self.view.frame
+                    self.view.addSubview(popOverVC.view)
+                    popOverVC.didMove(toParentViewController: self)
+                    defaults.set("true", forKey:"loadedItems")
+                    
+                }
+            }
+            itemImage.layer.cornerRadius = 35
             detailsButton.layer.cornerRadius = 15
             itemImage.clipsToBounds = true
-            locationManager.delegate = self
-            defaults.set("All items", forKey: "type")
             
-            if defaults.string(forKey: "isLoggedIn") == "true"{
+            //fittng the photofann
+            if (CLLocationManager.authorizationStatus() == .restricted) || (CLLocationManager.authorizationStatus() == .denied)  {
+                let alertController = UIAlertController(title: nil, message:
+                    "We do not have access to your location, please go to Settings/ Privacy/ Location and give us permission", preferredStyle: UIAlertControllerStyle.alert)
+                let cancel = UIAlertAction(title: "I authorized", style: .cancel, handler: { (action) in
+                    self.viewDidLoad()
+                })
+                alertController.addAction(cancel)
+                self.present(alertController, animated: true, completion: nil)
+            } else {
                 
-                authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
-                    guard user == nil else { return }
+                
+                self.mapView.delegate = self
+                self.itemImage.layer.cornerRadius = 35
+                detailsButton.layer.cornerRadius = 15
+                itemImage.clipsToBounds = true
+                locationManager.delegate = self
+                defaults.set("All items", forKey: "type")
+                
+                if defaults.string(forKey: "isLoggedIn") == "true"{
                     
-                    let loginViewController = UIStoryboard.initialViewController(for: .login)
-                    self.view.window?.rootViewController = loginViewController
-                    self.view.window?.makeKeyAndVisible()
-                    defaults.set("false", forKey:"loadedItems")
+                    authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
+                        guard user == nil else { return }
+                        
+                        let loginViewController = UIStoryboard.initialViewController(for: .login)
+                        self.view.window?.rootViewController = loginViewController
+                        self.view.window?.makeKeyAndVisible()
+                        defaults.set("false", forKey:"loadedItems")
+                    }
                 }
             }
         }
@@ -408,7 +413,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
             self.selectedItem = filteredItems[0]
             self.items = CoreDataHelper.retrieveItems()
-            var n = 0
             self.selectedIndex = 0
             let distance = self.myLocation.distance(from: contactLocation)
             self.itemDistanceLabel.backgroundColor = UIColor.clear
@@ -509,7 +513,6 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             let contactLocation = CLLocation(latitude: filteredItems[0].latitude, longitude: filteredItems[0].longitude)
             self.selectedItem = filteredItems[0]
             self.items = CoreDataHelper.retrieveItems()
-            var n = 0
             self.selectedIndex = 0
             let distance = self.myLocation.distance(from: contactLocation)
             self.itemDistanceLabel.backgroundColor = UIColor.clear
@@ -832,6 +835,33 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         popOverVC?.keyOfItem = selectedItem.key!
         popOverVC?.url = selectedItem.url!
         popOverVC?.view.endEditing(true)
+        
+        
+        if self.popOverVC?.email != ""{
+            if let emailURL:URL = URL(string: "mailto:qingfeng1230@gmail.com") {
+                let application:UIApplication = UIApplication.shared
+                if !(application.canOpenURL(emailURL)) {
+                    self.popOverVC?.emailButton.isHidden = true
+                    self.popOverVC?.emailImageView.isHidden = true
+                } else {
+                    self.popOverVC?.emailButton.isHidden = false
+                    self.popOverVC?.emailImageView.isHidden = false
+                }
+            }
+        }
+        
+        if self.popOverVC?.phone != ""{
+            if let emailURL:URL = URL(string: "tel:111") {
+                let application:UIApplication = UIApplication.shared
+                if !(application.canOpenURL(emailURL)) {
+                    self.popOverVC?.phoneButton.isHidden = true
+                    self.popOverVC?.phoneImageView.isHidden = true
+                } else {
+                    self.popOverVC?.phoneButton.isHidden = false
+                    self.popOverVC?.phoneImageView.isHidden = false
+                }
+            }
+        }
         
         self.addChildViewController((self.popOverVC)!)
         popOverVC?.view.frame = self.view.frame

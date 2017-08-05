@@ -291,6 +291,32 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         popOverVC?.url = selectedItem.url!
         popOverVC?.view.endEditing(true)
         
+        if self.popOverVC?.email != ""{
+            if let emailURL:URL = URL(string: "mailto:qingfeng1230@gmail.com") {
+                let application:UIApplication = UIApplication.shared
+                if !(application.canOpenURL(emailURL)) {
+                    self.popOverVC?.emailButton.isHidden = true
+                    self.popOverVC?.emailImageView.isHidden = true
+                } else {
+                    self.popOverVC?.emailButton.isHidden = false
+                    self.popOverVC?.emailImageView.isHidden = false
+                }
+            }
+        }
+        
+        if self.popOverVC?.phone != ""{
+            if let emailURL:URL = URL(string: "tel:111") {
+                let application:UIApplication = UIApplication.shared
+                if !(application.canOpenURL(emailURL)) {
+                    self.popOverVC?.phoneButton.isHidden = true
+                    self.popOverVC?.phoneImageView.isHidden = true
+                } else {
+                    self.popOverVC?.phoneButton.isHidden = false
+                    self.popOverVC?.phoneImageView.isHidden = false
+                }
+            }
+        }
+        
         self.addChildViewController((self.popOverVC)!)
         popOverVC?.view.frame = self.view.frame
         self.backgroundView.isHidden = false

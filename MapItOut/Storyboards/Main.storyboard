@@ -344,10 +344,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APm-fK-a3O">
-                                <rect key="frame" x="162" y="50" width="50" height="30"/>
+                                <rect key="frame" x="162" y="50" width="40" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="Fww-Ae-dJz"/>
-                                    <constraint firstAttribute="height" constant="30" id="Wba-IJ-n47"/>
+                                    <constraint firstAttribute="width" constant="40" id="Fww-Ae-dJz"/>
+                                    <constraint firstAttribute="height" constant="20" id="Wba-IJ-n47"/>
                                 </constraints>
                                 <state key="normal" image="whiteArrow.png">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -464,10 +464,10 @@
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="W7Q-ee-uWH" firstAttribute="top" secondItem="APm-fK-a3O" secondAttribute="bottom" constant="10" id="5lo-vK-jD8"/>
+                            <constraint firstItem="W7Q-ee-uWH" firstAttribute="top" secondItem="APm-fK-a3O" secondAttribute="bottom" constant="20" id="5lo-vK-jD8"/>
                             <constraint firstItem="OMD-xb-Drs" firstAttribute="top" secondItem="1Vq-dX-77f" secondAttribute="bottom" id="Ssa-L8-BX9"/>
                             <constraint firstItem="1Vq-dX-77f" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="WAv-sM-ajJ"/>
-                            <constraint firstItem="APm-fK-a3O" firstAttribute="centerX" secondItem="eVe-So-qd9" secondAttribute="centerX" id="XTX-xH-oIY"/>
+                            <constraint firstItem="APm-fK-a3O" firstAttribute="centerX" secondItem="eVe-So-qd9" secondAttribute="centerX" constant="-5.5" id="XTX-xH-oIY"/>
                             <constraint firstItem="OMD-xb-Drs" firstAttribute="top" secondItem="W7Q-ee-uWH" secondAttribute="bottom" id="b5Y-Ll-zT3"/>
                             <constraint firstAttribute="trailing" secondItem="W7Q-ee-uWH" secondAttribute="trailing" id="fwN-wh-vws"/>
                             <constraint firstItem="APm-fK-a3O" firstAttribute="top" secondItem="Nbw-KQ-iLJ" secondAttribute="bottom" constant="30" id="keX-Pp-8GJ"/>
@@ -662,10 +662,10 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kA-mg-zvm">
-                                <rect key="frame" x="162" y="150" width="50" height="30"/>
+                                <rect key="frame" x="167" y="150" width="40" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="QPo-AO-9wm"/>
-                                    <constraint firstAttribute="width" constant="50" id="wSb-4k-rK1"/>
+                                    <constraint firstAttribute="height" constant="20" id="QPo-AO-9wm"/>
+                                    <constraint firstAttribute="width" constant="40" id="wSb-4k-rK1"/>
                                 </constraints>
                                 <state key="normal" image="whiteArrow.png"/>
                                 <state key="selected" image="grayArrow.png"/>
@@ -675,7 +675,7 @@
                                 </connections>
                             </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="axm-if-fpb">
-                                <rect key="frame" x="26" y="400" width="323" height="37"/>
+                                <rect key="frame" x="26" y="390" width="323" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="2I5-tr-fzq"/>
                                 </constraints>
@@ -1056,11 +1056,11 @@
                                     <action selector="undoButtonTapped:" destination="dmp-N2-oVo" eventType="touchUpInside" id="OiR-ED-nnG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uub-Xh-WrK">
-                                <rect key="frame" x="163" y="50" width="50" height="30"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uub-Xh-WrK">
+                                <rect key="frame" x="168" y="60" width="40" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="8LB-Bl-IZN"/>
-                                    <constraint firstAttribute="width" constant="50" id="kMW-Tm-7eW"/>
+                                    <constraint firstAttribute="height" constant="20" id="8LB-Bl-IZN"/>
+                                    <constraint firstAttribute="width" constant="40" id="kMW-Tm-7eW"/>
                                 </constraints>
                                 <state key="normal" image="whiteArrow.png"/>
                                 <state key="selected" image="grayArrow.png"/>
@@ -1079,7 +1079,7 @@
                             <constraint firstItem="Cmk-SS-nsi" firstAttribute="top" secondItem="vF5-Bn-lJz" secondAttribute="bottom" constant="70" id="IBb-jB-Cui"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BH5-KS-zal" secondAttribute="trailing" constant="10" id="R2u-yb-Cik"/>
                             <constraint firstItem="BH5-KS-zal" firstAttribute="top" secondItem="vF5-Bn-lJz" secondAttribute="bottom" constant="10" id="h1q-26-0Ev"/>
-                            <constraint firstItem="uub-Xh-WrK" firstAttribute="top" secondItem="vF5-Bn-lJz" secondAttribute="bottom" constant="30" id="if7-wP-4CI"/>
+                            <constraint firstItem="uub-Xh-WrK" firstAttribute="top" secondItem="vF5-Bn-lJz" secondAttribute="bottom" constant="40" id="if7-wP-4CI"/>
                             <constraint firstItem="uub-Xh-WrK" firstAttribute="centerX" secondItem="V90-tU-nrb" secondAttribute="centerX" id="oFv-xZ-Jc9"/>
                         </constraints>
                     </view>
@@ -1569,8 +1569,8 @@
                                 <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                             </searchBar>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bxn-bJ-CqA">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bxn-bJ-CqA">
+                                <rect key="frame" x="0.0" y="187" width="375" height="480"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="C2J-SO-r71">
@@ -1836,9 +1836,9 @@
         <image name="arrowGreen.png" width="550" height="550"/>
         <image name="detailsButton" width="400" height="150"/>
         <image name="findContact.png" width="250" height="250"/>
-        <image name="grayArrow.png" width="668" height="405"/>
+        <image name="grayArrow.png" width="115" height="64"/>
         <image name="plusImage.png" width="202" height="202"/>
-        <image name="whiteArrow.png" width="282" height="171"/>
+        <image name="whiteArrow.png" width="115" height="64"/>
         <image name="whiteGearImage.png" width="198" height="200"/>
     </resources>
     <color key="tintColor" red="0.29185739160000002" green="0.34405413270000001" blue="0.69811654089999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
