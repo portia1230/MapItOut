@@ -281,7 +281,11 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         popOverVC?.organization = selectedItem.organization!
         popOverVC?.address = selectedItem.locationDescription!
         popOverVC?.type = selectedItem.type!
-        popOverVC?.contactPhoto = (selectedItem.image as? UIImage)!
+        popOverVC?.contactPhoto = (selectedItem.image as? UIImage) ?? #imageLiteral(resourceName: "noContactImage.png")
+        if selectedItem.image == nil{
+            selectedItem.image = #imageLiteral(resourceName: "noContactImage.png")
+            CoreDataHelper.saveItem()
+        }
         popOverVC?.email = selectedItem.email!
         popOverVC?.phone = selectedItem.phone!
         

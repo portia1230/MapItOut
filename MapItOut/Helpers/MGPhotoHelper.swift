@@ -12,14 +12,15 @@ class MGPhotoHelper: NSObject {
     //MARK: - Properties
     
     
-    
+    var view : UIView?
     var completionHandler :((UIImage) -> Void)?
     
     //MARK: - Helper Methods
     
     func presentActionSheet ( from viewController : UIViewController){
         let alertController = UIAlertController(title: nil, message: "Where do you want to get a picture from?", preferredStyle: .actionSheet)
-
+        
+        
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let capturePhotoAction = UIAlertAction(title: "Take Photo", style: .default, handler: { [unowned self] action in
                 self.presentImagePickerController(with: .camera, from: viewController)
@@ -40,11 +41,18 @@ class MGPhotoHelper: NSObject {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
+        
+        let popOver = alertController.popoverPresentationController
+        popOver?.sourceView  = UIView(frame:CGRect(x: 0, y: 0, width: 40, height: 20))
+        popOver?.sourceRect = (popOver?.sourceView?.bounds)!
+        popOver?.permittedArrowDirections = UIPopoverArrowDirection.left
+        
         viewController.present(alertController, animated: true)
     }
     
     func presentImagePickerController(with sourceType: UIImagePickerControllerSourceType, from viewController: UIViewController) {
         let imagePickerController = UIImagePickerController()
+        
         imagePickerController.sourceType = sourceType
         imagePickerController.delegate = self
         viewController.present(imagePickerController, animated: true)

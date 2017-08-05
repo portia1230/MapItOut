@@ -232,25 +232,27 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     func swipeRight(){
-        if self.selectedIndex != 0{
-            self.selectedIndex = selectedIndex - 1
-        } else {
-            self.selectedIndex = filteredItems.count - 1
+        if self.detailsButton.isEnabled{
+            if self.selectedIndex != 0{
+                self.selectedIndex = selectedIndex - 1
+            } else {
+                self.selectedIndex = filteredItems.count - 1
+            }
+            self.selectedItem = filteredItems[selectedIndex]
+            self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
+            self.itemNameLabel.text = filteredItems[selectedIndex].name
+            self.itemTypeLabel.text = filteredItems[selectedIndex].type
+            let contactLocation = CLLocation(latitude: filteredItems[selectedIndex].latitude, longitude: filteredItems[selectedIndex].longitude)
+            let distance = self.myLocation.distance(from: contactLocation)
+            if distance > 1000.0
+            {
+                self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
+            } else {
+                self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
+            }
+            let region = MKCoordinateRegionMake(contactLocation.coordinate , mapView.region.span)
+            self.mapView.setRegion(region, animated: true)
         }
-        self.selectedItem = filteredItems[selectedIndex]
-        self.itemImage.image = filteredItems[selectedIndex].image as? UIImage
-        self.itemNameLabel.text = filteredItems[selectedIndex].name
-        self.itemTypeLabel.text = filteredItems[selectedIndex].type
-        let contactLocation = CLLocation(latitude: filteredItems[selectedIndex].latitude, longitude: filteredItems[selectedIndex].longitude)
-        let distance = self.myLocation.distance(from: contactLocation)
-        if distance > 1000.0
-        {
-            self.itemDistanceLabel.text = " \(Int(distance/1000)) KM away"
-        } else {
-            self.itemDistanceLabel.text = " \(Int((distance * 1000).rounded())/1000) M away"
-        }
-        let region = MKCoordinateRegionMake(contactLocation.coordinate , mapView.region.span)
-        self.mapView.setRegion(region, animated: true)
     }
     
     func swipeLeft(){
