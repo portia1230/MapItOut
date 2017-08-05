@@ -70,6 +70,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             searchCompleter.queryFragment = searchText
         } else {
             self.searchTableView.isHidden = true
+            
         }
     }
     
@@ -112,6 +113,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let cell = tableView.cellForRow(at: indexPath) as! LocationTableViewCell
         self.locationTextField.text = cell.locationLabel.text! + " " + cell.subLabel.text!
         self.contactLocationDescription = cell.locationLabel.text! + " " + cell.subLabel.text!
+        self.originalLocation = cell.locationLabel.text! + " " + cell.subLabel.text!
         //self.searchResults[indexPath.row].
         
         let searchRequest = MKLocalSearchRequest(completion: self.searchResults[indexPath.row])
@@ -147,7 +149,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         pickerView = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 214))
         //pickerView.backgroundColor = .white
         //pickerView.showsSelectionIndicator = true
-        
+        locationTextField.autocorrectionType = .no
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
@@ -237,6 +239,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             self.activityView.isHidden = true
             
             if self.contactLocationDescription != ""{
+                self.originalLocation = contactLocationDescription
                 self.locationTextField.text = self.contactLocationDescription
                 getCoordinate(addressString: self.contactLocationDescription, completionHandler: { (location, error) in
                     let dispatchGroup = DispatchGroup()
@@ -256,7 +259,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     dispatchGroup.notify(queue: .main, execute: {
                     })
                 })
-            }  else {
+            } else {
                 let coordinate = getLocation(manager: locationManager)
                 self.location = coordinate
                 reverseGeocoding(latitude: coordinate.latitude, longitude: coordinate.longitude)
@@ -272,6 +275,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 locationMapView.setRegion(region, animated: true)
             }
         }
+        self.searchTableView.isHidden = true
     }
     
     
@@ -332,18 +336,21 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         if self.locationTextField.text == ""{
             self.locationTextField.text = self.originalLocation
             self.searchTableView.isHidden = true
+        } else {
+            self.searchTableView.isHidden = true
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchTableView.isHidden = true
-        searchBar.text = self.originalLocation
-        
+        self.locationTextField.text = self.originalLocation
         self.dismissKeyboard()
+        self.searchTableView.isHidden = true
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.originalLocation = self.locationTextField.text!
+        if self.locationTextField.text != ""{
+            self.originalLocation = self.locationTextField.text!
+        }
         self.locationTextField.text = ""
     }
     
@@ -351,6 +358,41 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         if searchBar.text == ""{
             self.searchTableView.isHidden = true
             searchBar.text = self.originalLocation
+            self.locationMapView.removeAnnotations(self.locationMapView.annotations)
+            let anno = MKPointAnnotation()
+            anno.coordinate.latitude = self.latitude
+            anno.coordinate.longitude = self.longitude
+            self.locationMapView.addAnnotation(anno)
+            let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
+            let span = MKCoordinateSpanMake(0.1, 0.1)
+            let region = MKCoordinateRegionMake(coordinate, span)
+            self.locationMapView.setRegion(region, animated: true)
+            self.location = coordinate
+        }
+        if self.searchResults.count == 0{
+            self.locationTextField.text = self.originalLocation
+            self.searchTableView.isHidden = true
+        } else {
+            self.locationTextField.text = self.searchResults[0].title + " " + self.searchResults[0].subtitle
+            self.searchTableView.isHidden = true
+            
+            let searchRequest = MKLocalSearchRequest(completion: self.searchResults[0])
+            let search = MKLocalSearch(request: searchRequest)
+            search.start { (response, error) in
+                let coordinate = response?.mapItems[0].placemark.coordinate
+                self.locationMapView.removeAnnotations(self.locationMapView.annotations)
+                let anno = MKPointAnnotation()
+                anno.coordinate = CLLocationCoordinate2DMake((coordinate?.latitude)!, (coordinate?.longitude)!)
+                let span = MKCoordinateSpanMake(0.1, 0.1)
+                self.location = coordinate
+                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                self.locationMapView.setRegion(region, animated: true)
+                self.locationMapView.addAnnotation(anno)
+                self.longitude = anno.coordinate.longitude
+                self.latitude = anno.coordinate.latitude
+                self.originalLocation = self.locationTextField.text!
+            }
+            
         }
         self.dismissKeyboard()
     }
@@ -415,8 +457,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     @IBAction func addContactButtonTapped(_ sender: Any) {
-        if self.nameTextField.text != "",
-            self.typeTextField.text != "", self.searchTableView.isHidden == true{
+        
+        if (self.nameTextField.text != "" ) && (
+            self.typeTextField.text != "") && (self.searchTableView.isHidden == true) && ( self.locationTextField.isFirstResponder == false){
             self.dismissKeyboard()
             self.searchTableView.isHidden = true
             self.loadingView.isHidden = false
@@ -482,7 +525,13 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             let alertController = UIAlertController(title: "", message:
                 "Did you put in a name, location and type?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
-            self.dismissKeyboard()
+            if self.locationTextField.isFirstResponder {
+                self.dismissKeyboard()
+                self.locationTextField.becomeFirstResponder()
+            } else {
+                self.dismissKeyboard()
+            }
+            
             self.present(alertController, animated: true, completion: nil)
         }
         

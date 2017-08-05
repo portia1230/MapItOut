@@ -98,16 +98,52 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.dismissKeyboard()
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.originalLocation = searchBar.text!
+        if self.searchBar.text != ""{
+            self.originalLocation = self.searchBar.text!
+        }
         self.searchBar.text = ""
         self.searchBar.showsCancelButton = true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = false
         if searchBar.text == ""{
             self.resultTableView.isHidden = true
             searchBar.text = self.originalLocation
+            self.contactMapView.removeAnnotations(self.contactMapView.annotations)
+            let anno = MKPointAnnotation()
+            anno.coordinate.latitude = self.latitude
+            anno.coordinate.longitude = self.longitude
+            self.contactMapView.addAnnotation(anno)
+            let coordinate = CLLocationCoordinate2DMake(self.latitude, self.longitude)
+            let span = MKCoordinateSpanMake(0.1, 0.1)
+            let region = MKCoordinateRegionMake(coordinate, span)
+            self.contactMapView.setRegion(region, animated: true)
+            self.location = coordinate
+        }
+        if self.searchResults.count == 0{
+            self.searchBar.text = self.originalLocation
+            self.resultTableView.isHidden = true
+        } else {
+            self.searchBar.text = self.searchResults[0].title + " " + self.searchResults[0].subtitle
+            self.resultTableView.isHidden = true
+            
+            let searchRequest = MKLocalSearchRequest(completion: self.searchResults[0])
+            let search = MKLocalSearch(request: searchRequest)
+            search.start { (response, error) in
+                let coordinate = response?.mapItems[0].placemark.coordinate
+                self.contactMapView.removeAnnotations(self.contactMapView.annotations)
+                let anno = MKPointAnnotation()
+                anno.coordinate = CLLocationCoordinate2DMake((coordinate?.latitude)!, (coordinate?.longitude)!)
+                let span = MKCoordinateSpanMake(0.1, 0.1)
+                self.location = coordinate!
+                let region = MKCoordinateRegion(center: anno.coordinate, span: span)
+                self.contactMapView.setRegion(region, animated: true)
+                self.contactMapView.addAnnotation(anno)
+                self.longitude = anno.coordinate.longitude
+                self.latitude = anno.coordinate.latitude
+                self.originalLocation = self.searchBar.text!
+            }
+            
         }
         self.dismissKeyboard()
     }
@@ -172,6 +208,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             self.contactMapView.addAnnotation(anno)
             self.longitude = (coordinate?.longitude)!
             self.latitude = (coordinate?.latitude)!
+            self.resultTableView.isHidden = true
             
         }
         tableView.isHidden = true
@@ -282,6 +319,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.startTimer), userInfo: nil, repeats: true)
         
+        self.resultTableView.isHidden = true
         self.undoButton.setTitleColor(UIColor.clear, for: .normal)
         self.undoButton.layer.cornerRadius = 30
         self.itemImage.layer.cornerRadius = 70
@@ -495,18 +533,22 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     func dismissView(){
         if (UIApplication.shared.isKeyboardPresented)||(self.resultTableView.isHidden == false){
             self.view.endEditing(true)
+            self.dismissKeyboard()
             if (self.searchBar.text == "") || (self.resultTableView.isHidden == false){
                 self.searchBar.text = OOriginalLocation
                 self.resultTableView.isHidden = true
             }
-            if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( originalLocation != OOriginalLocation){
+            if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( searchBar.text != OOriginalLocation){
                 self.undoButton.isEnabled = true
                 self.undoButton.setTitleColor(UIColor.white, for: .normal)
             } else {
                 self.undoButton.isEnabled = false
                 self.undoButton.setTitleColor(UIColor.clear, for: .normal)
             }
+            self.dismissButton.isEnabled = true
+            self.view.isUserInteractionEnabled = true
             
+            searchBarCancelButtonClicked(searchBar)
         } else {
             self.isChanged = false
             if self.undoButton.isEnabled == true {
@@ -754,7 +796,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 }
             }
         }
-        if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( originalLocation != OOriginalLocation){
+        if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( searchBar.text != OOriginalLocation){
             self.undoButton.isEnabled = true
             self.undoButton.setTitleColor(UIColor.white, for: .normal)
         } else {
