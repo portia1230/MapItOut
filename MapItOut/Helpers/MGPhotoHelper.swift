@@ -19,7 +19,9 @@ class MGPhotoHelper: NSObject {
     
     func presentActionSheet ( from viewController : UIViewController){
         let alertController = UIAlertController(title: nil, message: "Where do you want to get a picture from?", preferredStyle: .actionSheet)
-        
+        let defaultImageAction = UIAlertAction(title: "Use default image", style: .default) { (alert) in
+            self.completionHandler?(#imageLiteral(resourceName: "noContactImage.png"))
+        }
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let capturePhotoAction = UIAlertAction(title: "Take Photo", style: .default, handler: { [unowned self] action in
@@ -36,8 +38,7 @@ class MGPhotoHelper: NSObject {
             
             alertController.addAction(uploadAction)
         }
-
-
+        alertController.addAction(defaultImageAction)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         

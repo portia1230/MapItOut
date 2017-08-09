@@ -229,6 +229,11 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                     self.filteredItems.append(item)
                 }
             }
+            if self.filteredItems.count == 0 {
+                self.typeTextField.text = "All items"
+                self.filteredItems = self.sortedItems
+                defaults.set("All items", forKey: "type")
+            }
         }
         self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
         self.tableView.reloadData()
@@ -350,6 +355,12 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
             self.sortedItems = LocationService.rankDistance(items: self.items)
             self.filteredItems.remove(at: indexPath.row)
             self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
+            if self.filteredItems.count == 0 {
+                self.typeTextField.text = "All items"
+                self.filteredItems = self.sortedItems
+                defaults.set("All items", forKey: "type")
+                self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
+            }
             self.tableView.reloadData()
         }
     }

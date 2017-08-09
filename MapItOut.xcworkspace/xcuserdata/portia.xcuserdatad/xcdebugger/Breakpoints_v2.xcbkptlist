@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523641145.146481"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523641145.146481"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523641145.146481"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "411"
-            endingLineNumber = "411"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "uploadPhotoButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523591426.113358"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "609"
-            endingLineNumber = "609"
+            startingLineNumber = "614"
+            endingLineNumber = "614"
             landmarkName = "mapView(_:didSelect:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523591426.113358"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "608"
-            endingLineNumber = "608"
+            startingLineNumber = "613"
+            endingLineNumber = "613"
             landmarkName = "mapView(_:didSelect:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523591426.113358"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
             landmarkName = "filterResults(type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523591426.113358"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "481"
-            endingLineNumber = "481"
+            startingLineNumber = "486"
+            endingLineNumber = "486"
             landmarkName = "filterResults(type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523611196.873195"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "488"
-            endingLineNumber = "488"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "mapButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523611196.873195"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "489"
-            endingLineNumber = "489"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "mapButtonTapped(_:)"
             landmarkType = "7">
             <Locations>
@@ -410,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523611196.873195"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
             landmarkName = "mapButtonTapped(_:)"
             landmarkType = "7">
             <Locations>
@@ -538,11 +538,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523641145.146481"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -554,11 +554,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523604926.27385"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "826"
-            endingLineNumber = "826"
+            startingLineNumber = "831"
+            endingLineNumber = "831"
             landmarkName = "detailsButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -570,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "605"
-            endingLineNumber = "605"
+            startingLineNumber = "614"
+            endingLineNumber = "614"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -586,11 +586,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "593"
-            endingLineNumber = "593"
+            startingLineNumber = "601"
+            endingLineNumber = "601"
             landmarkName = "dismissView()"
             landmarkType = "7">
             <Locations>
@@ -634,11 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "589"
-            endingLineNumber = "589"
+            startingLineNumber = "597"
+            endingLineNumber = "597"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -682,11 +682,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
+            startingLineNumber = "505"
+            endingLineNumber = "505"
             landmarkName = "addContactButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -698,7 +698,39 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
+            timestampString = "523908433.990629"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "509"
+            endingLineNumber = "509"
+            landmarkName = "addContactButtonTapped(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapItOut/Controllers/AddEntryViewController.swift"
+            timestampString = "523908433.990629"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
+            landmarkName = "addContactButtonTapped(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapItOut/Controllers/AddEntryViewController.swift"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "510"
@@ -710,47 +742,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
-            landmarkName = "addContactButtonTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "511"
-            endingLineNumber = "511"
-            landmarkName = "addContactButtonTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523591426.113358"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "705"
-            endingLineNumber = "705"
+            startingLineNumber = "710"
+            endingLineNumber = "710"
             landmarkName = "settingButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -762,11 +762,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "513"
-            endingLineNumber = "513"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
             landmarkName = "addContactButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -858,11 +858,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "864"
-            endingLineNumber = "864"
+            startingLineNumber = "889"
+            endingLineNumber = "889"
             landmarkName = "textFieldDidEndEditing(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -874,11 +874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "865"
-            endingLineNumber = "865"
+            startingLineNumber = "890"
+            endingLineNumber = "890"
             landmarkName = "textFieldDidEndEditing(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -890,44 +890,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "869"
-            endingLineNumber = "869"
+            startingLineNumber = "894"
+            endingLineNumber = "894"
             landmarkName = "textFieldDidEndEditing(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523644437.212414"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
-            landmarkName = "phoneButtonTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523644437.212414"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "465"
-            endingLineNumber = "465"
-            landmarkName = "phoneButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -938,11 +906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523604926.27385"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "866"
-            endingLineNumber = "866"
+            startingLineNumber = "871"
+            endingLineNumber = "871"
             landmarkName = "detailsButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -954,11 +922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645128.615445"
+            timestampString = "523941760.829004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "543"
-            endingLineNumber = "543"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -970,11 +938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523565176.331508"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
             <Locations>
@@ -1018,11 +986,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/ContactListController.swift"
-            timestampString = "523611196.873195"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1050,11 +1018,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523591426.113358"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "618"
-            endingLineNumber = "618"
+            startingLineNumber = "623"
+            endingLineNumber = "623"
             landmarkName = "mapView(_:didSelect:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1114,11 +1082,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "650"
-            endingLineNumber = "650"
+            startingLineNumber = "661"
+            endingLineNumber = "661"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1130,11 +1098,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523941820.432475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "555"
-            endingLineNumber = "555"
+            startingLineNumber = "559"
+            endingLineNumber = "559"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1146,11 +1114,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "769"
-            endingLineNumber = "769"
+            startingLineNumber = "790"
+            endingLineNumber = "790"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1162,11 +1130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1178,11 +1146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "698"
-            endingLineNumber = "698"
+            startingLineNumber = "711"
+            endingLineNumber = "711"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1194,11 +1162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523942639.928453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "693"
-            endingLineNumber = "693"
+            startingLineNumber = "706"
+            endingLineNumber = "706"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1210,11 +1178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523613422.054196"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "674"
-            endingLineNumber = "674"
+            startingLineNumber = "679"
+            endingLineNumber = "679"
             landmarkName = "settingButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1226,11 +1194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/MainViewController.swift"
-            timestampString = "523613426.18146"
+            timestampString = "523908811.944647"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "677"
-            endingLineNumber = "677"
+            startingLineNumber = "682"
+            endingLineNumber = "682"
             landmarkName = "settingButtonTapped(_:)"
             landmarkType = "7">
             <Locations>
@@ -1274,11 +1242,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "searchBarCancelButtonClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1306,11 +1274,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645233.234365"
+            timestampString = "523941760.829004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "549"
-            endingLineNumber = "549"
+            startingLineNumber = "553"
+            endingLineNumber = "553"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1322,11 +1290,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523644888.071488"
+            timestampString = "523941760.829004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "534"
-            endingLineNumber = "534"
+            startingLineNumber = "538"
+            endingLineNumber = "538"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1338,11 +1306,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/PopUpViewController.swift"
-            timestampString = "523645128.615445"
+            timestampString = "523941760.829004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
+            startingLineNumber = "545"
+            endingLineNumber = "545"
             landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1354,11 +1322,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
             landmarkName = "addContactButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1370,12 +1338,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MapItOut/Controllers/AddEntryViewController.swift"
-            timestampString = "523647011.578554"
+            timestampString = "523908433.990629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "addContactButtonTapped(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapItOut/Controllers/PopUpViewController.swift"
+            timestampString = "523941878.193468"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MapItOut/Controllers/PopUpViewController.swift"
+            timestampString = "523942639.928453"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
+            landmarkName = "dismissView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

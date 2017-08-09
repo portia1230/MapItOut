@@ -70,7 +70,6 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             searchCompleter.queryFragment = searchText
         } else {
             self.searchTableView.isHidden = true
-            
         }
     }
     
@@ -511,11 +510,23 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     ItemService.addEntry(entry: entry)
                     newItem.url = entry.imageURL
                     CoreDataHelper.saveItem()
+                    var count = defaults.string(forKey: "count")
+                    count = count?.replacingOccurrences(of: "(", with: "")
+                    count = count?.replacingOccurrences(of: ")", with: "")
+                    let number = Int(count!)
+                    defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
+
                     self.dismiss(animated: true, completion: {
                         
                     })
                 }
             } else {
+                
+                var count = defaults.string(forKey: "count")
+                count = count?.replacingOccurrences(of: "(", with: "")
+                count = count?.replacingOccurrences(of: ")", with: "")
+                let number = Int(count!)
+                defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
                 self.dismiss(animated: true, completion: {
                     
                 })
@@ -523,7 +534,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             
         } else {
             let alertController = UIAlertController(title: "", message:
-                "Did you put in a name, location and type?", preferredStyle: UIAlertControllerStyle.alert)
+                "Did you put in a name, location and category?", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "No?", style: UIAlertActionStyle.default,handler: nil))
             if self.locationTextField.isFirstResponder {
                 self.dismissKeyboard()
@@ -571,7 +582,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         typeTextField.text = pickOption[row]
-        
+        self.type = pickOption[row]
     }
     
     //MARK: - Timer

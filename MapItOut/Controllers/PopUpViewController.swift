@@ -460,11 +460,21 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     }
     
     @IBAction func phoneButtonTapped(_ sender: Any) {
-        if let phoneCallURL:URL = URL(string: "tel:\(phoneTextField.text!)") {
+        var string = phoneTextField.text?.replacingOccurrences(of: "(", with: "")
+        string = string?.replacingOccurrences(of: ")", with: "")
+        string = string?.replacingOccurrences(of: "-", with: "")
+        string = string?.components(separatedBy: .whitespacesAndNewlines).joined()
+        if let phoneCallURL:URL = URL(string: "tel:\(string!))") {
             let application:UIApplication = UIApplication.shared
             if (application.canOpenURL(phoneCallURL)) {
                     application.open(phoneCallURL, options: [:], completionHandler: nil)
             }
+        } else {
+            let alert = UIAlertController(title: "An error occurred", message: nil, preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: {
+            })
         }
     }
     
@@ -487,19 +497,20 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         CoreDataHelper.deleteItems(item: self.item)
         
-        self.parent?.viewWillAppear(true)
-        self.parent?.viewDidAppear(true)
-        
         if defaults.string(forKey: "isLoggedIn") == "true"{
             let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\(self.keyOfItem).jpg")
             imageRef.delete(completion: { (error) in
                 ItemService.deleteEntry(key: self.keyOfItem)
                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.parent?.viewWillAppear(true)
+                    self.parent?.viewDidAppear(true)
                     self.view.removeFromSuperview()
                 }, completion: nil)
             })
         } else {
             UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                self.parent?.viewWillAppear(true)
+                self.parent?.viewDidAppear(true)
                 self.view.removeFromSuperview()
             }, completion: nil)
         }
@@ -514,15 +525,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             self.item.image = image
             self.isPhotoUpdated = true
             self.contactPhoto = image
-            if defaults.string(forKey: "isLoggedIn") == "true"{
-                let imageRef = Storage.storage().reference().child("images/items/\(User.currentUser.uid)/\((self.item.key)!).jpg")
-                StorageService.uploadHighImage(image, at: imageRef) { (downloadURL) in
-                    guard let downloadURL = downloadURL else {
-                        return
-                    }
-                    self.item.url = downloadURL.absoluteString
-                }
-            }
+            self.undoButton.isEnabled = true
+            self.undoButton.setTitleColor(.white, for: .normal)
         }
     }
     
@@ -551,8 +555,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             searchBarCancelButtonClicked(searchBar)
         } else {
             self.isChanged = false
+            self.isPhotoUpdated = false
             if self.undoButton.isEnabled == true {
-                
+                self.undoButton.isEnabled = false
+                self.undoButton.setTitleColor(.clear, for: .normal)
+                self.dismissButton.isEnabled = false
+                self.view.isUserInteractionEnabled = false
                 if self.parent is MainViewController{
                     
                     let parent = self.parent as! MainViewController
@@ -591,11 +599,12 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 if self.view.superview != nil{
                                     parent.backgroundView.isHidden = true
                                     parent.view.isUserInteractionEnabled = true
-                                    
                                     UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseOut, animations: {
                                         self.view.frame.origin.y = self.view.frame.height
                                     }, completion: { (bool) -> Void in
                                         self.view.removeFromSuperview()
+                                        self.dismissButton.isEnabled = true
+                                        self.view.isUserInteractionEnabled = true
                                     })
                                 }
                             }
@@ -627,6 +636,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                     self.view.frame.origin.y = self.view.frame.height
                                 }, completion: { (bool) -> Void in
                                     self.view.removeFromSuperview()
+                                    self.dismissButton.isEnabled = true
+                                    self.view.isUserInteractionEnabled = true
                                 })
                             }
                         }
@@ -656,6 +667,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             }, completion: { (bool) -> Void in
                                 parent.view.isUserInteractionEnabled = true
                                 self.view.removeFromSuperview()
+                                self.dismissButton.isEnabled = true
+                                self.view.isUserInteractionEnabled = true
                             })
                         }
 
@@ -698,6 +711,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 if self.view.superview != nil{
                                     UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                         self.view.removeFromSuperview()
+                                        self.dismissButton.isEnabled = true
+                                        self.view.isUserInteractionEnabled = true
                                     }, completion: nil)
                                 }
                             }
@@ -724,6 +739,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             if self.view.superview != nil{
                                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                     self.view.removeFromSuperview()
+                                    self.dismissButton.isEnabled = true
+                                    self.view.isUserInteractionEnabled = true
                                 }, completion: nil)
                             }
                         }
@@ -751,6 +768,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                     self.view.frame.origin.y = self.view.frame.height
                                 }, completion: { (bool) -> Void in
                                     self.view.removeFromSuperview()
+                                    self.dismissButton.isEnabled = true
+                                    self.view.isUserInteractionEnabled = true
                                 })
                             }
                         } else {
@@ -758,6 +777,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             if self.view.superview != nil{
                                 UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                     self.view.removeFromSuperview()
+                                    self.dismissButton.isEnabled = true
+                                    self.view.isUserInteractionEnabled = true
                                 }, completion: nil)
                             }
                         }
@@ -777,6 +798,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         self.view.frame.origin.y = self.view.frame.height
                     }, completion: { (bool) -> Void in
                         self.view.removeFromSuperview()
+                        self.dismissButton.isEnabled = true
+                        self.view.isUserInteractionEnabled = true
                     })
                 }
                 } else {
@@ -790,6 +813,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                             parent.backgroundView.isHidden = true
                             self.view.removeFromSuperview()
+                            self.dismissButton.isEnabled = true
+                            self.view.isUserInteractionEnabled = true
                         }, completion: nil)
                     }
                     
@@ -931,6 +956,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         typeTextField.text = pickOption[row]
+        self.type = pickOption[row]
     }
     
     //MARK: - Reverse Geocoding
