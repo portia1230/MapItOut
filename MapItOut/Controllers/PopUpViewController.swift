@@ -234,7 +234,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PopUpViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let addTypeButton = UIBarButtonItem(title: "Add type", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PopUpViewController.addtype))
+        let addTypeButton = UIBarButtonItem(title: "Add category", style: UIBarButtonItemStyle.plain, target: self, action: #selector(PopUpViewController.addtype))
         
         toolBar.setItems([addTypeButton,spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
