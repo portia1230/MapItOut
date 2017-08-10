@@ -101,6 +101,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (accessGranted, error) -> Void in
             })
         }
+        self.items = CoreDataHelper.retrieveItems()
+        for item in self.items{
+            if item.contactKey == nil{
+                item.contactKey = ""
+                CoreDataHelper.saveItem()
+                if defaults.string(forKey: "isLoggedIn") == "true"{
+                item.contactKey = ""
+                CoreDataHelper.saveItem()
+            }
+        }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,20 +141,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.mapView.userLocation.subtitle = ""
             self.mapView.userLocation.title = ""
             
-            self.items = CoreDataHelper.retrieveItems()
-            
-            for item in self.items{
-                if item.contactKey == nil{
-                    item.contactKey = ""
-                    CoreDataHelper.saveItem()
-                    if defaults.string(forKey: "isLoggedIn") == "true"{
-                        let entry = Entry(name: item.name!, organization: item.organization!, longitude: item.longitude, latitude: item.latitude, type: item.type!, imageURL: item.url!, phone: item.phone!, email: item.email!, key: item.key!, locationDescription: item.locationDescription!, contactKey: "")
-                     ItemService.editEntry(entry: entry)
-                    }
-                }
-            }
-            
-            self.sortedItems = LocationService.rankDistance(items: items)
+            self.sortedItems = LocationService.rankDistance(items: self.items)
             filterResults(type: self.typeLabel.text!)
             
             let location = CLLocation(latitude: LocationService.getLocation(manager: locationManager).latitude, longitude: LocationService.getLocation(manager: locationManager).longitude)
@@ -855,6 +853,8 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         popOverVC?.keyOfItem = selectedItem.key!
         popOverVC?.url = selectedItem.url!
         popOverVC?.view.endEditing(true)
+        popOverVC?.isChanged = false
+        popOverVC?.isPhotoUpdated = false
         //popOverVC?.typeTextField.resignFirstResponder()
         
         

@@ -298,6 +298,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         popOverVC?.longitude = selectedItem.longitude
         popOverVC?.keyOfItem = selectedItem.key!
         popOverVC?.url = selectedItem.url!
+        popOverVC?.isChanged = false
+        popOverVC?.isPhotoUpdated = false
         popOverVC?.view.endEditing(true)
         
         if self.popOverVC?.email != ""{

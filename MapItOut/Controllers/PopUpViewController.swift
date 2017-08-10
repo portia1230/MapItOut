@@ -301,7 +301,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             parent.backgroundView.isHidden = false
         }
         
-        
         pickOption = ["Family", "Food", "Friend"]
         for item in CoreDataHelper.retrieveItems(){
             var i = 0
@@ -384,6 +383,9 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         self.contactMapView.setRegion(region, animated: false)
         
         self.originalLocation = self.searchBar.text!
+        
+        self.undoButton.isEnabled = false
+        self.undoButton.setTitleColor(UIColor.clear, for: .normal)
         
         if isPhotoUpdated{
             self.undoButton.isEnabled = true
@@ -581,6 +583,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
         } else {
             self.isChanged = false
             self.isPhotoUpdated = false
+            let contactKey = self.item.contactKey!
             if self.undoButton.isEnabled == true {
                 self.undoButton.isEnabled = false
                 self.undoButton.setTitleColor(.clear, for: .normal)
@@ -602,7 +605,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                                 let urlString = downloadURL.absoluteString
                                 self.url = downloadURL.absoluteString
-                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
+                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: contactKey)
                                 
                                 ItemService.editEntry(entry: entry)
                                 
@@ -618,6 +621,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 item.type = self.typeTextField.text
                                 item.phone = self.phoneTextField.text
                                 item.url = urlString
+                                item.contactKey = contactKey
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
@@ -635,8 +639,6 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                             }
                         } else {
-                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
-                            ItemService.editEntry(entry: entry)
                             
                             let item = CoreDataHelper.newItem()
                             item.email = self.emailTextField.text
@@ -650,8 +652,11 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             item.type = self.typeTextField.text
                             item.phone = self.phoneTextField.text
                             item.url = self.OUrl
-                            
+                            item.contactKey = contactKey
                             CoreDataHelper.saveItem()
+                            
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: item.contactKey!)
+                            ItemService.editEntry(entry: entry)
                             parent.updateValue(item: item)
                             
                             if self.view.superview != nil{
@@ -680,6 +685,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         item.type = self.typeTextField.text
                         item.phone = self.phoneTextField.text
                         item.url = ""
+                        item.contactKey = contactKey
                         
                         CoreDataHelper.saveItem()
                         parent.updateValue(item: item)
@@ -715,7 +721,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                                 let urlString = downloadURL.absoluteString
                                 self.url = downloadURL.absoluteString
-                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
+                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: contactKey)
                                 ItemService.editEntry(entry: entry)
                                 
                                 let item = CoreDataHelper.newItem()
@@ -730,6 +736,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 item.type = self.typeTextField.text
                                 item.phone = self.phoneTextField.text
                                 item.url = urlString
+                                item.contactKey = contactKey
                                 
                                 CoreDataHelper.saveItem()
                                 parent.updateValue(item: item)
@@ -743,7 +750,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                             }
                         } else {
-                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: contactKey)
                             ItemService.editEntry(entry: entry)
                             
                             let item = CoreDataHelper.newItem()
@@ -758,6 +765,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                             item.type = self.typeTextField.text
                             item.phone = self.phoneTextField.text
                             item.url = OUrl
+                            item.contactKey = contactKey
                             
                             CoreDataHelper.saveItem()
                             parent.updateValue(item: item)
@@ -783,6 +791,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                         item.type = self.typeTextField.text
                         item.phone = self.phoneTextField.text
                         item.url = ""
+                        item.contactKey = contactKey
                         
                         CoreDataHelper.saveItem()
                         parent.updateValue(item: item)
@@ -847,7 +856,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                 }
             }
         }
-        if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( searchBar.text != OOriginalLocation){
+        if (phoneTextField.text! != OPhone) || (emailTextField.text! != OEmail) || (organizationTextField.text! != OOrganization) || (nameTextField.text! != OName) || (typeTextField.text! != OType) || ( searchBar.text != OOriginalLocation) {
             self.undoButton.isEnabled = true
             self.undoButton.setTitleColor(UIColor.white, for: .normal)
         } else {

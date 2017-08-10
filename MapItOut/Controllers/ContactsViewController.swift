@@ -167,6 +167,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     newItem.type = "Phone Contacts"
                     newItem.key = ""
                     newItem.url = ""
+                    newItem.contactKey = contact.identifier
                     CoreDataHelper.saveItem()
                     
                     if contact.postalAddresses.count != 0 {
@@ -230,7 +231,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             }
             i += 1
         }
-        
+        if self.parent is MainViewController{
+            let parent = self.parent as! MainViewController
+            parent.viewWillAppear(true)
+            parent.viewDidAppear(true)
+        }
+        if self.parent is ContactListController{
+            let parent = self.parent as! ContactListController
+            parent.viewWillAppear(true)
+            parent.viewDidAppear(true)
+        }
         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
             self.view.removeFromSuperview()
         }, completion: nil)
