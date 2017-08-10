@@ -21,7 +21,6 @@ class CoreDataHelper {
         weak var item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as? Item
         return item!
     }
-    
     //save activity
     static func saveItem() {
         do{

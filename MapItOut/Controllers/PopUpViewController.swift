@@ -301,6 +301,30 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
             parent.backgroundView.isHidden = false
         }
         
+        
+        pickOption = ["Family", "Food", "Friend"]
+        for item in CoreDataHelper.retrieveItems(){
+            var i = 0
+            var isPresent = false
+            while i < pickOption.count{
+                if (pickOption[i] == item.type){
+                    isPresent = true
+                }
+                i += 1
+            }
+            if isPresent == false{
+                self.pickOption.append(item.type!)
+            }
+        }
+        var i = 0
+        while i < pickOption.count{
+            if (pickOption[i] != typeTextField.text!) && (i == pickOption.count-1){
+                self.pickOption.append(typeTextField.text!)
+                break
+            }
+            i += 1
+        }
+        
         if let phoneCallURL:URL = URL(string: "tel:111") {
             let application:UIApplication = UIApplication.shared
             if !(application.canOpenURL(phoneCallURL)) {
@@ -537,6 +561,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     func dismissView(){
         if (UIApplication.shared.isKeyboardPresented)||(self.resultTableView.isHidden == false){
             self.view.endEditing(true)
+            self.typeTextField.resignFirstResponder()
             self.dismissKeyboard()
             if (self.searchBar.text == "") || (self.resultTableView.isHidden == false){
                 self.searchBar.text = OOriginalLocation
@@ -577,7 +602,8 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                                 let urlString = downloadURL.absoluteString
                                 self.url = downloadURL.absoluteString
-                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
+                                
                                 ItemService.editEntry(entry: entry)
                                 
                                 let item = CoreDataHelper.newItem()
@@ -609,7 +635,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                             }
                         } else {
-                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
                             ItemService.editEntry(entry: entry)
                             
                             let item = CoreDataHelper.newItem()
@@ -689,7 +715,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                                 let urlString = downloadURL.absoluteString
                                 self.url = downloadURL.absoluteString
-                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                                let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
                                 ItemService.editEntry(entry: entry)
                                 
                                 let item = CoreDataHelper.newItem()
@@ -717,7 +743,7 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
                                 }
                             }
                         } else {
-                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!)
+                            let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: self.OUrl, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: self.keyOfItem, locationDescription: self.searchBar.text!, contactKey: self.item.contactKey!)
                             ItemService.editEntry(entry: entry)
                             
                             let item = CoreDataHelper.newItem()
@@ -957,6 +983,14 @@ class PopUpViewController : UIViewController, MKMapViewDelegate, UITextFieldDele
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         typeTextField.text = pickOption[row]
         self.type = pickOption[row]
+        
+        if defaults.string(forKey: "type") != self.type{
+            var count = defaults.string(forKey: "count")
+            count = count?.replacingOccurrences(of: "(", with: "")
+            count = count?.replacingOccurrences(of: ")", with: "")
+            let number = Int(count!)
+            defaults.set("(" + String(describing: number! - 1) + ")", forKey: "count")
+        }
     }
     
     //MARK: - Reverse Geocoding

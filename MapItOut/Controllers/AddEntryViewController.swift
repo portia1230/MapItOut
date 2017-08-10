@@ -39,6 +39,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     var latitude = 0.0
     var longitude = 0.0
     var location : CLLocationCoordinate2D!
+    var contactKey = ""
     
     var reuseVC : AddEntryViewController?
     
@@ -484,6 +485,7 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             newItem.key = ""
             newItem.url = ""
             
+            
             if self.photoImageView.image == nil{
                 newItem.image = #imageLiteral(resourceName: "noContactImage.png")
             } else {
@@ -506,27 +508,29 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                     let urlString = downloadURL.absoluteString
                     newItem.url = urlString
                     CoreDataHelper.saveItem()
-                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: newItem.key!, locationDescription: self.locationTextField.text!)
+                    let entry = Entry(name: self.nameTextField.text!, organization: self.organizationTextField.text!, longitude: self.longitude, latitude: self.latitude, type: self.typeTextField.text!, imageURL: urlString, phone: self.phoneTextField.text!, email: self.emailTextField.text!, key: newItem.key!, locationDescription: self.locationTextField.text!, contactKey: self.contactKey)
                     ItemService.addEntry(entry: entry)
                     newItem.url = entry.imageURL
                     CoreDataHelper.saveItem()
-                    var count = defaults.string(forKey: "count")
-                    count = count?.replacingOccurrences(of: "(", with: "")
-                    count = count?.replacingOccurrences(of: ")", with: "")
-                    let number = Int(count!)
-                    defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
-
+                    if defaults.string(forKey: "type") == entry.type{
+                        var count = defaults.string(forKey: "count")
+                        count = count?.replacingOccurrences(of: "(", with: "")
+                        count = count?.replacingOccurrences(of: ")", with: "")
+                        let number = Int(count!)
+                        defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
+                    }
                     self.dismiss(animated: true, completion: {
                         
                     })
                 }
             } else {
-                
-                var count = defaults.string(forKey: "count")
-                count = count?.replacingOccurrences(of: "(", with: "")
-                count = count?.replacingOccurrences(of: ")", with: "")
-                let number = Int(count!)
-                defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
+                if defaults.string(forKey: "type") == typeTextField.text!{
+                    var count = defaults.string(forKey: "count")
+                    count = count?.replacingOccurrences(of: "(", with: "")
+                    count = count?.replacingOccurrences(of: ")", with: "")
+                    let number = Int(count!)
+                    defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
+                }
                 self.dismiss(animated: true, completion: {
                     
                 })

@@ -22,6 +22,7 @@ class Entry {
     var phone: String
     var email: String
     var locationDescription: String
+    var contactKey : String
     var dictValue: [String : Any]{
         return ["name": name,
                 "organization": organization,
@@ -32,10 +33,11 @@ class Entry {
                 "phone": phone,
                 "email": email,
                 "key": key,
-                "locationDescription": locationDescription]
+                "locationDescription": locationDescription,
+                "contactKey": contactKey]
     }
     
-    init( name: String, organization: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, type: String, imageURL: String, phone: String, email: String, key: String, locationDescription: String) {
+    init( name: String, organization: String, longitude: CLLocationDegrees, latitude: CLLocationDegrees, type: String, imageURL: String, phone: String, email: String, key: String, locationDescription: String, contactKey: String) {
         self.name = name
         self.organization = organization
         self.longitude = longitude
@@ -46,6 +48,7 @@ class Entry {
         self.email = email
         self.key = key
         self.locationDescription = locationDescription
+        self.contactKey = contactKey
     }
     
     init?(snapshot: DataSnapshot) {
@@ -59,7 +62,8 @@ class Entry {
             let phone = dict["phone"] as? String,
             let email = dict["email"] as? String,
             let key = dict["key"] as? String,
-            let locationDescription = dict["locationDescription"] as? String
+            let locationDescription = dict["locationDescription"] as? String,
+            let contactKey = dict["contactKey"] as? String
             else { return nil }
         
         self.key = key
@@ -72,6 +76,7 @@ class Entry {
         self.phone = phone
         self.email = email
         self.locationDescription = locationDescription
+        self.contactKey = contactKey
     }
     
     func distance(to location: CLLocation) -> CLLocationDistance {

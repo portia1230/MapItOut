@@ -91,7 +91,7 @@ class SignInPopUpViewController: UIViewController, UITextFieldDelegate, FUIAuthD
                 self.createButton.setTitle("Create!", for: .normal)
                 
                 print(error.debugDescription)
-                let alertController = UIAlertController(title: nil, message: error?.localizedDescription, preferredStyle: .alert)
+                let alertController = UIAlertController(title: error?.localizedDescription, message: "Keep in mind: if you are in a region where Google is not support, select use without account in homepage. \n 提醒：如果您所在的位置不支持谷歌（中国大陆），请在主页面选择“Use without account”", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Okay", style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
                 self.present(alertController, animated: true)

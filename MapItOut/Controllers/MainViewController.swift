@@ -93,6 +93,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if self.typeLabel.text == "All items"{
             defaults.set("(" + String(CoreDataHelper.retrieveItems().count) + ")", forKey: "count")
         }
+        
         self.numberCountLabel.text = defaults.string(forKey: "count")
         
         let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
@@ -130,6 +131,17 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             self.mapView.userLocation.title = ""
             
             self.items = CoreDataHelper.retrieveItems()
+            
+            for item in self.items{
+                if item.contactKey == nil{
+                    item.contactKey = ""
+                    CoreDataHelper.saveItem()
+                    if defaults.string(forKey: "isLoggedIn") == "true"{
+                        let entry = Entry(name: item.name!, organization: item.organization!, longitude: item.longitude, latitude: item.latitude, type: item.type!, imageURL: item.url!, phone: item.phone!, email: item.email!, key: item.key!, locationDescription: item.locationDescription!, contactKey: "")
+                     ItemService.editEntry(entry: entry)
+                    }
+                }
+            }
             
             self.sortedItems = LocationService.rankDistance(items: items)
             filterResults(type: self.typeLabel.text!)
@@ -583,6 +595,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
             reusableVC?.photoImageView.image = #imageLiteral(resourceName: "noContactImage.png")
             reusableVC?.photoImageView.alpha = 0
+            reusableVC?.contactKey = ""
             
             present(reusableVC!, animated: true, completion: nil)
         }
@@ -842,6 +855,7 @@ class MainViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         popOverVC?.keyOfItem = selectedItem.key!
         popOverVC?.url = selectedItem.url!
         popOverVC?.view.endEditing(true)
+        //popOverVC?.typeTextField.resignFirstResponder()
         
         
         if self.popOverVC?.email != ""{

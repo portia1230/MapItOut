@@ -10,6 +10,8 @@ import UIKit
 import ContactsUI
 import Foundation
 import CoreLocation
+import FirebaseStorage
+import Firebase
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -17,6 +19,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    @IBOutlet weak var loadingStackView: UIStackView!
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var loadingLabel: UILabel!
@@ -28,6 +33,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     var geocoder = CLGeocoder()
     @IBOutlet weak var searchBar: UISearchBar!
     
+    @IBOutlet weak var importContactActivityView: UIActivityIndicatorView!
+    @IBOutlet weak var importContactsLabel: UILabel!
+    
+    @IBOutlet weak var importAllButton: UIButton!
+    @IBOutlet weak var importContactsView: UIStackView!
     //MARK: - Functions
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -45,6 +55,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        self.importAllButton.layer.cornerRadius = 15
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
@@ -55,6 +66,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             self.activityView.startAnimating()
             self.backButton.isHidden = true
             self.view.isUserInteractionEnabled = false
+            self.importContactsView.isHidden = true
+            self.importAllButton.isHidden = true
+            self.loadingStackView.isHidden = false
         })
         tableView.delegate = self
         tableView.dataSource = self
@@ -82,6 +96,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         loadContacts()
     }
     
+    
+    //Functions
+    
     func loadContacts(){
         self.contacts = self.contacts.sorted(by: { (contact1, contact2) -> Bool in
             return contact1.givenName.compare(contact2.givenName) == ComparisonResult.orderedAscending
@@ -92,9 +109,132 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             self.loadingView.isHidden = true
             self.backButton.isHidden = false
             self.tableView.reloadData()
+            self.importAllButton.isHidden = false
+            self.loadingStackView.isHidden = true
         }, completion: nil)
     }
     
+    @IBAction func importAllButtonTapped(_ sender: Any) {
+        self.importContactActivityView.startAnimating()
+        self.importContactsView.isHidden = false
+        self.loadingView.isHidden = false
+        
+        self.importContactsLabel.text = "Importing \(self.results.count) contacts"
+        var i = 0
+        while i < self.contacts.count{
+            var isImported = false
+            for contact in CoreDataHelper.retrieveItems(){
+                if contact.contactKey == self.contacts[i].identifier{
+                    isImported = true
+                }
+            }
+            if isImported == false{
+                    self.importContactsLabel.text = "Imported \(i+1) new contacts"
+                    let contact = self.contacts[i]
+                    let newItem = CoreDataHelper.newItem()
+                    
+                    if contact.givenName.isEmpty == false{
+                        newItem.name = contact.givenName
+                    }
+                    if contact.familyName.isEmpty == false {
+                        if newItem.name == ""{
+                            newItem.name = contact.familyName
+                        } else {
+                            newItem.name?.append(" " + contact.familyName)
+                        }
+                    }
+                    if contact.emailAddresses.isEmpty == false {
+                        newItem.email = contact.emailAddresses[0].value as String
+                    } else {
+                        newItem.email = ""
+                    }
+                    if contact.organizationName.isEmpty == false{
+                        newItem.organization = contact.organizationName
+                    } else {
+                        newItem.organization = ""
+                    }
+                    if contact.phoneNumbers.count != 0 {
+                        newItem.phone = contact.phoneNumbers[0].value.stringValue
+                    } else {
+                        newItem.phone = ""
+                    }
+                    if contact.imageData?.isEmpty == false {
+                        newItem.image = UIImage(data: contact.imageData!)!
+                    } else {
+                        newItem.image = #imageLiteral(resourceName: "noContactImage.png")
+                    }
+                    
+                    newItem.type = "Phone Contacts"
+                    newItem.key = ""
+                    newItem.url = ""
+                    CoreDataHelper.saveItem()
+                    
+                    if contact.postalAddresses.count != 0 {
+                        let address = contact.postalAddresses[0].value
+                        let string = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.postalCode
+                        newItem.locationDescription = string
+                        getCoordinate(addressString: string, completionHandler: { (location, error) in
+                            newItem.latitude = location.latitude
+                            newItem.longitude = location.longitude
+                            CoreDataHelper.saveItem()
+                            
+                            if defaults.string(forKey: "isLoggedIn") == "true"{
+                                
+                                let currentUser = User.currentUser
+                                let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
+                                newItem.key = entryRef.key
+                                CoreDataHelper.saveItem()
+                                
+                                let imageRef = StorageReference.newContactImageReference(key: newItem.key!)
+                                StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
+                                    guard let downloadURL = downloadURL else {
+                                        return
+                                    }
+                                    let urlString = downloadURL.absoluteString
+                                    newItem.url = urlString
+                                    CoreDataHelper.saveItem()
+                                    if defaults.string(forKey: "type") == newItem.type{
+                                        var count = defaults.string(forKey: "count")
+                                        count = count?.replacingOccurrences(of: "(", with: "")
+                                        count = count?.replacingOccurrences(of: ")", with: "")
+                                        let number = Int(count!)
+                                        defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
+                                    }
+                                    
+                                    self.importContactsView.isHidden = true
+                                    self.loadingView.isHidden = true
+                                    self.loadingStackView.isHidden = false
+                                    if self.view.superview != nil{
+                                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                            self.view.removeFromSuperview()
+                                        }, completion: nil)
+                                    }
+                                }
+                            } else {
+                                self.importContactsView.isHidden = true
+                                self.loadingView.isHidden = true
+                                self.loadingStackView.isHidden = false
+                                
+                                if defaults.string(forKey: "type") == newItem.type{
+                                    var count = defaults.string(forKey: "count")
+                                    count = count?.replacingOccurrences(of: "(", with: "")
+                                    count = count?.replacingOccurrences(of: ")", with: "")
+                                    let number = Int(count!)
+                                    defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
+                                }
+                            }
+                            
+                        })
+                    }
+            
+            }
+            i += 1
+        }
+        
+        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+            self.view.removeFromSuperview()
+        }, completion: nil)
+    }
     
     //MARK: - Search bar delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -201,7 +341,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     roundedImage?.draw(in: imageView.bounds)
                     UIGraphicsEndImageContext()
                     parent.reusableVC?.image = roundedImage!
-                   // parent.reusableVC?.photoImageView.image = UIImage(data: contact.imageData!)!
+                    // parent.reusableVC?.photoImageView.image = UIImage(data: contact.imageData!)!
                 }
                 
                 if contact.postalAddresses.count != 0 {
@@ -312,6 +452,26 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 let string = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.postalCode
                 displayTaskViewController.contactLocationDescription = string
             }
+        }
+        
+    }
+    
+    
+    func getCoordinate( addressString : String,
+                        completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+            if error == nil {
+                if let placemark = placemarks?[0] {
+                    let location = placemark.location!
+                    //let converted = LocationTransformHelper.wgs2gcj(wgsLat: location.coordinate.latitude, wgsLng: location.coordinate.longitude)
+                    //let coordinate = CLLocationCoordinate2D(latitude: converted.gcjLat, longitude: converted.gcjLng)
+                    let coordinate = location.coordinate
+                    completionHandler(coordinate, nil)
+                    return
+                }
+            }
+            
         }
         
     }
