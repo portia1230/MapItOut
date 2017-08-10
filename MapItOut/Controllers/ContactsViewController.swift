@@ -202,10 +202,22 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                         defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
                                     }
                                     
-                                    self.importContactsView.isHidden = true
-                                    self.loadingView.isHidden = true
-                                    self.loadingStackView.isHidden = false
-                                    if self.view.superview != nil{
+                                    if i == self.contacts.count{
+                                        
+                                        self.importContactsView.isHidden = true
+                                        self.loadingView.isHidden = true
+                                        self.loadingStackView.isHidden = false
+                                        
+                                        if self.parent is MainViewController{
+                                            let parent = self.parent as! MainViewController
+                                            parent.viewWillAppear(true)
+                                            parent.viewDidAppear(true)
+                                        }
+                                        if self.parent is ContactListController{
+                                            let parent = self.parent as! ContactListController
+                                            parent.viewWillAppear(true)
+                                            parent.viewDidAppear(true)
+                                        }
                                         UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
                                             self.view.removeFromSuperview()
                                         }, completion: nil)
@@ -230,20 +242,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             
             }
             i += 1
+            
+            
         }
-        if self.parent is MainViewController{
-            let parent = self.parent as! MainViewController
-            parent.viewWillAppear(true)
-            parent.viewDidAppear(true)
-        }
-        if self.parent is ContactListController{
-            let parent = self.parent as! ContactListController
-            parent.viewWillAppear(true)
-            parent.viewDidAppear(true)
-        }
-        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-            self.view.removeFromSuperview()
-        }, completion: nil)
+        
     }
     
     //MARK: - Search bar delegate
