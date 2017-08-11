@@ -206,7 +206,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                             if (location.latitude == 0 && (location.longitude == 0)){
                                 CoreDataHelper.deleteItems(item: newItem)
                                 failedCount += 1
-                                if secondCount == filteredContacts.count{
+                                if secondCount == filteredContacts.count || (count == filteredContacts.count - failedCount){
                                     let alertController = UIAlertController(title: nil, message: "Unable to identify \(failedCount) addresses. Please import manually!", preferredStyle: .alert)
                                     let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: { (alert) in
                                     })
@@ -264,7 +264,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                     ItemService.addEntry(entry: entry)
                                     counted += 1
                                     print("\(counted) \(secondCount)")
-                                    if counted == filteredContacts.count && (secondCount == filteredContacts.count){
+                                    if counted == filteredContacts.count-failedCount && (secondCount == filteredContacts.count){
                                         if self.parent is MainViewController{
                                             let parent = self.parent as! MainViewController
                                             parent.viewWillAppear(true)
