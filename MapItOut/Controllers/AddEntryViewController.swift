@@ -233,6 +233,9 @@ class AddEntryViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             if (self.image) != #imageLiteral(resourceName: "noContactImage.png"){
                 self.photoImageView.image = self.image
                 self.photoImageView.alpha = 1
+            } else {
+                self.photoImageView.image = self.image
+                self.photoImageView.alpha = 0
             }
             self.locationMapView.showsUserLocation = false
             self.loadingView.isHidden = true
