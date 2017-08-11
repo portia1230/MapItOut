@@ -100,6 +100,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         defaults.set(typeTextField.text, forKey: "type")
         self.searchedItems = self.filteredItems
         self.searchBar.text = ""
+        self.searchBar.resignFirstResponder()
         self.tableView.reloadData()
         self.pickerUIView.isHidden = true
     }
@@ -179,8 +180,9 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         var i = 0
         var index = 0
         while i < self.filteredItems.count{
-            let info = self.filteredItems[i].email!+self.filteredItems[i].locationDescription!+self.filteredItems[i].name!+self.filteredItems[i].organization!+self.filteredItems[i].type!
-            if info.contains(searchText) == false{
+            var info = self.filteredItems[i].email!+self.filteredItems[i].locationDescription!+self.filteredItems[i].name!+self.filteredItems[i].organization!+self.filteredItems[i].type!
+            info = info.lowercased()
+            if info.contains(searchText.lowercased()) == false{
                 self.searchedItems.remove(at: i+index)
                 index -= 1
             }
