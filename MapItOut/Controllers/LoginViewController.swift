@@ -193,12 +193,19 @@ extension LoginViewController: FUIAuthDelegate {
             else { return }
         //redirect
         UserService.show(forUID: user.uid) { (user) in
-            if let user = user {
-                // handle existing user
-                User.setCurrent(user, writeToUserDefaults:  true)
-                let initialViewController = UIStoryboard.initialViewController(for: .main)
-                self.view.window?.rootViewController = initialViewController
-                self.view.window?.makeKeyAndVisible()
+            guard let user = user
+                else { return }
+            //redirect
+            defaults.set("false", forKey:"loadedItems")
+            defaults.set("true", forKey: "isLoggedIn")
+            
+            UserService.show(forUID: user.uid) { (user) in
+                if let user = user {
+                    User.setCurrent(user, writeToUserDefaults:  true)
+                    let initialViewController = UIStoryboard.initialViewController(for: .main)
+                    self.view.window?.rootViewController = initialViewController
+                    self.view.window?.makeKeyAndVisible()
+                }
             }
         }
     }
