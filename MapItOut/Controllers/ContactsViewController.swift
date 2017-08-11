@@ -119,16 +119,33 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         self.importContactsView.isHidden = false
         self.loadingView.isHidden = false
         
-        self.importContactsLabel.text = "Importing \(self.results.count) contacts"
+        self.importContactsLabel.text = "Filtering \(self.results.count) contacts"
         var i = 0
-        while i < self.contacts.count{
-            var isImported = false
-            for contact in CoreDataHelper.retrieveItems(){
-                if contact.contactKey == self.contacts[i].identifier{
-                    isImported = true
+        var allGood = true
+        while i < self.contacts.count {
+            allGood = true
+            var thisIsGood = false
+            for item in CoreDataHelper.retrieveItems(){
+                if item.contactKey! == self.contacts[i].identifier{
+                    thisIsGood = true
                 }
             }
-            if isImported == false{
+            if thisIsGood == false{
+                allGood = false
+                break
+            }
+            i += 1
+        }
+        i = 0
+        if allGood == false{
+            while i < self.contacts.count{
+                var isImported = false
+                for contact in CoreDataHelper.retrieveItems(){
+                    if contact.contactKey == self.contacts[i].identifier{
+                        isImported = true
+                    }
+                }
+                if isImported == false{
                     self.importContactsLabel.text = "Imported \(i+1) new contacts"
                     let contact = self.contacts[i]
                     let newItem = CoreDataHelper.newItem()
@@ -202,11 +219,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                         defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
                                     }
                                     
+                                    let entry = Entry(name: newItem.name!, organization: newItem.organization!, longitude: newItem.longitude, latitude: newItem.latitude, type: "Phone Contacts", imageURL: newItem.url!, phone: newItem.phone!, email: newItem.email!, key: newItem.key!, locationDescription: newItem.locationDescription!, contactKey: newItem.contactKey!)
+                                    ItemService.addEntry(entry: entry)
+                                    
                                     if i == self.contacts.count{
-                                        
-                                        self.importContactsView.isHidden = true
-                                        self.loadingView.isHidden = true
-                                        self.loadingStackView.isHidden = false
                                         
                                         if self.parent is MainViewController{
                                             let parent = self.parent as! MainViewController
@@ -218,9 +234,14 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                             parent.viewWillAppear(true)
                                             parent.viewDidAppear(true)
                                         }
-                                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                            self.view.removeFromSuperview()
-                                        }, completion: nil)
+                                        if self.view.superview != nil{
+                                            self.importContactsView.isHidden = true
+                                            self.loadingView.isHidden = true
+                                            self.loadingStackView.isHidden = false
+                                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                                self.view.removeFromSuperview()
+                                            }, completion: nil)
+                                        }
                                     }
                                 }
                             } else {
@@ -235,17 +256,35 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                     let number = Int(count!)
                                     defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
                                 }
+                                if i == self.contacts.count-1 {
+                                    if isImported == true{
+                                        if self.view.superview != nil{
+                                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                                self.view.removeFromSuperview()
+                                            }, completion: nil)
+                                        }
+                                    }
+                                }
                             }
                             
                         })
                     }
-            
+                    
+                }
+                
+                i += 1
+                
             }
-            i += 1
-            
-            
+        } else {
+            self.importContactsView.isHidden = true
+            self.loadingView.isHidden = true
+            self.loadingStackView.isHidden = false
+            if self.view.superview != nil{
+                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                    self.view.removeFromSuperview()
+                }, completion: nil)
+            }
         }
-        
     }
     
     //MARK: - Search bar delegate
@@ -308,17 +347,15 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     let addVC = storyboard.instantiateViewController(withIdentifier: "AddEntryViewController")
                     parent.reusableVC = addVC as? AddEntryViewController
                     parent.reusableVC?.modalTransitionStyle = .coverVertical
-                } else {
-                    parent.reusableVC?.contactLocationDescription = ""
-                    parent.reusableVC?.name = ""
-                    parent.reusableVC?.organization = ""
-                    parent.reusableVC?.type = ""
-                    parent.reusableVC?.phone = ""
-                    parent.reusableVC?.email = ""
-                    parent.reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
-                    parent.reusableVC?.photoImageView.image = #imageLiteral(resourceName: "noContactImage.png")
-                    parent.reusableVC?.photoImageView.alpha = 0
                 }
+                parent.reusableVC?.contactLocationDescription = ""
+                parent.reusableVC?.name = ""
+                parent.reusableVC?.organization = ""
+                parent.reusableVC?.type = ""
+                parent.reusableVC?.phone = ""
+                parent.reusableVC?.email = ""
+                parent.reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+                parent.reusableVC?.type = "Phone Contacts"
                 if contact.givenName.isEmpty == false{
                     parent.reusableVC?.name = contact.givenName
                 }
@@ -370,17 +407,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     let addVC = storyboard.instantiateViewController(withIdentifier: "AddEntryViewController")
                     parent.reusableVC = addVC as? AddEntryViewController
                     parent.reusableVC?.modalTransitionStyle = .coverVertical
-                } else {
-                    
-                    parent.reusableVC?.contactLocationDescription = ""
-                    parent.reusableVC?.name = ""
-                    parent.reusableVC?.organization = ""
-                    parent.reusableVC?.type = ""
-                    parent.reusableVC?.phone = ""
-                    parent.reusableVC?.email = ""
-                    parent.reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
-                    parent.reusableVC?.photoImageView.alpha = 0
                 }
+                
+                parent.reusableVC?.contactLocationDescription = ""
+                parent.reusableVC?.name = ""
+                parent.reusableVC?.organization = ""
+                parent.reusableVC?.type = ""
+                parent.reusableVC?.phone = ""
+                parent.reusableVC?.email = ""
+                parent.reusableVC?.image = #imageLiteral(resourceName: "noContactImage.png")
+                parent.reusableVC?.type = "Phone Contacts"
                 if contact.givenName.isEmpty == false{
                     parent.reusableVC?.name = contact.givenName
                 }
@@ -428,6 +464,13 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         cell?.nameLabel.text = results[indexPath.row].givenName + " " + results[indexPath.row].familyName
         let value = results[indexPath.row].postalAddresses[0].value
         cell?.addressLabel.text = value.street + " " + value.city + " " + value.state + " " + value.country + " " + value.postalCode
+        cell?.checkImageView.image! = #imageLiteral(resourceName: "unchecked.png")
+        for item in CoreDataHelper.retrieveItems(){
+            if item.contactKey! == results[indexPath.row].identifier{
+                cell?.checkImageView.image! = #imageLiteral(resourceName: "checked.png")
+            }
+        }
+        
         return cell!
     }
     

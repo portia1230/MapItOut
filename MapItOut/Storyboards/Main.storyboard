@@ -343,7 +343,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APm-fK-a3O">
-                                <rect key="frame" x="136" y="50" width="40" height="20"/>
+                                <rect key="frame" x="116" y="50" width="40" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="Sek-J6-QVy"/>
                                     <constraint firstAttribute="height" constant="20" id="oNO-oS-Szz"/>
@@ -368,11 +368,11 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9c3-40-vcp" id="U5R-Ut-xLc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="3mu-k6-ZOy">
-                                                            <rect key="frame" x="23" y="17.5" width="329" height="55.5"/>
+                                                            <rect key="frame" x="23" y="17" width="264" height="55.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Will Wang" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOZ-iM-YuU">
                                                                     <rect key="frame" x="0.0" y="0.0" width="87" height="27"/>
@@ -390,16 +390,30 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="55.5" id="VDC-fx-k22"/>
+                                                            </constraints>
                                                         </stackView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checked.png" translatesAutoresizingMaskIntoConstraints="NO" id="h1O-St-Yc8">
+                                                            <rect key="frame" x="325" y="29" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="7Xc-I4-HHn"/>
+                                                                <constraint firstAttribute="height" constant="30" id="XVm-HR-urq"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="3mu-k6-ZOy" firstAttribute="centerY" secondItem="U5R-Ut-xLc" secondAttribute="centerY" id="2rw-ae-7Lb"/>
-                                                        <constraint firstItem="3mu-k6-ZOy" firstAttribute="leading" secondItem="U5R-Ut-xLc" secondAttribute="leadingMargin" constant="15" id="cea-jg-Cdr"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="3mu-k6-ZOy" secondAttribute="trailing" constant="15" id="ryG-7g-9GG"/>
+                                                        <constraint firstItem="3mu-k6-ZOy" firstAttribute="leading" secondItem="U5R-Ut-xLc" secondAttribute="leadingMargin" constant="15" id="2vY-L9-fEV"/>
+                                                        <constraint firstItem="3mu-k6-ZOy" firstAttribute="top" secondItem="U5R-Ut-xLc" secondAttribute="topMargin" constant="9" id="HZA-ca-OCG"/>
+                                                        <constraint firstItem="h1O-St-Yc8" firstAttribute="centerY" secondItem="U5R-Ut-xLc" secondAttribute="centerY" id="SyJ-oO-JBK"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="3mu-k6-ZOy" secondAttribute="trailing" constant="80" id="YA1-CY-0aZ"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="h1O-St-Yc8" secondAttribute="trailing" constant="12" id="ah7-qh-Z1o"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="3mu-k6-ZOy" secondAttribute="bottom" constant="9" id="zA3-KA-PpQ"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="addressLabel" destination="hie-Ko-uN9" id="MYx-OJ-Vau"/>
+                                                    <outlet property="checkImageView" destination="h1O-St-Yc8" id="7ae-XT-QqS"/>
                                                     <outlet property="nameLabel" destination="qOZ-iM-YuU" id="xk3-ZW-AJH"/>
                                                     <segue destination="Y6f-BZ-apC" kind="presentation" identifier="contactSelected" trigger="accessoryAction" id="Xjx-vg-KDV"/>
                                                 </connections>
@@ -432,13 +446,13 @@
                                     <constraint firstAttribute="trailing" secondItem="kfW-QP-neD" secondAttribute="trailing" id="sri-DC-rfv"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W7Q-ee-uWH">
-                                <rect key="frame" x="0.0" y="90" width="375" height="577"/>
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W7Q-ee-uWH">
+                                <rect key="frame" x="0.0" y="485" width="375" height="182"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="PGP-Ic-Fr0">
                                         <rect key="frame" x="20" y="220" width="335" height="73"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finding Contacts with addresses" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEq-QG-qnS">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filtering Contacts with addresses" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEq-QG-qnS">
                                                 <rect key="frame" x="0.0" y="0.0" width="222" height="73"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="222" id="ncn-O1-emW"/>
@@ -486,13 +500,13 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rpp-Yp-2g6">
-                                <rect key="frame" x="191" y="45" width="174" height="30"/>
+                                <rect key="frame" x="171" y="45" width="194" height="30"/>
                                 <color key="backgroundColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="j5q-69-lVI"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
-                                <state key="normal" title="Import new Contacts">
+                                <state key="normal" title="Import all new Contacts">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -513,7 +527,7 @@
                             <constraint firstItem="Rpp-Yp-2g6" firstAttribute="top" secondItem="Nbw-KQ-iLJ" secondAttribute="bottom" constant="25" id="mNE-5G-xx0"/>
                             <constraint firstItem="1Vq-dX-77f" firstAttribute="top" secondItem="Nbw-KQ-iLJ" secondAttribute="bottom" constant="70" id="s0T-b8-vjE"/>
                             <constraint firstItem="W7Q-ee-uWH" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="t5p-1Z-hDy"/>
-                            <constraint firstItem="APm-fK-a3O" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leadingMargin" constant="120" id="zVC-AP-hfS"/>
+                            <constraint firstItem="APm-fK-a3O" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leadingMargin" constant="100" id="zVC-AP-hfS"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1878,6 +1892,7 @@
         <image name="List icon.png" width="520" height="520"/>
         <image name="Map Icon.png" width="520" height="520"/>
         <image name="arrowGreen.png" width="550" height="550"/>
+        <image name="checked.png" width="196" height="196"/>
         <image name="detailsButton" width="400" height="150"/>
         <image name="findContact.png" width="250" height="250"/>
         <image name="grayArrow.png" width="115" height="64"/>

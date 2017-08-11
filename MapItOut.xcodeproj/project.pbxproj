@@ -29,6 +29,8 @@
 		8362EE821F19E1C40055BF6C /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */; };
 		83680B611F149F2B003A14CC /* plusButton200*200.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B601F149F2B003A14CC /* plusButton200*200.png */; };
 		83680B631F14A83D003A14CC /* arrowGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 83680B621F14A83D003A14CC /* arrowGreen.png */; };
+		837095311F3D12ED0080F238 /* checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 8370952F1F3D12ED0080F238 /* checked.png */; };
+		837095321F3D12ED0080F238 /* unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 837095301F3D12ED0080F238 /* unchecked.png */; };
 		83761FC01F16BC1E00CE33D7 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83761FBF1F16BC1E00CE33D7 /* LocationService.swift */; };
 		83777A7A1F2009730023C51C /* SignInPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83777A791F2009730023C51C /* SignInPopUpViewController.swift */; };
 		837938941F136CE1003B4B34 /* AddEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837938931F136CE1003B4B34 /* AddEntryViewController.swift */; };
@@ -95,6 +97,8 @@
 		8362EE811F19E1C40055BF6C /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPointAnnotation.swift; path = CustomClasses/CustomPointAnnotation.swift; sourceTree = "<group>"; };
 		83680B601F149F2B003A14CC /* plusButton200*200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plusButton200*200.png"; path = "Arts/plusButton200*200.png"; sourceTree = "<group>"; };
 		83680B621F14A83D003A14CC /* arrowGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrowGreen.png; path = Arts/arrowGreen.png; sourceTree = "<group>"; };
+		8370952F1F3D12ED0080F238 /* checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checked.png; path = Arts/checked.png; sourceTree = "<group>"; };
+		837095301F3D12ED0080F238 /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unchecked.png; path = Arts/unchecked.png; sourceTree = "<group>"; };
 		83761FBF1F16BC1E00CE33D7 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/LocationService.swift; sourceTree = "<group>"; };
 		83777A791F2009730023C51C /* SignInPopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInPopUpViewController.swift; path = Controllers/SignInPopUpViewController.swift; sourceTree = "<group>"; };
 		837938931F136CE1003B4B34 /* AddEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddEntryViewController.swift; path = Controllers/AddEntryViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +183,8 @@
 		833BE1831F2A52EC009B229A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8370952F1F3D12ED0080F238 /* checked.png */,
+				837095301F3D12ED0080F238 /* unchecked.png */,
 				83E8711D1F3559920090AF12 /* upGrayArrow.png */,
 				83E8711E1F3559920090AF12 /* upWhiteArrow.png */,
 				83E8711B1F3556650090AF12 /* WechatIMG31.jpeg */,
@@ -421,6 +427,7 @@
 				83E4CB2B1F12EB5800EDDD91 /* Main.storyboard in Resources */,
 				83A43C461F1D75E3000F4324 /* findContact.png in Resources */,
 				832C7A3F1F266F6E0094766A /* whitePin.png in Resources */,
+				837095311F3D12ED0080F238 /* checked.png in Resources */,
 				83680B631F14A83D003A14CC /* arrowGreen.png in Resources */,
 				83EB67671F22A12400BD9BD8 /* placeHolder.png in Resources */,
 				832E167A1F1BF1D1005FCE55 /* Refresh.png in Resources */,
@@ -432,6 +439,7 @@
 				83E871201F3559920090AF12 /* upWhiteArrow.png in Resources */,
 				83AEF55E1F27DD68005AE7D3 /* noContactImage.png in Resources */,
 				83B17F051F2C45200050DEAF /* greenPin.png in Resources */,
+				837095321F3D12ED0080F238 /* unchecked.png in Resources */,
 				839DF3B81F147E250029D556 /* redPin.png in Resources */,
 				83B17F031F2BB70D0050DEAF /* ContactsIcon.png in Resources */,
 				832E167C1F1BF2BE005FCE55 /* whiteGearImage.png in Resources */,
