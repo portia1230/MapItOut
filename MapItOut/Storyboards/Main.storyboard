@@ -1180,7 +1180,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="108" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="c0R-kg-YAL">
-                                <rect key="frame" x="0.0" y="65" width="375" height="602"/>
+                                <rect key="frame" x="0.0" y="109" width="375" height="558"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="108" id="SDZ-pq-bZg" customClass="CustomTableCell" customModule="MapItOut" customModuleProvider="target">
@@ -1369,8 +1369,8 @@
                                     <constraint firstItem="Ufm-Dl-cws" firstAttribute="leading" secondItem="aBf-32-iAG" secondAttribute="trailing" constant="7" id="vOK-b7-CN8"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J9U-kz-RLa">
-                                <rect key="frame" x="0.0" y="65" width="375" height="110"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J9U-kz-RLa">
+                                <rect key="frame" x="0.0" y="139" width="375" height="36"/>
                                 <subviews>
                                     <pickerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiW-QX-JjJ">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
@@ -1388,13 +1388,23 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mTi-Mq-U92">
-                                <rect key="frame" x="0.0" y="125" width="375" height="542"/>
+                                <rect key="frame" x="0.0" y="344" width="375" height="323"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b94-jb-g3r">
+                                <rect key="frame" x="0.0" y="65" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <outlet property="delegate" destination="M4Q-aG-t6d" id="TJH-mP-Ndl"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="c0R-kg-YAL" firstAttribute="top" secondItem="b94-jb-g3r" secondAttribute="bottom" id="10V-kp-N0W"/>
+                            <constraint firstAttribute="trailing" secondItem="b94-jb-g3r" secondAttribute="trailing" id="1n5-Mj-UK8"/>
                             <constraint firstItem="mTi-Mq-U92" firstAttribute="top" secondItem="hFf-NZ-u7I" secondAttribute="top" id="4p3-ea-nBL"/>
+                            <constraint firstItem="b94-jb-g3r" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="bottom" id="56j-A9-Fi4"/>
                             <constraint firstItem="ZLz-XZ-O7G" firstAttribute="top" secondItem="c0R-kg-YAL" secondAttribute="bottom" id="6H7-Er-Hyq"/>
                             <constraint firstItem="mTi-Mq-U92" firstAttribute="leading" secondItem="hFf-NZ-u7I" secondAttribute="leading" id="AX8-8Q-iSd"/>
                             <constraint firstItem="J9U-kz-RLa" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="bottom" id="Aas-xZ-9Uq"/>
@@ -1404,10 +1414,11 @@
                             <constraint firstItem="J9U-kz-RLa" firstAttribute="leading" secondItem="hFf-NZ-u7I" secondAttribute="leading" id="P5M-8Q-37B"/>
                             <constraint firstAttribute="trailing" secondItem="iGs-l4-Jqo" secondAttribute="trailing" id="dUr-U5-kij"/>
                             <constraint firstItem="c0R-kg-YAL" firstAttribute="leading" secondItem="hFf-NZ-u7I" secondAttribute="leading" id="h6a-bj-1VF"/>
+                            <constraint firstItem="b94-jb-g3r" firstAttribute="leading" secondItem="hFf-NZ-u7I" secondAttribute="leading" id="kwh-YW-8K4"/>
                             <constraint firstAttribute="trailing" secondItem="J9U-kz-RLa" secondAttribute="trailing" id="mwK-sv-rLa"/>
                             <constraint firstAttribute="trailing" secondItem="c0R-kg-YAL" secondAttribute="trailing" id="oyL-rk-BtY"/>
                             <constraint firstItem="iGs-l4-Jqo" firstAttribute="leading" secondItem="hFf-NZ-u7I" secondAttribute="leading" id="tHu-BR-ENX"/>
-                            <constraint firstItem="c0R-kg-YAL" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="bottom" id="uKu-f0-sWW"/>
+                            <constraint firstItem="c0R-kg-YAL" firstAttribute="top" secondItem="iGs-l4-Jqo" secondAttribute="bottom" constant="44" id="uKu-f0-sWW"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1417,6 +1428,7 @@
                         <outlet property="pickerUIView" destination="J9U-kz-RLa" id="83M-vi-NSs"/>
                         <outlet property="pickerView" destination="PiW-QX-JjJ" id="0rA-T1-m13"/>
                         <outlet property="plusImageView" destination="rvb-eG-YDV" id="EUy-U9-gh9"/>
+                        <outlet property="searchBar" destination="b94-jb-g3r" id="vnO-vQ-e6m"/>
                         <outlet property="tableView" destination="c0R-kg-YAL" id="sXB-Wd-BDx"/>
                         <outlet property="typeTextField" destination="Ufm-Dl-cws" id="l84-sv-YNd"/>
                     </connections>

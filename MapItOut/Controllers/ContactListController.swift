@@ -16,7 +16,7 @@ import FirebaseAuth
 import CoreData
 import FirebaseStorage
 
-class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate {
+class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UISearchBarDelegate {
     
     //MARK: - Properties
     @IBOutlet weak var backgroundView: UIView!
@@ -27,6 +27,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerUIView: UIView!
     @IBOutlet weak var plusImageView: UIImageView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var reusableVC : AddEntryViewController?
     var reusableContactsVC: ContactsViewController?
@@ -36,6 +37,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     var sortedItems : [Item] = []
     var items = [Item]()
     var filteredItems : [Item] = []
+    var searchedItems : [Item] = []
     var locationDescription = ""
     var selectedIndex = 0
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -96,6 +98,8 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
         defaults.set(numberCountLabel.text, forKey: "count")
         defaults.set(typeTextField.text, forKey: "type")
+        self.searchedItems = self.filteredItems
+        self.searchBar.text = ""
         self.tableView.reloadData()
         self.pickerUIView.isHidden = true
     }
@@ -106,6 +110,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         
         super.viewDidLoad()
         pickerView.delegate = self
+        searchBar.delegate = self
         
         if defaults.string(forKey: "isLoggedIn") == "true"{
             authHandle = Auth.auth().addStateDidChangeListener() { [unowned self] (auth, user) in
@@ -127,6 +132,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        searchBar.text = ""
         self.backgroundView.isHidden = true
         self.plusImageView.isHidden = false
         self.pickerUIView.isHidden = true
@@ -147,6 +153,43 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 numberCount = "0"
             }
         }
+    }
+    
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchedItems = self.filteredItems
+        self.tableView.reloadData()
+        self.searchBar.resignFirstResponder()
+        self.view.endEditing(true)
+        searchBar.text = ""
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+        self.searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchedItems = self.filteredItems
+        
+        var i = 0
+        var index = 0
+        while i < self.filteredItems.count{
+            let info = self.filteredItems[i].email!+self.filteredItems[i].locationDescription!+self.filteredItems[i].name!+self.filteredItems[i].organization!+self.filteredItems[i].type!
+            if info.contains(searchText) == false{
+                self.searchedItems.remove(at: i+index)
+                index -= 1
+            }
+            i += 1
+        }
+        if searchText == ""{
+            self.searchedItems = self.filteredItems
+        }
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -206,12 +249,10 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     func updateValue(item: Item){
-        
         self.sortedItems.remove(at: self.selectedIndex)
         self.sortedItems.append(item)
         self.sortedItems = LocationService.rankDistance(items: self.sortedItems)
         filterItems(type: self.typeTextField.text!)
-        
     }
     
     func filterItems(type : String){
@@ -233,9 +274,11 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 self.typeTextField.text = "All items"
                 self.filteredItems = self.sortedItems
                 defaults.set("All items", forKey: "type")
+                self.searchBar.text = ""
             }
         }
         self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
+        self.searchedItems = self.filteredItems
         self.tableView.reloadData()
     }
     
@@ -247,13 +290,13 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filteredItems.count
+        return self.searchedItems.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableCell
-        let item = self.filteredItems[indexPath.row]
+        let item = self.searchedItems[indexPath.row]
         cell.addressLabel.text = item.locationDescription
         cell.nameLabel.text = item.name
         cell.typeLabel.text = item.type
@@ -268,10 +311,12 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
+        self.searchBar.resignFirstResponder()
+        self.view.endEditing(true)
         var i = 0
         self.items = CoreDataHelper.retrieveItems()
-        while i < self.filteredItems.count {
-            if self.filteredItems[indexPath.row].key == self.items[i].key{
+        while i < self.searchedItems.count {
+            if self.searchedItems[indexPath.row].key == self.items[i].key{
                 self.selectedIndex = i
             }
             i += 1
@@ -280,7 +325,7 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
         if self.popOverVC == nil{
             self.popOverVC = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
         }
-        let selectedItem = self.filteredItems[indexPath.row]
+        let selectedItem = self.searchedItems[indexPath.row]
         popOverVC?.item = selectedItem
         popOverVC?.name = selectedItem.name!
         popOverVC?.organization = selectedItem.organization!
@@ -352,16 +397,18 @@ class ContactListController: UIViewController, MKMapViewDelegate, UITextFieldDel
                 ItemService.deleteEntry(key: sortedItems[indexPath.row].key!)
             }
             
-            CoreDataHelper.deleteItems(item: self.filteredItems[indexPath.row])
+            CoreDataHelper.deleteItems(item: self.searchedItems[indexPath.row])
             self.items = CoreDataHelper.retrieveItems()
             self.sortedItems = LocationService.rankDistance(items: self.items)
-            self.filteredItems.remove(at: indexPath.row)
             self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
             if self.filteredItems.count == 0 {
                 self.typeTextField.text = "All items"
                 self.filteredItems = self.sortedItems
+                self.searchedItems = self.sortedItems
                 defaults.set("All items", forKey: "type")
                 self.numberCountLabel.text = "(" + String(self.filteredItems.count) + ")"
+            } else {
+                filterItems(type: self.typeTextField.text!)
             }
             self.tableView.reloadData()
         }
