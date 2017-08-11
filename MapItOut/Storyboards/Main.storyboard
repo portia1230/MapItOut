@@ -1892,7 +1892,7 @@
         <image name="List icon.png" width="520" height="520"/>
         <image name="Map Icon.png" width="520" height="520"/>
         <image name="arrowGreen.png" width="550" height="550"/>
-        <image name="checked.png" width="196" height="196"/>
+        <image name="checked.png" width="140" height="136"/>
         <image name="detailsButton" width="400" height="150"/>
         <image name="findContact.png" width="250" height="250"/>
         <image name="grayArrow.png" width="115" height="64"/>
