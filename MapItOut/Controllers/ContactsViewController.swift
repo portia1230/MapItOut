@@ -74,6 +74,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         self.contacts.removeAll()
         self.results.removeAll()
+        //self.importAllButton.isHidden = true
         
     }
     
@@ -139,9 +140,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         i = 0
         count = filteredContacts.count
-        self.importContactsLabel.text = "Imported 0/\(count) new contacts"
+        self.importContactsLabel.text = "Importing \(count) new contacts"
         if count > 0{
             var counted = 0
+            var failedCount = 0
             self.backButton.isEnabled = false
             self.importAllButton.isEnabled = false
             self.view.isUserInteractionEnabled = false
@@ -188,16 +190,52 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 newItem.contactKey = contact.identifier
                 CoreDataHelper.saveItem()
                 if contact.postalAddresses.count != 0 {
+                    
                     let address = contact.postalAddresses[0].value
-                    let string = address.street + " " + address.city + " " + address.state + " " + address.country
-                    let simpleString = address.city + " " + address.street + " " + address.country
-                    let dumbedString = address.city + " " + address.country
+                    let string = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.isoCountryCode
+                    let simpleString = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.isoCountryCode
+                    let dumbedString = address.city + " " + address.state + " " + address.country + " " + address.isoCountryCode
                     newItem.locationDescription = string
-                        self.getCoordinate(addressString: string, simpleString: simpleString, dumbedString: dumbedString, country: address.country, completionHandler: { (location, error) in
+                        self.getCoordinate(addressString: string, simpleString: simpleString, dumbedString: dumbedString, country: address.country + " " + address.isoCountryCode, completionHandler: { (location, error) in
                             newItem.latitude = location.latitude
                             newItem.longitude = location.longitude
                             CoreDataHelper.saveItem()
                             secondCount += 1
+                            print("\(string) \(simpleString) \(dumbedString) \(address.country + address.isoCountryCode)")
+                            
+                            if (location.latitude == 0 && (location.longitude == 0)){
+                                CoreDataHelper.deleteItems(item: newItem)
+                                failedCount += 1
+                                if secondCount == filteredContacts.count{
+                                    let alertController = UIAlertController(title: nil, message: "Unable to identify \(failedCount) addresses. Please import manually!", preferredStyle: .alert)
+                                    let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: { (alert) in
+                                    })
+                                    alertController.addAction(cancel)
+                                    self.present(alertController, animated: true, completion: { 
+                                        if self.parent is MainViewController{
+                                            let parent = self.parent as! MainViewController
+                                            parent.viewWillAppear(true)
+                                            parent.viewDidAppear(true)
+                                        }
+                                        if self.parent is ContactListController{
+                                            let parent = self.parent as! ContactListController
+                                            parent.viewWillAppear(true)
+                                            parent.viewDidAppear(true)
+                                        }
+                                        if self.view.superview != nil{
+                                            self.backButton.isEnabled = true
+                                            self.importAllButton.isEnabled = true
+                                            self.importContactsView.isHidden = true
+                                            self.loadingView.isHidden = true
+                                            self.view.isUserInteractionEnabled = true
+                                            self.loadingStackView.isHidden = false
+                                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                                self.view.removeFromSuperview()
+                                            }, completion: nil)
+                                        }
+                                    })
+                                }
+                            } else {
                             
                             if defaults.string(forKey: "isLoggedIn") == "true"{
                                 
@@ -226,11 +264,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                     ItemService.addEntry(entry: entry)
                                     counted += 1
                                     print("\(counted) \(secondCount)")
-                                    if counted>secondCount{
-                                        self.importContactsLabel.text = "Importing \(secondCount)/\(count) new contacts"
-                                    } else {
-                                        self.importContactsLabel.text = "Importing \(counted)/\(count) new contacts"
-                                    }
                                     if counted == filteredContacts.count && (secondCount == filteredContacts.count){
                                         if self.parent is MainViewController{
                                             let parent = self.parent as! MainViewController
@@ -276,8 +309,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                     defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
                                 }
                                 print(secondCount)
-                                self.importContactsLabel.text = "Importing \(secondCount)/\(count) new contacts"
-                                
                                 if secondCount == filteredContacts.count {
                                     self.backButton.isEnabled = true
                                     self.importAllButton.isEnabled = true
@@ -292,7 +323,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                     }
                                 }
                             }
-                            
+                    }
+                    
                         })
                 }
                 
@@ -551,7 +583,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     return
                 }
             } else {
-                print(error.debugDescription)
+                //print(error.debugDescription)
                 geocoder.geocodeAddressString(simpleString, completionHandler: { (placemarks, error) in
                     if error == nil {
                         if let placemark = placemarks?[0] {
@@ -578,6 +610,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                             completionHandler(coordinate, nil)
                                             return
                                         }
+                                    } else {
+                                        completionHandler(CLLocationCoordinate2DMake(0, 0),nil)
+                                        return
                                     }
                                 })
                             }
