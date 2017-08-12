@@ -95,6 +95,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             print("unable to fetch contacts")
         }
         loadContacts()
+        self.importAllButton.isHidden = true
     }
     
     
@@ -142,12 +143,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         count = filteredContacts.count
         self.importContactsLabel.text = "Importing \(count) new contacts"
         if count > 0{
-            var counted = 0
             var failedCount = 0
             self.backButton.isEnabled = false
             self.importAllButton.isEnabled = false
             self.view.isUserInteractionEnabled = false
-            while i < count{
+            while i < count {
                 let contact = filteredContacts[i]
                 let newItem = CoreDataHelper.newItem()
                 
@@ -196,75 +196,79 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     let simpleString = address.street + " " + address.city + " " + address.state + " " + address.country + " " + address.isoCountryCode
                     let dumbedString = address.city + " " + address.state + " " + address.country + " " + address.isoCountryCode
                     newItem.locationDescription = string
+                    DispatchQueue.main.async {
                         self.getCoordinate(addressString: string, simpleString: simpleString, dumbedString: dumbedString, country: address.country + " " + address.isoCountryCode, completionHandler: { (location, error) in
                             newItem.latitude = location.latitude
                             newItem.longitude = location.longitude
                             CoreDataHelper.saveItem()
-                            secondCount += 1
                             print("\(string) \(simpleString) \(dumbedString) \(address.country + address.isoCountryCode)")
-                            
-                            if (location.latitude == 0 && (location.longitude == 0)){
-                                CoreDataHelper.deleteItems(item: newItem)
-                                failedCount += 1
-                                if secondCount == filteredContacts.count || (count == filteredContacts.count - failedCount){
-                                    let alertController = UIAlertController(title: nil, message: "Unable to identify \(failedCount) addresses. Please import manually!", preferredStyle: .alert)
-                                    let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: { (alert) in
-                                    })
-                                    alertController.addAction(cancel)
-                                    self.present(alertController, animated: true, completion: { 
-                                        if self.parent is MainViewController{
-                                            let parent = self.parent as! MainViewController
-                                            parent.viewWillAppear(true)
-                                            parent.viewDidAppear(true)
-                                        }
-                                        if self.parent is ContactListController{
-                                            let parent = self.parent as! ContactListController
-                                            parent.viewWillAppear(true)
-                                            parent.viewDidAppear(true)
-                                        }
-                                        if self.view.superview != nil{
-                                            self.backButton.isEnabled = true
-                                            self.importAllButton.isEnabled = true
-                                            self.importContactsView.isHidden = true
-                                            self.loadingView.isHidden = true
-                                            self.view.isUserInteractionEnabled = true
-                                            self.loadingStackView.isHidden = false
-                                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                                self.view.removeFromSuperview()
-                                            }, completion: nil)
-                                        }
-                                    })
-                                }
-                            } else {
                             
                             if defaults.string(forKey: "isLoggedIn") == "true"{
                                 
-                                let currentUser = User.currentUser
-                                let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
-                                newItem.key = entryRef.key
-                                CoreDataHelper.saveItem()
-                                
-                                let imageRef = StorageReference.newContactImageReference(key: newItem.key!)
-                                StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
-                                    guard let downloadURL = downloadURL else {
-                                        return
-                                    }
-                                    let urlString = downloadURL.absoluteString
-                                    newItem.url = urlString
+                                if (location.latitude == 0 && (location.longitude == 0)){
+                                    CoreDataHelper.deleteItems(item: newItem)
+                                    failedCount += 1
+                                } else {
+                                    count += 1
+                                    let currentUser = User.currentUser
+                                    let entryRef = Database.database().reference().child("Contacts").child(currentUser.uid).childByAutoId()
+                                    newItem.key = entryRef.key
                                     CoreDataHelper.saveItem()
-                                    if defaults.string(forKey: "type") == newItem.type{
-                                        var count = defaults.string(forKey: "count")
-                                        count = count?.replacingOccurrences(of: "(", with: "")
-                                        count = count?.replacingOccurrences(of: ")", with: "")
-                                        let number = Int(count!)
-                                        defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
-                                    }
                                     
-                                    let entry = Entry(name: newItem.name!, organization: newItem.organization!, longitude: newItem.longitude, latitude: newItem.latitude, type: "Phone Contacts", imageURL: newItem.url!, phone: newItem.phone!, email: newItem.email!, key: newItem.key!, locationDescription: newItem.locationDescription!, contactKey: newItem.contactKey!)
-                                    ItemService.addEntry(entry: entry)
-                                    counted += 1
-                                    print("\(counted) \(secondCount)")
-                                    if counted == filteredContacts.count-failedCount && (secondCount == filteredContacts.count){
+                                    let imageRef = StorageReference.newContactImageReference(key: newItem.key!)
+                                    StorageService.uploadHighImage(newItem.image as! UIImage, at: imageRef) { (downloadURL) in
+                                        guard let downloadURL = downloadURL else {
+                                            return
+                                        }
+                                        let urlString = downloadURL.absoluteString
+                                        newItem.url = urlString
+                                        CoreDataHelper.saveItem()
+                                        if defaults.string(forKey: "type") == newItem.type{
+                                            var count = defaults.string(forKey: "count")
+                                            count = count?.replacingOccurrences(of: "(", with: "")
+                                            count = count?.replacingOccurrences(of: ")", with: "")
+                                            let number = Int(count!)
+                                            defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
+                                        }
+                                        
+                                        let entry = Entry(name: newItem.name!, organization: newItem.organization!, longitude: newItem.longitude, latitude: newItem.latitude, type: "Phone Contacts", imageURL: newItem.url!, phone: newItem.phone!, email: newItem.email!, key: newItem.key!, locationDescription: newItem.locationDescription!, contactKey: newItem.contactKey!)
+                                        ItemService.addEntry(entry: entry)
+                                    }
+                                }
+                                
+                                if i == filteredContacts.count && (CoreDataHelper.retrieveItems().count+failedCount == filteredContacts.count){
+                                    if failedCount > 0{
+                                        if i == filteredContacts.count && (CoreDataHelper.retrieveItems().count+failedCount == filteredContacts.count){
+                                            print(failedCount)
+                                            let alertController = UIAlertController(title: nil, message: "Unable to identify \(failedCount) addresses. Please import manually!", preferredStyle: .alert)
+                                            let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: { (alert) in
+                                            })
+                                            alertController.addAction(cancel)
+                                            self.present(alertController, animated: true, completion: {
+                                                if self.parent is MainViewController{
+                                                    let parent = self.parent as! MainViewController
+                                                    parent.viewWillAppear(true)
+                                                    parent.viewDidAppear(true)
+                                                }
+                                                if self.parent is ContactListController{
+                                                    let parent = self.parent as! ContactListController
+                                                    parent.viewWillAppear(true)
+                                                    parent.viewDidAppear(true)
+                                                }
+                                                if self.view.superview != nil{
+                                                    self.backButton.isEnabled = true
+                                                    self.importAllButton.isEnabled = true
+                                                    self.importContactsView.isHidden = true
+                                                    self.loadingView.isHidden = true
+                                                    self.view.isUserInteractionEnabled = true
+                                                    self.loadingStackView.isHidden = false
+                                                    UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                                        self.view.removeFromSuperview()
+                                                    }, completion: nil)
+                                                }
+                                            })
+                                        }
+                                    } else {
                                         if self.parent is MainViewController{
                                             let parent = self.parent as! MainViewController
                                             parent.viewWillAppear(true)
@@ -288,17 +292,14 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                         }
                                     }
                                 }
+                                
                             } else {
                                 
-                                if self.parent is MainViewController{
-                                    let parent = self.parent as! MainViewController
-                                    parent.viewWillAppear(true)
-                                    parent.viewDidAppear(true)
-                                }
-                                if self.parent is ContactListController{
-                                    let parent = self.parent as! ContactListController
-                                    parent.viewWillAppear(true)
-                                    parent.viewDidAppear(true)
+                                if (location.latitude == 0 && (location.longitude == 0)){
+                                    CoreDataHelper.deleteItems(item: newItem)
+                                    failedCount += 1
+                                } else {
+                                    count += 1
                                 }
                                 
                                 if defaults.string(forKey: "type") == newItem.type{
@@ -308,24 +309,72 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                     let number = Int(count!)
                                     defaults.set("(" + String(describing: number! + 1) + ")", forKey: "count")
                                 }
-                                print(secondCount)
-                                if secondCount == filteredContacts.count {
-                                    self.backButton.isEnabled = true
-                                    self.importAllButton.isEnabled = true
-                                    self.importContactsView.isHidden = true
-                                    self.loadingView.isHidden = true
-                                    self.view.isUserInteractionEnabled = true
-                                    self.loadingStackView.isHidden = false
-                                    if self.view.superview != nil{
-                                        UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
-                                            self.view.removeFromSuperview()
-                                        }, completion: nil)
+                                print("\(i) = \(filteredContacts.count)    \(count) + \(failedCount) = \(filteredContacts.count)")
+                                
+                                if failedCount>0{
+                                    print(i)
+                                    if (i == filteredContacts.count) && (count+failedCount == filteredContacts.count){
+                                        print(failedCount)
+                                        let alertController = UIAlertController(title: nil, message: "Unable to identify \(failedCount) addresses. Please import manually!", preferredStyle: .alert)
+                                        let cancel = UIAlertAction(title: "Okay", style: .cancel, handler: { (alert) in
+                                        })
+                                        alertController.addAction(cancel)
+                                        self.present(alertController, animated: true, completion: {
+                                            if self.parent is MainViewController{
+                                                let parent = self.parent as! MainViewController
+                                                parent.viewWillAppear(true)
+                                                parent.viewDidAppear(true)
+                                            }
+                                            if self.parent is ContactListController{
+                                                let parent = self.parent as! ContactListController
+                                                parent.viewWillAppear(true)
+                                                parent.viewDidAppear(true)
+                                            }
+                                            if self.view.superview != nil{
+                                                self.backButton.isEnabled = true
+                                                self.importAllButton.isEnabled = true
+                                                self.importContactsView.isHidden = true
+                                                self.loadingView.isHidden = true
+                                                self.view.isUserInteractionEnabled = true
+                                                self.loadingStackView.isHidden = false
+                                                UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                                    self.view.removeFromSuperview()
+                                                }, completion: nil)
+                                            }
+                                        })
+                                    }
+                                } else {
+                                    if (i == filteredContacts.count) && (count+failedCount == filteredContacts.count){
+                                        
+                                        if self.parent is MainViewController{
+                                            let parent = self.parent as! MainViewController
+                                            parent.viewWillAppear(true)
+                                            parent.viewDidAppear(true)
+                                        }
+                                        if self.parent is ContactListController{
+                                            let parent = self.parent as! ContactListController
+                                            parent.viewWillAppear(true)
+                                            parent.viewDidAppear(true)
+                                        }
+                                        
+                                        self.backButton.isEnabled = true
+                                        self.importAllButton.isEnabled = true
+                                        self.importContactsView.isHidden = true
+                                        self.loadingView.isHidden = true
+                                        self.view.isUserInteractionEnabled = true
+                                        self.loadingStackView.isHidden = false
+                                        if self.view.superview != nil{
+                                            UIView.transition(with: self.view.superview!, duration: 0.25, options: .transitionCrossDissolve, animations: { _ in
+                                                self.view.removeFromSuperview()
+                                            }, completion: nil)
+                                        }
                                     }
                                 }
                             }
+                            
+                        })
                     }
                     
-                        })
                 }
                 
                 i += 1

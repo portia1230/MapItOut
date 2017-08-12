@@ -343,7 +343,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APm-fK-a3O">
-                                <rect key="frame" x="56" y="50" width="40" height="20"/>
+                                <rect key="frame" x="167.5" y="50" width="40" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="Sek-J6-QVy"/>
                                     <constraint firstAttribute="height" constant="20" id="oNO-oS-Szz"/>
@@ -500,7 +500,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rpp-Yp-2g6">
-                                <rect key="frame" x="136" y="45" width="229" height="30"/>
+                                <rect key="frame" x="206" y="45" width="159" height="30"/>
                                 <color key="backgroundColor" red="0.35139796137809753" green="0.76921021938323975" blue="0.50198876857757568" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="j5q-69-lVI"/>
@@ -515,10 +515,9 @@
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Rpp-Yp-2g6" firstAttribute="leading" secondItem="APm-fK-a3O" secondAttribute="trailing" constant="40" id="7N8-ex-iLA"/>
-                            <constraint firstItem="APm-fK-a3O" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leadingMargin" constant="40" id="G0q-eo-Uxr"/>
                             <constraint firstAttribute="trailing" secondItem="Rpp-Yp-2g6" secondAttribute="trailing" constant="10" id="LcJ-F9-2mN"/>
                             <constraint firstItem="OMD-xb-Drs" firstAttribute="top" secondItem="1Vq-dX-77f" secondAttribute="bottom" id="Ssa-L8-BX9"/>
+                            <constraint firstItem="APm-fK-a3O" firstAttribute="centerX" secondItem="eVe-So-qd9" secondAttribute="centerX" id="U8q-jp-UWG"/>
                             <constraint firstItem="1Vq-dX-77f" firstAttribute="leading" secondItem="eVe-So-qd9" secondAttribute="leading" id="WAv-sM-ajJ"/>
                             <constraint firstItem="OMD-xb-Drs" firstAttribute="top" secondItem="W7Q-ee-uWH" secondAttribute="bottom" id="b5Y-Ll-zT3"/>
                             <constraint firstAttribute="trailing" secondItem="W7Q-ee-uWH" secondAttribute="trailing" id="fwN-wh-vws"/>
